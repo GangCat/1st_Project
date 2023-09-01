@@ -4,26 +4,28 @@ using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
-    public void Init(VoidVec3Delegate _pickingCallback, VoidFloatDelegate _cameraZoomCallback)
+    public void Init(VoidVec3Delegate _pickingCallback, VoidFloatDelegate _cameraZoomCallback, VoidVec3Delegate _moveCameraWithMouseCallback)
     {
         pickingCallback = _pickingCallback;
         cameraZoomCallback = _cameraZoomCallback;
+        moveCameraWithMouseCallback = _moveCameraWithMouseCallback;
     }
 
     
 
     private void Update()
     {
-        UpdateMouseInput();
-        UpdateCameraZoom();
+        MoveOperateWithMouseRightClick();
+        
     }
 
     private void LateUpdate()
     {
-        
+        ZoomCamera();
+        MoveCameraWithMouse();
     }
 
-    private void UpdateMouseInput()
+    private void MoveOperateWithMouseRightClick()
     {
         if (Input.GetMouseButtonDown(1))
         {
@@ -36,17 +38,22 @@ public class InputManager : MonoBehaviour
             }
         }
     }
-
-    private void UpdateCameraZoom()
-    {
-        cameraZoomCallback?.Invoke(Input.GetAxisRaw("Mouse ScrollWheel"));
-    }
-
     private IEnumerator DestroypickPosDisplay(GameObject _go)
     {
         yield return new WaitForSeconds(pickPosDisplayHideDelay);
         Destroy(_go);
     }
+
+    private void ZoomCamera()
+    {
+        cameraZoomCallback?.Invoke(Input.GetAxisRaw("Mouse ScrollWheel"));
+    }
+
+    private void MoveCameraWithMouse()
+    {
+        moveCameraWithMouseCallback?.Invoke(Input.mousePosition);
+    }
+
 
     [SerializeField]
     private GameObject pickPosPrefab = null;
@@ -57,6 +64,6 @@ public class InputManager : MonoBehaviour
 
     private VoidVec3Delegate pickingCallback = null;
     private VoidFloatDelegate cameraZoomCallback = null;
-
+    private VoidVec3Delegate moveCameraWithMouseCallback = null;
 
 }

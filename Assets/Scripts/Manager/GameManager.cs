@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        inputMng.Init(MovePlayerByPicking, ZoomCamera);
+        inputMng.Init(MovePlayerByPicking, ZoomCamera, MoveCameraWithMouse);
         playerMng.Init();
         cameraMng.Init();
     }
@@ -26,6 +26,11 @@ public class GameManager : MonoBehaviour
     private void ZoomCamera(float _zoomRatio)
     {
         cameraMng.ZoomCamera(_zoomRatio);
+    }
+
+    private void MoveCameraWithMouse(Vector3 _mousePos)
+    {
+        cameraMng.MoveCameraWithMouse(_mousePos);
     }
 
     private PlayerManager playerMng = null;

@@ -569,10 +569,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 277f7431280cdf74289a4f499c4a0e0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  zoomSpeed: 2
+  zoomSpeed: 5
+  camMoveSpeed: 5000
   minZoom: 5
   maxZoom: 20
   smoothTime: 0.2
+  screenOffsetX: 20
+  screenOffsetY: 10
 --- !u!1 &934388676
 GameObject:
   m_ObjectHideFlags: 0
