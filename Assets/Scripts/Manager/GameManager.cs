@@ -13,7 +13,10 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        inputMng.Init(MovePlayerByPicking, ZoomCamera, MoveCameraWithMouse);
+        // 마우스 가두기
+        Cursor.lockState = CursorLockMode.Confined;
+
+        inputMng.Init(MovePlayerByPicking, ZoomCamera, MoveCameraWithMouse, MoveCameraWithKey);
         playerMng.Init();
         cameraMng.Init();
     }
@@ -31,6 +34,11 @@ public class GameManager : MonoBehaviour
     private void MoveCameraWithMouse(Vector2 _mousePos)
     {
         cameraMng.MoveCameraWithMouse(_mousePos);
+    }
+
+    private void MoveCameraWithKey(Vector2 _arrowKeyInput)
+    {
+        cameraMng.MoveCameraWithKey(_arrowKeyInput);
     }
 
     private PlayerManager playerMng = null;

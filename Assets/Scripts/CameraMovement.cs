@@ -22,6 +22,7 @@ public class CameraMovement : MonoBehaviour
     {
         screenMovePos = transform.position;
 
+        
         if (_mousePos.x < screenOffsetX)
             screenMovePos -= transform.right * camMoveSpeed * Time.deltaTime;
         else if (_mousePos.x > Screen.width - screenOffsetX)
@@ -31,6 +32,16 @@ public class CameraMovement : MonoBehaviour
             screenMovePos -= Quaternion.Euler(0f, 45f, 0f) * Vector3.forward * camMoveSpeed * Time.deltaTime;
         else if (_mousePos.y > Screen.height - screenOffsetY)
             screenMovePos += Quaternion.Euler(0f, 45f, 0f) * Vector3.forward * camMoveSpeed * Time.deltaTime;
+
+        transform.position = Vector3.Lerp(transform.position, screenMovePos, Time.deltaTime);
+    }
+
+    public void MoveCemeraWithKey(Vector2 _arrowKeyInput)
+    {
+        screenMovePos = transform.position;
+
+        screenMovePos += transform.right * _arrowKeyInput.x * camMoveSpeed * Time.deltaTime;
+        screenMovePos += Quaternion.Euler(0f, 45f, 0f) * Vector3.forward * _arrowKeyInput.y * camMoveSpeed * Time.deltaTime;
 
         transform.position = Vector3.Lerp(transform.position, screenMovePos, Time.deltaTime);
     }

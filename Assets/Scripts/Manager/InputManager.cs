@@ -7,11 +7,13 @@ public class InputManager : MonoBehaviour
     public void Init(
         VoidVec3Delegate _pickingCallback, 
         VoidFloatDelegate _cameraZoomCallback,
-        VoidVec2Delegate _moveCameraWithMouseCallback)
+        VoidVec2Delegate _moveCameraWithMouseCallback,
+        VoidVec2Delegate _moveCameraWithKeyCallback)
     {
         pickingCallback = _pickingCallback;
         cameraZoomCallback = _cameraZoomCallback;
         moveCameraWithMouseCallback = _moveCameraWithMouseCallback;
+        moveCameraWithKeyCallback = _moveCameraWithKeyCallback;
     }
 
     private void Update()
@@ -22,8 +24,7 @@ public class InputManager : MonoBehaviour
     private void LateUpdate()
     {
         ZoomCamera();
-        MoveCameraWithMouse();
-        MoveCameraWithKey();
+        MoveCamera();
     }
 
     private void MoveOperateWithMouseRightClick()
@@ -50,16 +51,20 @@ public class InputManager : MonoBehaviour
         cameraZoomCallback?.Invoke(Input.GetAxisRaw("Mouse ScrollWheel"));
     }
 
-    private void MoveCameraWithMouse()
+    private void MoveCamera()
     {
-        moveCameraWithMouseCallback?.Invoke(Input.mousePosition);
+        if(Input.GetAxisRaw("Horizontal Arrow").Equals(0) && Input.GetAxisRaw("Vertical Arrow").Equals(0))
+            moveCameraWithMouseCallback?.Invoke(Input.mousePosition);
+        else
+            moveCameraWithKeyCallback?.Invoke
+                (
+                new Vector2
+                    (
+                    Input.GetAxisRaw("Horizontal Arrow"), 
+                    Input.GetAxisRaw("Vertical Arrow")
+                    )
+                );
     }
-
-    private void MoveCameraWithKey()
-    {
-
-    }
-
 
     [SerializeField]
     private GameObject pickPosPrefab = null;
@@ -71,5 +76,6 @@ public class InputManager : MonoBehaviour
     private VoidVec3Delegate pickingCallback = null;
     private VoidFloatDelegate cameraZoomCallback = null;
     private VoidVec2Delegate moveCameraWithMouseCallback = null;
+    private VoidVec2Delegate moveCameraWithKeyCallback = null;
 
 }
