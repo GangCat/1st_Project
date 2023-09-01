@@ -8,12 +8,14 @@ public class GameManager : MonoBehaviour
     {
         inputMng = FindAnyObjectByType<InputManager>();
         playerMng = FindAnyObjectByType<PlayerManager>();
+        cameraMng = FindAnyObjectByType<CameraManager>();
     }
 
     private void Start()
     {
-        inputMng.Init(MovePlayerByPicking);
+        inputMng.Init(MovePlayerByPicking, ZoomCamera);
         playerMng.Init();
+        cameraMng.Init();
     }
 
     private void MovePlayerByPicking(Vector3 _pickPos)
@@ -21,6 +23,12 @@ public class GameManager : MonoBehaviour
         playerMng.MovePlayerByPicking(_pickPos);
     }
 
+    private void ZoomCamera(float _zoomRatio)
+    {
+        cameraMng.ZoomCamera(_zoomRatio);
+    }
+
     private PlayerManager playerMng = null;
     private InputManager inputMng = null;
+    private CameraManager cameraMng = null;
 }

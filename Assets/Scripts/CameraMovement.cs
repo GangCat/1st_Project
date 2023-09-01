@@ -4,15 +4,33 @@ using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public void Init()
     {
-        
+        mainCamera = GetComponent<Camera>();
+        targetZoom = mainCamera.orthographicSize;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void ZoomCamera(float _zoomRatio)
     {
-        
+        targetZoom -= _zoomRatio * zoomSpeed;
+        targetZoom = Mathf.Clamp(targetZoom, minZoom, maxZoom);
+
+        mainCamera.orthographicSize = Mathf.SmoothDamp(mainCamera.orthographicSize, targetZoom, ref currentZoomVelocity, smoothTime);
     }
+
+
+    [SerializeField]
+    private float zoomSpeed = 5f;
+    [SerializeField]
+    private float minZoom = 5f;
+    [SerializeField]
+    private float maxZoom = 20f;
+    [SerializeField]
+    private float smoothTime = 0.2f;
+
+    private float targetZoom = 0f;
+    private float currentZoomVelocity = 0f;
+
+    private Camera mainCamera = null;
+
 }

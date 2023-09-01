@@ -4,14 +4,23 @@ using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
-    public void Init(VoidVec3Delegate _pickingCallback)
+    public void Init(VoidVec3Delegate _pickingCallback, VoidFloatDelegate _cameraZoomCallback)
     {
         pickingCallback = _pickingCallback;
+        cameraZoomCallback = _cameraZoomCallback;
     }
+
+    
 
     private void Update()
     {
         UpdateMouseInput();
+        UpdateCameraZoom();
+    }
+
+    private void LateUpdate()
+    {
+        
     }
 
     private void UpdateMouseInput()
@@ -28,6 +37,11 @@ public class InputManager : MonoBehaviour
         }
     }
 
+    private void UpdateCameraZoom()
+    {
+        cameraZoomCallback?.Invoke(Input.GetAxisRaw("Mouse ScrollWheel"));
+    }
+
     private IEnumerator DestroypickPosDisplay(GameObject _go)
     {
         yield return new WaitForSeconds(pickPosDisplayHideDelay);
@@ -39,6 +53,10 @@ public class InputManager : MonoBehaviour
     [SerializeField]
     private float pickPosDisplayHideDelay = 0.3f;
 
-    private VoidVec3Delegate pickingCallback = null;
     private Vector3 pickPos = Vector3.zero;
+
+    private VoidVec3Delegate pickingCallback = null;
+    private VoidFloatDelegate cameraZoomCallback = null;
+
+
 }
