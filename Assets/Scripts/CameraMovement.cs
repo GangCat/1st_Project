@@ -18,7 +18,7 @@ public class CameraMovement : MonoBehaviour
         mainCamera.orthographicSize = Mathf.SmoothDamp(mainCamera.orthographicSize, targetZoom, ref currentZoomVelocity, smoothTime);
     }
 
-    public void MoveCameraWithMouse(Vector3 _mousePos)
+    public void MoveCameraWithMouse(Vector2 _mousePos)
     {
         screenMovePos = transform.position;
 
@@ -31,8 +31,6 @@ public class CameraMovement : MonoBehaviour
             screenMovePos -= Quaternion.Euler(0f, 45f, 0f) * Vector3.forward * camMoveSpeed * Time.deltaTime;
         else if (_mousePos.y > Screen.height - screenOffsetY)
             screenMovePos += Quaternion.Euler(0f, 45f, 0f) * Vector3.forward * camMoveSpeed * Time.deltaTime;
-
-        
 
         transform.position = Vector3.Lerp(transform.position, screenMovePos, Time.deltaTime);
     }

@@ -15,7 +15,7 @@ public class CameraManager : MonoBehaviour
         cameraMove.ZoomCamera(_zoomRatio);
     }
 
-    public void MoveCameraWithMouse(Vector3 _mousePos)
+    public void MoveCameraWithMouse(Vector2 _mousePos)
     {
         cameraMove.MoveCameraWithMouse(_mousePos);
     }

@@ -4,25 +4,26 @@ using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
-    public void Init(VoidVec3Delegate _pickingCallback, VoidFloatDelegate _cameraZoomCallback, VoidVec3Delegate _moveCameraWithMouseCallback)
+    public void Init(
+        VoidVec3Delegate _pickingCallback, 
+        VoidFloatDelegate _cameraZoomCallback,
+        VoidVec2Delegate _moveCameraWithMouseCallback)
     {
         pickingCallback = _pickingCallback;
         cameraZoomCallback = _cameraZoomCallback;
         moveCameraWithMouseCallback = _moveCameraWithMouseCallback;
     }
 
-    
-
     private void Update()
     {
         MoveOperateWithMouseRightClick();
-        
     }
 
     private void LateUpdate()
     {
         ZoomCamera();
         MoveCameraWithMouse();
+        MoveCameraWithKey();
     }
 
     private void MoveOperateWithMouseRightClick()
@@ -54,6 +55,11 @@ public class InputManager : MonoBehaviour
         moveCameraWithMouseCallback?.Invoke(Input.mousePosition);
     }
 
+    private void MoveCameraWithKey()
+    {
+
+    }
+
 
     [SerializeField]
     private GameObject pickPosPrefab = null;
@@ -64,6 +70,6 @@ public class InputManager : MonoBehaviour
 
     private VoidVec3Delegate pickingCallback = null;
     private VoidFloatDelegate cameraZoomCallback = null;
-    private VoidVec3Delegate moveCameraWithMouseCallback = null;
+    private VoidVec2Delegate moveCameraWithMouseCallback = null;
 
 }
