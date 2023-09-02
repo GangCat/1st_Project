@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
 
         selectMng.Init();
         inputMng.Init(
-            MovePlayerByPicking, 
+            MoveUnitByPicking, 
             ZoomCamera, 
             MoveCameraWithMouse, 
             MoveCameraWithKey, 
@@ -37,7 +37,20 @@ public class GameManager : MonoBehaviour
 
     private void MoveUnitByPicking(Vector3 _pickPos)
     {
-        selectMng.MoveUnitByPicking(_pickPos);
+        if (selectMng.IsListEmpty) return;
+
+        if (selectMng.IsFriendlyUnit)
+        {
+            GameObject pickPosDisplayGo = Instantiate(pickPosPrefab, _pickPos, Quaternion.identity, transform);
+            StartCoroutine("DestroypickPosDisplay", pickPosDisplayGo);
+            selectMng.MoveUnitByPicking(_pickPos);
+        }
+    }
+
+    private IEnumerator DestroypickPosDisplay(GameObject _go)
+    {
+        yield return new WaitForSeconds(pickPosDisplayHideDelay);
+        Destroy(_go);
     }
 
     private void ZoomCamera(float _zoomRatio)
@@ -71,11 +84,12 @@ public class GameManager : MonoBehaviour
     {
         // 반환되는 배열을 가지고 해당 배열의 오브젝트들의 발 밑에 둥근 원을 생성
         selectMng.SelectFinish();
-        // 이동시 해당 도착점을 중심점으로 각 오브젝트들의 위치를 결정함. 이 때 버튼만든것처럼 오프셋으로 해서 3by4로
-        // /랑 % 이용해서 편하게 ㅇㅇ
-        // 선택된 오브젝트 발 밑에 원 생성
-        // 단체 이동
     }
+
+    [SerializeField]
+    private GameObject pickPosPrefab = null;
+    [SerializeField]
+    private float pickPosDisplayHideDelay = 0.3f;
 
     private PlayerManager playerMng = null;
     private InputManager inputMng = null;

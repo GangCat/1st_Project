@@ -39,14 +39,9 @@ public class InputManager : MonoBehaviour
 
     private void MoveOperateWithMouseRightClick()
     {
-        pickPos = Vector3.zero;
+        Vector3 pickPos = Vector3.zero;
         if (Functions.Picking("StageFloor", 1 << LayerMask.NameToLayer("StageFloor"), ref pickPos))
-        {
-            GameObject pickPosDisplayGo = Instantiate(pickPosPrefab, pickPos, Quaternion.identity, transform);
-            StartCoroutine("DestroypickPosDisplay", pickPosDisplayGo);
             pickingCallback?.Invoke(pickPos);
-        }
-
     }
 
     private void SelectOperateWithMouseLeftClick()
@@ -67,7 +62,7 @@ public class InputManager : MonoBehaviour
                 break;
 
             Functions.Picking("StageFloor", 1 << LayerMask.NameToLayer("StageFloor"), ref dragEndPos);
-            selectArea.SetLocalScale(Quaternion.Euler(0f, -45f, 0f) * dragEndPos - Quaternion.Euler(0f, -45f, 0f) * dragStartPos);
+            selectArea.SetLocalScale(Quaternion.Euler(0f, -45f, 0f) * (dragEndPos - dragStartPos));
             
             // 언제 한 번씩 picking할지 결정하기
             yield return null;
@@ -75,12 +70,6 @@ public class InputManager : MonoBehaviour
 
         selectFinishCallback?.Invoke();
         selectArea.SetActive(false);
-    }
-
-    private IEnumerator DestroypickPosDisplay(GameObject _go)
-    {
-        yield return new WaitForSeconds(pickPosDisplayHideDelay);
-        Destroy(_go);
     }
 
     private void ZoomCamera()
@@ -103,16 +92,10 @@ public class InputManager : MonoBehaviour
                 );
     }
 
-    [SerializeField]
-    private GameObject pickPosPrefab = null;
-    [SerializeField]
-    private float pickPosDisplayHideDelay = 0.3f;
+
 
     private Vector3 dragStartPos = Vector3.zero;
     private Vector3 dragEndPos = Vector3.zero;
-    private Vector3 pickPos = Vector3.zero;
-
-    private List<SelectableObject> selectedObjects = new List<SelectableObject>();
 
     private SelectArea selectArea = null;
 
