@@ -7,10 +7,10 @@ public class PlayerManager : MonoBehaviour
     public void Init()
     {
         move = GetComponentInChildren<PlayerMovement>();
-        move.Init();
+        //move.Init();
 
         statusHp = GetComponentInChildren<StatusHp>();
-        statusHp.Init();
+        //statusHp.Init();
 
         //StartCoroutine("TestHpSystemCoroutine");
     }
