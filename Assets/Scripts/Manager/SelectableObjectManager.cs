@@ -74,18 +74,24 @@ public class SelectableObjectManager : MonoBehaviour
     {
         int numForCalcStartPos = listSelectedObject.Count - 1;
         float halfOffset = offset * 0.5f;
-        float startXPos = _movePos.x - numForCalcStartPos % 4 * halfOffset;
-        float startZPos = _movePos.z + numForCalcStartPos / 4 * halfOffset;
+        float startXPos = 0f;
+        float startZPos = _movePos.z + numForCalcStartPos / rowNum * halfOffset;
+
+
+        if(numForCalcStartPos >= rowNum)
+            startXPos = _movePos.x - (rowNum - 1) * halfOffset;
+        else
+            startXPos = _movePos.x - numForCalcStartPos % rowNum * halfOffset;
 
         // 이동시 해당 도착점을 중심점으로 각 오브젝트들의 위치를 결정함. 이 때 버튼만든것처럼 오프셋으로 해서 3by4로
         // 반드시 열 개수는 4개로 즉 반드시 /4랑 %4로 위치 결정
         // /랑 % 이용해서 편하게 ㅇㅇ
-        for(int i = 0; i < numForCalcStartPos + 1; ++i)
+        for (int i = 0; i < listSelectedObject.Count; ++i)
             listSelectedObject[i].MoveToTargetPos(
                 new Vector3(
-                    startXPos + ((i % 4) * offset),
+                    startXPos + ((i % rowNum) * offset),
                     0f, 
-                    startZPos - ((i / 4) * offset)));
+                    startZPos - ((i / rowNum) * offset)));
 
         // 단체 이동
     }
@@ -97,4 +103,6 @@ public class SelectableObjectManager : MonoBehaviour
 
     [SerializeField]
     private float offset = 1f;
+    [SerializeField]
+    private int rowNum = 6;
 }
