@@ -40,6 +40,7 @@ public class InputManager : MonoBehaviour
             }
         }
     }
+
     private IEnumerator DestroypickPosDisplay(GameObject _go)
     {
         yield return new WaitForSeconds(pickPosDisplayHideDelay);

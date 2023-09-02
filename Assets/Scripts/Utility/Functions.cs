@@ -62,6 +62,17 @@ public static class Functions
         return Mathf.Atan2(dirToTarget.z, dirToTarget.x) * Mathf.Rad2Deg;
     }
 
+    public static bool Picking(ref RaycastHit _hit)
+    {
+        Vector3 mousePos = Input.mousePosition;
+        Ray ray = Camera.main.ScreenPointToRay(mousePos);
+
+        if(Physics.Raycast(ray, out _hit))
+            return true;
+
+        return false;
+    }
+
     /// <summary>
     /// 태그만을 가지고 피킹하는 함수.
     /// _point로 피킹된 위치를 참조하고 성공 여부를 반환한다.
