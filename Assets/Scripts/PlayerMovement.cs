@@ -20,6 +20,7 @@ public class PlayerMovement : MonoBehaviour
         Vector3 moveDir = (_pickPos - transform.position).normalized;
         while (true)
         {
+            transform.rotation = Quaternion.LookRotation(moveDir);
             if (Vector3.SqrMagnitude(transform.position - _pickPos) < 0.1f)
             {
                 transform.position = _pickPos;
@@ -31,5 +32,6 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    [SerializeField]
     private float moveSpeed = 10f;
 }

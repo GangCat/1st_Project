@@ -61,7 +61,7 @@ public class InputManager : MonoBehaviour
                 (
                 new Vector2
                     (
-                    Input.GetAxisRaw("Horizontal Arrow"), 
+                    Input.GetAxisRaw("Horizontal Arrow"),
                     Input.GetAxisRaw("Vertical Arrow")
                     )
                 );
