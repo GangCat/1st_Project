@@ -5,12 +5,12 @@ using UnityEngine;
 public class SelectArea : MonoBehaviour
 {
     public void Init(
-        //VoidTemplateDelegate<SelectableObject> _selectObjectCallback,
-        //VoidTemplateDelegate<SelectableObject> _unSelectObjectCallback
+        VoidTemplateDelegate<SelectableObject> _selectObjectCallback,
+        VoidTemplateDelegate<SelectableObject> _unSelectObjectCallback
         )
     {
-        //selectObjectCallback = _selectObjectCallback;
-        //unSelectObjectCallback = _unSelectObjectCallback;
+        selectObjectCallback = _selectObjectCallback;
+        unSelectObjectCallback = _unSelectObjectCallback;
 
         gameObject.SetActive(false);
     }
@@ -33,11 +33,17 @@ public class SelectArea : MonoBehaviour
 
     private void OnTriggerEnter(Collider _other)
     {
+#if UNITY_EDITOR
+        Debug.Log(_other.name);
+#endif
         selectObjectCallback?.Invoke(_other.GetComponent<SelectableObject>());
     }
 
     private void OnTriggerExit(Collider _other)
     {
+#if UNITY_EDITOR
+        Debug.Log("!" + _other.name);
+#endif
         unSelectObjectCallback?.Invoke(_other.GetComponent<SelectableObject>());
     }
 

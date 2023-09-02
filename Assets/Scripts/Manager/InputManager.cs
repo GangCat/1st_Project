@@ -8,15 +8,19 @@ public class InputManager : MonoBehaviour
         VoidVec3Delegate _pickingCallback,
         VoidFloatDelegate _cameraZoomCallback,
         VoidVec2Delegate _moveCameraWithMouseCallback,
-        VoidVec2Delegate _moveCameraWithKeyCallback)
+        VoidVec2Delegate _moveCameraWithKeyCallback,
+        VoidTemplateDelegate<SelectableObject> _selectObjectCallback,
+        VoidTemplateDelegate<SelectableObject> _unSelectObjectCallback,
+        VoidVoidDelegate _selectFinishCallback)
     {
         pickingCallback = _pickingCallback;
         cameraZoomCallback = _cameraZoomCallback;
         moveCameraWithMouseCallback = _moveCameraWithMouseCallback;
         moveCameraWithKeyCallback = _moveCameraWithKeyCallback;
+        selectFinishCallback = _selectFinishCallback;
 
         selectArea = GetComponentInChildren<SelectArea>();
-        selectArea.Init();
+        selectArea.Init(_selectObjectCallback, _unSelectObjectCallback);
     }
 
     private void Update()
@@ -69,6 +73,7 @@ public class InputManager : MonoBehaviour
             yield return null;
         }
 
+        selectFinishCallback?.Invoke();
         selectArea.SetActive(false);
     }
 
@@ -115,5 +120,5 @@ public class InputManager : MonoBehaviour
     private VoidFloatDelegate cameraZoomCallback = null;
     private VoidVec2Delegate moveCameraWithMouseCallback = null;
     private VoidVec2Delegate moveCameraWithKeyCallback = null;
-
+    private VoidVoidDelegate selectFinishCallback = null;
 }
