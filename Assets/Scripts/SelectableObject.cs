@@ -19,6 +19,12 @@ public class SelectableObject : MonoBehaviour
             move.MoveToTargetPos(_targetPos);
     }
 
+    public void FollowToTargetTr(Transform _targetTr)
+    {
+        if (move)
+            move.FollowToTargetTr(_targetTr);
+    }
+
     [SerializeField]
     private ESelectableObjectType objectType = ESelectableObjectType.None;
     [SerializeField]

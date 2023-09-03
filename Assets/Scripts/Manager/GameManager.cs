@@ -19,7 +19,8 @@ public class GameManager : MonoBehaviour
 
         selectMng.Init();
         inputMng.Init(
-            MoveUnitByPicking, 
+            MoveUnitByPicking,
+            MoveUnitByPickingObject,
             ZoomCamera, 
             MoveCameraWithMouse, 
             MoveCameraWithKey, 
@@ -45,6 +46,16 @@ public class GameManager : MonoBehaviour
             GameObject pickPosDisplayGo = Instantiate(pickPosPrefab, _pickPos, Quaternion.identity, transform);
             StartCoroutine("DestroypickPosDisplay", pickPosDisplayGo);
             selectMng.MoveUnitByPicking(_pickPos);
+        }
+    }
+
+    private void MoveUnitByPickingObject(Transform _targetTr)
+    {
+        if (selectMng.IsListEmpty) return;
+
+        if (selectMng.IsFriendlyUnit)
+        {
+            selectMng.MoveUnitByPicking(_targetTr);
         }
     }
 

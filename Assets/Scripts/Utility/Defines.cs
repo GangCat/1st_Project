@@ -9,6 +9,7 @@ public delegate void VoidStringDelegate(string _str);
 public delegate void VoidVec3Delegate(Vector3 _vec3);
 public delegate void VoidVec2Delegate(Vector2 _vec2);
 public delegate void VoidTemplateDelegate<T>(T _list);
+public delegate void VoidTransformDelegate(Transform _tr);
 
 [System.Serializable]
 public enum ESelectableObjectType { None = - 1, FriendlyUnit, FriendlyStructure, EnemyUnit, EnemyStructure, Length}

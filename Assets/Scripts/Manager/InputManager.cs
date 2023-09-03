@@ -6,6 +6,7 @@ public class InputManager : MonoBehaviour
 {
     public void Init(
         VoidVec3Delegate _pickingCallback,
+        VoidTransformDelegate _PickingObjectCallback,
         VoidFloatDelegate _cameraZoomCallback,
         VoidVec2Delegate _moveCameraWithMouseCallback,
         VoidVec2Delegate _moveCameraWithKeyCallback,
@@ -15,6 +16,7 @@ public class InputManager : MonoBehaviour
         VoidVoidDelegate _moveCameraWithObjectCallback)
     {
         pickingCallback = _pickingCallback;
+        PickingObjectCallback = _PickingObjectCallback;
         cameraZoomCallback = _cameraZoomCallback;
         moveCameraWithMouseCallback = _moveCameraWithMouseCallback;
         moveCameraWithKeyCallback = _moveCameraWithKeyCallback;
@@ -43,7 +45,10 @@ public class InputManager : MonoBehaviour
     private void MoveOperateWithMouseRightClick()
     {
         Vector3 pickPos = Vector3.zero;
-        if (Functions.Picking("StageFloor", 1 << LayerMask.NameToLayer("StageFloor"), ref pickPos))
+        RaycastHit hit;
+        if(Functions.Picking(1 << LayerMask.NameToLayer("SelectableObject"), out hit))
+            PickingObjectCallback?.Invoke(hit.transform);
+        else if (Functions.Picking("StageFloor", 1 << LayerMask.NameToLayer("StageFloor"), ref pickPos))
             pickingCallback?.Invoke(pickPos);
     }
 
@@ -112,6 +117,7 @@ public class InputManager : MonoBehaviour
     private SelectArea selectArea = null;
 
     private VoidVec3Delegate pickingCallback = null;
+    private VoidTransformDelegate PickingObjectCallback = null;
     private VoidFloatDelegate cameraZoomCallback = null;
     private VoidVec2Delegate moveCameraWithMouseCallback = null;
     private VoidVec2Delegate moveCameraWithKeyCallback = null;

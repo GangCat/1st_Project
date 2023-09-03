@@ -95,6 +95,12 @@ public class SelectableObjectManager : MonoBehaviour
 
         // 단체 이동
     }
+
+    public void MoveUnitByPicking(Transform _targetTr)
+    {
+        foreach (SelectableObject obj in listSelectedObject)
+            obj.FollowToTargetTr(_targetTr);
+    }
     
     private bool isFriendlyUnitInList = false;
 

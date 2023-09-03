@@ -136,6 +136,31 @@ public static class Functions
     }
 
     /// <summary>
+    /// 레이어마스크만 가지고 피킹하는 함수.
+    /// </summary>
+    /// <param name="_layerMask"></param>
+    /// <param name="_hit"></param>
+    /// <returns></returns>
+    public static bool Picking(int _layerMask, out RaycastHit _hit)
+    {
+        Vector3 mousePos = Input.mousePosition;
+        Ray ray = Camera.main.ScreenPointToRay(mousePos);
+
+#if UNITY_EDITOR
+        Debug.DrawRay(ray.origin, ray.direction * 1000f, Color.red, 1f);
+#endif
+
+        if (Physics.Raycast(ray, out _hit, 1000f, _layerMask))
+        {
+            return true;
+        }
+#if UNITY_EDITOR
+        Debug.Log(_hit);
+#endif
+        return false;
+    }
+
+    /// <summary>
     /// _rad 반지름을 가지는 원 안의 랜덤한 위치를 반환하는 메서드.
     /// 이 때 y값은 0으로 고정
     /// </summary>
