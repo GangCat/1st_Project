@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 2
   tags:
   - StageFloor
+  - FriendlyStructure
+  - EnemyStructure
+  - EnemyUnit
+  - FriendlyUnit
   layers:
   - Default
   - TransparentFX
