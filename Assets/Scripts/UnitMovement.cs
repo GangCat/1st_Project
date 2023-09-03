@@ -15,12 +15,12 @@ public class UnitMovement : MonoBehaviour
         Vector3 moveDir = (_targetPos - transform.position).normalized;
         while (true)
         {
-            if(Vector3.SqrMagnitude(_targetPos - transform.position) < 0.01f)
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(moveDir), 0.1f);
+            if (Vector3.SqrMagnitude(transform.position - _targetPos) < 0.01f)
             {
                 transform.position = _targetPos;
                 yield break;
             }
-
             transform.position += moveDir * moveSpeed * Time.deltaTime;
 
             yield return null;
