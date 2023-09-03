@@ -62,7 +62,7 @@ public static class Functions
         return Mathf.Atan2(dirToTarget.z, dirToTarget.x) * Mathf.Rad2Deg;
     }
 
-    public static bool Picking(ref RaycastHit _hit)
+    public static bool Picking(out RaycastHit _hit)
     {
         Vector3 mousePos = Input.mousePosition;
         Ray ray = Camera.main.ScreenPointToRay(mousePos);

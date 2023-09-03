@@ -25,7 +25,8 @@ public class GameManager : MonoBehaviour
             MoveCameraWithKey, 
             AddSelectedObject, 
             RemoveSelectedObject, 
-            SelectFinish);
+            SelectFinish,
+            MoveCameraWithObject);
         playerMng.Init();
         cameraMng.Init();
     }
@@ -66,6 +67,11 @@ public class GameManager : MonoBehaviour
     private void MoveCameraWithKey(Vector2 _arrowKeyInput)
     {
         cameraMng.MoveCameraWithKey(_arrowKeyInput);
+    }
+
+    private void MoveCameraWithObject()
+    {
+        cameraMng.MoveCameraWithObject(selectMng.GetFirstSelectableObjectInList.GetPos);
     }
 
     private void AddSelectedObject(SelectableObject _object)

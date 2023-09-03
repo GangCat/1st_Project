@@ -5,6 +5,7 @@ using UnityEngine;
 public class SelectableObject : MonoBehaviour
 {
     public ESelectableObjectType ObjectType => objectType;
+    public Vector3 GetPos => transform.position;
 
     public void Awake()
     {

@@ -25,5 +25,10 @@ public class CameraManager : MonoBehaviour
         cameraMove.MoveCemeraWithKey(_arrowKeyInput);
     }
 
+    public void MoveCameraWithObject(Vector3 _objectPos)
+    {
+        cameraMove.MoveCameraWithObject(_objectPos);
+    }
+
     private CameraMovement cameraMove = null;
 }

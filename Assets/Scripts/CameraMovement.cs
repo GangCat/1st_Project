@@ -46,7 +46,14 @@ public class CameraMovement : MonoBehaviour
         transform.position = Vector3.Lerp(transform.position, screenMovePos, Time.deltaTime);
     }
 
+    public void MoveCameraWithObject(Vector3 _objectPos)
+    {
+        transform.position = _objectPos + cameraOffset;
+    }
 
+
+    [SerializeField]
+    private Vector3 cameraOffset = Vector3.zero;
     [SerializeField]
     private float zoomSpeed = 5f;
     [SerializeField]

@@ -11,13 +11,16 @@ public class InputManager : MonoBehaviour
         VoidVec2Delegate _moveCameraWithKeyCallback,
         VoidTemplateDelegate<SelectableObject> _selectObjectCallback,
         VoidTemplateDelegate<SelectableObject> _unSelectObjectCallback,
-        VoidVoidDelegate _selectFinishCallback)
+        VoidVoidDelegate _selectFinishCallback,
+        VoidVoidDelegate _moveCameraWithObjectCallback)
     {
         pickingCallback = _pickingCallback;
         cameraZoomCallback = _cameraZoomCallback;
         moveCameraWithMouseCallback = _moveCameraWithMouseCallback;
         moveCameraWithKeyCallback = _moveCameraWithKeyCallback;
         selectFinishCallback = _selectFinishCallback;
+        moveCameraWithObjectCallback = _moveCameraWithObjectCallback;
+        selectObjectCallback = _selectObjectCallback;
 
         selectArea = GetComponentInChildren<SelectArea>();
         selectArea.Init(_selectObjectCallback, _unSelectObjectCallback);
@@ -46,6 +49,13 @@ public class InputManager : MonoBehaviour
 
     private void SelectOperateWithMouseLeftClick()
     {
+        RaycastHit hit;
+        if (Functions.Picking(out hit))
+        {
+            if(hit.transform.GetComponent<SelectableObject>())
+                selectObjectCallback?.Invoke(hit.transform.GetComponent<SelectableObject>());
+        }
+
         Functions.Picking("StageFloor", 1 << LayerMask.NameToLayer("StageFloor"), ref dragStartPos);
         selectArea.SetPos(dragStartPos);
         selectArea.SetLocalScale(Vector3.zero);
@@ -64,7 +74,6 @@ public class InputManager : MonoBehaviour
             Functions.Picking("StageFloor", 1 << LayerMask.NameToLayer("StageFloor"), ref dragEndPos);
             selectArea.SetLocalScale(Quaternion.Euler(0f, -45f, 0f) * (dragEndPos - dragStartPos));
             
-            // 언제 한 번씩 picking할지 결정하기
             yield return null;
         }
 
@@ -79,7 +88,11 @@ public class InputManager : MonoBehaviour
 
     private void MoveCamera()
     {
-        if (Input.GetAxisRaw("Horizontal Arrow").Equals(0) && Input.GetAxisRaw("Vertical Arrow").Equals(0))
+        if (Input.GetKey(KeyCode.Space))
+        {
+            moveCameraWithObjectCallback?.Invoke();
+        }
+        else if (Input.GetAxisRaw("Horizontal Arrow").Equals(0) && Input.GetAxisRaw("Vertical Arrow").Equals(0))
             moveCameraWithMouseCallback?.Invoke(Input.mousePosition);
         else
             moveCameraWithKeyCallback?.Invoke
@@ -93,7 +106,6 @@ public class InputManager : MonoBehaviour
     }
 
 
-
     private Vector3 dragStartPos = Vector3.zero;
     private Vector3 dragEndPos = Vector3.zero;
 
@@ -104,4 +116,6 @@ public class InputManager : MonoBehaviour
     private VoidVec2Delegate moveCameraWithMouseCallback = null;
     private VoidVec2Delegate moveCameraWithKeyCallback = null;
     private VoidVoidDelegate selectFinishCallback = null;
+    private VoidVoidDelegate moveCameraWithObjectCallback = null;
+    private VoidTemplateDelegate<SelectableObject> selectObjectCallback = null;
 }

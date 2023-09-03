@@ -6,6 +6,7 @@ public class SelectableObjectManager : MonoBehaviour
 {
     public bool IsListEmpty => listSelectedObject.Count < 1;
     public bool IsFriendlyUnit => isFriendlyUnitInList;
+    public SelectableObject GetFirstSelectableObjectInList => listSelectedObject[0];
 
     public void Init()
     {
@@ -76,8 +77,7 @@ public class SelectableObjectManager : MonoBehaviour
         float halfOffset = offset * 0.5f;
         float startXPos = 0f;
         float startZPos = _movePos.z + numForCalcStartPos / rowNum * halfOffset;
-
-
+        
         if(numForCalcStartPos >= rowNum)
             startXPos = _movePos.x - (rowNum - 1) * halfOffset;
         else
