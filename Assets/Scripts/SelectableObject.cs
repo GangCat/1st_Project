@@ -10,19 +10,34 @@ public class SelectableObject : MonoBehaviour
     public void Awake()
     {
         if (isControllable)
+        {
             move = GetComponent<UnitMovement>();
+            move.Init();
+        }
     }
 
-    public void MoveToTargetPos(Vector3 _targetPos)
+    //public void MoveToTargetPos(Vector3 _targetPos)
+    //{
+    //    if (move)
+    //        move.MoveByTargetPos(_targetPos);
+    //}
+
+    public void FollowTarget(Transform _targetTr)
     {
-        if (move)
-            move.MoveToTargetPos(_targetPos);
+        if (isControllable)
+            move.FollowTarget(_targetTr);
     }
 
-    public void FollowToTargetTr(Transform _targetTr)
+    public void MoveByMoveVec(Vector3 _moveVec)
     {
-        if (move)
-            move.FollowToTargetTr(_targetTr);
+        if (isControllable)
+            move.MoveByMoveVec(_moveVec);
+    }
+
+    public void MoveByTargetPos(Vector3 _targetPos)
+    {
+        if (isControllable)
+            move.MoveByTargetPos(_targetPos);
     }
 
     [SerializeField]
