@@ -71,7 +71,7 @@ public class SelectableObjectManager : MonoBehaviour
         return listSelectedObject.ToArray();
     }
 
-    public void MoveUnit(Vector3 _targetPos)
+    public void MoveUnitByPicking(Vector3 _targetPos)
     {
         if (IsGroupMaxDistOverRange())
         {

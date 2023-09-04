@@ -45,7 +45,7 @@ public class GameManager : MonoBehaviour
         {
             GameObject pickPosDisplayGo = Instantiate(pickPosPrefab, _pickPos, Quaternion.identity, transform);
             StartCoroutine("DestroypickPosDisplay", pickPosDisplayGo);
-            selectMng.MoveUnit(_pickPos);
+            selectMng.MoveUnitByPicking(_pickPos);
         }
     }
 
