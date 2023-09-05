@@ -42,7 +42,7 @@ public class PF_Grid : MonoBehaviour
     /// </summary>
     /// <param name="_curNode"></param>
     /// <returns></returns>
-    public List<PF_Node> GetNeighbours(PF_Node _curNode)
+    public List<PF_Node> GetNeighbors(PF_Node _curNode)
     {
         List<PF_Node> neighbours = new List<PF_Node>();
 
@@ -96,17 +96,6 @@ public class PF_Grid : MonoBehaviour
         //    grid[idxX, idxY] = new Node(walkable, worldPos, idxX, idxY);
         //    ++idx;
         //}
-    }
-
-    public void ResetNode()
-    {
-        for (int x = 0; x < gridSizeX; ++x)
-        {
-            for (int y = 0; y < gridSizeY; ++y)
-            {
-                grid[x, y].Reset();
-            }
-        }
     }
 
     private void OnDrawGizmos()

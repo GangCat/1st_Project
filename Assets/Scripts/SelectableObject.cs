@@ -16,22 +16,10 @@ public class SelectableObject : MonoBehaviour
         }
     }
 
-    //public void MoveToTargetPos(Vector3 _targetPos)
-    //{
-    //    if (move)
-    //        move.MoveByTargetPos(_targetPos);
-    //}
-
     public void FollowTarget(Transform _targetTr)
     {
         if (isControllable)
             move.FollowTarget(_targetTr);
-    }
-
-    public void MoveByMoveVec(Vector3 _moveVec)
-    {
-        if (isControllable)
-            move.MoveByMoveVec(_moveVec);
     }
 
     public void MoveByTargetPos(Vector3 _targetPos)

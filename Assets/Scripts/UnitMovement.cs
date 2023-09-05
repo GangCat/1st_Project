@@ -42,18 +42,18 @@ public class UnitMovement : MonoBehaviour
 
         while (true)
         {
-            if (transform.position == curWaypoint)
+            if (Vector3.SqrMagnitude(transform.position - curWaypoint) < 0.1f)
             {
                 ++targetIdx;
                 if (targetIdx >= path.Length)
-                {
                     yield break;
-                }
 
                 curWaypoint = path[targetIdx];
             }
 
-            transform.position = Vector3.MoveTowards(transform.position, curWaypoint, moveSpeed * Time.deltaTime);
+            Vector3 moveDir = curWaypoint - transform.position;
+            transform.position += moveDir.normalized * moveSpeed * Time.deltaTime;
+            transform.rotation = Quaternion.LookRotation(curWaypoint - transform.position);
             yield return null;
         }
     }

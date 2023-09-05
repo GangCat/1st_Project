@@ -13,6 +13,11 @@ public class PF_Heap<T> where T : IHeapItem<T>
         items = new T[_maxHeapSize];
     }
 
+    public T[] GetArray()
+    {
+        return items;
+    }
+
 
     public void Add(T _item)
     {

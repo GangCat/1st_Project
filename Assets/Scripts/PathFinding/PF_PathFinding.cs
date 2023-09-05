@@ -4,6 +4,7 @@ using System.Collections.Generic;
 // 시간 측정하려고 추가한 네임스페이스
 using System.Diagnostics;
 using System;
+using UnityEditor.Experimental.GraphView;
 
 public class PF_PathFinding : MonoBehaviour
 {
@@ -18,9 +19,7 @@ public class PF_PathFinding : MonoBehaviour
 
     public void StartFindPath(Vector3 _startPos, Vector3 _targetPos)
     {
-        if (pathFindCoroutine != null)
-            StopCoroutine(pathFindCoroutine);
-        pathFindCoroutine = StartCoroutine(FindPath(_startPos, _targetPos));
+        StartCoroutine(FindPath(_startPos, _targetPos));
     }
 
     private IEnumerator FindPath(Vector3 _startPos, Vector3 _targetPos)
@@ -28,14 +27,28 @@ public class PF_PathFinding : MonoBehaviour
         Stopwatch sw = new Stopwatch();
         sw.Start();
 
-        Vector3[] waypoints = new Vector3[0];
-        bool pathSuccess = false;
+        Vector3[] arrWaypoint = new Vector3[0];
+        bool isPathSuccess = false;
 
         // 시작 위치의 노드와 도착 위치의 노드를 찾아와서 저장.
         PF_Node startNode = grid.NodeFromWorldPoint(_startPos);
         PF_Node targetNode = grid.NodeFromWorldPoint(_targetPos);
 
-        if (/*startNode.walkable && */targetNode.walkable)
+        // 타겟이 walkable이 아니면 우선은 구하고 마지막 walkable인것까지만 가도록
+        //while(!targetNode.walkable)
+        //{
+        //    List<PF_Node> listNeighborNode = grid.GetNeighbours(targetNode);
+        //    foreach (PF_Node node in listNeighborNode)
+        //    {
+        //        if(node.walkable)
+        //        {
+        //            targetNode = node;
+        //            break;
+        //        }
+        //    }
+        //}
+
+        if (targetNode.walkable)
         {
             PF_Heap<PF_Node> openSet = new PF_Heap<PF_Node>(grid.MaxSize);
             // haseSet: key값 없이 value 그 자체로 key가 된다.
@@ -66,47 +79,46 @@ public class PF_PathFinding : MonoBehaviour
                 closedSet.Add(curNode);
 
                 // 도착했다면
-                if (curNode == targetNode)
+                if (curNode.Equals(targetNode))
                 {
                     sw.Stop();
                     print("path found: " + sw.ElapsedMilliseconds + "ms");
-                    pathSuccess = true;
+                    isPathSuccess = true;
                     break;
                 }
 
-                foreach (PF_Node neighbourNode in grid.GetNeighbours(curNode))
+                foreach (PF_Node neighborNode in grid.GetNeighbors(curNode))
                 {
-                    if (!neighbourNode.walkable || closedSet.Contains(neighbourNode)) continue;
+                    if (!neighborNode.walkable || closedSet.Contains(neighborNode)) continue;
 
-                    int newGCostToNeighbour = curNode.gCost + GetDistance(curNode, neighbourNode);
+                    int newGCostToNeighbor = curNode.gCost + CalcLowestCostWithNode(curNode, neighborNode);
 
                     // 지금 neighbourNode가 가지고 있는 gCost 값이 우리가 실제로 계산한 해당 노드의 gCost보다 크면 해당 노드의 코스트를 갱신해줘야 한다.
                     // 그리고 그와 상관없이 아직 openSet에 들어가있지 않다면 gCost를 계산해서 넣어주고 openSet에 넣어줘야 한다.
-                    if (newGCostToNeighbour < neighbourNode.gCost || !openSet.Contains(neighbourNode))
+                    if (newGCostToNeighbor < neighborNode.gCost || !openSet.Contains(neighborNode))
                     {
-                        neighbourNode.gCost = newGCostToNeighbour;
-                        neighbourNode.hCost = GetDistance(neighbourNode, targetNode);
-                        neighbourNode.parentNode = curNode;
+                        neighborNode.gCost = newGCostToNeighbor;
+                        neighborNode.hCost = CalcLowestCostWithNode(neighborNode, targetNode);
+                        neighborNode.parentNode = curNode;
 
-                        if (!openSet.Contains(neighbourNode))
-                            openSet.Add(neighbourNode);
+                        if (!openSet.Contains(neighborNode))
+                            openSet.Add(neighborNode);
                         else
-                            openSet.UpdateItem(neighbourNode);
+                            openSet.UpdateItem(neighborNode);
                     }
                 }
             }
         }
 
         yield return null;
-        grid.ResetNode();
 
-        if (pathSuccess)
+        if (isPathSuccess)
         {
-            waypoints = RetracePath(startNode, targetNode);
+            arrWaypoint = RetracePath(startNode, targetNode);
             UnityEngine.Debug.Log("true");
         }
 
-        finishPathFindCallback?.Invoke(waypoints, pathSuccess);
+        finishPathFindCallback?.Invoke(arrWaypoint, isPathSuccess);
     }
 
     /// <summary>
@@ -116,13 +128,11 @@ public class PF_PathFinding : MonoBehaviour
     /// <param name="_endNode"></param>
     private Vector3[] RetracePath(PF_Node _startNode, PF_Node _endNode)
     {
-        //Stack<PF_Node> stack = new Stack<PF_Node>();
         List<PF_Node> path = new List<PF_Node>();
         PF_Node curNode = _endNode;
 
-        while (curNode != _startNode)
+        while (!curNode.Equals(_startNode))
         {
-            //stack.Push(curNode);
             path.Add(curNode);
             curNode = curNode.parentNode;
         }
@@ -130,7 +140,6 @@ public class PF_PathFinding : MonoBehaviour
         Vector3[] waypoints = SimplifyPath(path);
         Array.Reverse(waypoints);
         return waypoints;
-        //grid.path = path;
     }
 
     private Vector3[] SimplifyPath(List<PF_Node> _path)
@@ -152,11 +161,12 @@ public class PF_PathFinding : MonoBehaviour
 
     /// <summary>
     /// nodeA에서 nodeB로 가는 최단거리를 임의로 계산해서 그 값을 반환하는 함수.
+    /// 유클리디안 거리 사용
     /// </summary>
     /// <param name="_nodeA"></param>
     /// <param name="_nodeB"></param>
     /// <returns></returns>
-    private int GetDistance(PF_Node _nodeA, PF_Node _nodeB)
+    private int CalcLowestCostWithNode(PF_Node _nodeA, PF_Node _nodeB)
     {
         int distX = Mathf.Abs(_nodeA.gridX - _nodeB.gridX);
         int distY = Mathf.Abs(_nodeA.gridY - _nodeB.gridY);
@@ -169,5 +179,4 @@ public class PF_PathFinding : MonoBehaviour
     private PF_Grid grid;
 
     private FinishPathFindDelegate finishPathFindCallback = null;
-    private Coroutine pathFindCoroutine = null;
 }

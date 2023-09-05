@@ -5,33 +5,12 @@ using System;
 
 public class PF_PathRequestManager : MonoBehaviour
 {
-    public delegate void FinishPathFindingDelegate();
-
-    public static PF_PathRequestManager Instance
-    {
-        get
-        {
-            if (instance == null)
-            {
-                instance = FindAnyObjectByType<PF_PathRequestManager>();
-                if (instance == null)
-                {
-                    GameObject pf_PathRequestmanager = new GameObject("PF_PathRequestManager");
-                    instance = pf_PathRequestmanager.AddComponent<PF_PathRequestManager>();
-                }
-            }
-            return instance;
-        }
-    }
-
     public static void RequestPath(Vector3 _pathStart, Vector3 _pathEnd, Action<Vector3[], bool> _callback)
     {
         SPathRequest newRequest = new SPathRequest(_pathStart, _pathEnd, _callback);
         instance.pathRequestQueue.Enqueue(newRequest);
         instance.TryProcessNext();
     }
-
-    private PF_PathRequestManager() { }
 
     private struct SPathRequest
     {
