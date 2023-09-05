@@ -5,25 +5,14 @@ using UnityEngine;
 public class PF_Unit : MonoBehaviour
 {
     public Transform targetTr;
-    private float speed = 5f;
+
     private Vector3[] path;
     private int targetIdx;
-    private PF_PathRequestManager pathRequest = null;
+    private float speed = 5f;
 
-    private void Awake()
+    public void SetPath()
     {
-        pathRequest = PF_PathRequestManager.Instance;
-    }
-
-    private void Start()
-    {
-        //PF_PathRequestManager.RequestPath(transform.position, targetTr.position, OnPathFound);
-    }
-
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.W))
-            PF_PathRequestManager.RequestPath(transform.position, targetTr.position, OnPathFound);
+        PF_PathRequestManager.RequestPath(transform.position, targetTr.position, OnPathFound);
     }
 
     public void OnPathFound(Vector3[] _newPath, bool _pathSuccessful)
@@ -31,6 +20,7 @@ public class PF_Unit : MonoBehaviour
         if (_pathSuccessful)
         {
             path = _newPath;
+            targetIdx = 0;
             StopCoroutine("FollowPath");
             StartCoroutine("FollowPath");
         }
@@ -47,7 +37,6 @@ public class PF_Unit : MonoBehaviour
                 ++targetIdx;
                 if (targetIdx >= path.Length)
                 {
-                    targetIdx = 0;
                     yield break;
                 }
 
@@ -66,7 +55,7 @@ public class PF_Unit : MonoBehaviour
             for(int i = targetIdx; i < path.Length; ++i)
             {
                 Gizmos.color = Color.black;
-                Gizmos.DrawCube(path[i], Vector3.one);
+                Gizmos.DrawCube(path[i], Vector3.one * 0.4f);
 
                 if (i == targetIdx)
                 {

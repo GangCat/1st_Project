@@ -34,6 +34,8 @@ public class SelectableObjectManager : MonoBehaviour
         // 오브젝트를 하나하나 검사.
         foreach (SelectableObject obj in tempListSelectableObject)
         {
+            if (obj == null) continue;
+
             switch (obj.ObjectType)
             {
                 case ESelectableObjectType.FriendlyUnit:
@@ -73,20 +75,22 @@ public class SelectableObjectManager : MonoBehaviour
 
     public void MoveUnitByPicking(Vector3 _targetPos)
     {
+        // 한점 모이기
         if (IsGroupMaxDistOverRange())
         {
             foreach (SelectableObject obj in listSelectedObject)
                 obj.MoveByTargetPos(_targetPos);
         }
+        // 대열 유지하면서 모이기
         else
         {
-            Vector3 moveVec = _targetPos - CalcGroupCenterPos(-_targetPos.y);
+            Vector3 centerPos = CalcFormationCenterPos(_targetPos.y);
             foreach (SelectableObject obj in listSelectedObject)
-                obj.MoveByMoveVec(moveVec);
+                obj.MoveByTargetPos(_targetPos + CalcPosInFormation(obj.GetPos, centerPos));
         }
     }
 
-    private Vector3 CalcGroupCenterPos(float _targetPosY)
+    private Vector3 CalcFormationCenterPos(float _targetPosY)
     {
         Vector3 centerPos = Vector3.zero;
         foreach(SelectableObject obj in listSelectedObject)
@@ -99,6 +103,11 @@ public class SelectableObjectManager : MonoBehaviour
         centerPos.y += _targetPosY;
 
         return centerPos;
+    }
+
+    private Vector3 CalcPosInFormation(Vector3 _myPos, Vector3 _centerPos)
+    {
+        return _myPos - _centerPos;
     }
 
     private bool IsGroupMaxDistOverRange()

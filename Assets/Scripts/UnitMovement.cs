@@ -1,86 +1,59 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
 public class UnitMovement : MonoBehaviour
 {
     public void Init()
     {
-        //agent = GetComponent<NavMeshAgent>();
-        //agent.speed = moveSpeed;
     }
+
     public void MoveByTargetPos(Vector3 _targetPos)
     {
-        StopCoroutine("MoveByMoveVecCoroutine");
-        StopCoroutine("MoveByTargetPosCoroutine");
         StopCoroutine("FollowTargetCoroutine");
-        StartCoroutine("MoveByTargetPosCoroutine", _targetPos);
+        SetPath(_targetPos);
     }
 
     public void FollowTarget(Transform _targetTr)
     {
-        StopCoroutine("MoveByMoveVecCoroutine");
-        StopCoroutine("MoveByTargetPosCoroutine");
         StopCoroutine("FollowTargetCoroutine");
         StartCoroutine("FollowTargetCoroutine", _targetTr);
     }
 
-    public void MoveByMoveVec(Vector3 _moveVec)
+    private void SetPath(Vector3 _targetPos)
     {
-        StopCoroutine("MoveByMoveVecCoroutine");
-        StopCoroutine("MoveByTargetPosCoroutine");
-        StopCoroutine("FollowTargetCoroutine");
-        StartCoroutine("MoveByMoveVecCoroutine", _moveVec);
+        PF_PathRequestManager.RequestPath(transform.position, _targetPos, OnPathFound);
     }
 
-    private IEnumerator MoveByMoveVecCoroutine(Vector3 _moveVec)
+    private void OnPathFound(Vector3[] _newPath, bool _pathSuccessful)
     {
-        Vector3 targetPos = transform.position + _moveVec;
-
-        while (true)
+        if (_pathSuccessful)
         {
-            Functions.RotateYaw(transform, Mathf.Atan2(_moveVec.z, _moveVec.x) * Mathf.Rad2Deg);
-            //transform.rotation = Quaternion.LookRotation(_moveVec);
-
-            if (Vector3.SqrMagnitude(transform.position - targetPos) < 0.01f)
-            {
-                transform.position = targetPos;
-                //agent.ResetPath();
-                yield break;
-            }
-
-            transform.position += _moveVec.normalized * moveSpeed * Time.deltaTime;
-            //agent.SetDestination(targetPos);
-            //if (!agent.hasPath)
-            //    yield break;
-            yield return null;
+            path = _newPath;
+            targetIdx = 0;
+            StopCoroutine("FollowPath");
+            StartCoroutine("FollowPath");
         }
     }
 
-
-    private IEnumerator MoveByTargetPosCoroutine(Vector3 _targetPos)
+    private IEnumerator FollowPath()
     {
-        Vector3 moveDir = (_targetPos - transform.position).normalized;
+        Vector3 curWaypoint = path[0];
 
         while (true)
         {
-            //transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(moveDir), 0.1f);
-            transform.rotation = Quaternion.LookRotation(moveDir);
-
-            if (Vector3.SqrMagnitude(transform.position - _targetPos) < 1.5f)
+            if (transform.position == curWaypoint)
             {
-                //agent.ResetPath();
-                yield break;
+                ++targetIdx;
+                if (targetIdx >= path.Length)
+                {
+                    yield break;
+                }
+
+                curWaypoint = path[targetIdx];
             }
 
-            transform.position += moveDir * moveSpeed * Time.deltaTime;
-            //if (Vector3.SqrMagnitude(transform.position - _targetPos) < 1f)
-            //{
-            //    agent.ResetPath();
-            //    yield break;
-            //}
-            //agent.SetDestination(_targetPos);
+            transform.position = Vector3.MoveTowards(transform.position, curWaypoint, moveSpeed * Time.deltaTime);
             yield return null;
         }
     }
@@ -89,17 +62,11 @@ public class UnitMovement : MonoBehaviour
     {
         while (true)
         {
-            //if (Vector3.SqrMagnitude(transform.position - _targetTr.position) > followOffset)
-            //    agent.SetDestination(_targetTr.position);
-            //else
-            //    agent.ResetPath();
-            //agent.SetDestination(_targetTr.position);
 
             if (Vector3.SqrMagnitude(transform.position - _targetTr.position) > followOffset)
             {
                 Vector3 moveDir = (_targetTr.position - transform.position).normalized;
-                
-                //transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(moveDir), 0.1f);
+
                 transform.rotation = Quaternion.LookRotation(_targetTr.position - transform.position);
 
                 transform.position += moveDir * moveSpeed * Time.deltaTime;
@@ -108,10 +75,29 @@ public class UnitMovement : MonoBehaviour
         }
     }
 
+    public void OnDrawGizmos()
+    {
+        if (path != null)
+        {
+            for (int i = targetIdx; i < path.Length; ++i)
+            {
+                Gizmos.color = Color.black;
+                Gizmos.DrawCube(path[i], Vector3.one * 0.4f);
+
+                if (i == targetIdx)
+                    Gizmos.DrawLine(transform.position, path[i]);
+                else
+                    Gizmos.DrawLine(path[i - 1], path[i]);
+            }
+        }
+    }
+
     [SerializeField]
     private float moveSpeed = 5f;
     [SerializeField]
     private float followOffset = 3f;
 
-    //private NavMeshAgent agent = null;
+    private int targetIdx;
+
+    private Vector3[] path;
 }

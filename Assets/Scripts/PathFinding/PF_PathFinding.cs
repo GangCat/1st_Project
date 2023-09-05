@@ -35,7 +35,7 @@ public class PF_PathFinding : MonoBehaviour
         PF_Node startNode = grid.NodeFromWorldPoint(_startPos);
         PF_Node targetNode = grid.NodeFromWorldPoint(_targetPos);
 
-        if (startNode.walkable && targetNode.walkable)
+        if (/*startNode.walkable && */targetNode.walkable)
         {
             PF_Heap<PF_Node> openSet = new PF_Heap<PF_Node>(grid.MaxSize);
             // haseSet: key값 없이 value 그 자체로 key가 된다.
@@ -98,11 +98,11 @@ public class PF_PathFinding : MonoBehaviour
         }
 
         yield return null;
+        grid.ResetNode();
 
         if (pathSuccess)
         {
             waypoints = RetracePath(startNode, targetNode);
-            grid.ResetNode();
             UnityEngine.Debug.Log("true");
         }
 
