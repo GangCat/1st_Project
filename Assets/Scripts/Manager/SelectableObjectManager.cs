@@ -112,11 +112,11 @@ public class SelectableObjectManager : MonoBehaviour
 
     private bool IsGroupMaxDistOverRange()
     {
-        float maxX = 0f;
-        float minX = 0f;
-        float maxZ = 0f;
-        float minZ = 0f;
-        Vector3 objPos = Vector3.zero;
+        Vector3 objPos = listSelectedObject[0].GetPos;
+        float maxX = objPos.x;
+        float minX = objPos.x;
+        float maxZ = objPos.z;
+        float minZ = objPos.z;
 
         foreach (SelectableObject obj in listSelectedObject)
         {
@@ -128,7 +128,7 @@ public class SelectableObjectManager : MonoBehaviour
             else if (objPos.z < minZ) minZ = objPos.z;
         }
 
-        return maxX - minX > rangeGroupLimitDist || maxZ - minZ > rangeGroupLimitDist;
+        return Mathf.Abs(maxX - minX) > rangeGroupLimitDist || Mathf.Abs(maxZ - minZ) > rangeGroupLimitDist;
     }
 
     public void MoveUnitByPicking(Transform _targetTr)

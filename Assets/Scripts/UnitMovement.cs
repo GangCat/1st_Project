@@ -115,7 +115,7 @@ public class UnitMovement : MonoBehaviour
         //transform.rotation = Quaternion.LookRotation(moveDir);
         while (true)
         {
-            if (Vector3.SqrMagnitude(transform.position - curWayNode.worldPos) < 0.1f)
+            if (Vector3.SqrMagnitude(transform.position - curWayNode.worldPos) < 0.01f)
             {
                 ++targetIdx;
                 if (targetIdx >= path.Length)

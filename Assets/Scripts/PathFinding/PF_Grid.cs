@@ -15,6 +15,31 @@ public class PF_Grid : MonoBehaviour
         CreateGrid();
     }
 
+    private void CreateGrid()
+    {
+        // 그리드에 2차원 노드 배열 공간 할당
+        grid = new PF_Node[gridSizeX, gridSizeY];
+        // 그리드의 중심이 0,0에 있다고 가정하고 좌하단의 좌표를 구함.
+        Vector3 worldBottomLeft = transform.position - (Vector3.right * (gridWorldSize.x * 0.5f)) - (Vector3.forward * (gridWorldSize.y * 0.5f));
+
+        // grid에 좌하단에서부터 하나씩 노드를 할당해주는 반복문
+        // 위에 2중 반복문이랑 비교했을때 장점이 뭘까
+        // 비교를 좀 적게한다.
+        int idx = 0;
+        int maxNodeCount = gridSizeX * gridSizeY;
+        int idxX = 0;
+        int idxY = 0;
+        while (idx < maxNodeCount)
+        {
+            idxX = idx % gridSizeX;
+            idxY = idx / gridSizeY;
+            Vector3 worldPos = worldBottomLeft + Vector3.right * (idxX * nodeDiameter + nodeRadius) + Vector3.forward * (idxY * nodeDiameter + nodeRadius);
+            bool walkable = !Physics.CheckSphere(worldPos, nodeRadius, unWalkableMask);
+            grid[idxX, idxY] = new PF_Node(walkable, worldPos, idxX, idxY);
+            ++idx;
+        }
+    }
+
     /// <summary>
     /// 해당 Pos의 노드를 반환하는 함수.
     /// </summary>
@@ -65,45 +90,12 @@ public class PF_Grid : MonoBehaviour
         _node.walkable = _isWalkable;
     }
 
-    private void CreateGrid()
-    {
-        // 그리드에 2차원 노드 배열 공간 할당
-        grid = new PF_Node[gridSizeX, gridSizeY];
-        // 그리드의 중심이 0,0에 있다고 가정하고 좌하단의 좌표를 구함.
-        Vector3 worldBottomLeft = transform.position - (Vector3.right * (gridWorldSize.x * 0.5f)) - (Vector3.forward * (gridWorldSize.y * 0.5f));
 
-        // grid에 좌하단에서부터 하나씩 노드를 할당해주는 반복문
-        for (int x = 0; x < gridSizeX; ++x)
-        {
-            for (int y = 0; y < gridSizeY; ++y)
-            {
-                Vector3 worldPos = worldBottomLeft + Vector3.right * (x * nodeDiameter + nodeRadius) + Vector3.forward * (y * nodeDiameter + nodeRadius);
-                bool walkable = !Physics.CheckSphere(worldPos, nodeRadius, unWalkableMask);
-                grid[x, y] = new PF_Node(walkable, worldPos, x, y);
-            }
-        }
-
-        // 위에 2중 반복문이랑 비교했을때 장점이 뭘까
-        // 비교를 좀 적게한다.
-        //int idx = 0;
-        //int maxNodeCount = gridSizeX * gridSizeY;
-        //int idxX = 0;
-        //int idxY = 0;
-        //while (idx < maxNodeCount)
-        //{
-        //    idxX = idx % gridSizeX;
-        //    idxY = idx / gridSizeY;
-        //    Vector3 worldPos = worldBottomLeft + Vector3.right * (idxX * nodeDiameter + nodeRadius) + Vector3.forward * (idxY * nodeDiameter + nodeRadius);
-        //    bool walkable = !Physics.CheckSphere(worldPos, nodeRadius, unWalkableMask);
-        //    grid[idxX, idxY] = new Node(walkable, worldPos, idxX, idxY);
-        //    ++idx;
-        //}
-    }
 
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireCube(transform.position, new Vector3(gridWorldSize.x, 1f, gridWorldSize.y));
-        if (grid != null && displayGridGizmos)
+        if (grid != null && displayUnwalkableNodeGizmos)
         {
             foreach (PF_Node node in grid)
             {
@@ -118,7 +110,7 @@ public class PF_Grid : MonoBehaviour
 
 
     [SerializeField]
-    private bool displayGridGizmos;
+    private bool displayUnwalkableNodeGizmos;
     // 해당 노드가 이동 가능한지 알기 위해 확인할 레이어.
     // 생성한 노드가 자리하는 위치에 레이어 마스크가 unWalkableMask인 오브젝트가 있으면 해당 노드는 unwalkable이 되는 방식
     [SerializeField]
