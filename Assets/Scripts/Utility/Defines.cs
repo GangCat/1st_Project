@@ -13,3 +13,6 @@ public delegate void VoidTransformDelegate(Transform _tr);
 
 [System.Serializable]
 public enum ESelectableObjectType { None = - 1, FriendlyUnit, FriendlyStructure, EnemyUnit, EnemyStructure, Length}
+
+[System.Serializable]
+public enum EBuildingType { None = -1, Turret, Bunker, Wall, Length }

@@ -28,6 +28,12 @@ public class InputManager : MonoBehaviour
         selectArea.Init(_selectObjectCallback, _unSelectObjectCallback);
     }
 
+    public Vector3 GetMousePos()
+    {
+        Vector3 mousePos = Input.mousePosition;
+        return Camera.main.ScreenToWorldPoint(mousePos);
+    }
+
     private void Update()
     {
         if (Input.GetMouseButtonDown(0))

@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
 public class UnitMovement : MonoBehaviour
 {
     public void Init()

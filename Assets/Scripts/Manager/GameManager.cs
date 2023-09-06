@@ -7,9 +7,10 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         inputMng = FindAnyObjectByType<InputManager>();
-        playerMng = FindAnyObjectByType<PlayerManager>();
         cameraMng = FindAnyObjectByType<CameraManager>();
         selectMng = FindAnyObjectByType<SelectableObjectManager>();
+        uiMng = FindAnyObjectByType<UIManager>();
+        buildMng = FindAnyObjectByType<BuildManager>();
     }
 
     private void Start()
@@ -28,13 +29,9 @@ public class GameManager : MonoBehaviour
             RemoveSelectedObject, 
             SelectFinish,
             MoveCameraWithObject);
-        playerMng.Init();
         cameraMng.Init();
-    }
 
-    private void MovePlayerByPicking(Vector3 _pickPos)
-    {
-        playerMng.MovePlayerByPicking(_pickPos);
+        uiMng.Init(BuildButtonOnClick);
     }
 
     private void MoveUnitByPicking(Vector3 _pickPos)
@@ -105,13 +102,20 @@ public class GameManager : MonoBehaviour
         selectMng.SelectFinish();
     }
 
+    private void BuildButtonOnClick(int _buildingType)
+    {
+        buildMng.ShowBlutpirnt((EBuildingType)_buildingType);
+    }
+
+
     [SerializeField]
     private GameObject pickPosPrefab = null;
     [SerializeField]
     private float pickPosDisplayHideDelay = 0.3f;
 
-    private PlayerManager playerMng = null;
     private InputManager inputMng = null;
     private CameraManager cameraMng = null;
     private SelectableObjectManager selectMng = null;
+    private UIManager uiMng = null;
+    private BuildManager buildMng = null;
 }
