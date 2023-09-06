@@ -10,19 +10,25 @@ public class UnitMovement : MonoBehaviour
 
     public void MoveByTargetPos(Vector3 _targetPos)
     {
-        StopCoroutine("FollowTargetCoroutine");
+        StopAllCoroutines();
         SetPath(_targetPos);
     }
 
     public void FollowTarget(Transform _targetTr)
     {
-        StopCoroutine("FollowTargetCoroutine");
+        StopAllCoroutines();
         StartCoroutine("FollowTargetCoroutine", _targetTr);
     }
 
     private void SetPath(Vector3 _targetPos)
     {
-        PF_PathRequestManager.RequestPath(transform.position, _targetPos, OnPathFound);
+        if (!Physics.Linecast(transform.position, _targetPos))
+        {
+            StopAllCoroutines();
+            StartCoroutine("MoveToTargetPosDirect", _targetPos);
+        }
+        else
+            PF_PathRequestManager.RequestPath(transform.position, _targetPos, OnPathFound);
     }
 
     private void OnPathFound(Vector3[] _newPath, bool _pathSuccessful)
@@ -36,41 +42,58 @@ public class UnitMovement : MonoBehaviour
         }
     }
 
-    private IEnumerator FollowPath()
+    private IEnumerator FollowTargetCoroutine(Transform _targetTr)
     {
-        Vector3 curWaypoint = path[0];
+        Vector3 moveDir = Vector3.zero;
 
         while (true)
         {
-            if (Vector3.SqrMagnitude(transform.position - curWaypoint) < 0.1f)
+            if (Vector3.SqrMagnitude(transform.position - _targetTr.position) > followOffset)
+            {
+                moveDir = (_targetTr.position - transform.position).normalized;
+
+                transform.rotation = Quaternion.LookRotation(_targetTr.position - transform.position);
+
+                transform.position += moveDir * moveSpeed * Time.deltaTime;
+            }
+            yield return null;
+        }
+    }
+
+    private IEnumerator MoveToTargetPosDirect(Vector3 _targetPos)
+    {
+        Vector3 moveDir = (_targetPos - transform.position).normalized;
+        transform.rotation = Quaternion.LookRotation(moveDir);
+        while (true)
+        {
+            if (Vector3.SqrMagnitude(transform.position - _targetPos) < 0.1f)
+                yield break;
+
+            transform.position += moveDir * moveSpeed * Time.deltaTime;
+
+            yield return null;
+        }
+    }
+
+    private IEnumerator FollowPath()
+    {
+        Vector3 curWaypoint = path[0];
+        Vector3 moveDir = curWaypoint - transform.position;
+
+        while (true)
+        {
+            if (Vector3.SqrMagnitude(transform.position - curWaypoint) < 0.01f)
             {
                 ++targetIdx;
                 if (targetIdx >= path.Length)
                     yield break;
 
                 curWaypoint = path[targetIdx];
+                moveDir = curWaypoint - transform.position;
+                transform.rotation = Quaternion.LookRotation(curWaypoint - transform.position);
             }
 
-            Vector3 moveDir = curWaypoint - transform.position;
             transform.position += moveDir.normalized * moveSpeed * Time.deltaTime;
-            transform.rotation = Quaternion.LookRotation(curWaypoint - transform.position);
-            yield return null;
-        }
-    }
-
-    private IEnumerator FollowTargetCoroutine(Transform _targetTr)
-    {
-        while (true)
-        {
-
-            if (Vector3.SqrMagnitude(transform.position - _targetTr.position) > followOffset)
-            {
-                Vector3 moveDir = (_targetTr.position - transform.position).normalized;
-
-                transform.rotation = Quaternion.LookRotation(_targetTr.position - transform.position);
-
-                transform.position += moveDir * moveSpeed * Time.deltaTime;
-            }
             yield return null;
         }
     }
@@ -100,4 +123,5 @@ public class UnitMovement : MonoBehaviour
     private int targetIdx;
 
     private Vector3[] path;
+    private PF_Node[] pathNode;
 }

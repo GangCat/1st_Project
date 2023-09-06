@@ -6,20 +6,22 @@ public class PF_Node : IHeapItem<PF_Node>
 {
     public int HeapIdx { get => heapIdx; set => heapIdx = value; }
 
-    public bool walkable;
     public Vector3 worldPos;
+    public bool walkable;
     public int gridX;
     public int gridY;
 
-    // 시작 노드에서 현재 노드까지의 가중치
+    /// <summary>
+    /// 시작 노드에서 현재 노드까지의 가중치
+    /// </summary>
     public int gCost;
-    // 현재 노드에서 타겟 노드까지의 가중치
+    /// <summary>
+    /// 현재 노드에서 타겟 노드까지의 가중치
+    /// </summary>
     public int hCost;
     public int FCost => gCost + hCost;
 
-
     public PF_Node parentNode;
-
     private int heapIdx;
 
     public PF_Node(bool _walkable, Vector3 _worldPos, int _gridX, int _gridY)

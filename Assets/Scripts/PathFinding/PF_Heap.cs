@@ -80,7 +80,6 @@ public class PF_Heap<T> where T : IHeapItem<T>
                 // 자식보다 우선순위가 더 낮다면 Swap
                 if (_item.CompareTo(items[swapIdx]) < 0)
                     Swap(_item, items[swapIdx]);
-                // 아니라면 자리를 찾았으니 종료
                 else
                     return;
             }

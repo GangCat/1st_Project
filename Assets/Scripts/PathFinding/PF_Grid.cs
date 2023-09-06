@@ -9,9 +9,7 @@ public class PF_Grid : MonoBehaviour
 
     public void Init()
     {
-        // 노드의 지름
         nodeDiameter = nodeRadius * 2;
-        // 전체 그리드의 너비(높이)에 총 몇개의 노드가 들어가는지 계산
         gridSizeX = Mathf.RoundToInt(gridWorldSize.x / nodeDiameter);
         gridSizeY = Mathf.RoundToInt(gridWorldSize.y / nodeDiameter);
         CreateGrid();
@@ -30,7 +28,6 @@ public class PF_Grid : MonoBehaviour
         percentX = Mathf.Clamp01(percentX);
         percentY = Mathf.Clamp01(percentY);
 
-        // RoundToInt 반올림 함수.
         int x = Mathf.RoundToInt((gridSizeX - 1) * percentX);
         int y = Mathf.RoundToInt((gridSizeY - 1) * percentY);
 
@@ -114,7 +111,6 @@ public class PF_Grid : MonoBehaviour
 
     [SerializeField]
     private bool displayGridGizmos;
-    //public bool disPlayGridGizmos;
     // 해당 노드가 이동 가능한지 알기 위해 확인할 레이어.
     // 생성한 노드가 자리하는 위치에 레이어 마스크가 unWalkableMask인 오브젝트가 있으면 해당 노드는 unwalkable이 되는 방식
     [SerializeField]
