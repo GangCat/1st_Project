@@ -12,7 +12,7 @@ public class PF_Unit : MonoBehaviour
 
     public void SetPath()
     {
-        PF_PathRequestManager.RequestPath(transform.position, targetTr.position, OnPathFound);
+        //PF_PathRequestManager.RequestPath(transform.position, targetTr.position, OnPathFound);
     }
 
     public void OnPathFound(Vector3[] _newPath, bool _pathSuccessful)

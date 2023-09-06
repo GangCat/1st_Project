@@ -60,6 +60,11 @@ public class PF_Grid : MonoBehaviour
         return neighbours;
     }
 
+    public void UpdateNodeWalkable(PF_Node _node, bool _isWalkable)
+    {
+        _node.walkable = _isWalkable;
+    }
+
     private void CreateGrid()
     {
         // 그리드에 2차원 노드 배열 공간 할당
@@ -102,8 +107,11 @@ public class PF_Grid : MonoBehaviour
         {
             foreach (PF_Node node in grid)
             {
-                Gizmos.color = node.walkable ? Color.white : Color.red;
-                Gizmos.DrawCube(node.worldPos, Vector3.one * (nodeDiameter - 0.1f));
+                if (!node.walkable)
+                {
+                    Gizmos.color = Color.red;
+                    Gizmos.DrawCube(node.worldPos, new Vector3(0.8f, 0.1f, 0.8f));
+                }
             }
         }
     }
