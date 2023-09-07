@@ -16,3 +16,6 @@ public enum ESelectableObjectType { None = - 1, FriendlyUnit, FriendlyStructure,
 
 [System.Serializable]
 public enum EBuildingType { None = -1, Turret, Bunker, Wall, Length }
+
+[System.Serializable]
+public enum EButtonFuncType { None = -1, FriendlyUnit, Structure, Enemy, Build, Tower, Bunker, Hero }

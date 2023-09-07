@@ -6,10 +6,14 @@ public class UIManager : MonoBehaviour
 {
     public void Init(VoidIntDelegate _buildBtnCallback)
     {
-        canvasBuildSys = GetComponentInChildren<CanvasBuildSystem>();
-        canvasBuildSys.Init(_buildBtnCallback);
+        canvasFuncButton = GetComponentInChildren<CanvasFuncButton>();
+        canvasFuncButton.Init(_buildBtnCallback);
     }
 
+    public void ShowFuncButton(ESelectableObjectType _selectObjectType)
+    {
+        canvasFuncButton.ShowFuncButton(_selectObjectType);
+    }
 
-    private CanvasBuildSystem canvasBuildSys = null;
+    private CanvasFuncButton canvasFuncButton = null;
 }

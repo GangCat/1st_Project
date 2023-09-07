@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class SelectableObjectManager : MonoBehaviour
 {
+    public delegate void VoidSelectObjectTypeDelegate(ESelectableObjectType _objectType);
     public bool IsListEmpty => listSelectedObject.Count < 1;
     public bool IsFriendlyUnit => isFriendlyUnitInList;
     public SelectableObject GetFirstSelectableObjectInList => listSelectedObject[0];
 
-    public void Init()
+    public void Init(VoidSelectObjectTypeDelegate _selectObjectCallback)
     {
         tempListSelectableObject.Clear();
         listSelectedObject.Clear();
+        selectObjectCallback = _selectObjectCallback;
     }
 
     public void AddSelectedObject(SelectableObject _object)
@@ -67,6 +69,8 @@ public class SelectableObjectManager : MonoBehaviour
 
         if (!isFriendlyUnitInList)
             listSelectedObject.Add(tempObj);
+
+        selectObjectCallback?.Invoke(listSelectedObject[0].ObjectType);
 
         tempListSelectableObject.Clear();
 
@@ -148,4 +152,6 @@ public class SelectableObjectManager : MonoBehaviour
     private int rowNum = 6;
     [SerializeField]
     private float rangeGroupLimitDist = 5f;
+
+    private VoidSelectObjectTypeDelegate selectObjectCallback = null;
 }

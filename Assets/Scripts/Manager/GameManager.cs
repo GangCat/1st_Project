@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
         // 마우스 가두기
         Cursor.lockState = CursorLockMode.Confined;
 
-        selectMng.Init();
+        selectMng.Init(UnitSelect);
         inputMng.Init(
             MoveUnitByPicking,
             MoveUnitByPickingObject,
@@ -32,6 +32,11 @@ public class GameManager : MonoBehaviour
         cameraMng.Init();
 
         uiMng.Init(BuildButtonOnClick);
+    }
+
+    private void UnitSelect(ESelectableObjectType _selectObjectType)
+    {
+        uiMng.ShowFuncButton(_selectObjectType);
     }
 
     private void MoveUnitByPicking(Vector3 _pickPos)
