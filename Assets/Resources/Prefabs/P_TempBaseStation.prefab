@@ -93,6 +93,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3845910304497348173}
   - component: {fileID: 8883937953507251874}
+  - component: {fileID: -6141483901220276170}
+  - component: {fileID: -4761019630317556292}
   m_Layer: 9
   m_Name: P_TempBaseStation
   m_TagString: Untagged
@@ -137,3 +139,31 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 3.9, y: 1, z: 3.9}
   m_Center: {x: -1.5, y: 0.5, z: 1.5}
+--- !u!114 &-6141483901220276170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8162044424758329862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4757c067b9c3f8047860a8ee579b36ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  curHp: 0
+  maxHp: 3000
+--- !u!114 &-4761019630317556292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8162044424758329862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb507dc23adf3a24ab9f5abbf56ea7d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectType: 1
+  isControllable: 0
