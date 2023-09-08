@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: -6141483901220276170}
   - component: {fileID: -4761019630317556292}
   m_Layer: 9
-  m_Name: P_TempBaseStation
+  m_Name: P_TempMainBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -165,5 +165,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb507dc23adf3a24ab9f5abbf56ea7d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectType: 1
+  objectType: 2
   isControllable: 0

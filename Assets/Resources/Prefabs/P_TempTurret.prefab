@@ -166,7 +166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb507dc23adf3a24ab9f5abbf56ea7d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectType: 1
+  objectType: 3
   isControllable: 0
 --- !u!114 &-7950939679708667185
 MonoBehaviour:
@@ -180,4 +180,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f384162f4a928e409805397ebf1902a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildingType: -1

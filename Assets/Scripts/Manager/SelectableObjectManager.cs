@@ -40,7 +40,8 @@ public class SelectableObjectManager : MonoBehaviour
 
             switch (obj.ObjectType)
             {
-                case ESelectableObjectType.FriendlyUnit:
+                case ESelectableObjectType.UNIT:
+                case ESelectableObjectType.HERO:
                     if (!isFriendlyUnitInList)
                     {
                         listSelectedObject.Clear();
@@ -50,17 +51,17 @@ public class SelectableObjectManager : MonoBehaviour
                     else
                         listSelectedObject.Add(obj);
                     break;
-                case ESelectableObjectType.FriendlyStructure:
+                case ESelectableObjectType.MAIN_BASE:
+                case ESelectableObjectType.TURRET:
+                case ESelectableObjectType.BUNKER:
+                case ESelectableObjectType.WALL:
                     if (isFriendlyUnitInList) break;
                     if (!tempObj) tempObj = obj;
                     if (!tempObj.ObjectType.Equals(obj.ObjectType))
                         tempObj = obj;
                     break;
-                case ESelectableObjectType.EnemyUnit:
-                    if (isFriendlyUnitInList) break;
-                    if (!tempObj) tempObj = obj;
-                    break;
-                case ESelectableObjectType.EnemyStructure:
+                case ESelectableObjectType.ENEMY_UNIT:
+                case ESelectableObjectType.ENEMY_STRUCTURE:
                     if (isFriendlyUnitInList) break;
                     if (!tempObj) tempObj = obj;
                     break;
@@ -68,8 +69,9 @@ public class SelectableObjectManager : MonoBehaviour
         }
 
         if (!isFriendlyUnitInList)
+        {
             listSelectedObject.Add(tempObj);
-
+        }
         selectObjectCallback?.Invoke(listSelectedObject[0].ObjectType);
 
         tempListSelectableObject.Clear();

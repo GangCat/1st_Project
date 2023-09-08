@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FuncButtonBase : MonoBehaviour
+public class CanvasFuncBase : MonoBehaviour
 {
     public void SetActive(bool _isActive)
     {

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class InputManager : MonoBehaviour
 {
@@ -63,6 +64,8 @@ public class InputManager : MonoBehaviour
         RaycastHit hit;
         if (Functions.Picking(out hit))
         {
+            if (EventSystem.current.IsPointerOverGameObject())
+                return;
             if(hit.transform.GetComponent<SelectableObject>())
                 selectObjectCallback?.Invoke(hit.transform.GetComponent<SelectableObject>());
         }

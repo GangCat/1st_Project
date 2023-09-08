@@ -4,12 +4,9 @@ using UnityEngine;
 
 public class BuildManager : MonoBehaviour
 {
-    public void ShowBlutpirnt(EBuildingType _buildingType)
+    public void ShowBlutpirnt(ESelectableObjectType _buildingType)
     {
         Debug.Log(_buildingType);
         //StartCoroutine("ShowBlueprint", _buildingType);
     }
-
-    [SerializeField]
-    private GameObject[] buildingPrefabs = null;
 }

@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
             MoveCameraWithObject);
         cameraMng.Init();
 
-        uiMng.Init(BuildButtonOnClick);
+        uiMng.Init();
     }
 
     private void UnitSelect(ESelectableObjectType _selectObjectType)
@@ -109,7 +109,7 @@ public class GameManager : MonoBehaviour
 
     private void BuildButtonOnClick(int _buildingType)
     {
-        buildMng.ShowBlutpirnt((EBuildingType)_buildingType);
+        buildMng.ShowBlutpirnt((ESelectableObjectType)_buildingType);
     }
 
 
