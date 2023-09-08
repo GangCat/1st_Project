@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
-    public void Init()
+    public void Init(
+        VoidVoidDelegate _moveBtnCallback,
+        VoidVoidDelegate _cancleBtnCallback)
     {
         canvasFuncButton = GetComponentInChildren<FuncButtonManager>();
-        canvasFuncButton.Init();
+        canvasFuncButton.Init(_moveBtnCallback, _cancleBtnCallback);
     }
 
     public void ShowFuncButton(ESelectableObjectType _selectObjectType)

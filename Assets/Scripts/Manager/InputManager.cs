@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Burst.CompilerServices;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -35,12 +36,44 @@ public class InputManager : MonoBehaviour
         return Camera.main.ScreenToWorldPoint(mousePos);
     }
 
+    public void OnClickMoveButton()
+    {
+        pickPosDisplayGo = Instantiate(pickPosPrefab, transform);
+        isMoveClick = true;
+    }
+
+    public void OnClickCancleButton()
+    {
+        ClearCurFunc();
+    }
+
+    private void ClearCurFunc()
+    {
+        isMoveClick = false;
+        // 등등 기능과 관련된 bool값 모두 초기화
+    }
+
+
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-            SelectOperateWithMouseLeftClick();
-        else if (Input.GetMouseButtonDown(1))
-            MoveOperateWithMouseRightClick();
+        if (isMoveClick)
+        {
+            RaycastHit hit;
+            if(pickPosDisplayGo != null && Functions.Picking(out hit))
+                pickPosDisplayGo.transform.position = hit.point;
+            if (Input.GetMouseButtonDown(0))
+            {
+                Destroy(pickPosDisplayGo);
+                MoveOperateWithMouseRightClick();
+            }
+        }
+        else
+        {
+            if (Input.GetMouseButtonDown(0))
+                SelectOperateWithMouseLeftClick();
+            else if (Input.GetMouseButtonDown(1))
+                MoveOperateWithMouseRightClick();
+        }
     }
 
     private void LateUpdate()
@@ -51,21 +84,37 @@ public class InputManager : MonoBehaviour
 
     private void MoveOperateWithMouseRightClick()
     {
+        if (EventSystem.current.IsPointerOverGameObject())
+            return;
+
+        if (isMoveClick) isMoveClick = false;
+
         Vector3 pickPos = Vector3.zero;
         RaycastHit hit;
-        if(Functions.Picking(1 << LayerMask.NameToLayer("SelectableObject"), out hit))
+        if (Functions.Picking(1 << LayerMask.NameToLayer("SelectableObject"), out hit))
             PickingObjectCallback?.Invoke(hit.transform);
         else if (Functions.Picking("StageFloor", 1 << LayerMask.NameToLayer("StageFloor"), ref pickPos))
+        {
+            GameObject pickPosDisplayGo = Instantiate(pickPosPrefab, pickPos, Quaternion.identity, transform);
+            StartCoroutine("DestroypickPosDisplay", pickPosDisplayGo);
             pickingCallback?.Invoke(pickPos);
+        }
+    }
+
+    private IEnumerator DestroypickPosDisplay(GameObject _go)
+    {
+        yield return new WaitForSeconds(pickPosDisplayHideDelay);
+        Destroy(_go);
     }
 
     private void SelectOperateWithMouseLeftClick()
     {
+        if (EventSystem.current.IsPointerOverGameObject())
+            return;
+
         RaycastHit hit;
         if (Functions.Picking(out hit))
         {
-            if (EventSystem.current.IsPointerOverGameObject())
-                return;
             if(hit.transform.GetComponent<SelectableObject>())
                 selectObjectCallback?.Invoke(hit.transform.GetComponent<SelectableObject>());
         }
@@ -119,6 +168,15 @@ public class InputManager : MonoBehaviour
                 );
     }
 
+
+    [SerializeField]
+    private GameObject pickPosPrefab = null;
+    [SerializeField]
+    private float pickPosDisplayHideDelay = 0.3f;
+
+    private bool isMoveClick = false;
+
+    private GameObject pickPosDisplayGo;
 
     private Vector3 dragStartPos = Vector3.zero;
     private Vector3 dragEndPos = Vector3.zero;

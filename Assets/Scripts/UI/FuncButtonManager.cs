@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class FuncButtonManager : MonoBehaviour
 {
-    public void Init()
+    public void Init(
+        VoidVoidDelegate _moveBtnCallback,
+        VoidVoidDelegate _cancleBtnCallback)
     {
         canvasUnitBaseFunc = GetComponentInChildren<CanvasUnitBaseFunc>();
         canvasStructureBaseFunc = GetComponentInChildren<CanvasStructureBaseFunc>();
@@ -14,8 +16,9 @@ public class FuncButtonManager : MonoBehaviour
         canvasBunkerFunc = GetComponentInChildren<CanvasBunkerFunc>();
         canvasSpawnNuclearFunc = GetComponentInChildren<CanvasSpawnNuclearFunc>();
         canvasHeroFunc = GetComponentInChildren<CanvasHeroFunc>();
+        cancleFunc = GetComponentInChildren<CanvasCancleFunc>();
 
-        canvasUnitBaseFunc.Init();
+        canvasUnitBaseFunc.Init(_moveBtnCallback + ActiveCancleBtn);
         canvasStructureBaseFunc.Init();
         canvasMainStructureFunc.Init();
         canvasSpawnUnitFunc.Init();
@@ -23,6 +26,7 @@ public class FuncButtonManager : MonoBehaviour
         canvasBunkerFunc.Init();
         canvasSpawnNuclearFunc.Init();
         canvasHeroFunc.Init();
+        cancleFunc.Init(_cancleBtnCallback);
     }
 
     public void ShowFuncButton(ESelectableObjectType _selectObjectType)
@@ -58,6 +62,16 @@ public class FuncButtonManager : MonoBehaviour
         }
 
         curActiveBtnFunc = _selectObjectType;
+    }
+
+    private void ActiveCancleBtn()
+    {
+        cancleFunc.SetActive(true);
+    }
+
+    private void DeActiveCancleBtn()
+    {
+        cancleFunc.SetActive(false);
     }
 
     private void HideFuncButton()
@@ -99,6 +113,7 @@ public class FuncButtonManager : MonoBehaviour
     private CanvasBunkerFunc canvasBunkerFunc = null;
     private CanvasSpawnNuclearFunc canvasSpawnNuclearFunc = null;
     private CanvasHeroFunc canvasHeroFunc = null;
+    private CanvasCancleFunc cancleFunc = null;
 
     private ESelectableObjectType curActiveBtnFunc = ESelectableObjectType.None;
 }

@@ -31,7 +31,9 @@ public class GameManager : MonoBehaviour
             MoveCameraWithObject);
         cameraMng.Init();
 
-        uiMng.Init();
+        uiMng.Init(
+            OnClickMoveButton,
+            OnClickCancleButton);
     }
 
     private void UnitSelect(ESelectableObjectType _selectObjectType)
@@ -45,8 +47,7 @@ public class GameManager : MonoBehaviour
 
         if (selectMng.IsFriendlyUnit)
         {
-            GameObject pickPosDisplayGo = Instantiate(pickPosPrefab, _pickPos, Quaternion.identity, transform);
-            StartCoroutine("DestroypickPosDisplay", pickPosDisplayGo);
+
             // 여기서 각 unit의 pathrequest를 진행
             
             selectMng.MoveUnitByPicking(_pickPos);
@@ -63,11 +64,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private IEnumerator DestroypickPosDisplay(GameObject _go)
-    {
-        yield return new WaitForSeconds(pickPosDisplayHideDelay);
-        Destroy(_go);
-    }
+
 
     private void ZoomCamera(float _zoomRatio)
     {
@@ -107,20 +104,29 @@ public class GameManager : MonoBehaviour
         selectMng.SelectFinish();
     }
 
+    private void OnClickMoveButton()
+    {
+        inputMng.OnClickMoveButton();
+    }
+
+    private void OnClickCancleButton()
+    {
+        inputMng.OnClickCancleButton();
+    }
+
     private void BuildButtonOnClick(int _buildingType)
     {
         buildMng.ShowBlutpirnt((ESelectableObjectType)_buildingType);
     }
 
 
-    [SerializeField]
-    private GameObject pickPosPrefab = null;
-    [SerializeField]
-    private float pickPosDisplayHideDelay = 0.3f;
+
 
     private InputManager inputMng = null;
     private CameraManager cameraMng = null;
     private SelectableObjectManager selectMng = null;
     private UIManager uiMng = null;
     private BuildManager buildMng = null;
+    private VoidVoidDelegate onClickMoveBtnCallback = null;
+
 }
