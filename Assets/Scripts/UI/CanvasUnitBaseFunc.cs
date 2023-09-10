@@ -5,14 +5,20 @@ using UnityEngine.UI;
 
 public class CanvasUnitBaseFunc : CanvasFuncBase
 {
-    public void Init(VoidVoidDelegate _moveBtnCallback)
+    public void Init()
     {
         gameObject.SetActive(false);
 
         moveBtn.onClick.AddListener(
             ()=>
             {
-                _moveBtnCallback?.Invoke();
+                ListUnitCommand.Use(1);
+            });
+
+        stopBtn.onClick.AddListener(
+            () =>
+            {
+                ListUnitCommand.Use(2);
             });
     }
 

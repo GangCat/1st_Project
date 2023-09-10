@@ -28,6 +28,11 @@ public class SelectableObject : MonoBehaviour
             move.MoveByTargetPos(_targetPos);
     }
 
+    public void Stop()
+    {
+        move.Stop();
+    }
+
     [SerializeField]
     private ESelectableObjectType objectType = ESelectableObjectType.None;
     [SerializeField]

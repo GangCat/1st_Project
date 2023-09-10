@@ -180,3 +180,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f384162f4a928e409805397ebf1902a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myXGrid: 1
+  myYGrid: 1

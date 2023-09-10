@@ -91,7 +91,7 @@ public class PF_PathFinding : MonoBehaviour
         if (isPathSuccess)
         {
             arrWayNode = RetracePath(startNode, targetNode);
-            UnityEngine.Debug.Log("true");
+            //UnityEngine.Debug.Log("true");
         }
 
         finishPathFindCallback?.Invoke(arrWayNode, isPathSuccess);
