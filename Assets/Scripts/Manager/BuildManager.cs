@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class BuildManager : MonoBehaviour
 {
-    public void Init()
+    public void Init(PF_Grid _grid)
     {
-        
+        grid = _grid;
     }
 
     public void ShowBluepirnt(ESelectableObjectType _buildingType)
@@ -60,7 +60,8 @@ public class BuildManager : MonoBehaviour
     public bool CancleBuild()
     {
         StopAllCoroutines();
-        Destroy(curTargetBuilding);
+        curBuilding.BuildComplete();
+        Destroy(curBuilding.gameObject);
         return false;
     }
 
@@ -78,7 +79,6 @@ public class BuildManager : MonoBehaviour
         }
 
         return true;
-
     }
 
     [SerializeField]
@@ -89,11 +89,8 @@ public class BuildManager : MonoBehaviour
     private GameObject wallPrefab = null;
     [SerializeField]
     private GameObject nuclearPrefab = null;
-    [SerializeField]
-    private PF_Grid grid = null;
 
-    private GameObject curTargetBuilding = null;
     private Building curBuilding = null;
+    private PF_Grid grid = null;
     private PF_Node curNode = null;
-
 }

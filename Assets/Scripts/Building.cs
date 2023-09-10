@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Building : MonoBehaviour
 {
-    public bool IsBuildable => isBuildable;
     public void Init(PF_Grid _grid)
     {
         oriColor = GetComponentInChildren<MeshRenderer>().material.color;
@@ -13,25 +12,11 @@ public class Building : MonoBehaviour
         StartCoroutine("CheckBuildableCoroutine");
     }
 
-    private IEnumerator CheckBuildableCoroutine()
+    public bool IsBuildable => isBuildable;
+
+    public void SetColliderEnable(bool _isEnable)
     {
-        curNode = grid.NodeFromWorldPoint(transform.position);
-
-        for(int i = 0; i < myXGrid; ++i)
-        {
-            for(int j = 0; j < myYGrid; ++j)
-            {
-                if (grid.GetNodeIsWalkable(curNode.gridX + i, curNode.gridY + j))
-                    continue;
-
-                UnBuildable();
-                isBuildable = false;
-                yield break;
-            }
-        }
-
-        isBuildable = true;
-        Buildable();
+        GetComponent<Collider>().enabled = _isEnable;
     }
 
     public void SetPos(Vector3 _targetPos)
@@ -55,20 +40,38 @@ public class Building : MonoBehaviour
         StopCoroutine("CheckBuildableCoroutine");
     }
 
-    protected void UnBuildable()
+
+
+    protected IEnumerator CheckBuildableCoroutine()
     {
-        mt.color = Color.red;
+        while (true)
+        {
+            isBuildable = true;
+
+            curNode = grid.NodeFromWorldPoint(transform.position);
+
+            for (int i = 0; i < myXGrid; ++i)
+            {
+                for (int j = 0; j < myYGrid; ++j)
+                {
+                    if (grid.GetNodeIsWalkable(curNode.gridX + i, curNode.gridY + j))
+                        continue;
+
+                    isBuildable = false;
+                }
+            }
+
+            SetColor();
+            yield return null;
+        }
     }
 
-    protected void Buildable()
+    protected void SetColor()
     {
-        mt.color = oriColor;
+        mt.color = isBuildable ? oriColor : Color.red;
     }
 
-    public void SetColliderEnable(bool _isEnable)
-    {
-        GetComponent<Collider>().enabled = _isEnable;
-    }
+    
 
     [SerializeField]
     protected int myXGrid = 1;

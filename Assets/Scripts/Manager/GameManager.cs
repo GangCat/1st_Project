@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
         selectMng = FindAnyObjectByType<SelectableObjectManager>();
         uiMng = FindAnyObjectByType<UIManager>();
         buildMng = FindAnyObjectByType<BuildManager>();
+        pathMng = FindAnyObjectByType<PF_PathRequestManager>();
     }
 
     private void Start()
@@ -29,6 +30,9 @@ public class GameManager : MonoBehaviour
         ListBuildCommand.Add(new CommandBuildWall(buildMng, inputMng));
         ListBuildCommand.Add(new CommandBuildNuclear(buildMng, inputMng));
 
+
+        grid = pathMng.GetComponent<PF_Grid>();
+
         selectMng.Init(UnitSelect);
         inputMng.Init(
             MoveUnitByPicking,
@@ -42,7 +46,7 @@ public class GameManager : MonoBehaviour
             MoveCameraWithObject);
         cameraMng.Init();
         uiMng.Init();
-        buildMng.Init();
+        buildMng.Init(grid);
     }
 
     private void UnitSelect(ESelectableObjectType _selectObjectType)
@@ -129,8 +133,11 @@ public class GameManager : MonoBehaviour
     private SelectableObjectManager selectMng = null;
     private UIManager uiMng = null;
     private BuildManager buildMng = null;
+    private PF_PathRequestManager pathMng = null;
+
+    private PF_Grid grid = null;
+
     private VoidVoidDelegate onClickMoveBtnCallback = null;
 
     private List<Command> listInputCommand = new List<Command>();
-
 }

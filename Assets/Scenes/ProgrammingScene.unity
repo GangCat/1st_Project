@@ -2564,6 +2564,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   turretPrefab: {fileID: 8421938389435490942, guid: 1f700fe65f7afaa4ba8bb82e28500dfc,
     type: 3}
+  bunkerPrefab: {fileID: 541031336262926454, guid: 5b7ed6a29ed6b8849a9a3bd7564238ef,
+    type: 3}
+  wallPrefab: {fileID: 8162044424758329862, guid: e4df569e3ecd352478a3dbccc5ada729,
+    type: 3}
+  nuclearPrefab: {fileID: 541031336262926454, guid: 5b7ed6a29ed6b8849a9a3bd7564238ef,
+    type: 3}
   grid: {fileID: 1446206863}
 --- !u!1 &357329358
 GameObject:
