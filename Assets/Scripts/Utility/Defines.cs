@@ -12,4 +12,4 @@ public delegate void VoidTemplateDelegate<T>(T _list);
 public delegate void VoidTransformDelegate(Transform _tr);
 
 [System.Serializable]
-public enum ESelectableObjectType { None = - 1, UNIT, HERO, MAIN_BASE, TURRET, BUNKER, WALL, ENEMY_UNIT, ENEMY_STRUCTURE}
+public enum ESelectableObjectType { None = - 1, UNIT, HERO, MAIN_BASE, TURRET, BUNKER, WALL, NUCLEAR, ENEMY_UNIT, ENEMY_STRUCTURE}

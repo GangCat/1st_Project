@@ -11,12 +11,27 @@ public class GameManager : MonoBehaviour
         selectMng = FindAnyObjectByType<SelectableObjectManager>();
         uiMng = FindAnyObjectByType<UIManager>();
         buildMng = FindAnyObjectByType<BuildManager>();
+        pathMng = FindAnyObjectByType<PF_PathRequestManager>();
     }
 
     private void Start()
     {
         // 마우스 가두기
         Cursor.lockState = CursorLockMode.Confined;
+
+        ListUnitCommand.Add(new CommandCancle());
+        ListUnitCommand.Add(new CommandMove(inputMng));
+        ListUnitCommand.Add(new CommandStop(selectMng));
+
+        ListBuildCommand.Add(new CommandBuildCancle(buildMng, inputMng));
+        ListBuildCommand.Add(new CommandBuildConfirm(buildMng, inputMng));
+        ListBuildCommand.Add(new CommandBuildTurret(buildMng, inputMng));
+        ListBuildCommand.Add(new CommandBuildBunker(buildMng, inputMng));
+        ListBuildCommand.Add(new CommandBuildWall(buildMng, inputMng));
+        ListBuildCommand.Add(new CommandBuildNuclear(buildMng, inputMng));
+
+
+        grid = pathMng.GetComponent<PF_Grid>();
 
         selectMng.Init(UnitSelect);
         inputMng.Init(
@@ -30,10 +45,8 @@ public class GameManager : MonoBehaviour
             SelectFinish,
             MoveCameraWithObject);
         cameraMng.Init();
-
-        uiMng.Init(
-            OnClickMoveButton,
-            OnClickCancleButton);
+        uiMng.Init();
+        buildMng.Init(grid);
     }
 
     private void UnitSelect(ESelectableObjectType _selectObjectType)
@@ -63,8 +76,6 @@ public class GameManager : MonoBehaviour
             selectMng.MoveUnitByPicking(_targetTr);
         }
     }
-
-
 
     private void ZoomCamera(float _zoomRatio)
     {
@@ -104,19 +115,14 @@ public class GameManager : MonoBehaviour
         selectMng.SelectFinish();
     }
 
-    private void OnClickMoveButton()
+    public void OnClickMoveButton()
     {
         inputMng.OnClickMoveButton();
     }
 
-    private void OnClickCancleButton()
-    {
-        inputMng.OnClickCancleButton();
-    }
-
     private void BuildButtonOnClick(int _buildingType)
     {
-        buildMng.ShowBlutpirnt((ESelectableObjectType)_buildingType);
+        buildMng.ShowBluepirnt((ESelectableObjectType)_buildingType);
     }
 
 
@@ -127,6 +133,11 @@ public class GameManager : MonoBehaviour
     private SelectableObjectManager selectMng = null;
     private UIManager uiMng = null;
     private BuildManager buildMng = null;
+    private PF_PathRequestManager pathMng = null;
+
+    private PF_Grid grid = null;
+
     private VoidVoidDelegate onClickMoveBtnCallback = null;
 
+    private List<Command> listInputCommand = new List<Command>();
 }

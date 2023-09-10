@@ -14,6 +14,7 @@ public class SelectableObjectManager : MonoBehaviour
         tempListSelectableObject.Clear();
         listSelectedObject.Clear();
         selectObjectCallback = _selectObjectCallback;
+
     }
 
     public void AddSelectedObject(SelectableObject _object)
@@ -94,6 +95,12 @@ public class SelectableObjectManager : MonoBehaviour
             foreach (SelectableObject obj in listSelectedObject)
                 obj.MoveByTargetPos(_targetPos + CalcPosInFormation(obj.GetPos, centerPos));
         }
+    }
+
+    public void Stop()
+    {
+        foreach (SelectableObject obj in listSelectedObject)
+            obj.Stop();
     }
 
     private Vector3 CalcFormationCenterPos(float _targetPosY)

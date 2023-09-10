@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class FuncButtonManager : MonoBehaviour
 {
-    public void Init(
-        VoidVoidDelegate _moveBtnCallback,
-        VoidVoidDelegate _cancleBtnCallback)
+    public void Init()
     {
         canvasUnitBaseFunc = GetComponentInChildren<CanvasUnitBaseFunc>();
         canvasStructureBaseFunc = GetComponentInChildren<CanvasStructureBaseFunc>();
@@ -18,7 +16,7 @@ public class FuncButtonManager : MonoBehaviour
         canvasHeroFunc = GetComponentInChildren<CanvasHeroFunc>();
         cancleFunc = GetComponentInChildren<CanvasCancleFunc>();
 
-        canvasUnitBaseFunc.Init(_moveBtnCallback + ActiveCancleBtn);
+        canvasUnitBaseFunc.Init();
         canvasStructureBaseFunc.Init();
         canvasMainStructureFunc.Init();
         canvasSpawnUnitFunc.Init();
@@ -26,7 +24,7 @@ public class FuncButtonManager : MonoBehaviour
         canvasBunkerFunc.Init();
         canvasSpawnNuclearFunc.Init();
         canvasHeroFunc.Init();
-        cancleFunc.Init(_cancleBtnCallback);
+        cancleFunc.Init();
     }
 
     public void ShowFuncButton(ESelectableObjectType _selectObjectType)

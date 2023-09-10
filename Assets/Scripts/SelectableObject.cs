@@ -16,6 +16,11 @@ public class SelectableObject : MonoBehaviour
         }
     }
 
+    public void Init(PF_Grid _grid)
+    {
+
+    }
+
     public void FollowTarget(Transform _targetTr)
     {
         if (isControllable)
@@ -26,6 +31,11 @@ public class SelectableObject : MonoBehaviour
     {
         if (isControllable)
             move.MoveByTargetPos(_targetPos);
+    }
+
+    public void Stop()
+    {
+        move.Stop();
     }
 
     [SerializeField]

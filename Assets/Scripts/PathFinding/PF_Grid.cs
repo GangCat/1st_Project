@@ -15,6 +15,8 @@ public class PF_Grid : MonoBehaviour
         CreateGrid();
     }
 
+
+
     private void CreateGrid()
     {
         // 그리드에 2차원 노드 배열 공간 할당
@@ -88,6 +90,16 @@ public class PF_Grid : MonoBehaviour
     public void UpdateNodeWalkable(PF_Node _node, bool _isWalkable)
     {
         _node.walkable = _isWalkable;
+    }
+
+    public bool GetNodeIsWalkable(int _gridX, int _gridY)
+    {
+        return grid[_gridX, _gridY].walkable;
+    }
+
+    public PF_Node GetNodeWithGrid(int _gridX, int _gridY)
+    {
+        return grid[_gridX, _gridY];
     }
 
 

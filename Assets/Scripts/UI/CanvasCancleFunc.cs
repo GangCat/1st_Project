@@ -5,12 +5,12 @@ using UnityEngine.UI;
 
 public class CanvasCancleFunc : MonoBehaviour
 {
-    public void Init(VoidVoidDelegate _cancleBtnCallback)
+    public void Init()
     {
         cancleBtn.onClick.AddListener(
             () =>
             {
-                _cancleBtnCallback?.Invoke();
+                ListUnitCommand.Use(0);
                 gameObject.SetActive(false);
             });
         gameObject.SetActive(false);

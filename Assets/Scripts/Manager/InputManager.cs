@@ -28,7 +28,11 @@ public class InputManager : MonoBehaviour
 
         selectArea = GetComponentInChildren<SelectArea>();
         selectArea.Init(_selectObjectCallback, _unSelectObjectCallback);
+
     }
+
+    public bool IsMoveClick { get; set; }
+    public bool IsBuildOperation { get; set; }
 
     public Vector3 GetMousePos()
     {
@@ -64,15 +68,27 @@ public class InputManager : MonoBehaviour
             if (Input.GetMouseButtonDown(0))
             {
                 Destroy(pickPosDisplayGo);
-                MoveOperateWithMouseRightClick();
+                MoveOperateWithMouseClick();
             }
+        }
+        else if (IsBuildOperation)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                if (EventSystem.current.IsPointerOverGameObject())
+                    return;
+
+                ListBuildCommand.Use(1);
+            }
+            else if (Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.Escape))
+                ListBuildCommand.Use(0);
         }
         else
         {
             if (Input.GetMouseButtonDown(0))
-                SelectOperateWithMouseLeftClick();
+                SelectOperateWithMouseClick();
             else if (Input.GetMouseButtonDown(1))
-                MoveOperateWithMouseRightClick();
+                MoveOperateWithMouseClick();
         }
     }
 
@@ -82,7 +98,7 @@ public class InputManager : MonoBehaviour
         MoveCamera();
     }
 
-    private void MoveOperateWithMouseRightClick()
+    private void MoveOperateWithMouseClick()
     {
         if (EventSystem.current.IsPointerOverGameObject())
             return;
@@ -107,7 +123,7 @@ public class InputManager : MonoBehaviour
         Destroy(_go);
     }
 
-    private void SelectOperateWithMouseLeftClick()
+    private void SelectOperateWithMouseClick()
     {
         if (EventSystem.current.IsPointerOverGameObject())
             return;

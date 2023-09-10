@@ -23,6 +23,11 @@ public class UnitMovement : MonoBehaviour
         StartCoroutine("FollowTargetCoroutine", _targetTr);
     }
 
+    public void Stop()
+    {
+        StopMoveCoroutines();
+    }
+
     private IEnumerator UpdateNodeWalkableCoroutine()
     {
         yield return new WaitForEndOfFrame();
