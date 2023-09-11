@@ -9,11 +9,11 @@ public class UnitMovement : MonoBehaviour
     {
     }
 
-    public void MoveByTargetPos(Vector3 _targetPos)
-    {
-        StopMoveCoroutines();
-        SetPath(_targetPos);
-    }
+    //public void MoveByTargetPos(Vector3 _targetPos)
+    //{
+    //    StopMoveCoroutines();
+    //    SetPath(_targetPos);
+    //}
 
     public void FollowTarget(Transform _targetTr)
     {
@@ -44,21 +44,21 @@ public class UnitMovement : MonoBehaviour
     //    }
     //}
 
-    private void SetPath(Vector3 _targetPos)
-    {
-        PF_PathRequestManager.RequestPath(transform.position, _targetPos, OnPathFound);
-    }
+    //private void SetPath(Vector3 _targetPos)
+    //{
+    //    PF_PathRequestManager.RequestPath(transform.position, _targetPos, OnPathFound);
+    //}
 
-    private void OnPathFound(PF_Node[] _newPath, bool _pathSuccessful)
-    {
-        if (_pathSuccessful)
-        {
-            path = _newPath;
-            targetIdx = 0;
-            StopCoroutine("FollowPathCoroutine");
-            StartCoroutine("FollowPathCoroutine");
-        }
-    }
+    //private void OnPathFound(PF_Node[] _newPath, bool _pathSuccessful)
+    //{
+    //    if (_pathSuccessful)
+    //    {
+    //        path = _newPath;
+    //        targetIdx = 0;
+    //        StopCoroutine("FollowPathCoroutine");
+    //        StartCoroutine("FollowPathCoroutine");
+    //    }
+    //}
 
     private IEnumerator FollowTargetCoroutine(Transform _targetTr)
     {
@@ -66,7 +66,7 @@ public class UnitMovement : MonoBehaviour
         {
             if (Vector3.SqrMagnitude(transform.position - _targetTr.position) > followOffset)
             {
-                SetPath(_targetTr.position);
+                //SetPath(_targetTr.position);
             }
             yield return new WaitForSeconds(1f);
         }
@@ -88,53 +88,53 @@ public class UnitMovement : MonoBehaviour
     //    }
     //}
 
-    private IEnumerator FollowPathCoroutine()
-    {
-        PF_Node curWayNode = path[0];
+    //private IEnumerator FollowPathCoroutine()
+    //{
+    //    PF_Node curWayNode = path[0];
         
-        //Vector3 moveDir = (curWayNode.worldPos - transform.position).normalized;
-        //transform.rotation = Quaternion.LookRotation(moveDir);
-        while (true)
-        {
-            if (Vector3.SqrMagnitude(transform.position - curWayNode.worldPos) < 0.01f)
-            {
-                ++targetIdx;
-                if (targetIdx >= path.Length)
-                {
-                    yield break;
-                }
+    //    //Vector3 moveDir = (curWayNode.worldPos - transform.position).normalized;
+    //    //transform.rotation = Quaternion.LookRotation(moveDir);
+    //    while (true)
+    //    {
+    //        if (Vector3.SqrMagnitude(transform.position - curWayNode.worldPos) < 0.01f)
+    //        {
+    //            ++targetIdx;
+    //            if (targetIdx >= path.Length)
+    //            {
+    //                yield break;
+    //            }
 
-                curWayNode = path[targetIdx];
+    //            curWayNode = path[targetIdx];
 
-                if (!curWayNode.walkable)
-                {
-                    while (!path[path.Length - 1].walkable)
-                        yield return null;
+    //            if (!curWayNode.walkable)
+    //            {
+    //                while (!path[path.Length - 1].walkable)
+    //                    yield return null;
 
-                    SetPath(path[path.Length - 1].worldPos);
-                    yield break;
-                }
+    //                SetPath(path[path.Length - 1].worldPos);
+    //                yield break;
+    //            }
 
 
-                //moveDir = (curWayNode.worldPos - transform.position).normalized;
-                //transform.rotation = Quaternion.LookRotation(curWayNode.worldPos - transform.position);
-            }
+    //            //moveDir = (curWayNode.worldPos - transform.position).normalized;
+    //            //transform.rotation = Quaternion.LookRotation(curWayNode.worldPos - transform.position);
+    //        }
 
-            Debug.DrawLine(transform.position, curWayNode.worldPos, Color.red, 1f);
+    //        Debug.DrawLine(transform.position, curWayNode.worldPos, Color.red, 1f);
 
-            if(Physics.Linecast(transform.position, curWayNode.worldPos, 1 << LayerMask.NameToLayer("SelectableObject")))
-            {
-                transform.Translate(Vector3.zero);
-                yield return new WaitForSeconds(0.5f);
-                //SetPath(path[path.Length - 1].worldPos);
-                //yield break;
-            }
+    //        if(Physics.Linecast(transform.position, curWayNode.worldPos, 1 << LayerMask.NameToLayer("SelectableObject")))
+    //        {
+    //            transform.Translate(Vector3.zero);
+    //            yield return new WaitForSeconds(0.5f);
+    //            //SetPath(path[path.Length - 1].worldPos);
+    //            //yield break;
+    //        }
 
-            transform.rotation = Quaternion.LookRotation(curWayNode.worldPos - transform.position);
-            transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
-            yield return null;
-        }
-    }
+    //        transform.rotation = Quaternion.LookRotation(curWayNode.worldPos - transform.position);
+    //        transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
+    //        yield return null;
+    //    }
+    //}
 
     //private void OnCollisionEnter(Collision _other)
     //{

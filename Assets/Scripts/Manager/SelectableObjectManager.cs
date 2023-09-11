@@ -173,8 +173,6 @@ public class SelectableObjectManager : MonoBehaviour
     private List<SelectableObject> listSelectedObject = new List<SelectableObject>();
 
     [SerializeField]
-    private float offset = 1f;
-    [SerializeField]
     private int rowNum = 6;
     [SerializeField]
     private float rangeGroupLimitDist = 5f;

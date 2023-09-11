@@ -24,10 +24,13 @@ public class SelectableObject : MonoBehaviour
         structFSM.targetPos = Vector3.zero;
         structFSM.moveSpeed = 5f;
 
+        idleState = null;
         moveState = new UnitMoveFSM();
         holdState = null;
         stopState = null;
         patrollState = null;
+
+        curState = idleState;
     }
 
 
@@ -66,8 +69,8 @@ public class SelectableObject : MonoBehaviour
     public void MoveByTargetPos(Vector3 _targetPos)
     {
         structFSM.targetPos = _targetPos;
+
         if (isControllable)
-            //move.MoveByTargetPos(_targetPos);
             ChangeState(moveState);
     }
 
@@ -84,6 +87,7 @@ public class SelectableObject : MonoBehaviour
     private UnitMovement move = null;
 
     private IFSM curState = null;
+    private IFSM idleState = null;
     private IFSM moveState = null;
     private IFSM holdState = null;
     private IFSM stopState = null;

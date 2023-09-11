@@ -136,8 +136,4 @@ public class GameManager : MonoBehaviour
     private PF_PathRequestManager pathMng = null;
 
     private PF_Grid grid = null;
-
-    private VoidVoidDelegate onClickMoveBtnCallback = null;
-
-    private List<Command> listInputCommand = new List<Command>();
 }
