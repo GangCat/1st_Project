@@ -14,7 +14,6 @@ public class SelectableObjectManager : MonoBehaviour
         tempListSelectableObject.Clear();
         listSelectedObject.Clear();
         selectObjectCallback = _selectObjectCallback;
-
     }
 
     public void AddSelectedObject(SelectableObject _object)
@@ -82,11 +81,10 @@ public class SelectableObjectManager : MonoBehaviour
 
     public void MoveUnitByPicking(Vector3 _targetPos)
     {
-        // 한점 모이기
+        // 지정된 위치에 5열 종대로 헤쳐모여
         if (IsGroupMaxDistOverRange())
         {
-            foreach (SelectableObject obj in listSelectedObject)
-                obj.MoveByTargetPos(_targetPos);
+            CalcNewFormation(_targetPos);
         }
         // 대열 유지하면서 모이기
         else
@@ -101,6 +99,25 @@ public class SelectableObjectManager : MonoBehaviour
     {
         foreach (SelectableObject obj in listSelectedObject)
             obj.Stop();
+    }
+
+    private void CalcNewFormation(Vector3 _targetPos)
+    {
+        int unitCnt = listSelectedObject.Count;
+        int col = Mathf.Clamp(unitCnt, 1, 5);
+
+        float posX = 0f;
+        float posZ = 0f;
+        Vector3 destPos = Vector3.zero;
+
+        for (int i = 0; i < unitCnt; ++i)
+        {
+            posX = i % col;
+            posZ = i / col;
+            destPos = _targetPos + new Vector3(posX, 0f, posZ);
+
+            listSelectedObject[i].MoveByTargetPos(destPos);
+        }
     }
 
     private Vector3 CalcFormationCenterPos(float _targetPosY)
@@ -161,6 +178,10 @@ public class SelectableObjectManager : MonoBehaviour
     private int rowNum = 6;
     [SerializeField]
     private float rangeGroupLimitDist = 5f;
+    [SerializeField]
+    private PF_Grid grid = null;
 
     private VoidSelectObjectTypeDelegate selectObjectCallback = null;
+
+
 }

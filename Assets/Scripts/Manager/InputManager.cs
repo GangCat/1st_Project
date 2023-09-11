@@ -70,6 +70,11 @@ public class InputManager : MonoBehaviour
                 Destroy(pickPosDisplayGo);
                 MoveOperateWithMouseClick();
             }
+            else if(Input.GetMouseButtonDown(1))
+            {
+                Destroy(pickPosDisplayGo);
+                OnClickCancleButton();
+            }
         }
         else if (IsBuildOperation)
         {
@@ -86,7 +91,7 @@ public class InputManager : MonoBehaviour
         else
         {
             if (Input.GetMouseButtonDown(0))
-                SelectOperateWithMouseClick();
+                DragOperateWithMouseClick();
             else if (Input.GetMouseButtonDown(1))
                 MoveOperateWithMouseClick();
         }
@@ -102,8 +107,6 @@ public class InputManager : MonoBehaviour
     {
         if (EventSystem.current.IsPointerOverGameObject())
             return;
-
-        if (isMoveClick) isMoveClick = false;
 
         Vector3 pickPos = Vector3.zero;
         RaycastHit hit;
@@ -123,7 +126,7 @@ public class InputManager : MonoBehaviour
         Destroy(_go);
     }
 
-    private void SelectOperateWithMouseClick()
+    private void DragOperateWithMouseClick()
     {
         if (EventSystem.current.IsPointerOverGameObject())
             return;

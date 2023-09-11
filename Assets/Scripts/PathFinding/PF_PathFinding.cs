@@ -4,7 +4,6 @@ using System.Collections.Generic;
 // 시간 측정하려고 추가한 네임스페이스
 using System.Diagnostics;
 using System;
-using UnityEditor.Experimental.GraphView;
 
 public class PF_PathFinding : MonoBehaviour
 {
@@ -104,6 +103,12 @@ public class PF_PathFinding : MonoBehaviour
         foreach (PF_Node node in listNeighborNode)
             if (node.walkable)
                 return node;
+
+        foreach(PF_Node node in listNeighborNode)
+        {
+            if (GetAccessibleNode(node) != null)
+                return GetAccessibleNode(node);
+        }
 
         return null;
     }
