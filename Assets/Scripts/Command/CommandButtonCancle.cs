@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CommandCancle : Command
+public class CommandButtonCancle : Command
 {
-    public CommandCancle() { }
+    public CommandButtonCancle() { }
 
     public override void Execute()
     {

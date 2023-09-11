@@ -1,10 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class CommandMove : Command
+public class CommandButtonMove : Command
 {
-    public CommandMove(InputManager _inputMng)
+    public CommandButtonMove(InputManager _inputMng)
     {
         inputMng = _inputMng;
     }

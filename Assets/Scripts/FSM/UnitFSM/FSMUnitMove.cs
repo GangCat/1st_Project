@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-public class UnitMoveFSM : IFSM
+public class FSMUnitMove : IFSM
 {
     public void FSM_Start(ref SFSM _structFSM)
     {

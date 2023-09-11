@@ -19,17 +19,7 @@ public class GameManager : MonoBehaviour
         // 마우스 가두기
         Cursor.lockState = CursorLockMode.Confined;
 
-        ListUnitCommand.Add(new CommandCancle());
-        ListUnitCommand.Add(new CommandMove(inputMng));
-        ListUnitCommand.Add(new CommandStop(selectMng));
-
-        ListBuildCommand.Add(new CommandBuildCancle(buildMng, inputMng));
-        ListBuildCommand.Add(new CommandBuildConfirm(buildMng, inputMng));
-        ListBuildCommand.Add(new CommandBuildTurret(buildMng, inputMng));
-        ListBuildCommand.Add(new CommandBuildBunker(buildMng, inputMng));
-        ListBuildCommand.Add(new CommandBuildWall(buildMng, inputMng));
-        ListBuildCommand.Add(new CommandBuildNuclear(buildMng, inputMng));
-
+        InitCommandList();
 
         grid = pathMng.GetComponent<PF_Grid>();
 
@@ -47,6 +37,25 @@ public class GameManager : MonoBehaviour
         cameraMng.Init();
         uiMng.Init();
         buildMng.Init(grid);
+    }
+
+    private void InitCommandList()
+    {
+        ListUnitButtonCommand.Add(new CommandButtonCancle());
+        ListUnitButtonCommand.Add(new CommandButtonMove(inputMng));
+        ListUnitButtonCommand.Add(new CommandButtonStop(selectMng));
+        ListUnitButtonCommand.Add(new CommandButtonHold());
+        ListUnitButtonCommand.Add(new CommandButtonPatrol());
+        ListUnitButtonCommand.Add(new CommandButtonAttack());
+
+        ListBuildCommand.Add(new CommandBuildCancle(buildMng, inputMng));
+        ListBuildCommand.Add(new CommandBuildConfirm(buildMng, inputMng));
+        ListBuildCommand.Add(new CommandBuildTurret(buildMng, inputMng));
+        ListBuildCommand.Add(new CommandBuildBunker(buildMng, inputMng));
+        ListBuildCommand.Add(new CommandBuildWall(buildMng, inputMng));
+        ListBuildCommand.Add(new CommandBuildNuclear(buildMng, inputMng));
+
+
     }
 
     private void UnitSelect(ESelectableObjectType _selectObjectType)

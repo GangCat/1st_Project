@@ -12,13 +12,13 @@ public class CanvasUnitBaseFunc : CanvasFuncBase
         moveBtn.onClick.AddListener(
             ()=>
             {
-                ListUnitCommand.Use(1);
+                ListUnitButtonCommand.Use(1);
             });
 
         stopBtn.onClick.AddListener(
             () =>
             {
-                ListUnitCommand.Use(2);
+                ListUnitButtonCommand.Use(2);
             });
     }
 

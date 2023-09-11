@@ -24,11 +24,11 @@ public class SelectableObject : MonoBehaviour
         structFSM.targetPos = Vector3.zero;
         structFSM.moveSpeed = 5f;
 
-        idleState = null;
-        moveState = new UnitMoveFSM();
-        holdState = null;
-        stopState = null;
-        patrollState = null;
+        idleState = new FSMUnitIdle();
+        moveState = new FSMUnitMove();
+        holdState = new FSMUnitHold();
+        stopState = new FSMUnitStop();
+        attackState = new FSMUnitAttack();
 
         curState = idleState;
     }
@@ -41,19 +41,16 @@ public class SelectableObject : MonoBehaviour
 
     private IEnumerator ChangeFSMCoroutine(IFSM _newState)
     {
-        if (curState != null)
-        {
-            // 언박싱, 값 복사 중 뭐가 더 비용이 적을지 생각
-            curState.FSM_End(ref structFSM);
-        }
-            yield return null;
-            curState = _newState;
-            curState.FSM_Start(ref structFSM);
+        // 언박싱, 값 복사 중 뭐가 더 비용이 적을지 생각
+        curState.FSM_End(ref structFSM);
+        yield return null;
+        curState = _newState;
+        curState.FSM_Start(ref structFSM);
     }
 
     private void Update()
     {
-        if(curState != null)
+        //if(curState != null)
             curState.FSM_Update(ref structFSM);
     }
 
@@ -91,7 +88,7 @@ public class SelectableObject : MonoBehaviour
     private IFSM moveState = null;
     private IFSM holdState = null;
     private IFSM stopState = null;
-    private IFSM patrollState = null;
+    private IFSM attackState = null;
 
     private SFSM structFSM;
 

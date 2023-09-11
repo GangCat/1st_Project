@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CommandStop : Command
+public class CommandButtonStop : Command
 {
-    public CommandStop(SelectableObjectManager _selectableObjMng)
+    public CommandButtonStop(SelectableObjectManager _selectableObjMng)
     {
         selectableObjMng = _selectableObjMng;
     }
