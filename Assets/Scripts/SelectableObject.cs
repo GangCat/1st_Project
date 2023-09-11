@@ -7,6 +7,8 @@ public class SelectableObject : MonoBehaviour
     public ESelectableObjectType ObjectType => objectType;
     public Vector3 GetPos => transform.position;
 
+    
+
     public void Awake()
     {
         Init();
@@ -20,38 +22,60 @@ public class SelectableObject : MonoBehaviour
             move.Init();
         }
 
-        structFSM.myTr = transform;
-        structFSM.targetPos = Vector3.zero;
-        structFSM.moveSpeed = 5f;
+        if (isControllable)
+        {
+            IState stateIdle = new StateIdle();
+            IState stateMove = new StateMove();
+            IState stateStop = new StateStop();
+            IState stateHold = new StateHold();
+            IState statePatrol = new StatePatrol();
+            IState stateAttack = new StateAttack();
+            IState stateTrace = new StateTrace();
+            IState stateFollow = new StateFollow();
 
-        idleState = new FSMUnitIdle();
-        moveState = new FSMUnitMove();
-        holdState = new FSMUnitHold();
-        stopState = new FSMUnitStop();
-        attackState = new FSMUnitAttack();
+            structState.listState = new List<IState>();
 
-        curState = idleState;
+            structState.listState.Add(stateIdle);
+            structState.listState.Add(stateMove);
+            structState.listState.Add(stateStop);
+            structState.listState.Add(stateHold);
+            structState.listState.Add(statePatrol);
+            structState.listState.Add(stateAttack);
+            structState.listState.Add(stateTrace);
+            structState.listState.Add(stateFollow);
+
+            structState.myTr = transform;
+            structState.callback = ChangeState;
+        
+            curState = stateIdle;
+        }
     }
 
-
-    public void ChangeState(IFSM _newState)
+    public void AttackDmg(int _dmg)
     {
-        StartCoroutine("ChangeFSMCoroutine", _newState);
+        Debug.LogFormat("Hit Dmg {0}", _dmg);
     }
 
-    private IEnumerator ChangeFSMCoroutine(IFSM _newState)
+    public void ChangeState(IState _newState)
+    {
+        if(isControllable)
+            StartCoroutine("ChangeFSMCoroutine", _newState);
+    }
+
+    private IEnumerator ChangeFSMCoroutine(IState _newState)
     {
         // 언박싱, 값 복사 중 뭐가 더 비용이 적을지 생각
-        curState.FSM_End(ref structFSM);
+        curState.End(ref structState);
         yield return null;
         curState = _newState;
-        curState.FSM_Start(ref structFSM);
+        curState.Start(ref structState);
     }
 
     private void Update()
     {
+        if(isControllable)
         //if(curState != null)
-            curState.FSM_Update(ref structFSM);
+            curState.Update(ref structState);
     }
 
 
@@ -65,10 +89,19 @@ public class SelectableObject : MonoBehaviour
 
     public void MoveByTargetPos(Vector3 _targetPos)
     {
-        structFSM.targetPos = _targetPos;
+        structState.targetPos = _targetPos;
 
         if (isControllable)
-            ChangeState(moveState);
+            ChangeState(structState.listState[(int)EState.MOVE]);
+    }
+
+    public void MoveAttack(Vector3 _targetPos)
+    {
+        structState.targetPos = _targetPos;
+        structState.isAttackMove = true;
+
+        if (isControllable)
+            ChangeState(structState.listState[(int)EState.MOVE]);
     }
 
     public void Stop()
@@ -80,17 +113,11 @@ public class SelectableObject : MonoBehaviour
     private ESelectableObjectType objectType = ESelectableObjectType.None;
     [SerializeField]
     private bool isControllable = false;
+    [SerializeField]
+    private SUnitState structState;
 
     private UnitMovement move = null;
 
-    private IFSM curState = null;
-    private IFSM idleState = null;
-    private IFSM moveState = null;
-    private IFSM holdState = null;
-    private IFSM stopState = null;
-    private IFSM attackState = null;
+    private IState curState = null;
 
-    private SFSM structFSM;
-
-    private float moveSpeed = 5f;
 }

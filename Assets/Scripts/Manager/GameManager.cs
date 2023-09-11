@@ -46,7 +46,7 @@ public class GameManager : MonoBehaviour
         ListUnitButtonCommand.Add(new CommandButtonStop(selectMng));
         ListUnitButtonCommand.Add(new CommandButtonHold());
         ListUnitButtonCommand.Add(new CommandButtonPatrol());
-        ListUnitButtonCommand.Add(new CommandButtonAttack());
+        ListUnitButtonCommand.Add(new CommandButtonAttack(inputMng));
 
         ListBuildCommand.Add(new CommandBuildCancle(buildMng, inputMng));
         ListBuildCommand.Add(new CommandBuildConfirm(buildMng, inputMng));

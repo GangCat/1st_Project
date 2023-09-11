@@ -79,16 +79,22 @@ public class SelectableObjectManager : MonoBehaviour
         return listSelectedObject.ToArray();
     }
 
-    public void MoveUnitByPicking(Vector3 _targetPos)
+    public void MoveUnitByPicking(Vector3 _targetPos, bool isAttackMove = false)
     {
-        // 지정된 위치에 5열 종대로 헤쳐모여
-        if (IsGroupMaxDistOverRange())
+        if (isAttackMove)
         {
+            Vector3 centerPos = CalcFormationCenterPos(_targetPos.y);
+            foreach (SelectableObject obj in listSelectedObject)
+                obj.MoveAttack(_targetPos + CalcPosInFormation(obj.GetPos, centerPos));
+        }
+        else if (IsGroupMaxDistOverRange())
+        {
+            // 지정된 위치에 5열 종대로 헤쳐모여
             CalcNewFormation(_targetPos);
         }
-        // 대열 유지하면서 모이기
         else
         {
+            // 대열 유지하면서 모이기
             Vector3 centerPos = CalcFormationCenterPos(_targetPos.y);
             foreach (SelectableObject obj in listSelectedObject)
                 obj.MoveByTargetPos(_targetPos + CalcPosInFormation(obj.GetPos, centerPos));

@@ -88,6 +88,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectType: 0
   isControllable: 1
+  structFSM:
+    myTr: {fileID: 6892984012615317130}
+    targetTr: {fileID: 0}
+    targetPos: {x: 0, y: 0, z: 0}
+    moveSpeed: 5
+    attRange: 5
+    attRate: 1
+    attDmg: 5
+    isHold: 0
 --- !u!114 &5398495305969481112
 MonoBehaviour:
   m_ObjectHideFlags: 0

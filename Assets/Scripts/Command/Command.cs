@@ -4,5 +4,5 @@ using UnityEngine;
 
 public abstract class Command
 {
-    public virtual void Execute() { }
+    public abstract void Execute();
 }

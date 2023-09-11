@@ -46,14 +46,22 @@ public class InputManager : MonoBehaviour
         isMoveClick = true;
     }
 
+    public void OnClickAttackButton()
+    {
+        pickPosDisplayGo = Instantiate(pickPosPrefab, transform);
+        isAttackClick = true;
+    }
+
     public void OnClickCancleButton()
     {
         ClearCurFunc();
     }
 
+
     private void ClearCurFunc()
     {
         isMoveClick = false;
+        isAttackClick = false;
         // 등등 기능과 관련된 bool값 모두 초기화
     }
 
@@ -71,6 +79,22 @@ public class InputManager : MonoBehaviour
                 MoveOperateWithMouseClick();
             }
             else if(Input.GetMouseButtonDown(1))
+            {
+                Destroy(pickPosDisplayGo);
+                OnClickCancleButton();
+            }
+        }
+        else if (isAttackClick)
+        {
+            RaycastHit hit;
+            if (pickPosDisplayGo != null && Functions.Picking(out hit))
+                pickPosDisplayGo.transform.position = hit.point;
+            if (Input.GetMouseButtonDown(0))
+            {
+                Destroy(pickPosDisplayGo);
+                MoveOperateWithMouseClick();
+            }
+            else if (Input.GetMouseButtonDown(1))
             {
                 Destroy(pickPosDisplayGo);
                 OnClickCancleButton();
@@ -104,6 +128,23 @@ public class InputManager : MonoBehaviour
     }
 
     private void MoveOperateWithMouseClick()
+    {
+        if (EventSystem.current.IsPointerOverGameObject())
+            return;
+
+        Vector3 pickPos = Vector3.zero;
+        RaycastHit hit;
+        if (Functions.Picking(1 << LayerMask.NameToLayer("SelectableObject"), out hit))
+            PickingObjectCallback?.Invoke(hit.transform);
+        else if (Functions.Picking("StageFloor", 1 << LayerMask.NameToLayer("StageFloor"), ref pickPos))
+        {
+            GameObject pickPosDisplayGo = Instantiate(pickPosPrefab, pickPos, Quaternion.identity, transform);
+            StartCoroutine("DestroypickPosDisplay", pickPosDisplayGo);
+            pickingCallback?.Invoke(pickPos);
+        }
+    }
+
+    private void MoveOperateWithMouseClick(bool _isAttackClick)
     {
         if (EventSystem.current.IsPointerOverGameObject())
             return;
@@ -194,6 +235,7 @@ public class InputManager : MonoBehaviour
     private float pickPosDisplayHideDelay = 0.3f;
 
     private bool isMoveClick = false;
+    private bool isAttackClick = false;
 
     private GameObject pickPosDisplayGo;
 

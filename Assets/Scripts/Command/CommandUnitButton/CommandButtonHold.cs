@@ -4,5 +4,8 @@ using UnityEngine;
 
 public class CommandButtonHold : Command
 {
-
+    public override void Execute()
+    {
+        throw new System.NotImplementedException();
+    }
 }

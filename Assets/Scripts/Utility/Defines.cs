@@ -14,9 +14,23 @@ public delegate void VoidTransformDelegate(Transform _tr);
 [System.Serializable]
 public enum ESelectableObjectType { None = - 1, UNIT, HERO, MAIN_BASE, TURRET, BUNKER, WALL, NUCLEAR, ENEMY_UNIT, ENEMY_STRUCTURE}
 
-public struct SFSM
+[System.Serializable]
+public struct SUnitState
 {
     public Transform myTr;
-    public Vector3 targetPos;
+    public Transform targetTr;
     public float moveSpeed;
+    public float attRange;
+    public float attRate;
+    public float traceStartRange;
+    public float traceEndRange;
+    public int attDmg;
+    public Vector3 targetPos;
+    public bool isHold;
+    public bool isAttackMove;
+
+    public System.Action<IState> callback;
+    public List<IState> listState;
 }
+
+public enum EState { NONE = -1, IDLE, MOVE, STOP, HOLD, PATROL, ATTACK, TRACE, FOLLOW}
