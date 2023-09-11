@@ -6,6 +6,8 @@ using UnityEngine.EventSystems;
 
 public class InputManager : MonoBehaviour
 {
+    
+
     public void Init(
         VoidVec3Delegate _pickingCallback,
         VoidTransformDelegate _PickingObjectCallback,
@@ -15,7 +17,8 @@ public class InputManager : MonoBehaviour
         VoidTemplateDelegate<SelectableObject> _selectObjectCallback,
         VoidTemplateDelegate<SelectableObject> _unSelectObjectCallback,
         VoidVoidDelegate _selectFinishCallback,
-        VoidVoidDelegate _moveCameraWithObjectCallback)
+        VoidVoidDelegate _moveCameraWithObjectCallback,
+        VoidVec3Delegate _attackMoveCallback)
     {
         pickingCallback = _pickingCallback;
         PickingObjectCallback = _PickingObjectCallback;
@@ -25,6 +28,7 @@ public class InputManager : MonoBehaviour
         selectFinishCallback = _selectFinishCallback;
         moveCameraWithObjectCallback = _moveCameraWithObjectCallback;
         selectObjectCallback = _selectObjectCallback;
+        attackMoveCallback = _attackMoveCallback;
 
         selectArea = GetComponentInChildren<SelectArea>();
         selectArea.Init(_selectObjectCallback, _unSelectObjectCallback);
@@ -76,6 +80,7 @@ public class InputManager : MonoBehaviour
             if (Input.GetMouseButtonDown(0))
             {
                 Destroy(pickPosDisplayGo);
+                OnClickCancleButton();
                 MoveOperateWithMouseClick();
             }
             else if(Input.GetMouseButtonDown(1))
@@ -92,7 +97,8 @@ public class InputManager : MonoBehaviour
             if (Input.GetMouseButtonDown(0))
             {
                 Destroy(pickPosDisplayGo);
-                MoveOperateWithMouseClick();
+                OnClickCancleButton();
+                AttackMoveOperateWithMouseClick();
             }
             else if (Input.GetMouseButtonDown(1))
             {
@@ -144,7 +150,7 @@ public class InputManager : MonoBehaviour
         }
     }
 
-    private void MoveOperateWithMouseClick(bool _isAttackClick)
+    private void AttackMoveOperateWithMouseClick()
     {
         if (EventSystem.current.IsPointerOverGameObject())
             return;
@@ -157,7 +163,7 @@ public class InputManager : MonoBehaviour
         {
             GameObject pickPosDisplayGo = Instantiate(pickPosPrefab, pickPos, Quaternion.identity, transform);
             StartCoroutine("DestroypickPosDisplay", pickPosDisplayGo);
-            pickingCallback?.Invoke(pickPos);
+            attackMoveCallback?.Invoke(pickPos);
         }
     }
 
@@ -252,4 +258,5 @@ public class InputManager : MonoBehaviour
     private VoidVoidDelegate selectFinishCallback = null;
     private VoidVoidDelegate moveCameraWithObjectCallback = null;
     private VoidTemplateDelegate<SelectableObject> selectObjectCallback = null;
+    private VoidVec3Delegate attackMoveCallback = null;
 }

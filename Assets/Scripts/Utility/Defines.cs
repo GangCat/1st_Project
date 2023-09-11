@@ -10,6 +10,7 @@ public delegate void VoidVec3Delegate(Vector3 _vec3);
 public delegate void VoidVec2Delegate(Vector2 _vec2);
 public delegate void VoidTemplateDelegate<T>(T _list);
 public delegate void VoidTransformDelegate(Transform _tr);
+public delegate void NodeUpdateDelegate(Vector3 _pos, int _nodeIdx);
 
 [System.Serializable]
 public enum ESelectableObjectType { None = - 1, UNIT, HERO, MAIN_BASE, TURRET, BUNKER, WALL, NUCLEAR, ENEMY_UNIT, ENEMY_STRUCTURE}
@@ -20,17 +21,22 @@ public struct SUnitState
     public Transform myTr;
     public Transform targetTr;
     public float moveSpeed;
-    public float attRange;
-    public float attRate;
     public float traceStartRange;
     public float traceEndRange;
+    public float attRange;
+    public float attRate;
     public int attDmg;
     public Vector3 targetPos;
+
+    public int nodeIdx;
+
     public bool isHold;
     public bool isAttackMove;
 
     public System.Action<IState> callback;
     public List<IState> listState;
+    public NodeUpdateDelegate updateNodeCallback;
 }
 
 public enum EState { NONE = -1, IDLE, MOVE, STOP, HOLD, PATROL, ATTACK, TRACE, FOLLOW}
+

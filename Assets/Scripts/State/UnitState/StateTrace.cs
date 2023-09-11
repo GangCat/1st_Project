@@ -23,12 +23,6 @@ public class StateTrace : IState
 
         myPos = myTr.position;
 
-        if (Vector3.SqrMagnitude(targetTr.position - myPos) < Mathf.Pow(attackRange, 2))
-        {
-            _structState.callback(_structState.listState[(int)EState.ATTACK]);
-            return;
-        }
-
         elapsedTimeForCheckPath += Time.deltaTime;
 
         if (elapsedTimeForCheckPath < checkPathDelay) return;
@@ -40,26 +34,6 @@ public class StateTrace : IState
         }
         else
         {
-            elapsedTimeForCheckEnemy += Time.deltaTime;
-            if (elapsedTimeForCheckEnemy > checkEnemyDelay)
-            {
-                elapsedTimeForCheckEnemy = 0f;
-                Collider[] arrCollider = null;
-                arrCollider = Physics.OverlapSphere(myPos, _structState.traceStartRange);
-
-                if (arrCollider.Length > 0)
-                {
-                    foreach (Collider c in arrCollider)
-                    {
-                        if (c.CompareTag("EnemyUnit"))
-                        {
-                            _structState.targetTr = c.transform;
-                            _structState.callback(_structState.listState[(int)EState.TRACE]);
-                        }
-                    }
-                }
-            }
-
             if (Physics.Linecast(myPos, curWayNode.worldPos, 1 << LayerMask.NameToLayer("SelectableObject")))
             {
                 elapsedTimeForCheckPath = 0f;
@@ -68,6 +42,12 @@ public class StateTrace : IState
 
             if (Vector3.SqrMagnitude(myPos - curWayNode.worldPos) < 0.01f)
             {
+                if (Vector3.SqrMagnitude(targetTr.position - myPos) < Mathf.Pow(attackRange, 2))
+                {
+                    _structState.callback(_structState.listState[(int)EState.ATTACK]);
+                    return;
+                }
+
                 ++targetIdx;
                 if (targetIdx >= arrPath.Length)
                 {
@@ -76,10 +56,13 @@ public class StateTrace : IState
 
                 curWayNode = arrPath[targetIdx];
 
-                if (!curWayNode.walkable)
-                {
-                    PF_PathRequestManager.RequestPath(myPos, arrPath[arrPath.Length - 1].worldPos, OnPathFound);
-                }
+            }
+
+            if (!curWayNode.walkable)
+            {
+                PF_PathRequestManager.RequestPath(myPos, arrPath[arrPath.Length - 1].worldPos, OnPathFound);
+                elapsedTimeForCheckPath = 0f;
+                return;
             }
 
             myTr.rotation = Quaternion.LookRotation(curWayNode.worldPos - myPos);
@@ -89,6 +72,8 @@ public class StateTrace : IState
 
     public void End(ref SUnitState _structState)
     {
+        _structState.updateNodeCallback(myTr.position, _structState.nodeIdx);
+
         arrPath = null;
         targetIdx = 0;
         curWayNode = null;
@@ -112,10 +97,7 @@ public class StateTrace : IState
     private float moveSpeed = 0f;
 
     private float elapsedTimeForCheckPath = 1f;
-    private float checkPathDelay = 0.5f;
-
-    private float elapsedTimeForCheckEnemy = 0f;
-    private float checkEnemyDelay = 0.5f;
+    private float checkPathDelay = 0.2f;
 
     private Transform targetTr = null;
     private Transform myTr = null;

@@ -33,7 +33,8 @@ public class GameManager : MonoBehaviour
             AddSelectedObject, 
             RemoveSelectedObject, 
             SelectFinish,
-            MoveCameraWithObject);
+            MoveCameraWithObject,
+            AttackMove);
         cameraMng.Init();
         uiMng.Init();
         buildMng.Init(grid);
@@ -122,6 +123,11 @@ public class GameManager : MonoBehaviour
     {
         // 반환되는 배열을 가지고 해당 배열의 오브젝트들의 발 밑에 둥근 원을 생성
         selectMng.SelectFinish();
+    }
+
+    private void AttackMove(Vector3 _targetPos)
+    {
+        selectMng.MoveUnitByPicking(_targetPos, true);
     }
 
     public void OnClickMoveButton()

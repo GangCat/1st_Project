@@ -17,10 +17,6 @@ public class StateMove : IState
     {
         if (arrPath == null) return;
 
-        elapsedTimeForCheckPath += Time.deltaTime;
-
-        if (elapsedTimeForCheckPath < checkPathDelay) return;
-
         myPos = myTr.position;
 
         if (_structState.isAttackMove)
@@ -46,6 +42,10 @@ public class StateMove : IState
             }
         }
 
+        elapsedTimeForCheckPath += Time.deltaTime;
+
+        if (elapsedTimeForCheckPath < checkPathDelay) return;
+
         if (Physics.Linecast(myPos, curWayNode.worldPos, 1 << LayerMask.NameToLayer("SelectableObject")))
         {
             elapsedTimeForCheckPath = 0f;
@@ -62,11 +62,13 @@ public class StateMove : IState
             }
 
             curWayNode = arrPath[targetIdx];
+        }
 
-            if (!curWayNode.walkable)
-            {
-                PF_PathRequestManager.RequestPath(myPos, arrPath[arrPath.Length - 1].worldPos, OnPathFound);
-            }
+        if (!curWayNode.walkable)
+        {
+            PF_PathRequestManager.RequestPath(myPos, arrPath[arrPath.Length - 1].worldPos, OnPathFound);
+            elapsedTimeForCheckPath = 0f;
+            return;
         }
 
         myTr.rotation = Quaternion.LookRotation(curWayNode.worldPos - myPos);
@@ -75,6 +77,8 @@ public class StateMove : IState
 
     public void End(ref SUnitState _structState)
     {
+        _structState.updateNodeCallback(myTr.position, _structState.nodeIdx);
+
         arrPath = null;
         targetIdx = 0;
         curWayNode = null;
@@ -94,9 +98,9 @@ public class StateMove : IState
     private int targetIdx = 0;
     private float moveSpeed = 0f;
     private float elapsedTimeForCheckEnemy = 0f;
-    private float checkEnemyDelay = 0.5f;
+    private float checkEnemyDelay = 0.1f;
     private float elapsedTimeForCheckPath = 1f;
-    private float checkPathDelay = 0.5f;
+    private float checkPathDelay = 0.2f;
 
     private Transform myTr = null;
     private Transform targetTr = null;

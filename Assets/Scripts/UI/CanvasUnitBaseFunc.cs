@@ -20,6 +20,12 @@ public class CanvasUnitBaseFunc : CanvasFuncBase
             {
                 ListUnitButtonCommand.Use(2);
             });
+
+        attackBtn.onClick.AddListener(
+            () =>
+            {
+                ListUnitButtonCommand.Use(5);
+            });
     }
 
     [SerializeField]

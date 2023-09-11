@@ -14,6 +14,28 @@ public class SelectableObjectManager : MonoBehaviour
         tempListSelectableObject.Clear();
         listSelectedObject.Clear();
         selectObjectCallback = _selectObjectCallback;
+        int nodeIdx = 0;
+
+        foreach (SelectableObject obj in FindObjectsOfType<SelectableObject>())
+        {
+            if (obj.CompareTag("FriendlyUnit"))
+            {
+                listNodeUnderUnit.Add(grid.NodeFromWorldPoint(obj.GetPos));
+                obj.Init(nodeIdx, UpdateNodeWalkable);
+                ++nodeIdx;
+            }
+        }
+
+        foreach (PF_Node node in listNodeUnderUnit)
+            node.walkable = false;
+    }
+
+    public void UpdateNodeWalkable(Vector3 _pos, int _idx)
+    {
+        PF_Node newNode = grid.NodeFromWorldPoint(_pos);
+        newNode.walkable = false;
+        listNodeUnderUnit[_idx].walkable = true;
+        listNodeUnderUnit[_idx] = newNode;
     }
 
     public void AddSelectedObject(SelectableObject _object)
@@ -187,5 +209,5 @@ public class SelectableObjectManager : MonoBehaviour
 
     private VoidSelectObjectTypeDelegate selectObjectCallback = null;
 
-
+    public List<PF_Node> listNodeUnderUnit = new List<PF_Node>();
 }

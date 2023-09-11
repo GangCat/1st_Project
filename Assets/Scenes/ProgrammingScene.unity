@@ -3492,6 +3492,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: P_TempTurret
       objectReference: {fileID: 0}
+    - target: {fileID: 8421938389435490942, guid: 1f700fe65f7afaa4ba8bb82e28500dfc,
+        type: 3}
+      propertyPath: m_TagString
+      value: FriendlyStructure
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -18634,6 +18639,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: P_TempMainBase
       objectReference: {fileID: 0}
+    - target: {fileID: 8162044424758329862, guid: 84ef0facb01956b449c682e9f37929e0,
+        type: 3}
+      propertyPath: m_TagString
+      value: FriendlyStructure
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -19568,8 +19578,7 @@ PrefabInstance:
       propertyPath: isControllable
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 85326528598308137, guid: de6acd57ac4368649b62249bb1c43242, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:

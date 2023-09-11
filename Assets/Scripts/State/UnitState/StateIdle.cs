@@ -44,6 +44,7 @@ public class StateIdle : IState
     private Vector3 myPos = Vector3.zero;
 
     private float elapsedTimeForCheckEnemy = 0f;
-    private float checkEnemyDelay = 0.5f;
+    private float checkEnemyDelay = 0.1f;
+
     private float traceStartRange = 0f;
 }

@@ -7,15 +7,12 @@ public class SelectableObject : MonoBehaviour
     public ESelectableObjectType ObjectType => objectType;
     public Vector3 GetPos => transform.position;
 
-    
 
-    public void Awake()
+    public void Init(int _nodeIdx, NodeUpdateDelegate _updateNodeCallback = null)
     {
-        Init();
-    }
+        structState.updateNodeCallback = _updateNodeCallback;
+        structState.nodeIdx = _nodeIdx;
 
-    public void Init()
-    {
         if (isControllable)
         {
             move = GetComponent<UnitMovement>();
@@ -119,5 +116,4 @@ public class SelectableObject : MonoBehaviour
     private UnitMovement move = null;
 
     private IState curState = null;
-
 }

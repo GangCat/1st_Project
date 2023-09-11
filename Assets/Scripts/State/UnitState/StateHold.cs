@@ -44,5 +44,5 @@ public class StateHold : IState
     private Vector3 myPos = Vector3.zero;
 
     private float elapsedTime = 0f;
-    private float checkDelay = 0.5f;
+    private float checkDelay = 0.1f;
 }

@@ -14,7 +14,7 @@ public class StateFollow : IState
         PF_PathRequestManager.RequestPath(myTr.position, targetTr.position, OnPathFound);
     }
 
-    public void Update(ref SUnitState _structFSM)
+    public void Update(ref SUnitState _structState)
     {
         if (arrPath == null) return;
 
@@ -47,19 +47,23 @@ public class StateFollow : IState
             }
 
             curWayNode = arrPath[targetIdx];
+        }
 
-            if (!curWayNode.walkable)
-            {
-                PF_PathRequestManager.RequestPath(myPos, arrPath[arrPath.Length - 1].worldPos, OnPathFound);
-            }
+        if (!curWayNode.walkable)
+        {
+            PF_PathRequestManager.RequestPath(myPos, arrPath[arrPath.Length - 1].worldPos, OnPathFound);
+            elapsedTimeForCheckPath = 0f;
+            return;
         }
 
         myTr.rotation = Quaternion.LookRotation(curWayNode.worldPos - myPos);
         myTr.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
     }
 
-    public void End(ref SUnitState _structFSM)
+    public void End(ref SUnitState _structState)
     {
+        _structState.updateNodeCallback(myTr.position, _structState.nodeIdx);
+
         arrPath = null;
         targetIdx = 0;
         curWayNode = null;
@@ -82,9 +86,9 @@ public class StateFollow : IState
     private PF_Node curWayNode = null;
 
     private float elapsedTimeForCheckPath = 1f;
-    private float checkPathDelay = 0.5f;
+    private float checkPathDelay = 0.2f;
     private float elapsedTimeForRequestPath = 0f;
-    private float RequestPathDelay = 0.5f;
+    private float RequestPathDelay = 0.2f;
 
     private Vector3 myPos = Vector3.zero;
     private Transform targetTr = null;
