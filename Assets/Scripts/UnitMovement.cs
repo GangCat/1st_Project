@@ -7,7 +7,6 @@ public class UnitMovement : MonoBehaviour
 {
     public void Init()
     {
-        //StartCoroutine("UpdateNodeStateCoroutine");
     }
 
     public void MoveByTargetPos(Vector3 _targetPos)

@@ -13,3 +13,10 @@ public delegate void VoidTransformDelegate(Transform _tr);
 
 [System.Serializable]
 public enum ESelectableObjectType { None = - 1, UNIT, HERO, MAIN_BASE, TURRET, BUNKER, WALL, NUCLEAR, ENEMY_UNIT, ENEMY_STRUCTURE}
+
+public struct SFSM
+{
+    public Transform myTr;
+    public Vector3 targetPos;
+    public float moveSpeed;
+}

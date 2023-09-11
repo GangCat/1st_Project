@@ -9,28 +9,66 @@ public class SelectableObject : MonoBehaviour
 
     public void Awake()
     {
+        Init();
+    }
+
+    public void Init()
+    {
         if (isControllable)
         {
             move = GetComponent<UnitMovement>();
             move.Init();
         }
+
+        structFSM.myTr = transform;
+        structFSM.targetPos = Vector3.zero;
+        structFSM.moveSpeed = 5f;
+
+        moveState = new UnitMoveFSM();
+        holdState = null;
+        stopState = null;
+        patrollState = null;
     }
 
-    public void Init(PF_Grid _grid)
+
+    public void ChangeState(IFSM _newState)
     {
-
+        StartCoroutine("ChangeFSMCoroutine", _newState);
     }
+
+    private IEnumerator ChangeFSMCoroutine(IFSM _newState)
+    {
+        if (curState != null)
+        {
+            // 언박싱, 값 복사 중 뭐가 더 비용이 적을지 생각
+            curState.FSM_End(ref structFSM);
+        }
+            yield return null;
+            curState = _newState;
+            curState.FSM_Start(ref structFSM);
+    }
+
+    private void Update()
+    {
+        if(curState != null)
+            curState.FSM_Update(ref structFSM);
+    }
+
 
     public void FollowTarget(Transform _targetTr)
     {
         if (isControllable)
             move.FollowTarget(_targetTr);
+
+        //ChangeState(moveState);
     }
 
     public void MoveByTargetPos(Vector3 _targetPos)
     {
+        structFSM.targetPos = _targetPos;
         if (isControllable)
-            move.MoveByTargetPos(_targetPos);
+            //move.MoveByTargetPos(_targetPos);
+            ChangeState(moveState);
     }
 
     public void Stop()
@@ -44,4 +82,14 @@ public class SelectableObject : MonoBehaviour
     private bool isControllable = false;
 
     private UnitMovement move = null;
+
+    private IFSM curState = null;
+    private IFSM moveState = null;
+    private IFSM holdState = null;
+    private IFSM stopState = null;
+    private IFSM patrollState = null;
+
+    private SFSM structFSM;
+
+    private float moveSpeed = 5f;
 }
