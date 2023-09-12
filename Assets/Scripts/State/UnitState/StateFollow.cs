@@ -10,6 +10,8 @@ public class StateFollow : IState
         targetTr = _structState.targetTr;
         moveSpeed = _structState.moveSpeed;
 
+        _structState.isHold = false;
+
         PF_PathRequestManager.RequestPath(myTr.position, targetTr.position, OnPathFound);
     }
 

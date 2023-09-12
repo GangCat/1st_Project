@@ -12,7 +12,7 @@ public class StateTrace : IState
         targetTr = _structState.targetTr;
         moveSpeed = _structState.moveSpeed;
         traceEndRange = _structState.traceEndRange;
-        attackRange = _structState.attRange;
+        attackRange = _structState.attRange;        
 
         PF_PathRequestManager.RequestPath(myTr.position, targetTr.position, OnPathFound);
     }

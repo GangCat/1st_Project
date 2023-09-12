@@ -109,7 +109,14 @@ public class SelectableObject : MonoBehaviour
 
     public void Stop()
     {
-        move.Stop();
+        if (isControllable)
+            ChangeState(structState.arrState[(int)EState.STOP]);
+    }
+
+    public void Hold()
+    {
+        if (isControllable)
+            ChangeState(structState.arrState[(int)EState.HOLD]);
     }
 
     [SerializeField]

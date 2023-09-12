@@ -8,6 +8,8 @@ public class StateIdle : IState
     {
         myPos = _structState.myTr.position;
         traceStartRange = _structState.traceStartRange;
+
+        _structState.isHold = false;
     }
 
     public void Update(ref SUnitState _structState)

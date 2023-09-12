@@ -11,6 +11,8 @@ public class StateMove : IState
         isAttackMove = _structState.isAttackMove;
         targetTr = _structState.targetTr;
 
+        _structState.isHold = false;
+
         PF_PathRequestManager.RequestPath(myTr.position, _structState.targetPos, OnPathFound);
     }
 

@@ -11,6 +11,8 @@ public class StatePatrol : IState
         myTr = _structState.myTr;
         moveSpeed = _structState.moveSpeed;
 
+        _structState.isHold = false;
+
         PF_PathRequestManager.RequestPath(wayPointFrom, wayPointTo, OnPathFound);
     }
 

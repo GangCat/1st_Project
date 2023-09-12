@@ -38,7 +38,6 @@ public class StateHold : IState
 
     public void End(ref SUnitState _structState)
     {
-        _structState.isHold = false;
     }
 
     private Vector3 myPos = Vector3.zero;

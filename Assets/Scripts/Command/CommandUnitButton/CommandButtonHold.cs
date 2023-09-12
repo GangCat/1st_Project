@@ -4,8 +4,15 @@ using UnityEngine;
 
 public class CommandButtonHold : Command
 {
+    public CommandButtonHold(SelectableObjectManager _selectMng)
+    {
+        selectMng = _selectMng;
+    }
+
     public override void Execute()
     {
-        throw new System.NotImplementedException();
+        selectMng.Hold();
     }
+
+    private SelectableObjectManager selectMng = null;
 }

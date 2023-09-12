@@ -9,33 +9,40 @@ public class CanvasUnitBaseFunc : CanvasFuncBase
     {
         gameObject.SetActive(false);
 
-        moveBtn.onClick.AddListener(
+        btnMove.onClick.AddListener(
             ()=>
             {
                 ListUnitButtonCommand.Use(1);
             });
 
-        stopBtn.onClick.AddListener(
+        btnStop.onClick.AddListener(
             () =>
             {
                 ListUnitButtonCommand.Use(2);
             });
 
-        attackBtn.onClick.AddListener(
+        btnHold.onClick.AddListener(
+            () =>
+            {
+                ListUnitButtonCommand.Use(3);
+            });
+
+        btnAttack.onClick.AddListener(
             () =>
             {
                 ListUnitButtonCommand.Use(5);
             });
+
     }
 
     [SerializeField]
-    private Button moveBtn = null;
+    private Button btnMove = null;
     [SerializeField]
-    private Button stopBtn = null;
+    private Button btnStop = null;
     [SerializeField]
-    private Button holdBtn = null;
+    private Button btnHold = null;
     [SerializeField]
-    private Button PatrolBtn = null;
+    private Button btnPatrol = null;
     [SerializeField]
-    private Button attackBtn = null;
+    private Button btnAttack = null;
 }

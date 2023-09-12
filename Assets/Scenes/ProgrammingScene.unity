@@ -5397,11 +5397,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27db92021f9c3f14787a86cb55d886de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveBtn: {fileID: 2044163890}
-  stopBtn: {fileID: 1694168639}
-  holdBtn: {fileID: 1003045613}
-  PatrolBtn: {fileID: 1025016225}
-  attackBtn: {fileID: 1769439683}
+  btnMove: {fileID: 2044163890}
+  btnStop: {fileID: 1694168639}
+  btnHold: {fileID: 1003045613}
+  btnPatrol: {fileID: 1025016225}
+  btnAttack: {fileID: 1769439683}
 --- !u!1 &989486304
 GameObject:
   m_ObjectHideFlags: 0
