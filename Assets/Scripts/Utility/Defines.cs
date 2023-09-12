@@ -24,6 +24,9 @@ public struct SUnitState
     public Transform targetTr;
     [HideInInspector]
     public Vector3 targetPos;
+    [HideInInspector]
+    public int nodeIdx;
+
     public float moveSpeed;
     public float traceStartRange;
     public float traceEndRange;
@@ -31,8 +34,6 @@ public struct SUnitState
     public float attRate;
     
     public int attDmg;
-    [HideInInspector]
-    public int nodeIdx;
 
     public bool isHold;
     public bool isAttackMove;

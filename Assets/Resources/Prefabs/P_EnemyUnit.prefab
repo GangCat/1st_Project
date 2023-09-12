@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 6892984012615317130}
   - component: {fileID: 8491137552510769540}
+  - component: {fileID: 9169043946334099396}
   - component: {fileID: 8204235503644602067}
   - component: {fileID: 7824584007890135282}
-  - component: {fileID: 5398495305969481112}
-  - component: {fileID: 9169043946334099396}
+  - component: {fileID: 4815547369824481657}
   m_Layer: 7
   m_Name: P_EnemyUnit
   m_TagString: EnemyUnit
@@ -60,6 +60,33 @@ CapsuleCollider:
   m_Height: 1.4
   m_Direction: 1
   m_Center: {x: 0, y: 0.7, z: 0}
+--- !u!54 &9169043946334099396
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 186232715040071189}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!114 &8204235503644602067
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -88,20 +115,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectType: 7
   isControllable: 0
-  structState:
-    myTr: {fileID: 0}
-    targetTr: {fileID: 0}
-    targetPos: {x: 0, y: 0, z: 0}
-    moveSpeed: 0
-    traceStartRange: 0
-    traceEndRange: 0
-    attRange: 0
-    attRate: 0
-    attDmg: 0
-    nodeIdx: 0
-    isHold: 0
-    isAttackMove: 0
---- !u!114 &5398495305969481112
+--- !u!114 &4815547369824481657
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -110,39 +124,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 186232715040071189}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d3901caf770717944b7126af8df200a7, type: 3}
+  m_Script: {fileID: 11500000, guid: 6cfaf88004a2e794783e5bab6eff631b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
-  followOffset: 3
-  grid: {fileID: 0}
---- !u!54 &9169043946334099396
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 186232715040071189}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 126
-  m_CollisionDetection: 0
+  unitState:
+    myTr: {fileID: 0}
+    targetTr: {fileID: 0}
+    targetPos: {x: 0, y: 0, z: 0}
+    nodeIdx: 0
+    moveSpeed: 2
+    traceStartRange: 3
+    traceEndRange: 5
+    attRange: 2
+    attRate: 3
+    attDmg: 1
+    isHold: 0
+    isAttackMove: 0
 --- !u!1 &3256322658277572286
 GameObject:
   m_ObjectHideFlags: 0
