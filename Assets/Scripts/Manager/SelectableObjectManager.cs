@@ -137,11 +137,10 @@ public class SelectableObjectManager : MonoBehaviour
 
     public void Patrol(Vector3 _wayPointTo)
     {
-        foreach (SelectableObject obj in listSelectedObject)
-            obj.Patrol(_wayPointTo);
+        CalcNewFormation(_wayPointTo, true);
     }
 
-    private void CalcNewFormation(Vector3 _targetPos)
+    private void CalcNewFormation(Vector3 _targetPos, bool _isPatrol = false)
     {
         int unitCnt = listSelectedObject.Count;
         int col = Mathf.Clamp(unitCnt, 1, 5);
@@ -156,7 +155,10 @@ public class SelectableObjectManager : MonoBehaviour
             posZ = i / col;
             destPos = _targetPos + new Vector3(posX, 0f, posZ);
 
-            listSelectedObject[i].MoveByTargetPos(destPos);
+            if(_isPatrol)
+                listSelectedObject[i].Patrol(destPos);
+            else
+                listSelectedObject[i].MoveByTargetPos(destPos);
         }
     }
 

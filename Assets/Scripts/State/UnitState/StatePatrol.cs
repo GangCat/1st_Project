@@ -23,6 +23,7 @@ public class StatePatrol : IState
         myPos = myTr.position;
 
         elapsedTimeForCheckEnemy += Time.deltaTime;
+
         if (elapsedTimeForCheckEnemy > checkEnemyDelay)
         {
             elapsedTimeForCheckEnemy = 0f;
@@ -37,6 +38,7 @@ public class StatePatrol : IState
                     {
                         _structState.targetTr = c.transform;
                         _structState.callback(_structState.arrState[(int)EState.TRACE]);
+                        return;
                     }
                 }
             }

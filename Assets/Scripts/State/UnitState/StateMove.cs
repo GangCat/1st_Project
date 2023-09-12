@@ -39,6 +39,7 @@ public class StateMove : IState
                         {
                             _structState.targetTr = c.transform;
                             _structState.callback(_structState.arrState[(int)EState.TRACE]);
+                            return;
                         }
                     }
                 }
