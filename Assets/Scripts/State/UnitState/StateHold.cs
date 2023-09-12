@@ -29,7 +29,7 @@ public class StateHold : IState
                     if (c.CompareTag("EnemyUnit"))
                     {
                         _structState.targetTr = c.transform;
-                        _structState.callback(_structState.listState[(int)EState.ATTACK]);
+                        _structState.callback(_structState.arrState[(int)EState.ATTACK]);
                     }
                 }
             }

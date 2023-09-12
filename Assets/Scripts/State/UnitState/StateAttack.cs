@@ -31,11 +31,11 @@ public class StateAttack : IState
         {
             if (_structState.isHold)
             {
-                _structState.callback(_structState.listState[(int)EState.HOLD]);
+                _structState.callback(_structState.arrState[(int)EState.HOLD]);
             }
             else
             {
-                _structState.callback(_structState.listState[(int)EState.TRACE]);
+                _structState.callback(_structState.arrState[(int)EState.TRACE]);
             }
         }
 

@@ -35,7 +35,7 @@ public class StateMove : IState
                         if (c.CompareTag("EnemyUnit"))
                         {
                             _structState.targetTr = c.transform;
-                            _structState.callback(_structState.listState[(int)EState.TRACE]);
+                            _structState.callback(_structState.arrState[(int)EState.TRACE]);
                         }
                     }
                 }
@@ -57,7 +57,7 @@ public class StateMove : IState
             ++targetIdx;
             if (targetIdx >= arrPath.Length)
             {
-                _structState.callback(_structState.listState[(int)EState.STOP]);
+                _structState.callback(_structState.arrState[(int)EState.STOP]);
                 return;
             }
 

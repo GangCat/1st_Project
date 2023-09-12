@@ -14,7 +14,7 @@ public class StateStop : IState
         elapsedTime += Time.deltaTime;
         if (elapsedTime > stopDelayTime)
         {
-            _structState.callback(_structState.listState[(int)EState.IDLE]);
+            _structState.callback(_structState.arrState[(int)EState.IDLE]);
         }
 
     }

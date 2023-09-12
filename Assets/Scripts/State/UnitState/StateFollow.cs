@@ -17,12 +17,38 @@ public class StateFollow : IState
     public void Update(ref SUnitState _structState)
     {
         if (arrPath == null) return;
+        
+        myPos = myTr.position;
 
+        elapsedTimeForCheckPath += Time.deltaTime;
         elapsedTimeForRequestPath += Time.deltaTime;
 
         if (elapsedTimeForCheckPath < checkPathDelay) return;
+        if (elapsedTimeForRequestPath < checkPathDelay) return;
 
-        myPos = myTr.position;
+        if (Vector3.SqrMagnitude(myPos - curWayNode.worldPos) < 0.01f)
+        {
+            _structState.updateNodeCallback(myPos, _structState.nodeIdx);
+            if (Vector3.SqrMagnitude(myPos - targetTr.position) < 3f) return;
+
+            ++targetIdx;
+
+            if (targetIdx >= arrPath.Length)
+            {
+                PF_PathRequestManager.RequestPath(myPos, targetTr.position, OnPathFound);
+                elapsedTimeForRequestPath = 0f;
+                return;
+            }
+
+            curWayNode = arrPath[targetIdx];
+        }
+
+        //if(elapsedTimeForRequestPath > RequestPathDelay)
+        //{
+        //    elapsedTimeForRequestPath = 0f;
+        //    PF_PathRequestManager.RequestPath(myPos, targetTr.position, OnPathFound);
+        //    return;
+        //}
 
         if (Physics.Linecast(myPos, curWayNode.worldPos, 1 << LayerMask.NameToLayer("SelectableObject")))
         {
@@ -30,29 +56,10 @@ public class StateFollow : IState
             return;
         }
 
-        if(elapsedTimeForRequestPath > RequestPathDelay)
-        {
-            elapsedTimeForRequestPath = 0f;
-            PF_PathRequestManager.RequestPath(myTr.position, targetTr.position, OnPathFound);
-            return;
-        }
-
-        if (Vector3.SqrMagnitude(myPos - curWayNode.worldPos) < 0.01f)
-        {
-            ++targetIdx;
-            if (targetIdx >= arrPath.Length)
-            {
-                arrPath = null;
-                return;
-            }
-
-            curWayNode = arrPath[targetIdx];
-        }
-
         if (!curWayNode.walkable)
         {
-            PF_PathRequestManager.RequestPath(myPos, arrPath[arrPath.Length - 1].worldPos, OnPathFound);
-            elapsedTimeForCheckPath = 0f;
+            PF_PathRequestManager.RequestPath(myPos, targetTr.position, OnPathFound);
+            elapsedTimeForRequestPath = 0f;
             return;
         }
 
@@ -86,9 +93,11 @@ public class StateFollow : IState
     private PF_Node curWayNode = null;
 
     private float elapsedTimeForCheckPath = 1f;
-    private float checkPathDelay = 0.2f;
-    private float elapsedTimeForRequestPath = 0f;
-    private float RequestPathDelay = 0.2f;
+    private float checkPathDelay = 0.4f;
+    private float elapsedTimeForRequestPath = 10f;
+    private float RequestPathDelay = 1f;
+
+    private bool isCloseToTarget = false;
 
     private Vector3 myPos = Vector3.zero;
     private Transform targetTr = null;

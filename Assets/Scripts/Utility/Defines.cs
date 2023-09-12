@@ -18,25 +18,28 @@ public enum ESelectableObjectType { None = - 1, UNIT, HERO, MAIN_BASE, TURRET, B
 [System.Serializable]
 public struct SUnitState
 {
+    [HideInInspector]
     public Transform myTr;
+    [HideInInspector]
     public Transform targetTr;
+    [HideInInspector]
+    public Vector3 targetPos;
     public float moveSpeed;
     public float traceStartRange;
     public float traceEndRange;
     public float attRange;
     public float attRate;
+    
     public int attDmg;
-    public Vector3 targetPos;
-
+    [HideInInspector]
     public int nodeIdx;
 
     public bool isHold;
     public bool isAttackMove;
 
     public System.Action<IState> callback;
-    public List<IState> listState;
+    public IState[] arrState;
     public NodeUpdateDelegate updateNodeCallback;
 }
 
-public enum EState { NONE = -1, IDLE, MOVE, STOP, HOLD, PATROL, ATTACK, TRACE, FOLLOW}
-
+public enum EState { NONE = -1, IDLE, MOVE, STOP, HOLD, PATROL, ATTACK, TRACE, FOLLOW, LENGTH}

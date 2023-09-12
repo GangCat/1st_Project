@@ -30,16 +30,16 @@ public class SelectableObject : MonoBehaviour
             IState stateTrace = new StateTrace();
             IState stateFollow = new StateFollow();
 
-            structState.listState = new List<IState>();
+            structState.arrState = new IState[(int)EState.LENGTH];
 
-            structState.listState.Add(stateIdle);
-            structState.listState.Add(stateMove);
-            structState.listState.Add(stateStop);
-            structState.listState.Add(stateHold);
-            structState.listState.Add(statePatrol);
-            structState.listState.Add(stateAttack);
-            structState.listState.Add(stateTrace);
-            structState.listState.Add(stateFollow);
+            structState.arrState[(int)EState.IDLE] = stateIdle;
+            structState.arrState[(int)EState.MOVE] = stateMove;
+            structState.arrState[(int)EState.STOP] = stateStop;
+            structState.arrState[(int)EState.HOLD] = stateHold;
+            structState.arrState[(int)EState.PATROL] = statePatrol;
+            structState.arrState[(int)EState.ATTACK] = stateAttack;
+            structState.arrState[(int)EState.TRACE] = stateTrace;
+            structState.arrState[(int)EState.FOLLOW] = stateFollow;
 
             structState.myTr = transform;
             structState.callback = ChangeState;
@@ -71,17 +71,15 @@ public class SelectableObject : MonoBehaviour
     private void Update()
     {
         if(isControllable)
-        //if(curState != null)
             curState.Update(ref structState);
     }
 
 
     public void FollowTarget(Transform _targetTr)
     {
+        structState.targetTr = _targetTr;
         if (isControllable)
-            move.FollowTarget(_targetTr);
-
-        //ChangeState(moveState);
+            ChangeState(structState.arrState[(int)EState.FOLLOW]);
     }
 
     public void MoveByTargetPos(Vector3 _targetPos)
@@ -89,7 +87,7 @@ public class SelectableObject : MonoBehaviour
         structState.targetPos = _targetPos;
 
         if (isControllable)
-            ChangeState(structState.listState[(int)EState.MOVE]);
+            ChangeState(structState.arrState[(int)EState.MOVE]);
     }
 
     public void MoveAttack(Vector3 _targetPos)
@@ -98,7 +96,7 @@ public class SelectableObject : MonoBehaviour
         structState.isAttackMove = true;
 
         if (isControllable)
-            ChangeState(structState.listState[(int)EState.MOVE]);
+            ChangeState(structState.arrState[(int)EState.MOVE]);
     }
 
     public void Stop()

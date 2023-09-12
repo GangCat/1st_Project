@@ -33,9 +33,9 @@ public class SelectableObjectManager : MonoBehaviour
     public void UpdateNodeWalkable(Vector3 _pos, int _idx)
     {
         PF_Node newNode = grid.NodeFromWorldPoint(_pos);
-        newNode.walkable = false;
         listNodeUnderUnit[_idx].walkable = true;
         listNodeUnderUnit[_idx] = newNode;
+        newNode.walkable = false;
     }
 
     public void AddSelectedObject(SelectableObject _object)

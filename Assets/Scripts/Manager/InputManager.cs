@@ -69,7 +69,6 @@ public class InputManager : MonoBehaviour
         // 등등 기능과 관련된 bool값 모두 초기화
     }
 
-
     private void Update()
     {
         if (isMoveClick)

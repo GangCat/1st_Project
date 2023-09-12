@@ -29,7 +29,7 @@ public class StateTrace : IState
 
         if (Vector3.SqrMagnitude(targetTr.position - myPos) > Mathf.Pow(traceEndRange, 2))
         {
-            _structState.callback(_structState.listState[(int)EState.STOP]);
+            _structState.callback(_structState.arrState[(int)EState.STOP]);
             return;
         }
         else
@@ -44,7 +44,7 @@ public class StateTrace : IState
             {
                 if (Vector3.SqrMagnitude(targetTr.position - myPos) < Mathf.Pow(attackRange, 2))
                 {
-                    _structState.callback(_structState.listState[(int)EState.ATTACK]);
+                    _structState.callback(_structState.arrState[(int)EState.ATTACK]);
                     return;
                 }
 
