@@ -6,12 +6,14 @@ public class StateAttack : IState
 {
     public void Start(ref SUnitState _structState)
     {
+        myTr = _structState.myTr;
         targetTr = _structState.targetTr;
         attRate = _structState.attRate;
     }
 
     public void Update(ref SUnitState _structState)
     {
+        myTr.rotation = Quaternion.LookRotation(targetTr.position - myTr.position);
         elapsedTime += Time.deltaTime;
         if (elapsedTime < attRate)
         {
@@ -30,4 +32,5 @@ public class StateAttack : IState
 
     private float attRate = 0f;
     private Transform targetTr = null;
+    private Transform myTr = null;
 }

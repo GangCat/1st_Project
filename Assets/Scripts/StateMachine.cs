@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class StateMachine : MonoBehaviour
 {
-    
+
     public void Init(int _nodeIdx, NodeUpdateDelegate _updateNodeCallback)
     {
         unitState.updateNodeCallback = _updateNodeCallback;
@@ -105,11 +105,19 @@ public class StateMachine : MonoBehaviour
         curState.Start(ref unitState);
     }
 
+    public void ResetState()
+    {
+        stackState.Clear();
+        curState.End(ref unitState);
+        curState = arrState[(int)EState.IDLE];
+        curState.Start(ref unitState);
+    }
+
 
 
     private void Update()
     {
-        if(curState != null)
+        if (curState != null)
             curState.Update(ref unitState);
     }
 
