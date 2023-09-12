@@ -28,6 +28,7 @@ public class SelectableObject : MonoBehaviour
             IState statePatrol = new StatePatrol();
             IState stateAttack = new StateAttack();
             IState stateTrace = new StateTrace();
+            IState stateFollow = new StateFollow();
 
             structState.arrState = new IState[(int)EState.LENGTH];
 
@@ -38,6 +39,7 @@ public class SelectableObject : MonoBehaviour
             structState.arrState[(int)EState.PATROL] = statePatrol;
             structState.arrState[(int)EState.ATTACK] = stateAttack;
             structState.arrState[(int)EState.TRACE] = stateTrace;
+            structState.arrState[(int)EState.FOLLOW] = stateFollow;
 
             structState.myTr = transform;
             structState.callback = ChangeState;
@@ -76,9 +78,8 @@ public class SelectableObject : MonoBehaviour
     public void FollowTarget(Transform _targetTr)
     {
         structState.targetTr = _targetTr;
-        structState.isFollow = true;
         if (isControllable)
-            ChangeState(structState.arrState[(int)EState.MOVE]);
+            ChangeState(structState.arrState[(int)EState.FOLLOW]);
     }
 
     public void MoveByTargetPos(Vector3 _targetPos)

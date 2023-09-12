@@ -7,6 +7,7 @@ public class StateStop : IState
     public void Start(ref SUnitState _structState)
     {
     }
+
     public void Update(ref SUnitState _structState)
     {
         elapsedTime += Time.deltaTime;
@@ -14,8 +15,8 @@ public class StateStop : IState
         {
             _structState.callback(_structState.arrState[(int)EState.IDLE]);
         }
-
     }
+
     public void End(ref SUnitState _structState)
     {
     }

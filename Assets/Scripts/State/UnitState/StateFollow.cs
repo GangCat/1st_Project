@@ -2,16 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StateMove : IState
+public class StateFollow : IState
 {
     public void Start(ref SUnitState _structState)
     {
         myTr = _structState.myTr;
-        moveSpeed = _structState.moveSpeed;
-        isAttackMove = _structState.isAttackMove;
         targetTr = _structState.targetTr;
+        moveSpeed = _structState.moveSpeed;
 
-        PF_PathRequestManager.RequestPath(myTr.position, _structState.targetPos, OnPathFound);
+        PF_PathRequestManager.RequestPath(myTr.position, targetTr.position, OnPathFound);
     }
 
     public void Update(ref SUnitState _structState)
@@ -20,32 +19,16 @@ public class StateMove : IState
 
         myPos = myTr.position;
 
-        if (isAttackMove)
-        {
-            elapsedTimeForCheckEnemy += Time.deltaTime;
-            if (elapsedTimeForCheckEnemy > checkEnemyDelay)
-            {
-                elapsedTimeForCheckEnemy = 0f;
-                Collider[] arrCollider = null;
-                arrCollider = Physics.OverlapSphere(myPos, _structState.traceStartRange);
-
-                if (arrCollider.Length > 0)
-                {
-                    foreach (Collider c in arrCollider)
-                    {
-                        if (c.CompareTag("EnemyUnit"))
-                        {
-                            _structState.targetTr = c.transform;
-                            _structState.callback(_structState.arrState[(int)EState.TRACE]);
-                        }
-                    }
-                }
-            }
-        }
-
         elapsedTimeForCheckPath += Time.deltaTime;
         elapsedTimeForRequestPath += Time.deltaTime;
 
+        if (isCloseToTarget)
+        {
+            if (Vector3.SqrMagnitude(myPos - targetTr.position) > 9f)
+                isCloseToTarget = false;
+
+            return;
+        }
         if (elapsedTimeForCheckPath < checkPathDelay) return;
         if (elapsedTimeForRequestPath < RequestPathDelay) return;
 
@@ -62,13 +45,6 @@ public class StateMove : IState
             return;
         }
 
-        //if (Physics.OverlapBox(myTr.position + myTr.forward, new Vector3(0.1f, 0.1f, 0.5f), Quaternion.identity, 1 << LayerMask.NameToLayer("SelectableObject")).Length > 1)
-        //{
-        //    PF_PathRequestManager.RequestPath(myPos, arrPath[arrPath.Length - 1].worldPos, OnPathFound);
-        //    elapsedTimeForCheckPath = 0f;
-        //    return;
-        //}
-
         if (Vector3.SqrMagnitude(myPos - curWayNode.worldPos) < 0.01f)
         {
             ++targetIdx;
@@ -76,17 +52,13 @@ public class StateMove : IState
             {
                 _structState.updateNodeCallback(myTr.position, _structState.nodeIdx);
 
-                if (isFollow)
+                if (Vector3.SqrMagnitude(myPos - targetTr.position) <= 9f)
                 {
-                    if (Vector3.SqrMagnitude(myPos - targetTr.position) <= 4f)
-                        return;
-
-                    PF_PathRequestManager.RequestPath(myPos, targetTr.position, OnPathFound);
-                    elapsedTimeForRequestPath = 0f;
+                    isCloseToTarget = true;
                     return;
                 }
-
-                _structState.callback(_structState.arrState[(int)EState.STOP]);
+                PF_PathRequestManager.RequestPath(myPos, targetTr.position, OnPathFound);
+                elapsedTimeForRequestPath = 0f;
                 return;
             }
 
@@ -101,7 +73,6 @@ public class StateMove : IState
     {
         _structState.updateNodeCallback(myTr.position, _structState.nodeIdx);
 
-        _structState.isAttackMove = false;
         arrPath = null;
         targetIdx = 0;
         curWayNode = null;
@@ -121,15 +92,12 @@ public class StateMove : IState
     private int targetIdx = 0;
     private float moveSpeed = 0f;
 
-    private float elapsedTimeForCheckEnemy = 0f;
-    private float checkEnemyDelay = 0.1f;
     private float elapsedTimeForCheckPath = 1f;
     private float checkPathDelay = 0.2f;
     private float elapsedTimeForRequestPath = 1f;
     private float RequestPathDelay = 0.2f;
 
-    private bool isAttackMove = false;
-    private bool isFollow = false;
+    private bool isCloseToTarget = false;
 
     private Transform myTr = null;
     private Transform targetTr = null;

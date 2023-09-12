@@ -36,11 +36,10 @@ public struct SUnitState
 
     public bool isHold;
     public bool isAttackMove;
-    public bool isFollow;
 
     public System.Action<IState> callback;
     public IState[] arrState;
     public NodeUpdateDelegate updateNodeCallback;
 }
 
-public enum EState { NONE = -1, IDLE, MOVE, STOP, HOLD, PATROL, ATTACK, TRACE, LENGTH}
+public enum EState { NONE = -1, IDLE, MOVE, STOP, HOLD, PATROL, ATTACK, TRACE, FOLLOW, LENGTH}
