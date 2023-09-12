@@ -1,14 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
 
 public class StateIdle : IState
 {
     public void Start(ref SUnitState _structState)
     {
-        _structState.isHold = false;
-        _structState.isAttackMove = false;
         myPos = _structState.myTr.position;
         traceStartRange = _structState.traceStartRange;
     }

@@ -6,9 +6,11 @@ public class StateMove : IState
 {
     public void Start(ref SUnitState _structState)
     {
-        _structState.isHold = false;
         myTr = _structState.myTr;
         moveSpeed = _structState.moveSpeed;
+        isAttackMove = _structState.isAttackMove;
+        isFollow = _structState.isFollow;
+        targetTr = _structState.targetTr;
 
         PF_PathRequestManager.RequestPath(myTr.position, _structState.targetPos, OnPathFound);
     }
@@ -19,7 +21,7 @@ public class StateMove : IState
 
         myPos = myTr.position;
 
-        if (_structState.isAttackMove)
+        if (isAttackMove)
         {
             elapsedTimeForCheckEnemy += Time.deltaTime;
             if (elapsedTimeForCheckEnemy > checkEnemyDelay)
@@ -43,8 +45,10 @@ public class StateMove : IState
         }
 
         elapsedTimeForCheckPath += Time.deltaTime;
+        elapsedTimeForRequestPath += Time.deltaTime;
 
         if (elapsedTimeForCheckPath < checkPathDelay) return;
+        if (elapsedTimeForRequestPath < RequestPathDelay) return;
 
         if (Physics.Linecast(myPos, curWayNode.worldPos, 1 << LayerMask.NameToLayer("SelectableObject")))
         {
@@ -57,6 +61,18 @@ public class StateMove : IState
             ++targetIdx;
             if (targetIdx >= arrPath.Length)
             {
+                _structState.updateNodeCallback(myTr.position, _structState.nodeIdx);
+
+                if (isFollow)
+                {
+                    if (Vector3.SqrMagnitude(myPos - targetTr.position) <= 4f)
+                        return;
+
+                    PF_PathRequestManager.RequestPath(myPos, targetTr.position, OnPathFound);
+                    elapsedTimeForRequestPath = 0f;
+                    return;
+                }
+
                 _structState.callback(_structState.arrState[(int)EState.STOP]);
                 return;
             }
@@ -79,6 +95,8 @@ public class StateMove : IState
     {
         _structState.updateNodeCallback(myTr.position, _structState.nodeIdx);
 
+        _structState.isAttackMove = false;
+        _structState.isFollow = false;
         arrPath = null;
         targetIdx = 0;
         curWayNode = null;
@@ -97,10 +115,16 @@ public class StateMove : IState
 
     private int targetIdx = 0;
     private float moveSpeed = 0f;
+
     private float elapsedTimeForCheckEnemy = 0f;
     private float checkEnemyDelay = 0.1f;
     private float elapsedTimeForCheckPath = 1f;
     private float checkPathDelay = 0.2f;
+    private float elapsedTimeForRequestPath = 1f;
+    private float RequestPathDelay = 0.2f;
+
+    private bool isAttackMove = false;
+    private bool isFollow = false;
 
     private Transform myTr = null;
     private Transform targetTr = null;

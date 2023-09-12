@@ -6,8 +6,6 @@ public class StateStop : IState
 {
     public void Start(ref SUnitState _structState)
     {
-        _structState.isHold = false;
-        _structState.isAttackMove = false;
     }
     public void Update(ref SUnitState _structState)
     {

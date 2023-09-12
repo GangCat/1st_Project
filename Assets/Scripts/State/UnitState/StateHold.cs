@@ -6,7 +6,6 @@ public class StateHold : IState
 {
     public void Start(ref SUnitState _structState)
     {
-        _structState.isAttackMove = false;
         _structState.isHold = true;
         myPos = _structState.myTr.position;
         elapsedTime = 0f;
@@ -39,6 +38,7 @@ public class StateHold : IState
 
     public void End(ref SUnitState _structState)
     {
+        _structState.isHold = false;
     }
 
     private Vector3 myPos = Vector3.zero;
