@@ -76,18 +76,6 @@ public class StateMove : IState
             ++targetIdx;
             if (targetIdx >= arrPath.Length)
             {
-                _structState.updateNodeCallback(myTr.position, _structState.nodeIdx);
-
-                if (isFollow)
-                {
-                    if (Vector3.SqrMagnitude(myPos - targetTr.position) <= 4f)
-                        return;
-
-                    PF_PathRequestManager.RequestPath(myPos, targetTr.position, OnPathFound);
-                    elapsedTimeForRequestPath = 0f;
-                    return;
-                }
-
                 _structState.callback(_structState.arrState[(int)EState.STOP]);
                 return;
             }
@@ -102,7 +90,6 @@ public class StateMove : IState
     public void End(ref SUnitState _structState)
     {
         _structState.updateNodeCallback(myTr.position, _structState.nodeIdx);
-
         _structState.isAttackMove = false;
         arrPath = null;
         targetIdx = 0;
@@ -116,6 +103,23 @@ public class StateMove : IState
             arrPath = _newPath;
             targetIdx = 0;
             curWayNode = arrPath[0];
+        }
+    }
+
+    public void OnDrawGizmos()
+    {
+        if (arrPath != null)
+        {
+            for (int i = targetIdx; i < arrPath.Length; ++i)
+            {
+                Gizmos.color = Color.black;
+                Gizmos.DrawCube(arrPath[i].worldPos, Vector3.one * 0.4f);
+
+                if (i == targetIdx)
+                    Gizmos.DrawLine(myTr.position, arrPath[i].worldPos);
+                else
+                    Gizmos.DrawLine(arrPath[i - 1].worldPos, arrPath[i].worldPos);
+            }
         }
     }
 

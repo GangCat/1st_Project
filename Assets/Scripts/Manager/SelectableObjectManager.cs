@@ -135,6 +135,12 @@ public class SelectableObjectManager : MonoBehaviour
             obj.Hold();
     }
 
+    public void Patrol(Vector3 _wayPointTo)
+    {
+        foreach (SelectableObject obj in listSelectedObject)
+            obj.Patrol(_wayPointTo);
+    }
+
     private void CalcNewFormation(Vector3 _targetPos)
     {
         int unitCnt = listSelectedObject.Count;

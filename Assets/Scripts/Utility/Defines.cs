@@ -43,3 +43,5 @@ public struct SUnitState
 }
 
 public enum EState { NONE = -1, IDLE, MOVE, STOP, HOLD, PATROL, ATTACK, TRACE, FOLLOW, LENGTH}
+
+public enum EUnitButtonCommand { NONE = -1, CANCLE, MOVE, STOP, HOLD, PATROL, ATTACK}

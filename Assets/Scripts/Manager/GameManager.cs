@@ -34,7 +34,8 @@ public class GameManager : MonoBehaviour
             RemoveSelectedObject, 
             SelectFinish,
             MoveCameraWithObject,
-            AttackMove);
+            AttackMove,
+            PatrolMove);
         cameraMng.Init();
         uiMng.Init();
         buildMng.Init(grid);
@@ -46,7 +47,7 @@ public class GameManager : MonoBehaviour
         ListUnitButtonCommand.Add(new CommandButtonMove(inputMng));
         ListUnitButtonCommand.Add(new CommandButtonStop(selectMng));
         ListUnitButtonCommand.Add(new CommandButtonHold(selectMng));
-        ListUnitButtonCommand.Add(new CommandButtonPatrol());
+        ListUnitButtonCommand.Add(new CommandButtonPatrol(inputMng));
         ListUnitButtonCommand.Add(new CommandButtonAttack(inputMng));
 
         ListBuildCommand.Add(new CommandBuildCancle(buildMng, inputMng));
@@ -128,6 +129,11 @@ public class GameManager : MonoBehaviour
     private void AttackMove(Vector3 _targetPos)
     {
         selectMng.MoveUnitByPicking(_targetPos, true);
+    }
+
+    private void PatrolMove(Vector3 _wayPointTo)
+    {
+        selectMng.Patrol(_wayPointTo);
     }
 
     public void OnClickMoveButton()

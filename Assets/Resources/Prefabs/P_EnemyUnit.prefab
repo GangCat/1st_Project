@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8204235503644602067}
   - component: {fileID: 7824584007890135282}
   - component: {fileID: 5398495305969481112}
+  - component: {fileID: 9169043946334099396}
   m_Layer: 7
   m_Name: P_EnemyUnit
   m_TagString: EnemyUnit
@@ -86,17 +87,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectType: 7
-  isControllable: 1
+  isControllable: 0
   structState:
     myTr: {fileID: 0}
     targetTr: {fileID: 0}
+    targetPos: {x: 0, y: 0, z: 0}
     moveSpeed: 0
-    attRange: 0
-    attRate: 0
     traceStartRange: 0
     traceEndRange: 0
+    attRange: 0
+    attRate: 0
     attDmg: 0
-    targetPos: {x: 0, y: 0, z: 0}
+    nodeIdx: 0
     isHold: 0
     isAttackMove: 0
 --- !u!114 &5398495305969481112
@@ -114,6 +116,33 @@ MonoBehaviour:
   moveSpeed: 5
   followOffset: 3
   grid: {fileID: 0}
+--- !u!54 &9169043946334099396
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 186232715040071189}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &3256322658277572286
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public class SelectableObject : MonoBehaviour
@@ -118,6 +119,8 @@ public class SelectableObject : MonoBehaviour
         if (isControllable)
             ChangeState(structState.arrState[(int)EState.HOLD]);
     }
+
+
 
     [SerializeField]
     private ESelectableObjectType objectType = ESelectableObjectType.None;

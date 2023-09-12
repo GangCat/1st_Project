@@ -4,8 +4,15 @@ using UnityEngine;
 
 public class CommandButtonPatrol : Command
 {
+    public CommandButtonPatrol(InputManager _inputMng)
+    {
+        inputMng = _inputMng;
+    }
+
     public override void Execute()
     {
-        throw new System.NotImplementedException();
+        inputMng.OnClickPatrolButton();
     }
+
+    private InputManager inputMng = null;
 }

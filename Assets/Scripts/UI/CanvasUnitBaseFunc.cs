@@ -12,25 +12,31 @@ public class CanvasUnitBaseFunc : CanvasFuncBase
         btnMove.onClick.AddListener(
             ()=>
             {
-                ListUnitButtonCommand.Use(1);
+                ListUnitButtonCommand.Use((int)EUnitButtonCommand.MOVE);
             });
 
         btnStop.onClick.AddListener(
             () =>
             {
-                ListUnitButtonCommand.Use(2);
+                ListUnitButtonCommand.Use((int)EUnitButtonCommand.STOP);
             });
 
         btnHold.onClick.AddListener(
             () =>
             {
-                ListUnitButtonCommand.Use(3);
+                ListUnitButtonCommand.Use((int)EUnitButtonCommand.HOLD);
+            });
+
+        btnPatrol.onClick.AddListener(
+            () =>
+            {
+                ListUnitButtonCommand.Use((int)EUnitButtonCommand.PATROL);
             });
 
         btnAttack.onClick.AddListener(
             () =>
             {
-                ListUnitButtonCommand.Use(5);
+                ListUnitButtonCommand.Use((int)EUnitButtonCommand.ATTACK);
             });
 
     }

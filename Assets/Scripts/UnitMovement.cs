@@ -15,16 +15,16 @@ public class UnitMovement : MonoBehaviour
     //    SetPath(_targetPos);
     //}
 
-    public void FollowTarget(Transform _targetTr)
-    {
-        StopMoveCoroutines();
-        StartCoroutine("FollowTargetCoroutine", _targetTr);
-    }
+    //public void FollowTarget(Transform _targetTr)
+    //{
+    //    StopMoveCoroutines();
+    //    StartCoroutine("FollowTargetCoroutine", _targetTr);
+    //}
 
-    public void Stop()
-    {
-        StopMoveCoroutines();
-    }
+    //public void Stop()
+    //{
+    //    StopMoveCoroutines();
+    //}
 
     //private IEnumerator UpdateNodeStateCoroutine()
     //{
@@ -60,17 +60,17 @@ public class UnitMovement : MonoBehaviour
     //    }
     //}
 
-    private IEnumerator FollowTargetCoroutine(Transform _targetTr)
-    {
-        while (true)
-        {
-            if (Vector3.SqrMagnitude(transform.position - _targetTr.position) > followOffset)
-            {
-                //SetPath(_targetTr.position);
-            }
-            yield return new WaitForSeconds(1f);
-        }
-    }
+    //private IEnumerator FollowTargetCoroutine(Transform _targetTr)
+    //{
+    //    while (true)
+    //    {
+    //        if (Vector3.SqrMagnitude(transform.position - _targetTr.position) > followOffset)
+    //        {
+    //            //SetPath(_targetTr.position);
+    //        }
+    //        yield return new WaitForSeconds(1f);
+    //    }
+    //}
 
 
     //private IEnumerator MoveToTargetPosDirect(Vector3 _targetPos)
@@ -154,37 +154,18 @@ public class UnitMovement : MonoBehaviour
     //    SetPath(path[path.Length - 1].worldPos);
     //}
 
-    private void StopMoveCoroutines()
-    {
-        StopCoroutine("FollowPathCoroutine");
-        StopCoroutine("FollowTargetCoroutine");
-    }
+    //private void StopMoveCoroutines()
+    //{
+    //    StopCoroutine("FollowPathCoroutine");
+    //    StopCoroutine("FollowTargetCoroutine");
+    //}
 
-    public void OnDrawGizmos()
-    {
-        if (path != null)
-        {
-            for (int i = targetIdx; i < path.Length; ++i)
-            {
-                Gizmos.color = Color.black;
-                Gizmos.DrawCube(path[i].worldPos, Vector3.one * 0.4f);
 
-                if (i == targetIdx)
-                    Gizmos.DrawLine(transform.position, path[i].worldPos);
-                else
-                    Gizmos.DrawLine(path[i - 1].worldPos, path[i].worldPos);
-            }
-        }
-    }
 
     [SerializeField]
     private float moveSpeed = 5f;
     [SerializeField]
     private float followOffset = 3f;
-
-    [Header("-Test")]
-    [SerializeField]
-    private PF_Grid grid;
 
     private int targetIdx;
 

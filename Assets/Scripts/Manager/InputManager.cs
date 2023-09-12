@@ -18,7 +18,8 @@ public class InputManager : MonoBehaviour
         VoidTemplateDelegate<SelectableObject> _unSelectObjectCallback,
         VoidVoidDelegate _selectFinishCallback,
         VoidVoidDelegate _moveCameraWithObjectCallback,
-        VoidVec3Delegate _attackMoveCallback)
+        VoidVec3Delegate _attackMoveCallback,
+        VoidVec3Delegate _patrolCallback)
     {
         pickingCallback = _pickingCallback;
         PickingObjectCallback = _PickingObjectCallback;
@@ -29,6 +30,7 @@ public class InputManager : MonoBehaviour
         moveCameraWithObjectCallback = _moveCameraWithObjectCallback;
         selectObjectCallback = _selectObjectCallback;
         attackMoveCallback = _attackMoveCallback;
+        patrolCallback = _patrolCallback;
 
         selectArea = GetComponentInChildren<SelectArea>();
         selectArea.Init(_selectObjectCallback, _unSelectObjectCallback);
@@ -56,6 +58,12 @@ public class InputManager : MonoBehaviour
         isAttackClick = true;
     }
 
+    public void OnClickPatrolButton()
+    {
+        pickPosDisplayGo = Instantiate(pickPosPrefab, transform);
+        isPatrolClick = true;
+    }
+
     public void OnClickCancleButton()
     {
         ClearCurFunc();
@@ -66,6 +74,7 @@ public class InputManager : MonoBehaviour
     {
         isMoveClick = false;
         isAttackClick = false;
+        isPatrolClick = false;
         // 등등 기능과 관련된 bool값 모두 초기화
     }
 
@@ -80,12 +89,12 @@ public class InputManager : MonoBehaviour
             {
                 Destroy(pickPosDisplayGo);
                 OnClickCancleButton();
-                MoveOperateWithMouseClick();
+                MoveWithMouseClick();
             }
             else if(Input.GetMouseButtonDown(1))
             {
                 Destroy(pickPosDisplayGo);
-                OnClickCancleButton();
+                ClearCurFunc();
             }
         }
         else if (isAttackClick)
@@ -96,13 +105,30 @@ public class InputManager : MonoBehaviour
             if (Input.GetMouseButtonDown(0))
             {
                 Destroy(pickPosDisplayGo);
-                OnClickCancleButton();
-                AttackMoveOperateWithMouseClick();
+                ClearCurFunc();
+                AttackMoveWithMouseClick();
             }
             else if (Input.GetMouseButtonDown(1))
             {
                 Destroy(pickPosDisplayGo);
-                OnClickCancleButton();
+                ClearCurFunc();
+            }
+        }
+        else if (isPatrolClick)
+        {
+            RaycastHit hit;
+            if (pickPosDisplayGo != null && Functions.Picking(out hit))
+                pickPosDisplayGo.transform.position = hit.point;
+            if (Input.GetMouseButtonDown(0))
+            {
+                Destroy(pickPosDisplayGo);
+                ClearCurFunc();
+                PatrolWithMouseClick();
+            }
+            else if (Input.GetMouseButtonDown(1))
+            {
+                Destroy(pickPosDisplayGo);
+                ClearCurFunc();
             }
         }
         else if (IsBuildOperation)
@@ -122,7 +148,7 @@ public class InputManager : MonoBehaviour
             if (Input.GetMouseButtonDown(0))
                 DragOperateWithMouseClick();
             else if (Input.GetMouseButtonDown(1))
-                MoveOperateWithMouseClick();
+                MoveWithMouseClick();
         }
     }
 
@@ -132,7 +158,7 @@ public class InputManager : MonoBehaviour
         MoveCamera();
     }
 
-    private void MoveOperateWithMouseClick()
+    private void MoveWithMouseClick()
     {
         if (EventSystem.current.IsPointerOverGameObject())
             return;
@@ -149,7 +175,7 @@ public class InputManager : MonoBehaviour
         }
     }
 
-    private void AttackMoveOperateWithMouseClick()
+    private void AttackMoveWithMouseClick()
     {
         if (EventSystem.current.IsPointerOverGameObject())
             return;
@@ -163,6 +189,23 @@ public class InputManager : MonoBehaviour
             GameObject pickPosDisplayGo = Instantiate(pickPosPrefab, pickPos, Quaternion.identity, transform);
             StartCoroutine("DestroypickPosDisplay", pickPosDisplayGo);
             attackMoveCallback?.Invoke(pickPos);
+        }
+    }
+
+    private void PatrolWithMouseClick()
+    {
+        if (EventSystem.current.IsPointerOverGameObject())
+            return;
+
+        Vector3 pickPos = Vector3.zero;
+        RaycastHit hit;
+        if (Functions.Picking(1 << LayerMask.NameToLayer("SelectableObject"), out hit))
+            PickingObjectCallback?.Invoke(hit.transform);
+        else if (Functions.Picking("StageFloor", 1 << LayerMask.NameToLayer("StageFloor"), ref pickPos))
+        {
+            GameObject pickPosDisplayGo = Instantiate(pickPosPrefab, pickPos, Quaternion.identity, transform);
+            StartCoroutine("DestroypickPosDisplay", pickPosDisplayGo);
+            patrolCallback?.Invoke(pickPos);
         }
     }
 
@@ -241,6 +284,7 @@ public class InputManager : MonoBehaviour
 
     private bool isMoveClick = false;
     private bool isAttackClick = false;
+    private bool isPatrolClick = false;
 
     private GameObject pickPosDisplayGo;
 
@@ -258,4 +302,5 @@ public class InputManager : MonoBehaviour
     private VoidVoidDelegate moveCameraWithObjectCallback = null;
     private VoidTemplateDelegate<SelectableObject> selectObjectCallback = null;
     private VoidVec3Delegate attackMoveCallback = null;
+    private VoidVec3Delegate patrolCallback = null;
 }
