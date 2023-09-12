@@ -97,8 +97,11 @@ public class StateMachine : MonoBehaviour
     public void ChangeState(IState _newState)
     {
         curState.End(ref unitState);
-        stackState.Push(curState);
-        curState = _newState;
+        if (curState != _newState)
+        {
+            stackState.Push(curState);
+            curState = _newState;
+        }
         curState.Start(ref unitState);
     }
 

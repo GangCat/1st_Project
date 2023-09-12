@@ -114,7 +114,7 @@ public class SelectableObject : MonoBehaviour
 
     private void StateMove()
     {
-        curWayNode = null;
+        
         StopAllCoroutines();
 
         switch (moveState)
@@ -147,6 +147,7 @@ public class SelectableObject : MonoBehaviour
 
     private IEnumerator CheckNormalMoveCoroutine()
     {
+        curWayNode = null;
         PF_PathRequestManager.RequestPath(transform.position, targetPos, OnPathFound);
         yield return null;
 
@@ -387,6 +388,23 @@ public class SelectableObject : MonoBehaviour
         stateMachine.FinishState();
     }
 
+
+    public void OnDrawGizmos()
+    {
+        if (arrPath != null)
+        {
+            for (int i = targetIdx; i < arrPath.Length; ++i)
+            {
+                Gizmos.color = Color.black;
+                Gizmos.DrawCube(arrPath[i].worldPos, Vector3.one * 0.4f);
+
+                if (i == targetIdx)
+                    Gizmos.DrawLine(transform.position, arrPath[i].worldPos);
+                else
+                    Gizmos.DrawLine(arrPath[i - 1].worldPos, arrPath[i].worldPos);
+            }
+        }
+    }
 
 
     [SerializeField]
