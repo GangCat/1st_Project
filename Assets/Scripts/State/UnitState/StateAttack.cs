@@ -9,6 +9,7 @@ public class StateAttack : IState
         targetTr = _structState.targetTr;
         attRate = _structState.attRate;
     }
+
     public void Update(ref SUnitState _structState)
     {
         elapsedTime += Time.deltaTime;
@@ -19,6 +20,7 @@ public class StateAttack : IState
             targetTr.GetComponent<SelectableObject>().AttackDmg(_structState.attDmg);
         }
     }
+
     public void End(ref SUnitState _structState)
     {
 

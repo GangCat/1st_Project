@@ -30,10 +30,16 @@ public class SelectableObject : MonoBehaviour
 
     public void FollowTarget(Transform _targetTr)
     {
-        stateMachine.SetTargetTr(_targetTr);
+        //stateMachine.SetTargetTr(_targetTr);
+
+        //if (isControllable)
+        //    stateMachine.ChangeState(stateMachine.GetState((int)EState.FOLLOW));
+
+        targetTr = _targetTr;
+        moveState = EMoveState.FOLLOW;
 
         if (isControllable)
-            stateMachine.ChangeState(stateMachine.GetState((int)EState.FOLLOW));
+            StateMove();
     }
 
     public void MoveByTargetPos(Vector3 _targetPos)
@@ -49,7 +55,7 @@ public class SelectableObject : MonoBehaviour
     public void MoveAttack(Vector3 _targetPos)
     {
         targetPos = _targetPos;
-        moveState = EMoveState.NORMAL;
+        moveState = EMoveState.ATTACK;
 
         if (isControllable)
             StateMove();
@@ -78,6 +84,7 @@ public class SelectableObject : MonoBehaviour
 
     private void StateIdle()
     {
+        stateMachine.ChangeState(stateMachine.GetState((int)EState.IDLE));
         StartCoroutine("CheckEnemyInAttRangeCoroutine");
     }
 
@@ -107,6 +114,7 @@ public class SelectableObject : MonoBehaviour
 
     private void StateMove()
     {
+        curWayNode = null;
         StopAllCoroutines();
 
         switch (moveState)
@@ -162,7 +170,7 @@ public class SelectableObject : MonoBehaviour
 
 
             // 노드에 도착할 때마다 새로운 노드로 이동 갱신
-               if (Vector3.SqrMagnitude(transform.position - curWayNode.worldPos) < 0.01f)
+            if (Vector3.SqrMagnitude(transform.position - curWayNode.worldPos) < 0.01f)
             {
                 ++targetIdx;
 
@@ -239,40 +247,54 @@ public class SelectableObject : MonoBehaviour
 
     private IEnumerator CheckFollowMoveCoroutine()
     {
-        PF_PathRequestManager.RequestPath(transform.position, targetPos, OnPathFound);
+        PF_PathRequestManager.RequestPath(transform.position, targetTr.position, OnPathFound);
         yield return null;
 
         while (curWayNode == null)
             yield return null;
+
+        float elapsedTime = 0f;
 
         stateMachine.TargetPos = curWayNode.worldPos;
         stateMachine.ChangeState(stateMachine.GetState((int)EState.MOVE));
 
         while (true)
         {
-            if (!curWayNode.walkable)
-            {   
-                PF_PathRequestManager.RequestPath(transform.position, targetPos, OnPathFound);
-                yield return new WaitForSeconds(0.1f);
-            }
-
-            if (Physics.Linecast(transform.position, curWayNode.worldPos, 1 << LayerMask.NameToLayer("SelectableObject")))
-                yield return new WaitForSeconds(0.1f);
-
-
-            // 노드에 도착할 때마다 새로운 노드로 이동 갱신
-            if (Vector3.SqrMagnitude(transform.position - curWayNode.worldPos) < 0.01f)
+            elapsedTime += Time.deltaTime;
+            if (curWayNode != null)
             {
-                ++targetIdx;
-                updateNodeCallback?.Invoke(transform.position, stateMachine.GetNodeIdx());
-                
-                if (targetIdx >= arrPath.Length)
+                if (!curWayNode.walkable)
                 {
-                    
+                    PF_PathRequestManager.RequestPath(transform.position, targetTr.position, OnPathFound);
+                    yield return new WaitForSeconds(0.1f);
                 }
 
-                stateMachine.TargetPos = curWayNode.worldPos;
+                if (Physics.Linecast(transform.position, curWayNode.worldPos, 1 << LayerMask.NameToLayer("SelectableObject")))
+                    yield return new WaitForSeconds(0.1f);
+
+
+                // 노드에 도착할 때마다 새로운 노드로 이동 갱신
+                if (Vector3.SqrMagnitude(transform.position - curWayNode.worldPos) < 0.01f)
+                {
+                    ++targetIdx;
+                    updateNodeCallback?.Invoke(transform.position, stateMachine.GetNodeIdx());
+
+                    if (targetIdx >= arrPath.Length)
+                    {
+                        curWayNode = null;
+                        continue;
+                    }
+                    curWayNode = arrPath[targetIdx];
+                    stateMachine.TargetPos = curWayNode.worldPos;
+                }
             }
+
+            if (elapsedTime > resetPathDelay)
+            {
+                PF_PathRequestManager.RequestPath(transform.position, targetTr.position, OnPathFound);
+                yield return new WaitForSeconds(0.3f);
+            }
+
 
             yield return null;
         }
@@ -291,6 +313,7 @@ public class SelectableObject : MonoBehaviour
 
     private void StateStop()
     {
+        stateMachine.ChangeState(stateMachine.GetState((int)EState.STOP));
         StartCoroutine("CheckStopCoroutine");
     }
 
@@ -305,6 +328,8 @@ public class SelectableObject : MonoBehaviour
 
     private void StateAttack()
     {
+        StopAllCoroutines();
+        stateMachine.ChangeState(stateMachine.GetState((int)EState.ATTACK));
         StartCoroutine("CheckAttackCoroutine");
     }
 
@@ -312,6 +337,33 @@ public class SelectableObject : MonoBehaviour
     {
         while (true)
         {
+            if (stateMachine.TargetTr != null && Vector3.SqrMagnitude(stateMachine.TargetTr.position - transform.position) > Mathf.Pow(stateMachine.AttackRange, 2))
+            {
+                stateMachine.TargetTr = null;
+
+                Collider[] arrCollider = null;
+                arrCollider = Physics.OverlapSphere(transform.position, traceStartRange);
+
+                if (arrCollider.Length > 0)
+                {
+                    foreach (Collider c in arrCollider)
+                    {
+                        if (c.CompareTag("EnemyUnit"))
+                        {
+                            stateMachine.SetTargetTr(c.transform);
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if (stateMachine.TargetTr == null)
+            {
+                // 추격, 정찰, 대기, 홀드 등 뭐든간에 이전으로 돌아감.
+                FinishState();
+            }
+
+
             yield return null;
         }
     }
@@ -347,7 +399,7 @@ public class SelectableObject : MonoBehaviour
     private StateMachine stateMachine = null;
 
     private Vector3 targetPos = Vector3.zero;
-    
+
     private Transform targetTr = null;
 
     private PF_Node[] arrPath = null;
@@ -358,4 +410,5 @@ public class SelectableObject : MonoBehaviour
     private NodeUpdateDelegate updateNodeCallback = null;
 
     private float traceStartRange = 7f;
+    private float resetPathDelay = 2f;
 }

@@ -43,6 +43,15 @@ public class StateMachine : MonoBehaviour
         set => unitState.targetPos = value;
     }
 
+    public Transform TargetTr
+    {
+        get => unitState.targetTr;
+        set => unitState.targetTr = value;
+    }
+
+    public float AttackRange => unitState.attRange;
+    public float AttackRate => unitState.attRate;
+
     public void SetTargetTr(Transform _targetTr)
     {
         unitState.targetTr = _targetTr;
