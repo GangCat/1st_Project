@@ -541,12 +541,27 @@ PrefabInstance:
     - target: {fileID: 186232715040071189, guid: 1a6427e02f043fb49b31dd80f757f371,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 186232715040071189, guid: 1a6427e02f043fb49b31dd80f757f371,
         type: 3}
       propertyPath: m_TagString
       value: FriendlyUnit
+      objectReference: {fileID: 0}
+    - target: {fileID: 3650822248373926283, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: unitState.moveSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3650822248373926283, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: unitState.traceEndRange
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 3650822248373926283, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: unitState.traceStartRange
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 5398495305969481112, guid: 1a6427e02f043fb49b31dd80f757f371,
         type: 3}
@@ -602,6 +617,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7824584007890135282, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: chaseStartRange
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7824584007890135282, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: traceStartRange
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7824584007890135282, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: chaseFinishRange
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 7824584007890135282, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: traceFinishRange
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 7824584007890135282, guid: 1a6427e02f043fb49b31dd80f757f371,
         type: 3}
@@ -795,12 +830,27 @@ PrefabInstance:
     - target: {fileID: 186232715040071189, guid: 1a6427e02f043fb49b31dd80f757f371,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 186232715040071189, guid: 1a6427e02f043fb49b31dd80f757f371,
         type: 3}
       propertyPath: m_TagString
       value: FriendlyUnit
+      objectReference: {fileID: 0}
+    - target: {fileID: 3650822248373926283, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: unitState.moveSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3650822248373926283, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: unitState.traceEndRange
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 3650822248373926283, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: unitState.traceStartRange
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 5398495305969481112, guid: 1a6427e02f043fb49b31dd80f757f371,
         type: 3}
@@ -856,6 +906,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7824584007890135282, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: chaseStartRange
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7824584007890135282, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: traceStartRange
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7824584007890135282, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: chaseFinishRange
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 7824584007890135282, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: traceFinishRange
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 7824584007890135282, guid: 1a6427e02f043fb49b31dd80f757f371,
         type: 3}
@@ -3505,12 +3575,27 @@ PrefabInstance:
     - target: {fileID: 186232715040071189, guid: 1a6427e02f043fb49b31dd80f757f371,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 186232715040071189, guid: 1a6427e02f043fb49b31dd80f757f371,
         type: 3}
       propertyPath: m_TagString
       value: FriendlyUnit
+      objectReference: {fileID: 0}
+    - target: {fileID: 3650822248373926283, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: unitState.moveSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3650822248373926283, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: unitState.traceEndRange
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 3650822248373926283, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: unitState.traceStartRange
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 5398495305969481112, guid: 1a6427e02f043fb49b31dd80f757f371,
         type: 3}
@@ -3566,6 +3651,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7824584007890135282, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: chaseStartRange
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7824584007890135282, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: traceStartRange
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7824584007890135282, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: chaseFinishRange
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 7824584007890135282, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: traceFinishRange
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 7824584007890135282, guid: 1a6427e02f043fb49b31dd80f757f371,
         type: 3}
@@ -3649,12 +3754,27 @@ PrefabInstance:
     - target: {fileID: 186232715040071189, guid: 1a6427e02f043fb49b31dd80f757f371,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 186232715040071189, guid: 1a6427e02f043fb49b31dd80f757f371,
         type: 3}
       propertyPath: m_TagString
       value: FriendlyUnit
+      objectReference: {fileID: 0}
+    - target: {fileID: 3650822248373926283, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: unitState.moveSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3650822248373926283, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: unitState.traceEndRange
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 3650822248373926283, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: unitState.traceStartRange
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 5398495305969481112, guid: 1a6427e02f043fb49b31dd80f757f371,
         type: 3}
@@ -3710,6 +3830,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7824584007890135282, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: chaseStartRange
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7824584007890135282, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: traceStartRange
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7824584007890135282, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: chaseFinishRange
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 7824584007890135282, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: traceFinishRange
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 7824584007890135282, guid: 1a6427e02f043fb49b31dd80f757f371,
         type: 3}
@@ -6064,12 +6204,27 @@ PrefabInstance:
     - target: {fileID: 186232715040071189, guid: 1a6427e02f043fb49b31dd80f757f371,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 186232715040071189, guid: 1a6427e02f043fb49b31dd80f757f371,
         type: 3}
       propertyPath: m_TagString
       value: FriendlyUnit
+      objectReference: {fileID: 0}
+    - target: {fileID: 3650822248373926283, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: unitState.moveSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3650822248373926283, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: unitState.traceEndRange
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 3650822248373926283, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: unitState.traceStartRange
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 5398495305969481112, guid: 1a6427e02f043fb49b31dd80f757f371,
         type: 3}
@@ -6125,6 +6280,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7824584007890135282, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: chaseStartRange
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7824584007890135282, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: traceStartRange
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7824584007890135282, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: chaseFinishRange
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 7824584007890135282, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: traceFinishRange
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 7824584007890135282, guid: 1a6427e02f043fb49b31dd80f757f371,
         type: 3}
@@ -6292,12 +6467,27 @@ PrefabInstance:
     - target: {fileID: 186232715040071189, guid: 1a6427e02f043fb49b31dd80f757f371,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 186232715040071189, guid: 1a6427e02f043fb49b31dd80f757f371,
         type: 3}
       propertyPath: m_TagString
       value: FriendlyUnit
+      objectReference: {fileID: 0}
+    - target: {fileID: 3650822248373926283, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: unitState.moveSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3650822248373926283, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: unitState.traceEndRange
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 3650822248373926283, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: unitState.traceStartRange
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 5398495305969481112, guid: 1a6427e02f043fb49b31dd80f757f371,
         type: 3}
@@ -6353,6 +6543,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7824584007890135282, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: chaseStartRange
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7824584007890135282, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: traceStartRange
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7824584007890135282, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: chaseFinishRange
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 7824584007890135282, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: traceFinishRange
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 7824584007890135282, guid: 1a6427e02f043fb49b31dd80f757f371,
         type: 3}
@@ -7043,12 +7253,27 @@ PrefabInstance:
     - target: {fileID: 186232715040071189, guid: 1a6427e02f043fb49b31dd80f757f371,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 186232715040071189, guid: 1a6427e02f043fb49b31dd80f757f371,
         type: 3}
       propertyPath: m_TagString
       value: FriendlyUnit
+      objectReference: {fileID: 0}
+    - target: {fileID: 3650822248373926283, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: unitState.moveSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3650822248373926283, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: unitState.traceEndRange
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 3650822248373926283, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: unitState.traceStartRange
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 5398495305969481112, guid: 1a6427e02f043fb49b31dd80f757f371,
         type: 3}
@@ -7104,6 +7329,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7824584007890135282, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: chaseStartRange
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7824584007890135282, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: traceStartRange
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7824584007890135282, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: chaseFinishRange
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 7824584007890135282, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: traceFinishRange
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 7824584007890135282, guid: 1a6427e02f043fb49b31dd80f757f371,
         type: 3}
@@ -8764,12 +9009,27 @@ PrefabInstance:
     - target: {fileID: 186232715040071189, guid: 1a6427e02f043fb49b31dd80f757f371,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 186232715040071189, guid: 1a6427e02f043fb49b31dd80f757f371,
         type: 3}
       propertyPath: m_TagString
       value: FriendlyUnit
+      objectReference: {fileID: 0}
+    - target: {fileID: 3650822248373926283, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: unitState.moveSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3650822248373926283, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: unitState.traceEndRange
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 3650822248373926283, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: unitState.traceStartRange
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 5398495305969481112, guid: 1a6427e02f043fb49b31dd80f757f371,
         type: 3}
@@ -8825,6 +9085,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7824584007890135282, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: chaseStartRange
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7824584007890135282, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: traceStartRange
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7824584007890135282, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: chaseFinishRange
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 7824584007890135282, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: traceFinishRange
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 7824584007890135282, guid: 1a6427e02f043fb49b31dd80f757f371,
         type: 3}
@@ -8946,6 +9226,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: P_Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 6917241794151303350, guid: b1841c0cd9c4e6d439fd42a2caeb4d6b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7175020197789139696, guid: b1841c0cd9c4e6d439fd42a2caeb4d6b,
         type: 3}
@@ -9374,6 +9659,21 @@ PrefabInstance:
       propertyPath: m_TagString
       value: FriendlyUnit
       objectReference: {fileID: 0}
+    - target: {fileID: 3650822248373926283, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: unitState.moveSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3650822248373926283, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: unitState.traceEndRange
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 3650822248373926283, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: unitState.traceStartRange
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 5398495305969481112, guid: 1a6427e02f043fb49b31dd80f757f371,
         type: 3}
       propertyPath: grid
@@ -9428,6 +9728,31 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7824584007890135282, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: attackRange
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7824584007890135282, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: chaseStartRange
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7824584007890135282, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: traceStartRange
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7824584007890135282, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: chaseFinishRange
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 7824584007890135282, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: traceFinishRange
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 7824584007890135282, guid: 1a6427e02f043fb49b31dd80f757f371,
         type: 3}
@@ -9870,12 +10195,27 @@ PrefabInstance:
     - target: {fileID: 186232715040071189, guid: 1a6427e02f043fb49b31dd80f757f371,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 186232715040071189, guid: 1a6427e02f043fb49b31dd80f757f371,
         type: 3}
       propertyPath: m_TagString
       value: FriendlyUnit
+      objectReference: {fileID: 0}
+    - target: {fileID: 3650822248373926283, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: unitState.moveSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3650822248373926283, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: unitState.traceEndRange
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 3650822248373926283, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: unitState.traceStartRange
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 5398495305969481112, guid: 1a6427e02f043fb49b31dd80f757f371,
         type: 3}
@@ -9931,6 +10271,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7824584007890135282, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: chaseStartRange
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7824584007890135282, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: traceStartRange
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7824584007890135282, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: chaseFinishRange
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 7824584007890135282, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: traceFinishRange
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 7824584007890135282, guid: 1a6427e02f043fb49b31dd80f757f371,
         type: 3}
@@ -11282,7 +11642,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 7361
   m_UseColorTemperature: 1
-  m_BoundingSphereOverride: {x: 1.7e-44, y: 9.1835e-41, z: 1.8e-43, w: -3.9417158e-38}
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: -3.9417158e-38}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
@@ -11957,12 +12317,27 @@ PrefabInstance:
     - target: {fileID: 186232715040071189, guid: 1a6427e02f043fb49b31dd80f757f371,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 186232715040071189, guid: 1a6427e02f043fb49b31dd80f757f371,
         type: 3}
       propertyPath: m_TagString
       value: FriendlyUnit
+      objectReference: {fileID: 0}
+    - target: {fileID: 3650822248373926283, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: unitState.moveSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3650822248373926283, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: unitState.traceEndRange
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 3650822248373926283, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: unitState.traceStartRange
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 5398495305969481112, guid: 1a6427e02f043fb49b31dd80f757f371,
         type: 3}
@@ -12018,6 +12393,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7824584007890135282, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: chaseStartRange
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7824584007890135282, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: traceStartRange
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7824584007890135282, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: chaseFinishRange
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 7824584007890135282, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: traceFinishRange
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 7824584007890135282, guid: 1a6427e02f043fb49b31dd80f757f371,
         type: 3}
@@ -12136,6 +12531,11 @@ PrefabInstance:
     - target: {fileID: 6892984012615317130, guid: de6acd57ac4368649b62249bb1c43242,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7824584007890135282, guid: de6acd57ac4368649b62249bb1c43242,
+        type: 3}
+      propertyPath: traceStartRange
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
@@ -12700,13 +13100,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 186232715040071189, guid: 1a6427e02f043fb49b31dd80f757f371,
         type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 186232715040071189, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
       propertyPath: m_TagString
       value: FriendlyUnit
       objectReference: {fileID: 0}
     - target: {fileID: 3650822248373926283, guid: 1a6427e02f043fb49b31dd80f757f371,
         type: 3}
       propertyPath: unitState.moveSpeed
-      value: 1
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3650822248373926283, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: unitState.traceEndRange
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 3650822248373926283, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: unitState.traceStartRange
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 5398495305969481112, guid: 1a6427e02f043fb49b31dd80f757f371,
         type: 3}
@@ -12762,6 +13177,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7824584007890135282, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: chaseStartRange
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7824584007890135282, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: traceStartRange
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7824584007890135282, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: chaseFinishRange
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 7824584007890135282, guid: 1a6427e02f043fb49b31dd80f757f371,
+        type: 3}
+      propertyPath: traceFinishRange
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 7824584007890135282, guid: 1a6427e02f043fb49b31dd80f757f371,
         type: 3}

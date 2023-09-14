@@ -6,17 +6,13 @@ public class StateHold : IState
 {
     public void Start(ref SUnitState _structState)
     {
-
     }
 
     public void Update(ref SUnitState _structState)
     {
-
     }
 
     public void End(ref SUnitState _structState)
     {
-
     }
-
 }

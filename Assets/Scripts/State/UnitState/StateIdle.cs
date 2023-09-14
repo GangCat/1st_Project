@@ -15,5 +15,4 @@ public class StateIdle : IState
     public void End(ref SUnitState _structState)
     {
     }
-
 }

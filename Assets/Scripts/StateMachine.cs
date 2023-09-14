@@ -4,29 +4,22 @@ using UnityEngine;
 
 public class StateMachine : MonoBehaviour
 {
-    public delegate void CurStateDelegate(IState _curState);
     public delegate void CurStateEnumDelegate(EState _curEState);
-
 
     public void Init(
         int _nodeIdx, 
         NodeUpdateDelegate _updateNodeCallback,
-        CurStateDelegate _curStateCallback,
         CurStateEnumDelegate _curStateEnumCallback)
     {
         unitState.nodeIdx = _nodeIdx;
         unitState.updateNodeCallback = _updateNodeCallback;
-        curStateCallback = _curStateCallback;
         curStateEnumCallback = _curStateEnumCallback;
 
         IState stateIdle = new StateIdle();
         IState stateMove = new StateMove();
         IState stateStop = new StateStop();
         IState stateHold = new StateHold();
-        IState statePatrol = new StatePatrol();
         IState stateAttack = new StateAttack();
-        IState stateTrace = new StateTrace();
-        IState stateFollow = new StateFollow();
 
         arrState = new IState[(int)EState.LENGTH];
 
@@ -34,17 +27,12 @@ public class StateMachine : MonoBehaviour
         arrState[(int)EState.MOVE] = stateMove;
         arrState[(int)EState.STOP] = stateStop;
         arrState[(int)EState.HOLD] = stateHold;
-        arrState[(int)EState.PATROL] = statePatrol;
         arrState[(int)EState.ATTACK] = stateAttack;
-        arrState[(int)EState.TRACE] = stateTrace;
-        arrState[(int)EState.FOLLOW] = stateFollow;
 
         unitState.myTr = transform;
-        //unitState.callback = ChangeState;
 
         curState = stateIdle;
         curStateEnum = EState.IDLE;
-        stackState.Push(curState);
         stackStateEnum.Push(curStateEnum);
     }
 
@@ -61,7 +49,6 @@ public class StateMachine : MonoBehaviour
     }
 
     public float AttackRange => unitState.attRange;
-    public float AttackRate => unitState.attRate;
 
     public void SetTargetTr(Transform _targetTr)
     {
@@ -71,11 +58,6 @@ public class StateMachine : MonoBehaviour
     public int GetNodeIdx()
     {
         return unitState.nodeIdx;
-    }
-
-    public IState GetState(int _idx)
-    {
-        return arrState[_idx];
     }
 
     public void EnqueueState(IState _state)
@@ -99,34 +81,34 @@ public class StateMachine : MonoBehaviour
     }
 
     #region stateTest
-    public void FinishState()
-    {
-        curState.End(ref unitState);
-        curState = stackState.Pop();
-        curStateCallback?.Invoke(curState);
-        curState.Start(ref unitState);
-    }
+    //public void FinishState()
+    //{
+    //    curState.End(ref unitState);
+    //    curState = stackState.Pop();
+    //    curStateCallback?.Invoke(curState);
+    //    curState.Start(ref unitState);
+    //}
 
-    public void ChangeState(IState _newState)
-    {
-        curState.End(ref unitState);
-        if (curState != _newState)
-        {
-            stackState.Push(curState);
-            curState = _newState;
-        }
-        curStateCallback?.Invoke(curState);
-        curState.Start(ref unitState);
-    }
+    //public void ChangeState(IState _newState)
+    //{
+    //    curState.End(ref unitState);
+    //    if (curState != _newState)
+    //    {
+    //        stackState.Push(curState);
+    //        curState = _newState;
+    //    }
+    //    curStateCallback?.Invoke(curState);
+    //    curState.Start(ref unitState);
+    //}
 
-    public void ResetState()
-    {
-        stackState.Clear();
-        curState.End(ref unitState);
-        curState = arrState[(int)EState.IDLE];
-        curStateCallback?.Invoke(curState);
-        curState.Start(ref unitState);
-    }
+    //public void ResetState()
+    //{
+    //    stackState.Clear();
+    //    curState.End(ref unitState);
+    //    curState = arrState[(int)EState.IDLE];
+    //    curStateCallback?.Invoke(curState);
+    //    curState.Start(ref unitState);
+    //}
     #endregion
 
     #region estate test
@@ -183,6 +165,5 @@ public class StateMachine : MonoBehaviour
     private EState curStateEnum = EState.NONE;
 
     private IState curState = null;
-    private CurStateDelegate curStateCallback = null;
     private CurStateEnumDelegate curStateEnumCallback = null;
 }
