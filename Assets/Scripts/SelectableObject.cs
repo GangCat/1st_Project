@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 public class SelectableObject : MonoBehaviour
 {
@@ -11,12 +10,13 @@ public class SelectableObject : MonoBehaviour
 
     public void Init(int _nodeIdx, NodeUpdateDelegate _updateNodeCallback = null)
     {
+        nodeIdx = _nodeIdx;
         updateNodeCallback = _updateNodeCallback;
         stateMachine = GetComponent<StateMachine>();
 
         if (stateMachine != null)
         {
-            stateMachine.Init(_nodeIdx, GetCurState);
+            stateMachine.Init(GetCurState);
             StateIdle();
         }
     }
@@ -187,8 +187,6 @@ public class SelectableObject : MonoBehaviour
                 StartCoroutine("CheckIsEnemyInChaseStartRangeCoroutine");
                 break;
             case EMoveState.CHASE:
-                // 지금 문제가 attackMove에서 chase로 바꾸고 적을 공격해서 만일 적이 사라지면 chase로 돌아옴.
-                // 그래서 타겟이 없어서 idle로 변경됨.
                 if (targetTr == null)
                 {
                     curMoveCondition = prevMoveCondition;
@@ -202,7 +200,6 @@ public class SelectableObject : MonoBehaviour
                     StartCoroutine("CheckIsTargetInChaseFinishRangeCoroutine");
                     StartCoroutine("CheckIsTargetInAttackRangeCoroutine");
                 }
-
                 break;
             case EMoveState.FOLLOW:
                 if (targetTr == null)
@@ -576,15 +573,26 @@ public class SelectableObject : MonoBehaviour
         }
     }
 
-
+    [Header("-Unit Attribute")]
     [SerializeField]
     private ESelectableObjectType objectType = ESelectableObjectType.None;
     [SerializeField]
     private bool isControllable = false;
 
+    [Header("-Unit Control Values")]
+    [SerializeField]
+    private float chaseStartRange = 0f;
+    [SerializeField]
+    private float chaseFinishRange = 0f;
+    [SerializeField]
+    private float attackRange = 0f;
+    [SerializeField]
+    private float resetPathDelay = 0.5f;
+    [SerializeField]
+    private float stopDelay = 2f;
+
     private EMoveState curMoveCondition = EMoveState.NONE;
     private EMoveState prevMoveCondition = EMoveState.NONE;
-
     private StateMachine stateMachine = null;
 
     private Vector3 targetPos = Vector3.zero;
@@ -592,21 +600,12 @@ public class SelectableObject : MonoBehaviour
 
     private Transform targetTr = null;
 
+    private int targetIdx = 0;
     private PF_Node[] arrPath = null;
     private PF_Node curWayNode = null;
-    private int targetIdx = 0;
 
     private NodeUpdateDelegate updateNodeCallback = null;
 
-    [SerializeField]
-    private float chaseStartRange = 0f;
-    [SerializeField]
-    private float chaseFinishRange = 0f;
-    [SerializeField]
-    private float attackRange = 0f;
-
-    private float resetPathDelay = 0.5f;
-    private float stopDelay = 2f;
-
+    private int nodeIdx = 0;
     private int testIdx = 0;
 }

@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public delegate void VoidVoidDelegate();
@@ -12,8 +11,6 @@ public delegate void VoidTemplateDelegate<T>(T _list);
 public delegate void VoidTransformDelegate(Transform _tr);
 public delegate void NodeUpdateDelegate(Vector3 _pos, int _nodeIdx);
 
-[System.Serializable]
-public enum ESelectableObjectType { None = - 1, UNIT, HERO, MAIN_BASE, TURRET, BUNKER, WALL, NUCLEAR, ENEMY_UNIT, ENEMY_STRUCTURE}
 
 [System.Serializable]
 public struct SUnitState
@@ -24,13 +21,14 @@ public struct SUnitState
     public Transform targetTr;
     [HideInInspector]
     public Vector3 targetPos;
-    [HideInInspector]
-    public int nodeIdx;
 
-    public float attRate;
     public float moveSpeed;
+    public float attRate;
     public int attDmg;
 }
+
+[System.Serializable]
+public enum ESelectableObjectType { None = - 1, UNIT, HERO, MAIN_BASE, TURRET, BUNKER, WALL, NUCLEAR, ENEMY_UNIT, ENEMY_STRUCTURE}
 
 public enum EState { NONE = -1, IDLE, MOVE, STOP, HOLD, ATTACK, LENGTH}
 

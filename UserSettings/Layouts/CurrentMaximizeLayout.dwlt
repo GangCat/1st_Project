@@ -65,7 +65,7 @@ MonoBehaviour:
   m_SerializedViewNames: []
   m_SerializedViewValues: []
   m_PlayModeViewName: GameView
-  m_ShowGizmos: 1
+  m_ShowGizmos: 0
   m_TargetDisplay: 0
   m_ClearColor: {r: 0, g: 0, b: 0, a: 0}
   m_TargetSize: {x: 1920, y: 1080}
@@ -75,7 +75,7 @@ MonoBehaviour:
   m_EnterPlayModeBehavior: 0
   m_UseMipMap: 0
   m_VSyncEnabled: 0
-  m_Gizmos: 1
+  m_Gizmos: 0
   m_Stats: 0
   m_SelectedSizes: 03000000000000000000000000000000000000000000000000000000000000000000000000000000
   m_ZoomArea:
@@ -573,9 +573,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 9.953781, y: 5.5082526, z: -7.0485435}
+    m_Target: {x: 3.562356, y: 15.625508, z: -16.099644}
     speed: 2
-    m_Value: {x: 9.953781, y: 5.5082526, z: -7.0485435}
+    m_Value: {x: 3.562356, y: 15.625508, z: -16.099644}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -621,13 +621,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: 0.06926851, y: 0.86650115, z: -0.4782484, w: 0.12564653}
+    m_Target: {x: 0.50273716, y: 0.23021334, z: -0.14100347, w: 0.82128316}
     speed: 2
-    m_Value: {x: 0.06926398, y: 0.86644447, z: -0.4782171, w: 0.1256383}
+    m_Value: {x: 0.50270426, y: 0.23019828, z: -0.14099425, w: 0.8212294}
   m_Size:
-    m_Target: 1.1685227
+    m_Target: 1.5901979
     speed: 2
-    m_Value: 1.1685227
+    m_Value: 1.5901979
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -742,9 +742,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 
-      m_LastClickedID: 0
-      m_ExpandedIDs: c2faffffcefaffff22fbffffd6740000b4750000
+      m_SelectedIDs: 34f8ffff
+      m_LastClickedID: -1996
+      m_ExpandedIDs: 2efbffffd4740000b2750000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -787,8 +787,8 @@ MonoBehaviour:
     y: 0
     width: 372
     height: 947
-  m_MinSize: {x: 275, y: 50}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 277, y: 71}
+  m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 10}
   m_Panes:
   - {fileID: 10}
@@ -914,7 +914,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets
+    - Assets/Scripts
     m_Globs: []
     m_OriginalText: 
     m_ImportLogFlags: 0
@@ -922,7 +922,7 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets
+  - Assets/Scripts
   m_LastFoldersGridSize: 16
   m_LastProjectPath: C:\Users\SAMSUNG\Desktop\NewFolder\Unity\1st Project
   m_LockTracker:
@@ -931,7 +931,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: de790000
     m_LastClickedID: 31198
-    m_ExpandedIDs: 00000000de790000e0790000
+    m_ExpandedIDs: 00000000dc790000de790000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -959,7 +959,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000de790000e0790000
+    m_ExpandedIDs: 00000000dc790000de790000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -984,8 +984,8 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 
-    m_LastClickedInstanceID: 0
+    m_SelectedInstanceIDs: 34f8ffff
+    m_LastClickedInstanceID: -1996
     m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c62300008aea0000887a000030360000
     m_RenameOverlay:
