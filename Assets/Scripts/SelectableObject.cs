@@ -66,6 +66,7 @@ public class SelectableObject : MonoBehaviour
     public void Patrol(Vector3 _wayPointTo)
     {
         targetPos = _wayPointTo;
+        wayPointStart = transform.position;
         curMoveCondition = EMoveState.PATROL;
 
         if (isControllable)
@@ -113,6 +114,7 @@ public class SelectableObject : MonoBehaviour
                     {
                         stateMachine.TargetTr = c.transform;
                         targetTr = c.transform;
+                        prevMoveCondition = curMoveCondition;
                         curMoveCondition = EMoveState.CHASE;
                         StateMove();
                         yield break;
@@ -220,7 +222,8 @@ public class SelectableObject : MonoBehaviour
                 // 그래서 타겟이 없어서 idle로 변경됨.
                 if (targetTr == null)
                 {
-                    curMoveCondition = EMoveState.NORMAL;
+                    curMoveCondition = prevMoveCondition;
+                    prevMoveCondition = EMoveState.NONE;
                     StateMove();
                     break;
                 }
@@ -297,10 +300,10 @@ public class SelectableObject : MonoBehaviour
 
     private IEnumerator CheckPatrolMoveCoroutine()
     {
-        Vector3 wayPointFrom = transform.position;
+        Vector3 wayPointFrom = wayPointStart;
         Vector3 wayPointTo = targetPos;
 
-        PF_PathRequestManager.RequestPath(wayPointFrom, wayPointTo, OnPathFound);
+        PF_PathRequestManager.RequestPath(transform.position, wayPointTo, OnPathFound);
         yield return null;
 
         while (curWayNode == null)
@@ -602,10 +605,12 @@ public class SelectableObject : MonoBehaviour
     private bool isControllable = false;
 
     private EMoveState curMoveCondition = EMoveState.NONE;
+    private EMoveState prevMoveCondition = EMoveState.NONE;
 
     private StateMachine stateMachine = null;
 
     private Vector3 targetPos = Vector3.zero;
+    private Vector3 wayPointStart = Vector3.zero;
 
     private Transform targetTr = null;
 
