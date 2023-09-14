@@ -362,14 +362,7 @@ public class SelectableObject : MonoBehaviour
     {
         while (true)
         {
-            if (stateMachine.TargetTr == null)
-            {
-                // 추격, 정찰, 대기, 홀드 등 뭐든간에 이전으로 돌아감.
-                FinishState();
-            }
-
-
-            if (Vector3.SqrMagnitude(stateMachine.TargetTr.position - transform.position) > Mathf.Pow(stateMachine.AttackRange, 2))
+            if (stateMachine.TargetTr != null && Vector3.SqrMagnitude(stateMachine.TargetTr.position - transform.position) > Mathf.Pow(stateMachine.AttackRange, 2))
             {
                 stateMachine.TargetTr = null;
 
@@ -383,10 +376,16 @@ public class SelectableObject : MonoBehaviour
                         if (c.CompareTag("EnemyUnit"))
                         {
                             stateMachine.SetTargetTr(c.transform);
-                            break;
+                            continue;
                         }
                     }
                 }
+            }
+            else if (stateMachine.TargetTr == null)
+            {
+                // 추격, 정찰, 대기, 홀드 등 뭐든간에 이전으로 돌아감.
+                FinishState();
+                yield break;
             }
 
             yield return null;

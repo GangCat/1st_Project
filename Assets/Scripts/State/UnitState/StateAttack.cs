@@ -13,13 +13,16 @@ public class StateAttack : IState
 
     public void Update(ref SUnitState _structState)
     {
-        myTr.rotation = Quaternion.LookRotation(targetTr.position - myTr.position);
-        elapsedTime += Time.deltaTime;
-        if (elapsedTime < attRate)
+        if (targetTr != null)
         {
-            elapsedTime = 0f;
-            // 공격 애니메이션 출력
-            targetTr.GetComponent<SelectableObject>().AttackDmg(_structState.attDmg);
+            myTr.rotation = Quaternion.LookRotation(targetTr.position - myTr.position);
+            elapsedTime += Time.deltaTime;
+            if (elapsedTime < attRate)
+            {
+                elapsedTime = 0f;
+                // 공격 애니메이션 출력
+                targetTr.GetComponent<SelectableObject>().AttackDmg(_structState.attDmg);
+            }
         }
     }
 
