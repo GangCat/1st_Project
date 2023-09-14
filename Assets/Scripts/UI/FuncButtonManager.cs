@@ -8,7 +8,7 @@ public class FuncButtonManager : MonoBehaviour
     {
         canvasUnitBaseFunc = GetComponentInChildren<CanvasUnitBaseFunc>();
         canvasStructureBaseFunc = GetComponentInChildren<CanvasStructureBaseFunc>();
-        canvasMainStructureFunc = GetComponentInChildren<CanvasMainBaseFunc>();
+        canvasMainStructureFunc = GetComponentInChildren<CanvasMainStructureFunc>();
         canvasSpawnUnitFunc = GetComponentInChildren<CanvasSpawnUnitFunc>();
         canvasTurretFunc = GetComponentInChildren<CanvasTurretFunc>();
         canvasBunkerFunc = GetComponentInChildren<CanvasBunkerFunc>();
@@ -41,8 +41,8 @@ public class FuncButtonManager : MonoBehaviour
                 canvasHeroFunc.SetActive(true);
                 break;
             case ESelectableObjectType.MAIN_BASE:
-                canvasStructureBaseFunc.SetActive(true);
                 canvasMainStructureFunc.SetActive(true);
+                canvasStructureBaseFunc.SetActive(true);
                 break;
             case ESelectableObjectType.TURRET:
                 canvasStructureBaseFunc.SetActive(true);
@@ -54,6 +54,10 @@ public class FuncButtonManager : MonoBehaviour
                 break;
             case ESelectableObjectType.WALL:
                 canvasStructureBaseFunc.SetActive(true);
+                break;
+            case ESelectableObjectType.BARRACK:
+                canvasMainStructureFunc.SetActive(true);
+                canvasSpawnUnitFunc.SetActive(true);
                 break;
             default:
                 break;
@@ -98,6 +102,9 @@ public class FuncButtonManager : MonoBehaviour
             case ESelectableObjectType.WALL:
                 canvasStructureBaseFunc.SetActive(false);
                 break;
+            case ESelectableObjectType.BARRACK:
+                canvasSpawnUnitFunc.SetActive(false);
+                break;
             default:
                 break;
         }
@@ -105,7 +112,7 @@ public class FuncButtonManager : MonoBehaviour
 
     private CanvasUnitBaseFunc canvasUnitBaseFunc = null;
     private CanvasStructureBaseFunc canvasStructureBaseFunc = null;
-    private CanvasMainBaseFunc canvasMainStructureFunc = null;
+    private CanvasMainStructureFunc canvasMainStructureFunc = null;
     private CanvasSpawnUnitFunc canvasSpawnUnitFunc = null;
     private CanvasTurretFunc canvasTurretFunc = null;
     private CanvasBunkerFunc canvasBunkerFunc = null;

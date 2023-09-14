@@ -8,7 +8,11 @@ public class BuildingTurret : Building
     {
         selectObj = GetComponentInChildren<SelectableObject>();
         selectObj.Init();
+        selectObj.SetMyTr(turretHeadTr);
     }
+
+    [SerializeField]
+    private Transform turretHeadTr = null;
 
     private SelectableObject selectObj = null;
 }

@@ -77,6 +77,8 @@ public class SelectableObjectManager : MonoBehaviour
                 case ESelectableObjectType.TURRET:
                 case ESelectableObjectType.BUNKER:
                 case ESelectableObjectType.WALL:
+                case ESelectableObjectType.BARRACK:
+                case ESelectableObjectType.NUCLEAR:
                     if (isFriendlyUnitInList) break;
                     if (!tempObj) tempObj = obj;
                     if (!tempObj.ObjectType.Equals(obj.ObjectType))
@@ -94,6 +96,7 @@ public class SelectableObjectManager : MonoBehaviour
         {
             listSelectedObject.Add(tempObj);
         }
+
         selectObjectCallback?.Invoke(listSelectedObject[0].ObjectType);
 
         tempListSelectableObject.Clear();

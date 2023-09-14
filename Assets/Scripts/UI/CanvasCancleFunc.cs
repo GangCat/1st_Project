@@ -10,7 +10,7 @@ public class CanvasCancleFunc : MonoBehaviour
         cancleBtn.onClick.AddListener(
             () =>
             {
-                ListUnitButtonCommand.Use(0);
+                ArrayUnitButtonCommand.Use(EUnitButtonCommand.CANCLE);
                 gameObject.SetActive(false);
             });
         gameObject.SetActive(false);

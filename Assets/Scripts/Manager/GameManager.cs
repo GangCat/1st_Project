@@ -43,21 +43,23 @@ public class GameManager : MonoBehaviour
 
     private void InitCommandList()
     {
-        ListUnitButtonCommand.Add(new CommandButtonCancle());
-        ListUnitButtonCommand.Add(new CommandButtonMove(inputMng));
-        ListUnitButtonCommand.Add(new CommandButtonStop(selectMng));
-        ListUnitButtonCommand.Add(new CommandButtonHold(selectMng));
-        ListUnitButtonCommand.Add(new CommandButtonPatrol(inputMng));
-        ListUnitButtonCommand.Add(new CommandButtonAttack(inputMng));
 
-        ListBuildCommand.Add(new CommandBuildCancle(buildMng, inputMng));
-        ListBuildCommand.Add(new CommandBuildConfirm(buildMng, inputMng));
-        ListBuildCommand.Add(new CommandBuildTurret(buildMng, inputMng));
-        ListBuildCommand.Add(new CommandBuildBunker(buildMng, inputMng));
-        ListBuildCommand.Add(new CommandBuildWall(buildMng, inputMng));
-        ListBuildCommand.Add(new CommandBuildNuclear(buildMng, inputMng));
+        ArrayUnitButtonCommand.Add(EUnitButtonCommand.CANCLE, new CommandButtonCancle());
+        ArrayUnitButtonCommand.Add(EUnitButtonCommand.MOVE, new CommandButtonMove(inputMng));
+        ArrayUnitButtonCommand.Add(EUnitButtonCommand.STOP, new CommandButtonStop(selectMng));
+        ArrayUnitButtonCommand.Add(EUnitButtonCommand.HOLD, new CommandButtonHold(selectMng));
+        ArrayUnitButtonCommand.Add(EUnitButtonCommand.PATROL, new CommandButtonPatrol(inputMng));
+        ArrayUnitButtonCommand.Add(EUnitButtonCommand.ATTACK, new CommandButtonAttack(inputMng));
 
+        ArrayBuildCommand.Add(EMainStructureCommnad.CANCLE, new CommandBuildCancle(buildMng, inputMng));
+        ArrayBuildCommand.Add(EMainStructureCommnad.CONFIRM, new CommandBuildConfirm(buildMng, inputMng));
+        ArrayBuildCommand.Add(EMainStructureCommnad.BUILD_TURRET, new CommandBuildTurret(buildMng, inputMng));
+        ArrayBuildCommand.Add(EMainStructureCommnad.BUILD_BUNKER, new CommandBuildBunker(buildMng, inputMng));
+        ArrayBuildCommand.Add(EMainStructureCommnad.BUILD_WALL, new CommandBuildWall(buildMng, inputMng));
+        ArrayBuildCommand.Add(EMainStructureCommnad.BUILD_NUCLEAR, new CommandBuildNuclear(buildMng, inputMng));
+        ArrayBuildCommand.Add(EMainStructureCommnad.BUILD_BARRACK, new CommandBuildBarrack(buildMng, inputMng));
 
+        ArraySpawnUnitCommand.Add(EBarrackCommand.RALLYPOINT, new CommandRallypoint(inputMng));
     }
 
     private void UnitSelect(ESelectableObjectType _selectObjectType)

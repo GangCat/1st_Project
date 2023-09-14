@@ -31,6 +31,11 @@ public class StateMachine : MonoBehaviour
         stackStateEnum.Push(curStateEnum);
     }
 
+    public void SetMyTr(Transform _myTr)
+    {
+        unitState.myTr = _myTr;
+    }
+
     public Vector3 TargetPos
     {
         get => unitState.targetPos;

@@ -37,7 +37,7 @@ public class InputManager : MonoBehaviour
 
     public bool IsMoveClick { get; set; }
     public bool IsBuildOperation { get; set; }
-
+    
     public Vector3 GetMousePos()
     {
         Vector3 mousePos = Input.mousePosition;
@@ -62,6 +62,12 @@ public class InputManager : MonoBehaviour
         isPatrolClick = true;
     }
 
+    public void OnClickRallyPointButton()
+    {
+        pickPosDisplayGo = Instantiate(pickPosPrefab, transform);
+        isRallyPointClick = true;
+    }
+
     public void OnClickCancleButton()
     {
         ClearCurFunc();
@@ -80,7 +86,27 @@ public class InputManager : MonoBehaviour
     {
         elapsedTime += Time.deltaTime;
 
-        if (isMoveClick)
+
+
+        if (isAttackClick)
+        {
+            RaycastHit hit;
+            if (pickPosDisplayGo != null && Functions.Picking(out hit))
+                pickPosDisplayGo.transform.position = hit.point;
+            if (Input.GetMouseButtonDown(0))
+            {
+                Destroy(pickPosDisplayGo);
+                ClearCurFunc();
+                AttackMoveWithMouseClick();
+
+            }
+            else if (Input.GetMouseButtonDown(1))
+            {
+                Destroy(pickPosDisplayGo);
+                ClearCurFunc();
+            }
+        }
+        else if (isMoveClick)
         {
             RaycastHit hit;
             if(pickPosDisplayGo != null && Functions.Picking(out hit))
@@ -92,24 +118,6 @@ public class InputManager : MonoBehaviour
                 MoveWithMouseClick();
             }
             else if(Input.GetMouseButtonDown(1))
-            {
-                Destroy(pickPosDisplayGo);
-                ClearCurFunc();
-            }
-        }
-        else if (isAttackClick)
-        {
-            RaycastHit hit;
-            if (pickPosDisplayGo != null && Functions.Picking(out hit))
-                pickPosDisplayGo.transform.position = hit.point;
-            if (Input.GetMouseButtonDown(0))
-            {
-                Destroy(pickPosDisplayGo);
-                ClearCurFunc();
-                AttackMoveWithMouseClick();
-                
-            }
-            else if (Input.GetMouseButtonDown(1))
             {
                 Destroy(pickPosDisplayGo);
                 ClearCurFunc();
@@ -140,10 +148,14 @@ public class InputManager : MonoBehaviour
                 if (EventSystem.current.IsPointerOverGameObject())
                     return;
 
-                ListBuildCommand.Use(1);
+                ArrayBuildCommand.Use(EMainStructureCommnad.CONFIRM);
             }
             else if (Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.Escape))
-                ListBuildCommand.Use(0);
+                ArrayBuildCommand.Use(EMainStructureCommnad.CANCLE);
+        }
+        else if (isRallyPointClick)
+        {
+
         }
         else
         {
@@ -307,6 +319,7 @@ public class InputManager : MonoBehaviour
     private bool isMoveClick = false;
     private bool isAttackClick = false;
     private bool isPatrolClick = false;
+    private bool isRallyPointClick = false;
 
     private GameObject pickPosDisplayGo;
 

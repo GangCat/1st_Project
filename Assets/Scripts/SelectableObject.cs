@@ -30,6 +30,11 @@ public class SelectableObject : MonoBehaviour
         //Debug.LogFormat("Hit Dmg {0}", _dmg);
     }
 
+    public void SetMyTr(Transform _myTr)
+    {
+        stateMachine.SetMyTr(_myTr);
+    }
+
 
     public void FollowTarget(Transform _targetTr)
     {
@@ -448,6 +453,7 @@ public class SelectableObject : MonoBehaviour
 
     private IEnumerator AttackCoroutine()
     {
+        yield return null;
         targetTr = stateMachine.TargetTr;
         while (true)
         {
@@ -482,6 +488,7 @@ public class SelectableObject : MonoBehaviour
 
     private IEnumerator CheckHoldCoroutine()
     {
+        yield return null;
         while (true)
         {
             Collider[] arrCollider = null;
