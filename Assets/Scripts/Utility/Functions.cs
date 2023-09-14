@@ -85,9 +85,6 @@ public static class Functions
         Vector3 mousePos = Input.mousePosition;
         Ray ray = Camera.main.ScreenPointToRay(mousePos);
         RaycastHit hit;
-#if UNITY_EDITOR
-        Debug.DrawRay(ray.origin, ray.direction * 1000f, Color.red, 1f);
-#endif
         if (Physics.Raycast(ray, out hit))
         {
             if (hit.transform.CompareTag(_tag))
@@ -96,9 +93,7 @@ public static class Functions
                 return true;
             }
         }
-#if UNITY_EDITOR
-        Debug.Log(hit);
-#endif
+
         return false;
     }
 
@@ -117,10 +112,6 @@ public static class Functions
         Ray ray = Camera.main.ScreenPointToRay(mousePos);
         RaycastHit hit;
 
-#if UNITY_EDITOR
-        Debug.DrawRay(ray.origin, ray.direction * 1000f, Color.red, 1f);
-#endif
-
         if (Physics.Raycast(ray, out hit, 1000f, _layerMask))
         {
             if (hit.transform.CompareTag(_tag))
@@ -129,9 +120,6 @@ public static class Functions
                 return true;
             }
         }
-#if UNITY_EDITOR
-        Debug.Log(hit);
-#endif
         return false;
     }
 
@@ -146,17 +134,10 @@ public static class Functions
         Vector3 mousePos = Input.mousePosition;
         Ray ray = Camera.main.ScreenPointToRay(mousePos);
 
-#if UNITY_EDITOR
-        Debug.DrawRay(ray.origin, ray.direction * 1000f, Color.red, 1f);
-#endif
-
         if (Physics.Raycast(ray, out _hit, 1000f, _layerMask))
         {
             return true;
         }
-#if UNITY_EDITOR
-        Debug.Log(_hit);
-#endif
         return false;
     }
 

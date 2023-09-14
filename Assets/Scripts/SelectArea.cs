@@ -33,17 +33,11 @@ public class SelectArea : MonoBehaviour
 
     private void OnTriggerEnter(Collider _other)
     {
-#if UNITY_EDITOR
-        Debug.Log(_other.name);
-#endif
         selectObjectCallback?.Invoke(_other.GetComponent<SelectableObject>());
     }
 
     private void OnTriggerExit(Collider _other)
     {
-#if UNITY_EDITOR
-        Debug.Log("!" + _other.name);
-#endif
         unSelectObjectCallback?.Invoke(_other.GetComponent<SelectableObject>());
     }
 

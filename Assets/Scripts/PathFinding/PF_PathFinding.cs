@@ -59,7 +59,7 @@ public class PF_PathFinding : MonoBehaviour
                 if (curNode.Equals(targetNode))
                 {
                     sw.Stop();
-                    print("path found: " + sw.ElapsedMilliseconds + "ms");
+                    //print("path found: " + sw.ElapsedMilliseconds + "ms");
                     isPathSuccess = true;
                     break;
                 }

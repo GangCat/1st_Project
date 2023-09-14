@@ -78,6 +78,8 @@ public class InputManager : MonoBehaviour
 
     private void Update()
     {
+        elapsedTime += Time.deltaTime;
+
         if (isMoveClick)
         {
             RaycastHit hit;
@@ -105,6 +107,7 @@ public class InputManager : MonoBehaviour
                 Destroy(pickPosDisplayGo);
                 ClearCurFunc();
                 AttackMoveWithMouseClick();
+                
             }
             else if (Input.GetMouseButtonDown(1))
             {
@@ -122,6 +125,7 @@ public class InputManager : MonoBehaviour
                 Destroy(pickPosDisplayGo);
                 ClearCurFunc();
                 PatrolWithMouseClick();
+                
             }
             else if (Input.GetMouseButtonDown(1))
             {
@@ -146,7 +150,9 @@ public class InputManager : MonoBehaviour
             if (Input.GetMouseButtonDown(0))
                 DragOperateWithMouseClick();
             else if (Input.GetMouseButtonDown(1))
+            {
                 MoveWithMouseClick();
+            }
         }
     }
 
@@ -158,6 +164,12 @@ public class InputManager : MonoBehaviour
 
     private void MoveWithMouseClick()
     {
+        if (elapsedTime < 0.2f)
+            return;
+        else
+            elapsedTime = 0f;
+
+
         if (EventSystem.current.IsPointerOverGameObject())
             return;
 
@@ -175,6 +187,11 @@ public class InputManager : MonoBehaviour
 
     private void AttackMoveWithMouseClick()
     {
+        if (elapsedTime < 0.2f)
+            return;
+        else
+            elapsedTime = 0f;
+
         if (EventSystem.current.IsPointerOverGameObject())
             return;
 
@@ -192,6 +209,11 @@ public class InputManager : MonoBehaviour
 
     private void PatrolWithMouseClick()
     {
+        if (elapsedTime < 0.2f)
+            return;
+        else
+            elapsedTime = 0f;
+
         if (EventSystem.current.IsPointerOverGameObject())
             return;
 
@@ -279,6 +301,8 @@ public class InputManager : MonoBehaviour
     private GameObject pickPosPrefab = null;
     [SerializeField]
     private float pickPosDisplayHideDelay = 0.3f;
+
+    private float elapsedTime = 0f;
 
     private bool isMoveClick = false;
     private bool isAttackClick = false;

@@ -28,7 +28,7 @@ public struct SUnitState
 }
 
 [System.Serializable]
-public enum ESelectableObjectType { None = - 1, UNIT, HERO, MAIN_BASE, TURRET, BUNKER, WALL, NUCLEAR, ENEMY_UNIT, ENEMY_STRUCTURE}
+public enum ESelectableObjectType { None = - 1, UNIT, HERO, MAIN_BASE, TURRET, BUNKER, WALL, BARRACK, NUCLEAR, ENEMY_UNIT, ENEMY_STRUCTURE}
 
 public enum EState { NONE = -1, IDLE, MOVE, STOP, HOLD, ATTACK, LENGTH}
 

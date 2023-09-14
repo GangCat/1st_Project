@@ -65,7 +65,7 @@ MonoBehaviour:
   m_SerializedViewNames: []
   m_SerializedViewValues: []
   m_PlayModeViewName: GameView
-  m_ShowGizmos: 0
+  m_ShowGizmos: 1
   m_TargetDisplay: 0
   m_ClearColor: {r: 0, g: 0, b: 0, a: 0}
   m_TargetSize: {x: 1920, y: 1080}
@@ -75,8 +75,8 @@ MonoBehaviour:
   m_EnterPlayModeBehavior: 0
   m_UseMipMap: 0
   m_VSyncEnabled: 0
-  m_Gizmos: 0
-  m_Stats: 0
+  m_Gizmos: 1
+  m_Stats: 1
   m_SelectedSizes: 03000000000000000000000000000000000000000000000000000000000000000000000000000000
   m_ZoomArea:
     m_HRangeLocked: 0
@@ -573,9 +573,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 3.562356, y: 15.625508, z: -16.099644}
+    m_Target: {x: 0.877272, y: 3.015327, z: -3.9021785}
     speed: 2
-    m_Value: {x: 3.562356, y: 15.625508, z: -16.099644}
+    m_Value: {x: 0.87727195, y: 3.015327, z: -3.9021785}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -621,13 +621,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: 0.50273716, y: 0.23021334, z: -0.14100347, w: 0.82128316}
+    m_Target: {x: -0.10947444, y: -0.5531332, z: 0.07364145, w: -0.8226736}
     speed: 2
-    m_Value: {x: 0.50270426, y: 0.23019828, z: -0.14099425, w: 0.8212294}
+    m_Value: {x: -0.10823199, y: -0.5531999, z: 0.072805814, w: -0.82277274}
   m_Size:
-    m_Target: 1.5901979
+    m_Target: 2.5406692
     speed: 2
-    m_Value: 1.5901979
+    m_Value: 2.5406692
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -742,9 +742,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 34f8ffff
-      m_LastClickedID: -1996
-      m_ExpandedIDs: 2efbffffd4740000b2750000
+      m_SelectedIDs: 94760000
+      m_LastClickedID: 30356
+      m_ExpandedIDs: 2efbffffb47500005a770000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -760,7 +760,7 @@ MonoBehaviour:
         m_IsRenaming: 0
         m_OriginalEventType: 11
         m_IsRenamingFilename: 0
-        m_ClientGUIView: {fileID: 7}
+        m_ClientGUIView: {fileID: 4}
       m_SearchString: 
     m_ExpandedScenes: []
     m_CurrenRootInstanceID: 0
@@ -787,8 +787,8 @@ MonoBehaviour:
     y: 0
     width: 372
     height: 947
-  m_MinSize: {x: 277, y: 71}
-  m_MaxSize: {x: 4002, y: 4021}
+  m_MinSize: {x: 275, y: 50}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 10}
   m_Panes:
   - {fileID: 10}
@@ -914,7 +914,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scripts
+    - Assets/Resources/Prefabs
     m_Globs: []
     m_OriginalText: 
     m_ImportLogFlags: 0
@@ -922,16 +922,16 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/Scripts
+  - Assets/Resources/Prefabs
   m_LastFoldersGridSize: 16
   m_LastProjectPath: C:\Users\SAMSUNG\Desktop\NewFolder\Unity\1st Project
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: de790000
-    m_LastClickedID: 31198
-    m_ExpandedIDs: 00000000dc790000de790000
+    m_SelectedIDs: 287a0000
+    m_LastClickedID: 31272
+    m_ExpandedIDs: 00000000de790000e0790000ee790000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -959,7 +959,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000dc790000de790000
+    m_ExpandedIDs: 00000000de790000e0790000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -984,24 +984,24 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 34f8ffff
-    m_LastClickedInstanceID: -1996
+    m_SelectedInstanceIDs: 94760000
+    m_LastClickedInstanceID: 30356
     m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c62300008aea0000887a000030360000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: 
-      m_OriginalName: 
+      m_Name: P_TempWall4X
+      m_OriginalName: P_TempWall4X
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 0
+      m_UserData: 37540
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 11
+      m_OriginalEventType: 0
       m_IsRenamingFilename: 1
       m_ClientGUIView: {fileID: 11}
     m_CreateAssetUtility:

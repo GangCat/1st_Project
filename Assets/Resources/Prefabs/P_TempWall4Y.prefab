@@ -27,8 +27,8 @@ Transform:
   m_GameObject: {fileID: 3143580946574777160}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 2, z: 1}
-  m_LocalScale: {x: 0.9, y: 4, z: 2.9}
+  m_LocalPosition: {x: 0, y: 2, z: -1.5}
+  m_LocalScale: {x: 0.9, y: 4, z: 3.9}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3845910304497348173}
@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: 8964975729645022558}
   - component: {fileID: 6126758822872318196}
   m_Layer: 9
-  m_Name: P_TempWall
+  m_Name: P_TempWall4Y
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -138,8 +138,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.9, y: 1, z: 2.9}
-  m_Center: {x: 0, y: 0.5, z: 1}
+  m_Size: {x: 0.9, y: 4, z: 3.9}
+  m_Center: {x: 0, y: 2, z: -1.5}
 --- !u!114 &7534801930405887633
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -167,7 +167,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectType: 5
-  isControllable: 0
+  isMovable: 0
+  chaseStartRange: 0
+  chaseFinishRange: 0
+  attackRange: 0
+  resetPathDelay: 0.5
+  stopDelay: 2
 --- !u!114 &6126758822872318196
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -181,4 +186,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myXGrid: 1
-  myYGrid: 3
+  myYGrid: 4
