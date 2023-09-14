@@ -12,7 +12,7 @@ public class BuildManager : MonoBehaviour
 
     public void ShowBluepirnt(ESelectableObjectType _buildingType)
     {
-        //Debug.Log(_buildingType);
+        if (isBlueprint) return;
         switch (_buildingType)
         {
             case ESelectableObjectType.TURRET:
@@ -38,6 +38,8 @@ public class BuildManager : MonoBehaviour
 
     private IEnumerator ShowBlueprint()
     {
+        isBlueprint = true;
+
         if (curBuilding == null) yield break;
 
         curBuilding.Init(grid);
@@ -59,6 +61,7 @@ public class BuildManager : MonoBehaviour
         StopAllCoroutines();
         curBuilding.BuildComplete();
         Destroy(curBuilding.gameObject);
+        isBlueprint = false;
         return false;
     }
 
@@ -72,6 +75,7 @@ public class BuildManager : MonoBehaviour
             curBuilding.UpdateNodeUnWalkable();
             curBuilding.BuildComplete();
             curBuilding.transform.parent = null;
+            isBlueprint = false;
             return false;
         }
 
@@ -92,4 +96,5 @@ public class BuildManager : MonoBehaviour
     private Building curBuilding = null;
     private PF_Grid grid = null;
     private PF_Node curNode = null;
+    private bool isBlueprint = false;
 }
