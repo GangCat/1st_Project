@@ -14,7 +14,7 @@ public class SelectableObject : MonoBehaviour
         stateMachine = GetComponent<StateMachine>();
 
         if (stateMachine != null)
-            stateMachine.Init(_nodeIdx, _updateNodeCallback);
+            stateMachine.Init(_nodeIdx, _updateNodeCallback, GetCurState, GetCurState);
     }
 
     public void AttackDmg(int _dmg)
@@ -26,7 +26,7 @@ public class SelectableObject : MonoBehaviour
     public void FollowTarget(Transform _targetTr)
     {
         targetTr = _targetTr;
-        moveState = EMoveState.FOLLOW;
+        curMoveCondition = EMoveState.FOLLOW;
 
         if (isControllable)
             StateMove();
@@ -35,7 +35,7 @@ public class SelectableObject : MonoBehaviour
     public void FollowEnemy(Transform _targetTr)
     {
         targetTr = _targetTr;
-        moveState = EMoveState.FOLLOW_ENEMY;
+        curMoveCondition = EMoveState.FOLLOW_ENEMY;
 
         if (isControllable)
             StateMove();
@@ -45,7 +45,7 @@ public class SelectableObject : MonoBehaviour
     {
         //targetPos = _targetPos;
         targetPos = _targetPos;
-        moveState = EMoveState.NORMAL;
+        curMoveCondition = EMoveState.NORMAL;
 
         if (isControllable)
             StateMove();
@@ -54,7 +54,7 @@ public class SelectableObject : MonoBehaviour
     public void MoveAttack(Vector3 _targetPos)
     {
         targetPos = _targetPos;
-        moveState = EMoveState.ATTACK;
+        curMoveCondition = EMoveState.ATTACK;
 
         if (isControllable)
             StateMove();
@@ -63,7 +63,7 @@ public class SelectableObject : MonoBehaviour
     public void Patrol(Vector3 _wayPointTo)
     {
         targetPos = _wayPointTo;
-        moveState = EMoveState.PATROL;
+        curMoveCondition = EMoveState.PATROL;
 
         if (isControllable)
             StateMove();
@@ -72,7 +72,8 @@ public class SelectableObject : MonoBehaviour
     public void Stop()
     {
         if (isControllable)
-            stateMachine.ChangeState(stateMachine.GetState((int)EState.STOP));
+            //stateMachine.ChangeState(stateMachine.GetState((int)EState.STOP));
+            stateMachine.ChangeStateEnum(EState.STOP);
     }
 
     public void Hold()
@@ -82,13 +83,11 @@ public class SelectableObject : MonoBehaviour
     }
 
 
-
-
-
-
+    #region StateIdleCondition
     private void StateIdle()
     {
-        stateMachine.ChangeState(stateMachine.GetState((int)EState.IDLE));
+        //stateMachine.ChangeState(stateMachine.GetState((int)EState.IDLE));
+        stateMachine.ChangeStateEnum(EState.IDLE);
         StartCoroutine("CheckEnemyInChaseStartRangeCoroutine");
     }
 
@@ -114,24 +113,25 @@ public class SelectableObject : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
         }
     }
+    #endregion
 
-
+    #region StateMoveConditions
     private void StateMove()
     {
         StopAllCoroutines();
 
-        switch (moveState)
+        switch (curMoveCondition)
         {
             case EMoveState.NORMAL:
                 StartCoroutine("CheckNormalMoveCoroutine");
                 break;
             case EMoveState.ATTACK:
                 StartCoroutine("CheckNormalMoveCoroutine");
-                StartCoroutine("CheckEnemyInAttRangeCoroutine");
+                StartCoroutine("CheckEnemyInChaseStartRangeCoroutine");
                 break;
             case EMoveState.PATROL:
                 StartCoroutine("CheckPatrolMoveCoroutine");
-                StartCoroutine("CheckEnemyInAttRangeCoroutine");
+                StartCoroutine("CheckEnemyInChaseStartRangeCoroutine");
                 break;
             case EMoveState.FOLLOW:
                 StartCoroutine("CheckFollowMoveCoroutine");
@@ -141,7 +141,7 @@ public class SelectableObject : MonoBehaviour
                 break;
             case EMoveState.FOLLOW_ENEMY:
                 StartCoroutine("CheckFollowMoveCoroutine");
-                StartCoroutine("CheckEnemyInAttRangeCoroutine");
+                StartCoroutine("CheckEnemyInChaseStartRangeCoroutine");
                 break;
             default:
                 break;
@@ -158,7 +158,8 @@ public class SelectableObject : MonoBehaviour
             yield return null;
 
         stateMachine.TargetPos = curWayNode.worldPos;
-        stateMachine.ChangeState(stateMachine.GetState((int)EState.MOVE));
+        //stateMachine.ChangeState(stateMachine.GetState((int)EState.MOVE));
+        stateMachine.ChangeStateEnum(EState.MOVE);
 
         while (true)
         {
@@ -209,7 +210,8 @@ public class SelectableObject : MonoBehaviour
             yield return null;
 
         stateMachine.TargetPos = curWayNode.worldPos;
-        stateMachine.ChangeState(stateMachine.GetState((int)EState.MOVE));
+        //stateMachine.ChangeState(stateMachine.GetState((int)EState.MOVE));
+        stateMachine.ChangeStateEnum(EState.MOVE);
 
         while (true)
         {
@@ -229,8 +231,8 @@ public class SelectableObject : MonoBehaviour
             }
 
 
-                // 노드에 도착할 때마다 새로운 노드로 이동 갱신
-                if (Vector3.SqrMagnitude(transform.position - curWayNode.worldPos) < 0.01f)
+            // 노드에 도착할 때마다 새로운 노드로 이동 갱신
+            if (Vector3.SqrMagnitude(transform.position - curWayNode.worldPos) < 0.01f)
             {
                 ++targetIdx;
                 updateNodeCallback?.Invoke(transform.position, stateMachine.GetNodeIdx());
@@ -269,7 +271,8 @@ public class SelectableObject : MonoBehaviour
         float elapsedTime = 0f;
 
         stateMachine.TargetPos = curWayNode.worldPos;
-        stateMachine.ChangeState(stateMachine.GetState((int)EState.MOVE));
+        //stateMachine.ChangeState(stateMachine.GetState((int)EState.MOVE));
+        stateMachine.ChangeStateEnum(EState.MOVE);
 
         while (true)
         {
@@ -326,11 +329,14 @@ public class SelectableObject : MonoBehaviour
             curWayNode = arrPath[targetIdx];
         }
     }
+    #endregion
 
+    #region StateStopCondition
     private void StateStop()
     {
         StopAllCoroutines();
-        stateMachine.ChangeState(stateMachine.GetState((int)EState.STOP));
+        //stateMachine.ChangeState(stateMachine.GetState((int)EState.STOP));
+        stateMachine.ChangeStateEnum(EState.STOP);
         StartCoroutine("CheckStopCoroutine");
     }
 
@@ -338,13 +344,17 @@ public class SelectableObject : MonoBehaviour
     {
         yield return new WaitForSeconds(stopDelay);
 
-        stateMachine.ResetState();
+        //stateMachine.ResetState();
+        stateMachine.ResetStateEnum();
     }
+    #endregion
 
+    #region StateAttackCondition
     private void StateAttack()
     {
         StopAllCoroutines();
-        stateMachine.ChangeState(stateMachine.GetState((int)EState.ATTACK));
+        //stateMachine.ChangeState(stateMachine.GetState((int)EState.ATTACK));
+        stateMachine.ChangeStateEnum(EState.ATTACK);
         StartCoroutine("CheckAttackCoroutine");
     }
 
@@ -352,7 +362,14 @@ public class SelectableObject : MonoBehaviour
     {
         while (true)
         {
-            if (stateMachine.TargetTr != null && Vector3.SqrMagnitude(stateMachine.TargetTr.position - transform.position) > Mathf.Pow(stateMachine.AttackRange, 2))
+            if (stateMachine.TargetTr == null)
+            {
+                // 추격, 정찰, 대기, 홀드 등 뭐든간에 이전으로 돌아감.
+                FinishState();
+            }
+
+
+            if (Vector3.SqrMagnitude(stateMachine.TargetTr.position - transform.position) > Mathf.Pow(stateMachine.AttackRange, 2))
             {
                 stateMachine.TargetTr = null;
 
@@ -372,21 +389,17 @@ public class SelectableObject : MonoBehaviour
                 }
             }
 
-            if (stateMachine.TargetTr == null)
-            {
-                // 추격, 정찰, 대기, 홀드 등 뭐든간에 이전으로 돌아감.
-                FinishState();
-            }
-
-
             yield return null;
         }
     }
+    #endregion
 
+    #region StateHoldCondition
     private void StateHold()
     {
         StopAllCoroutines();
-        stateMachine.ChangeState(stateMachine.GetState((int)EState.HOLD));
+        //stateMachine.ChangeState(stateMachine.GetState((int)EState.HOLD));
+        stateMachine.ChangeStateEnum(EState.HOLD);
         StartCoroutine("CheckHoldCoroutine");
     }
 
@@ -412,11 +425,14 @@ public class SelectableObject : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
         }
     }
+    #endregion
+
 
     private void FinishState()
     {
         StopAllCoroutines();
-        stateMachine.FinishState();
+        //stateMachine.FinishState();
+        stateMachine.FinishStateEnum();
     }
 
 
@@ -437,13 +453,48 @@ public class SelectableObject : MonoBehaviour
         }
     }
 
+    private void GetCurState(IState _curState)
+    {
+        
+
+        switch (_curState)
+        {
+
+        }
+
+    }
+
+    private void GetCurState(EState _curStateEnum)
+    {
+        switch (_curStateEnum)
+        {
+            case EState.IDLE:
+                StateIdle();
+                break;
+            case EState.MOVE:
+                StateMove();
+                break;
+            case EState.STOP:
+                StateStop();
+                break;
+            case EState.HOLD:
+                StateHold();
+                break;
+            case EState.ATTACK:
+                StateAttack();
+                break;
+            default:
+                break;
+        }
+    }
+
 
     [SerializeField]
     private ESelectableObjectType objectType = ESelectableObjectType.None;
     [SerializeField]
     private bool isControllable = false;
 
-    private EMoveState moveState = EMoveState.NONE;
+    private EMoveState curMoveCondition = EMoveState.NONE;
 
     private StateMachine stateMachine = null;
 
@@ -460,4 +511,7 @@ public class SelectableObject : MonoBehaviour
     private float traceStartRange = 7f;
     private float resetPathDelay = 2f;
     private float stopDelay = 2f;
+
+    private EState curState = EState.NONE;
+
 }

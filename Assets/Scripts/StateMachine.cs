@@ -4,11 +4,20 @@ using UnityEngine;
 
 public class StateMachine : MonoBehaviour
 {
+    public delegate void CurStateDelegate(IState _curState);
+    public delegate void CurStateEnumDelegate(EState _curEState);
 
-    public void Init(int _nodeIdx, NodeUpdateDelegate _updateNodeCallback)
+
+    public void Init(
+        int _nodeIdx, 
+        NodeUpdateDelegate _updateNodeCallback,
+        CurStateDelegate _curStateCallback,
+        CurStateEnumDelegate _curStateEnumCallback)
     {
-        unitState.updateNodeCallback = _updateNodeCallback;
         unitState.nodeIdx = _nodeIdx;
+        unitState.updateNodeCallback = _updateNodeCallback;
+        curStateCallback = _curStateCallback;
+        curStateEnumCallback = _curStateEnumCallback;
 
         IState stateIdle = new StateIdle();
         IState stateMove = new StateMove();
@@ -31,10 +40,12 @@ public class StateMachine : MonoBehaviour
         arrState[(int)EState.FOLLOW] = stateFollow;
 
         unitState.myTr = transform;
-        unitState.callback = ChangeState;
+        //unitState.callback = ChangeState;
 
         curState = stateIdle;
+        curStateEnum = EState.IDLE;
         stackState.Push(curState);
+        stackStateEnum.Push(curStateEnum);
     }
 
     public Vector3 TargetPos
@@ -87,10 +98,12 @@ public class StateMachine : MonoBehaviour
         stackState.Clear();
     }
 
+    #region stateTest
     public void FinishState()
     {
         curState.End(ref unitState);
         curState = stackState.Pop();
+        curStateCallback?.Invoke(curState);
         curState.Start(ref unitState);
     }
 
@@ -102,6 +115,7 @@ public class StateMachine : MonoBehaviour
             stackState.Push(curState);
             curState = _newState;
         }
+        curStateCallback?.Invoke(curState);
         curState.Start(ref unitState);
     }
 
@@ -110,17 +124,53 @@ public class StateMachine : MonoBehaviour
         stackState.Clear();
         curState.End(ref unitState);
         curState = arrState[(int)EState.IDLE];
+        curStateCallback?.Invoke(curState);
+        curState.Start(ref unitState);
+    }
+    #endregion
+
+    #region estate test
+    public void FinishStateEnum()
+    {
+        curState.End(ref unitState);
+        curStateEnum = stackStateEnum.Pop();
+        curStateEnumCallback?.Invoke(curStateEnum);
+        curState = arrState[(int)curStateEnum];
         curState.Start(ref unitState);
     }
 
+    public void ChangeStateEnum(EState _newState)
+    {
+        curState.End(ref unitState);
+        if (curStateEnum != _newState)
+        {
+            stackStateEnum.Push(curStateEnum);
+            curStateEnum = _newState;
+            curState = arrState[(int)curStateEnum];
+        }
+        //curStateEnumCallback?.Invoke(curStateEnum);
+        curState.Start(ref unitState);
+    }
 
+    public void ResetStateEnum()
+    {
+        stackStateEnum.Clear();
+
+        curState.End(ref unitState);
+
+        curStateEnum = EState.IDLE;
+        curState = arrState[(int)curStateEnum];
+
+        curStateEnumCallback?.Invoke(curStateEnum);
+        curState.Start(ref unitState);
+    }
+    #endregion
 
     private void Update()
     {
         if (curState != null)
             curState.Update(ref unitState);
     }
-
 
     [SerializeField]
     private SUnitState unitState;
@@ -129,5 +179,10 @@ public class StateMachine : MonoBehaviour
     private Stack<IState> stackState = new Stack<IState>();
     private IState[] arrState = null;
 
+    private Stack<EState> stackStateEnum = new Stack<EState>();
+    private EState curStateEnum = EState.NONE;
+
     private IState curState = null;
+    private CurStateDelegate curStateCallback = null;
+    private CurStateEnumDelegate curStateEnumCallback = null;
 }

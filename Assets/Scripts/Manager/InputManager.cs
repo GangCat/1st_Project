@@ -6,8 +6,6 @@ using UnityEngine.EventSystems;
 
 public class InputManager : MonoBehaviour
 {
-    
-
     public void Init(
         VoidVec3Delegate _pickingCallback,
         VoidTransformDelegate _PickingObjectCallback,
