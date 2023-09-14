@@ -27,19 +27,9 @@ public struct SUnitState
     [HideInInspector]
     public int nodeIdx;
 
-    public float moveSpeed;
-    public float traceStartRange;
-    public float traceEndRange;
-    public float attRange;
     public float attRate;
-    
+    public float moveSpeed;
     public int attDmg;
-
-    public bool isHold;
-    public bool isAttackMove;
-
-    public IState[] arrState;
-    public NodeUpdateDelegate updateNodeCallback;
 }
 
 public enum EState { NONE = -1, IDLE, MOVE, STOP, HOLD, ATTACK, LENGTH}

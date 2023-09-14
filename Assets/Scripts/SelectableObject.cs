@@ -5,7 +5,7 @@ using static UnityEngine.GraphicsBuffer;
 
 public class SelectableObject : MonoBehaviour
 {
-    public enum EMoveState { NONE = -1, NORMAL, ATTACK, PATROL, FOLLOW, CHASE, FOLLOW_ENEMY }
+    public enum EMoveState { NONE = -1, NORMAL, ATTACK, PATROL, CHASE, FOLLOW, FOLLOW_ENEMY }
     public ESelectableObjectType ObjectType => objectType;
     public Vector3 GetPos => transform.position;
 
@@ -16,7 +16,7 @@ public class SelectableObject : MonoBehaviour
 
         if (stateMachine != null)
         {
-            stateMachine.Init(_nodeIdx, _updateNodeCallback, GetCurState);
+            stateMachine.Init(_nodeIdx, GetCurState);
             StateIdle();
         }
     }
@@ -30,16 +30,12 @@ public class SelectableObject : MonoBehaviour
     public void FollowTarget(Transform _targetTr)
     {
         stateMachine.TargetTr = _targetTr;
-        curMoveCondition = EMoveState.FOLLOW;
+        targetTr = _targetTr;
 
-        if (isControllable)
-            StateMove();
-    }
-
-    public void FollowEnemy(Transform _targetTr)
-    {
-        stateMachine.TargetTr = _targetTr;
-        curMoveCondition = EMoveState.FOLLOW_ENEMY;
+        if(targetTr.CompareTag("EnemyUnit"))
+            curMoveCondition = EMoveState.FOLLOW_ENEMY;
+        else
+            curMoveCondition = EMoveState.FOLLOW;
 
         if (isControllable)
             StateMove();
@@ -89,6 +85,7 @@ public class SelectableObject : MonoBehaviour
     #region StateIdleCondition
     private void StateIdle()
     {
+        stateMachine.TargetTr = null;
         updateNodeCallback?.Invoke(transform.position, stateMachine.GetNodeIdx());
         Debug.Log("Idle " + testIdx);
         ++testIdx;
@@ -164,28 +161,7 @@ public class SelectableObject : MonoBehaviour
                     yield break;
                 }
             }
-            // hold의 경우 적이 공격 범위에 들어오기 전까지 타겟이 없음.
-            // 즉 hold를 위한 추가적인 조건임.
-            else
-            {
-                Collider[] arrCollider = null;
-                arrCollider = Physics.OverlapSphere(transform.position, attackRange, 1 << LayerMask.NameToLayer("SelectableObject"));
-
-                if (arrCollider.Length > 1)
-                {
-                    foreach (Collider c in arrCollider)
-                    {
-                        if (c.CompareTag("EnemyUnit"))
-                        {
-                            stateMachine.TargetTr = c.transform;
-                            StateAttack();
-                            yield break;
-                        }
-                    }
-                }
-            }
-
-            yield return new WaitForSeconds(0.5f);
+            yield return null;
         }
     }
 
@@ -210,13 +186,6 @@ public class SelectableObject : MonoBehaviour
                 StartCoroutine("CheckPatrolMoveCoroutine");
                 StartCoroutine("CheckIsEnemyInChaseStartRangeCoroutine");
                 break;
-            case EMoveState.FOLLOW:
-                if (targetTr == null)
-                    ResetState();
-                else
-                    StartCoroutine("CheckFollowMoveCoroutine");
-
-                break;
             case EMoveState.CHASE:
                 // 지금 문제가 attackMove에서 chase로 바꾸고 적을 공격해서 만일 적이 사라지면 chase로 돌아옴.
                 // 그래서 타겟이 없어서 idle로 변경됨.
@@ -233,6 +202,13 @@ public class SelectableObject : MonoBehaviour
                     StartCoroutine("CheckIsTargetInChaseFinishRangeCoroutine");
                     StartCoroutine("CheckIsTargetInAttackRangeCoroutine");
                 }
+
+                break;
+            case EMoveState.FOLLOW:
+                if (targetTr == null)
+                    ResetState();
+                else
+                    StartCoroutine("CheckFollowMoveCoroutine");
 
                 break;
             case EMoveState.FOLLOW_ENEMY:
@@ -252,6 +228,8 @@ public class SelectableObject : MonoBehaviour
 
     private IEnumerator CheckNormalMoveCoroutine()
     {
+        stateMachine.TargetTr = null;
+
         PF_PathRequestManager.RequestPath(transform.position, targetPos, OnPathFound);
         yield return null;
 
@@ -519,9 +497,9 @@ public class SelectableObject : MonoBehaviour
         while (true)
         {
             Collider[] arrCollider = null;
-            arrCollider = Physics.OverlapSphere(transform.position, stateMachine.AttackRange);
+            arrCollider = Physics.OverlapSphere(transform.position, attackRange);
 
-            if (arrCollider.Length > 0)
+            if (arrCollider.Length > 1)
             {
                 foreach (Collider c in arrCollider)
                 {

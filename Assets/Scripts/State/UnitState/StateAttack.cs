@@ -9,6 +9,7 @@ public class StateAttack : IState
         myTr = _structState.myTr;
         targetTr = _structState.targetTr;
         attRate = _structState.attRate;
+        attDmg = _structState.attDmg;
     }
 
     public void Update(ref SUnitState _structState)
@@ -21,7 +22,7 @@ public class StateAttack : IState
             {
                 elapsedTime = 0f;
                 // 공격 애니메이션 출력
-                targetTr.GetComponent<SelectableObject>().AttackDmg(_structState.attDmg);
+                targetTr.GetComponent<SelectableObject>().AttackDmg(attDmg);
             }
         }
     }
@@ -31,9 +32,10 @@ public class StateAttack : IState
 
     }
 
+    private int attDmg = 0;
     private float elapsedTime = 0f;
-
     private float attRate = 0f;
+
     private Transform targetTr = null;
     private Transform myTr = null;
 }

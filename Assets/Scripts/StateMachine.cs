@@ -6,13 +6,9 @@ public class StateMachine : MonoBehaviour
 {
     public delegate void CurStateEnumDelegate(EState _curEState);
 
-    public void Init(
-        int _nodeIdx, 
-        NodeUpdateDelegate _updateNodeCallback,
-        CurStateEnumDelegate _curStateEnumCallback)
+    public void Init( int _nodeIdx, CurStateEnumDelegate _curStateEnumCallback)
     {
         unitState.nodeIdx = _nodeIdx;
-        unitState.updateNodeCallback = _updateNodeCallback;
         curStateEnumCallback = _curStateEnumCallback;
 
         IState stateIdle = new StateIdle();
@@ -47,8 +43,6 @@ public class StateMachine : MonoBehaviour
         get => unitState.targetTr;
         set => unitState.targetTr = value;
     }
-
-    public float AttackRange => unitState.attRange;
 
     public void SetTargetTr(Transform _targetTr)
     {
@@ -114,11 +108,7 @@ public class StateMachine : MonoBehaviour
     #region estate test
     public void FinishStateEnum()
     {
-        curState.End(ref unitState);
-        curStateEnum = stackStateEnum.Pop();
-        curStateEnumCallback?.Invoke(curStateEnum);
-        curState = arrState[(int)curStateEnum];
-        curState.Start(ref unitState);
+        curStateEnumCallback?.Invoke(stackStateEnum.Pop());
     }
 
     public void ChangeStateEnum(EState _newState)
@@ -137,14 +127,7 @@ public class StateMachine : MonoBehaviour
     public void ResetStateEnum()
     {
         stackStateEnum.Clear();
-
-        curState.End(ref unitState);
-
-        curStateEnum = EState.IDLE;
-        curState = arrState[(int)curStateEnum];
-
-        curStateEnumCallback?.Invoke(curStateEnum);
-        curState.Start(ref unitState);
+        curStateEnumCallback?.Invoke(EState.IDLE);
     }
     #endregion
 
