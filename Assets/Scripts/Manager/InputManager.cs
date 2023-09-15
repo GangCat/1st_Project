@@ -34,8 +34,6 @@ public class InputManager : MonoBehaviour
         selectArea.Init(_selectObjectCallback, _unSelectObjectCallback);
 
     }
-
-    public bool IsMoveClick { get; set; }
     public bool IsBuildOperation { get; set; }
     
     public Vector3 GetMousePos()
@@ -68,17 +66,13 @@ public class InputManager : MonoBehaviour
         isRallyPointClick = true;
     }
 
-    public void OnClickCancleButton()
-    {
-        ClearCurFunc();
-    }
-
-
     private void ClearCurFunc()
     {
         isMoveClick = false;
         isAttackClick = false;
         isPatrolClick = false;
+        isRallyPointClick = false;
+        IsBuildOperation = false;
         // 등등 기능과 관련된 bool값 모두 초기화
     }
 
@@ -114,7 +108,7 @@ public class InputManager : MonoBehaviour
             if (Input.GetMouseButtonDown(0))
             {
                 Destroy(pickPosDisplayGo);
-                OnClickCancleButton();
+                ClearCurFunc();
                 MoveWithMouseClick();
             }
             else if(Input.GetMouseButtonDown(1))
@@ -148,10 +142,10 @@ public class InputManager : MonoBehaviour
                 if (EventSystem.current.IsPointerOverGameObject())
                     return;
 
-                ArrayBuildCommand.Use(EMainStructureCommnad.CONFIRM);
+                ArrayBuildCommand.Use(EMainBaseCommnad.CONFIRM);
             }
             else if (Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.Escape))
-                ArrayBuildCommand.Use(EMainStructureCommnad.CANCLE);
+                ArrayBuildCommand.Use(EMainBaseCommnad.CANCLE);
         }
         else if (isRallyPointClick)
         {

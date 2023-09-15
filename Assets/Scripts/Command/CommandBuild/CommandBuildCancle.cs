@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CommandBuildCancle : Command
 {
-    public CommandBuildCancle(BuildManager _buildMng, InputManager _inputMng)
+    public CommandBuildCancle(StructureManager _buildMng, InputManager _inputMng)
     {
         buildMng = _buildMng;
         inputMng = _inputMng;
@@ -15,6 +15,6 @@ public class CommandBuildCancle : Command
         inputMng.IsBuildOperation = buildMng.CancleBuild();
     }
 
-    private BuildManager buildMng = null;
+    private StructureManager buildMng = null;
     private InputManager inputMng = null;
 }

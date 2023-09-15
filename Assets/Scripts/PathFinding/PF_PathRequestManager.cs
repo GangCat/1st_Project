@@ -5,6 +5,13 @@ using System;
 
 public class PF_PathRequestManager : MonoBehaviour
 {
+    public void Init()
+    {
+        instance = this;
+        pathFinding = GetComponent<PF_PathFinding>();
+        pathFinding.Init(FinishedProcessingPath);
+    }
+
     public static void RequestPath(Vector3 _pathStart, Vector3 _pathEnd, Action<PF_Node[], bool> _callback)
     {
         SPathRequest newRequest = new SPathRequest(_pathStart, _pathEnd, _callback);
@@ -43,12 +50,6 @@ public class PF_PathRequestManager : MonoBehaviour
         }
     }
 
-    private void Awake()
-    {
-        instance = this;
-        pathFinding = GetComponent<PF_PathFinding>();
-        pathFinding.Init(FinishedProcessingPath);
-    }
 
     private Queue<SPathRequest> pathRequestQueue = new Queue<SPathRequest>();
     private SPathRequest curPathRequest;
@@ -57,5 +58,4 @@ public class PF_PathRequestManager : MonoBehaviour
     private PF_PathFinding pathFinding;
 
     private bool isProcessingPath;
-
 }

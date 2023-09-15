@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CommandBuildTurret : Command
 {
-    public CommandBuildTurret(BuildManager _buildMng, InputManager _inputMng) 
+    public CommandBuildTurret(StructureManager _buildMng, InputManager _inputMng) 
     {
         buildMng = _buildMng;
         inputMng = _inputMng;
@@ -16,6 +16,6 @@ public class CommandBuildTurret : Command
         inputMng.IsBuildOperation = true;
     }
 
-    private BuildManager buildMng = null;
+    private StructureManager buildMng = null;
     private InputManager inputMng = null;
 }

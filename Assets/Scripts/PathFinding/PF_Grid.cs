@@ -14,8 +14,6 @@ public class PF_Grid : MonoBehaviour
         CreateGrid();
     }
 
-
-
     private void CreateGrid()
     {
         // 그리드에 2차원 노드 배열 공간 할당

@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Building : MonoBehaviour
+public class Structure : MonoBehaviour
 {
-    public void Init(PF_Grid _grid)
+    public virtual void Init(PF_Grid _grid)
     {
         oriColor = GetComponentInChildren<MeshRenderer>().material.color;
         mt = GetComponentInChildren<MeshRenderer>().material;
@@ -39,8 +39,6 @@ public class Building : MonoBehaviour
     {
         StopCoroutine("CheckBuildableCoroutine");
     }
-
-
 
     protected IEnumerator CheckBuildableCoroutine()
     {

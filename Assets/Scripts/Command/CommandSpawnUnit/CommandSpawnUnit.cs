@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CommandSpawnUnit : Command
 {
-    public CommandSpawnUnit(BuildingBarrack _barrack, ESpawnUnitType _unitType)
+    public CommandSpawnUnit(StructureBarrack _barrack, ESpawnUnitType _unitType)
     {
         barrack = _barrack;
         unitType = _unitType;
@@ -15,6 +15,6 @@ public class CommandSpawnUnit : Command
         barrack.SpawnUnit(unitType);
     }
 
-    private BuildingBarrack barrack = null;
+    private StructureBarrack barrack = null;
     private ESpawnUnitType unitType = ESpawnUnitType.NONE;
 }

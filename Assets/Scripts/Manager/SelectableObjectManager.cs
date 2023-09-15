@@ -11,18 +11,16 @@ public class SelectableObjectManager : MonoBehaviour
 
     public void Init(VoidSelectObjectTypeDelegate _selectObjectCallback)
     {
-        tempListSelectableObject.Clear();
         listSelectedObject.Clear();
+        tempListSelectableObject.Clear();
         selectObjectCallback = _selectObjectCallback;
-        int nodeIdx = 0;
 
         foreach (SelectableObject obj in FindObjectsOfType<SelectableObject>())
         {
             if (obj.CompareTag("FriendlyUnit"))
             {
                 listNodeUnderUnit.Add(grid.NodeFromWorldPoint(obj.GetPos));
-                obj.Init(nodeIdx, UpdateNodeWalkable);
-                ++nodeIdx;
+                obj.Init(UpdateNodeWalkable);
             }
         }
 
@@ -30,7 +28,18 @@ public class SelectableObjectManager : MonoBehaviour
             node.walkable = false;
     }
 
-    public void UpdateNodeWalkable(Vector3 _pos, int _idx)
+    public static int GetNodeIdx()
+    {
+        for(int i = 0; i < listNodeUnderUnit.Count; ++i)
+        {
+            if (listNodeUnderUnit[i] == null)
+                return i;
+        }
+
+        return listNodeUnderUnit.Count;
+    }
+
+    public static void UpdateNodeWalkable(Vector3 _pos, int _idx)
     {
         PF_Node newNode = grid.NodeFromWorldPoint(_pos);
         listNodeUnderUnit[_idx].walkable = true;
@@ -63,7 +72,7 @@ public class SelectableObjectManager : MonoBehaviour
             switch (obj.ObjectType)
             {
                 case ESelectableObjectType.UNIT:
-                case ESelectableObjectType.HERO:
+                case ESelectableObjectType.UNIT_HERO:
                     if (!isFriendlyUnitInList)
                     {
                         listSelectedObject.Clear();
@@ -218,13 +227,11 @@ public class SelectableObjectManager : MonoBehaviour
     private List<SelectableObject> listSelectedObject = new List<SelectableObject>();
 
     [SerializeField]
-    private int rowNum = 6;
-    [SerializeField]
     private float rangeGroupLimitDist = 5f;
     [SerializeField]
-    private PF_Grid grid = null;
+    private static PF_Grid grid = null;
 
     private VoidSelectObjectTypeDelegate selectObjectCallback = null;
 
-    public List<PF_Node> listNodeUnderUnit = new List<PF_Node>();
+    public static List<PF_Node> listNodeUnderUnit = new List<PF_Node>();
 }

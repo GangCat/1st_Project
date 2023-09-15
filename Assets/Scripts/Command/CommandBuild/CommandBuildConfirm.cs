@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CommandBuildConfirm : Command
 {
-    public CommandBuildConfirm(BuildManager _buildMng, InputManager _inputMng)
+    public CommandBuildConfirm(StructureManager _buildMng, InputManager _inputMng)
     {
         buildMng = _buildMng;
         inputMng = _inputMng;
@@ -15,6 +15,6 @@ public class CommandBuildConfirm : Command
         inputMng.IsBuildOperation = buildMng.BuildStructure();
     }
 
-    private BuildManager buildMng = null;
+    private StructureManager buildMng = null;
     private InputManager inputMng = null;
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CommandBuildWall : Command
 {
-    public CommandBuildWall(BuildManager _buildMng, InputManager _inputMng)
+    public CommandBuildWall(StructureManager _buildMng, InputManager _inputMng)
     {
         buildMng = _buildMng;
         inputMng = _inputMng;
@@ -17,6 +17,6 @@ public class CommandBuildWall : Command
     }
 
 
-    private BuildManager buildMng = null;
+    private StructureManager buildMng = null;
     private InputManager inputMng = null;
 }

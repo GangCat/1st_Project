@@ -8,11 +8,13 @@ public class SelectableObject : MonoBehaviour
     public ESelectableObjectType ObjectType => objectType;
     public Vector3 GetPos => transform.position;
 
-    public void Init(int _nodeIdx = -1, NodeUpdateDelegate _updateNodeCallback = null)
+    public void Init(NodeUpdateDelegate _updateNodeCallback = null)
     {
-        nodeIdx = _nodeIdx;
-        updateNodeCallback = _updateNodeCallback;
+        nodeIdx = SelectableObjectManager.GetNodeIdx();
+        updateNodeCallback = SelectableObjectManager.UpdateNodeWalkable;
         stateMachine = GetComponent<StateMachine>();
+
+        updateNodeCallback?.Invoke(transform.position, nodeIdx);
 
         if (stateMachine != null)
         {
@@ -24,6 +26,8 @@ public class SelectableObject : MonoBehaviour
                 StateHold();
         }
     }
+
+
 
     public void AttackDmg(int _dmg)
     {
@@ -81,7 +85,7 @@ public class SelectableObject : MonoBehaviour
     public void Stop()
     {
         if (isMovable)
-            StateStop();
+            StateStop();  
     }
 
     public void Hold()
@@ -604,5 +608,4 @@ public class SelectableObject : MonoBehaviour
     private NodeUpdateDelegate updateNodeCallback = null;
 
     private int nodeIdx = 0;
-    private int testIdx = 0;
 }

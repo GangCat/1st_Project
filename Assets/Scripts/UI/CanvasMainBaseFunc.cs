@@ -3,38 +3,38 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CanvasMainStructureFunc : CanvasFuncBase
+public class CanvasMainBaseFunc : CanvasFuncBase
 {
     public void Init()
     {
         btnBuildTurret.onClick.AddListener(
             () =>
             {
-                ArrayBuildCommand.Use(EMainStructureCommnad.BUILD_TURRET);
+                ArrayBuildCommand.Use(EMainBaseCommnad.BUILD_TURRET);
             });
 
         btnBuildBunker.onClick.AddListener(
             () =>
             {
-                ArrayBuildCommand.Use(EMainStructureCommnad.BUILD_BUNKER);
+                ArrayBuildCommand.Use(EMainBaseCommnad.BUILD_BUNKER);
             });
 
         btnBuildWall.onClick.AddListener(
             () =>
             {
-                ArrayBuildCommand.Use(EMainStructureCommnad.BUILD_WALL);
+                ArrayBuildCommand.Use(EMainBaseCommnad.BUILD_WALL);
             });
 
         btnBuildNuclear.onClick.AddListener(
             () =>
             {
-                ArrayBuildCommand.Use(EMainStructureCommnad.BUILD_NUCLEAR);
+                ArrayBuildCommand.Use(EMainBaseCommnad.BUILD_NUCLEAR);
             });
 
         btnBuildBarrack.onClick.AddListener(
             () =>
             {
-                ArrayBuildCommand.Use(EMainStructureCommnad.BUILD_BARRACK);
+                ArrayBuildCommand.Use(EMainBaseCommnad.BUILD_BARRACK);
             });
 
         gameObject.SetActive(false);
