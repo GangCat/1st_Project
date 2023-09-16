@@ -21,10 +21,13 @@ public struct SUnitState
     public Transform targetTr;
     [HideInInspector]
     public Vector3 targetPos;
+    [HideInInspector]
+    public bool isWaitForNewPath;
 
     public float moveSpeed;
     public float attRate;
     public int attDmg;
+    
 }
 
 [System.Serializable]

@@ -118,7 +118,7 @@ MonoBehaviour:
   chaseStartRange: 10
   chaseFinishRange: 12
   attackRange: 4
-  resetPathDelay: 0.5
+  resetPathDelay: 1.5
   stopDelay: 2
 --- !u!114 &3650822248373926283
 MonoBehaviour:

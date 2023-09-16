@@ -176,6 +176,7 @@ public class SelectableObject : MonoBehaviour
     {
         StopAllCoroutines();
         curWayNode = null;
+        stateMachine.SetWaitForNewPath(false);
 
         switch (curMoveCondition)
         {
@@ -231,14 +232,14 @@ public class SelectableObject : MonoBehaviour
         stateMachine.TargetTr = null;
 
         PF_PathRequestManager.RequestPath(transform.position, targetPos, OnPathFound);
-        yield return null;
+        stateMachine.SetWaitForNewPath(true);
 
         while (curWayNode == null)
             yield return null;
 
         stateMachine.TargetPos = curWayNode.worldPos;
         stateMachine.ChangeStateEnum(EState.MOVE);
-
+        stateMachine.SetWaitForNewPath(false);
         while (true)
         {
             if (!curWayNode.walkable)
@@ -247,11 +248,12 @@ public class SelectableObject : MonoBehaviour
                 curWayNode = null;
 
                 PF_PathRequestManager.RequestPath(transform.position, targetPos, OnPathFound);
-
+                stateMachine.SetWaitForNewPath(true);
                 while (curWayNode == null)
                     yield return null;
 
                 stateMachine.TargetPos = curWayNode.worldPos;
+                stateMachine.SetWaitForNewPath(false);
             }
 
             if (Physics.Linecast(transform.position, curWayNode.worldPos, 1 << LayerMask.NameToLayer("SelectableObject")))
@@ -269,6 +271,7 @@ public class SelectableObject : MonoBehaviour
                 {
                     //curWayNode = null;
                     ResetState();
+                    stateMachine.SetWaitForNewPath(false);
                     yield break;
                 }
 
@@ -286,13 +289,13 @@ public class SelectableObject : MonoBehaviour
         Vector3 wayPointTo = targetPos;
 
         PF_PathRequestManager.RequestPath(transform.position, wayPointTo, OnPathFound);
-        yield return null;
-
+        stateMachine.SetWaitForNewPath(true);
         while (curWayNode == null)
             yield return null;
 
         stateMachine.TargetPos = curWayNode.worldPos;
         stateMachine.ChangeStateEnum(EState.MOVE);
+        stateMachine.SetWaitForNewPath(false);
 
         while (true)
         {
@@ -300,10 +303,12 @@ public class SelectableObject : MonoBehaviour
             {
                 curWayNode = null;
                 PF_PathRequestManager.RequestPath(transform.position, wayPointTo, OnPathFound);
+                stateMachine.SetWaitForNewPath(true);
                 while (curWayNode == null)
                     yield return null;
 
                 stateMachine.TargetPos = curWayNode.worldPos;
+                stateMachine.SetWaitForNewPath(false);
             }
 
             if (Physics.Linecast(transform.position, curWayNode.worldPos, 1 << LayerMask.NameToLayer("SelectableObject")))
@@ -324,12 +329,13 @@ public class SelectableObject : MonoBehaviour
                     wayPointTo = tempWayPoint;
 
                     PF_PathRequestManager.RequestPath(wayPointFrom, wayPointTo, OnPathFound);
-                    yield return null;
+                    stateMachine.SetWaitForNewPath(true);
 
                     while (targetIdx != 0)
                         yield return null;
 
                     stateMachine.TargetPos = curWayNode.worldPos;
+                    stateMachine.SetWaitForNewPath(false);
                     continue;
                 }
                 curWayNode = arrPath[targetIdx];
@@ -344,7 +350,7 @@ public class SelectableObject : MonoBehaviour
     {
         targetTr = stateMachine.TargetTr;
         PF_PathRequestManager.RequestPath(transform.position, targetTr.position, OnPathFound);
-        yield return null;
+        stateMachine.SetWaitForNewPath(true);
 
         while (curWayNode == null)
             yield return null;
@@ -353,6 +359,7 @@ public class SelectableObject : MonoBehaviour
 
         stateMachine.TargetPos = curWayNode.worldPos;
         stateMachine.ChangeStateEnum(EState.MOVE);
+        stateMachine.SetWaitForNewPath(false);
 
         while (true)
         {
@@ -361,60 +368,60 @@ public class SelectableObject : MonoBehaviour
                 ResetState();
                 yield break;
             }
-
             elapsedTime += Time.deltaTime;
-            if (curWayNode != null)
-            {
-                if (!curWayNode.walkable)
-                {
-                    curWayNode = null;
-                    PF_PathRequestManager.RequestPath(transform.position, targetTr.position, OnPathFound);
 
-                    while (curWayNode == null)
-                        yield return null;
-
-                    stateMachine.TargetPos = curWayNode.worldPos;
-                }
-
-                if (Physics.Linecast(transform.position, curWayNode.worldPos, 1 << LayerMask.NameToLayer("SelectableObject")))
-                    yield return new WaitForSeconds(0.1f);
-
-
-                if (isTargetInRangeFromMyPos(curWayNode.worldPos, 0.1f))
-                {
-                    ++targetIdx;
-                    nodeUpdate.Execute(transform.position, nodeIdx);
-
-                    if (targetIdx >= arrPath.Length)
-                    {
-                        curWayNode = null;
-                        PF_PathRequestManager.RequestPath(transform.position, targetTr.position, OnPathFound);
-                        while (curWayNode == null)
-                            yield return null;
-
-                        stateMachine.TargetPos = curWayNode.worldPos;
-                    }
-                    else
-                    {
-                        curWayNode = arrPath[targetIdx];
-                        stateMachine.TargetPos = curWayNode.worldPos;
-                    }
-                }
-            }
-
-            // 일정 주기로 경로 재탐색
             if (elapsedTime > resetPathDelay)
             {
                 elapsedTime = 0f;
 
                 curWayNode = null;
                 PF_PathRequestManager.RequestPath(transform.position, targetTr.position, OnPathFound);
+                stateMachine.SetWaitForNewPath(true);
                 while (curWayNode == null)
                     yield return null;
-
+                
                 stateMachine.TargetPos = curWayNode.worldPos;
+                stateMachine.SetWaitForNewPath(false);
             }
+            else
+            {
+                if (curWayNode != null)
+                {
+                    if (!curWayNode.walkable)
+                    {
+                        curWayNode = null;
+                        PF_PathRequestManager.RequestPath(transform.position, targetTr.position, OnPathFound);
+                        stateMachine.SetWaitForNewPath(true);
 
+                        while (curWayNode == null)
+                            yield return null;
+
+                        stateMachine.TargetPos = curWayNode.worldPos;
+                        stateMachine.SetWaitForNewPath(false);
+                    }
+
+                    if (Physics.Linecast(transform.position, curWayNode.worldPos, 1 << LayerMask.NameToLayer("SelectableObject")))
+                        yield return new WaitForSeconds(0.1f);
+
+
+                    if (isTargetInRangeFromMyPos(curWayNode.worldPos, 0.1f))
+                    {
+                        ++targetIdx;
+                        nodeUpdate.Execute(transform.position, nodeIdx);
+
+                        if (targetIdx >= arrPath.Length)
+                        {
+                            curWayNode = null;
+                            stateMachine.SetWaitForNewPath(true);
+                        }
+                        else
+                        {
+                            curWayNode = arrPath[targetIdx];
+                            stateMachine.TargetPos = curWayNode.worldPos;
+                        }
+                    }
+                }
+            }
             yield return null;
         }
     }

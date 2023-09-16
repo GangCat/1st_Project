@@ -48,6 +48,11 @@ public class StateMachine : MonoBehaviour
         set => unitState.targetTr = value;
     }
 
+    public void SetWaitForNewPath(bool _isWaiting)
+    {
+        unitState.isWaitForNewPath = _isWaiting;
+    }
+
     public void FinishStateEnum()
     {
         curStateEnumCallback?.Invoke(stackStateEnum.Pop());
