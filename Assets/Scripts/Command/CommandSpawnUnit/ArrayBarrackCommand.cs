@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ArraySpawnUnitCommand
+public class ArrayBarrackCommand
 {
     private static Command[] arrCmd = new Command[(int)EBarrackCommand.LENGTH];
 

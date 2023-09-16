@@ -10,19 +10,19 @@ public class CanvasBarrackFunc : CanvasFuncBase
         buttonSpawnUnit1.onClick.AddListener(
             () =>
             {
-                ArraySpawnUnitCommand.Use(EBarrackCommand.SPAWN_MELEE);
+                ArrayBarrackCommand.Use(EBarrackCommand.SPAWN_MELEE);
             });
 
         buttonSpawnUnit2.onClick.AddListener(
             () =>
             {
-                ArraySpawnUnitCommand.Use(EBarrackCommand.SPAWN_RANGE);
+                ArrayBarrackCommand.Use(EBarrackCommand.SPAWN_RANGE);
             });
 
         buttonSpawnUnit3.onClick.AddListener(
             () =>
             {
-                ArraySpawnUnitCommand.Use(EBarrackCommand.SPAWN_ROCKET);
+                ArrayBarrackCommand.Use(EBarrackCommand.SPAWN_ROCKET);
             });
 
 

@@ -76,6 +76,7 @@ public class StructureManager : MonoBehaviour
             curStructure.UpdateNodeUnWalkable();
             curStructure.BuildComplete();
             curStructure.transform.parent = null;
+            curStructure.Init();
             isBlueprint = false;
             return false;
         }

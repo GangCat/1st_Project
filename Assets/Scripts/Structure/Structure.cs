@@ -12,6 +12,8 @@ public class Structure : MonoBehaviour
         StartCoroutine("CheckBuildableCoroutine");
     }
 
+    public virtual void Init() { }
+
     public bool IsBuildable => isBuildable;
 
     public void SetColliderEnable(bool _isEnable)

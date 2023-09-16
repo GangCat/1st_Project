@@ -59,7 +59,7 @@ public class GameManager : MonoBehaviour
         ArrayBuildCommand.Add(EMainBaseCommnad.BUILD_NUCLEAR, new CommandBuildNuclear(buildMng, inputMng));
         ArrayBuildCommand.Add(EMainBaseCommnad.BUILD_BARRACK, new CommandBuildBarrack(buildMng, inputMng));
 
-        ArraySpawnUnitCommand.Add(EBarrackCommand.RALLYPOINT, new CommandRallypoint(inputMng));
+        ArrayBarrackCommand.Add(EBarrackCommand.RALLYPOINT, new CommandRallypoint(inputMng));
     }
 
     private void UnitSelect(ESelectableObjectType _selectObjectType)

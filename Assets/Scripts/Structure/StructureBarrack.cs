@@ -9,15 +9,13 @@ public class StructureBarrack : Structure
         nodeUpdateCallback = _nodeUpdateCallback;
     }
 
-    public override void Init(PF_Grid _grid)
+    public override void Init()
     {
-        base.Init(_grid);
-
         spawnPoint = transform.position;
-        spawnPoint.z += 3f;
-        ArraySpawnUnitCommand.Add(EBarrackCommand.SPAWN_MELEE, new CommandSpawnUnit(this, ESpawnUnitType.MELEE));
-        ArraySpawnUnitCommand.Add(EBarrackCommand.SPAWN_RANGE, new CommandSpawnUnit(this, ESpawnUnitType.RANGE));
-        ArraySpawnUnitCommand.Add(EBarrackCommand.SPAWN_ROCKET, new CommandSpawnUnit(this, ESpawnUnitType.ROCKET));
+        spawnPoint.y += 4f;
+        ArrayBarrackCommand.Add(EBarrackCommand.SPAWN_MELEE, new CommandSpawnUnit(this, ESpawnUnitType.MELEE));
+        ArrayBarrackCommand.Add(EBarrackCommand.SPAWN_RANGE, new CommandSpawnUnit(this, ESpawnUnitType.RANGE));
+        ArrayBarrackCommand.Add(EBarrackCommand.SPAWN_ROCKET, new CommandSpawnUnit(this, ESpawnUnitType.ROCKET));
     }
 
     public void SpawnUnit(ESpawnUnitType _unitType)

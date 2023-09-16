@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class StructureTurret : Structure
 {
-    public override void Init(PF_Grid _grid)
+    public override void Init()
     {
-        base.Init(_grid);
         selectObj = GetComponentInChildren<SelectableObject>();
         selectObj.Init();
         selectObj.SetMyTr(turretHeadTr);
