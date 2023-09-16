@@ -96,7 +96,6 @@ GameObject:
   - component: {fileID: 5330385086193909519}
   - component: {fileID: 5209549203731370052}
   - component: {fileID: 1784176741930829291}
-  - component: {fileID: 4205126466673021810}
   - component: {fileID: 6825190610509680595}
   m_Layer: 7
   m_Name: P_Player
@@ -171,22 +170,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectType: 1
-  isControllable: 1
---- !u!114 &4205126466673021810
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6917241794151303350}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d3901caf770717944b7126af8df200a7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 5
-  followOffset: 3
-  grid: {fileID: 0}
+  isMovable: 0
+  chaseStartRange: 0
+  chaseFinishRange: 0
+  attackRange: 0
+  resetPathDelay: 0.5
+  stopDelay: 2
 --- !u!54 &6825190610509680595
 Rigidbody:
   m_ObjectHideFlags: 0

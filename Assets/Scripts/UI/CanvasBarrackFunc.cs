@@ -25,10 +25,8 @@ public class CanvasBarrackFunc : CanvasFuncBase
                 ArrayBarrackCommand.Use(EBarrackCommand.SPAWN_ROCKET);
             });
 
-
         gameObject.SetActive(false);
     }
-
 
 
     [SerializeField]

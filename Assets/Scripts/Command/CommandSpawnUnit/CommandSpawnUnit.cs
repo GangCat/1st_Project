@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class CommandSpawnUnit : Command
 {
-    public CommandSpawnUnit(StructureBarrack _barrack, ESpawnUnitType _unitType)
+    public CommandSpawnUnit(SelectableObjectManager _selMng, ESpawnUnitType _unitType)
     {
-        barrack = _barrack;
+        selMng = _selMng;
         unitType = _unitType;
     }
 
     public override void Execute()
     {
-        barrack.SpawnUnit(unitType);
+        selMng.SpawnUnit(unitType);
     }
 
-    private StructureBarrack barrack = null;
+    private SelectableObjectManager selMng = null;
     private ESpawnUnitType unitType = ESpawnUnitType.NONE;
 }

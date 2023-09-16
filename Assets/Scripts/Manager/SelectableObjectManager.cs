@@ -44,6 +44,12 @@ public class SelectableObjectManager : MonoBehaviour
         return unitNode.worldPos;
     }
 
+    public void SpawnUnit(ESpawnUnitType _unitType)
+    {
+        if (listSelectedObject[0].ObjectType.Equals(ESelectableObjectType.BARRACK))
+            listSelectedObject[0].GetComponent<StructureBarrack>().SpawnUnit(_unitType);
+    }
+
     public void AddSelectedObject(SelectableObject _object)
     {
         tempListSelectableObject.Add(_object);

@@ -41,6 +41,8 @@ public class SelectableObject : MonoBehaviour
 
     public void FollowTarget(Transform _targetTr)
     {
+        if (_targetTr.Equals(transform)) return;
+
         stateMachine.TargetTr = _targetTr;
         targetTr = _targetTr;
 
