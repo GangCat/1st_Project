@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Android;
+using UnityEngine.Rendering.HighDefinition;
 
 public class StructureBarrack : Structure
 {
@@ -20,8 +22,20 @@ public class StructureBarrack : Structure
 
     public void SpawnUnit(ESpawnUnitType _unitType)
     {
+        listUnit.Add(_unitType);
+        RequestSpawnUnit();
         // ui에 나타내는 내용
-        StartCoroutine("SpawnUnitCoroutine", _unitType);
+    }
+
+    private void RequestSpawnUnit()
+    {
+        if (!isProcessingSpawnUnit && listUnit.Count > 0)
+        {
+            isProcessingSpawnUnit = true;
+            ESpawnUnitType unitType = listUnit[0];
+            listUnit.RemoveAt(0);
+            StartCoroutine("SpawnUnitCoroutine", unitType);
+        }
     }
 
     private IEnumerator SpawnUnitCoroutine(ESpawnUnitType _unitType)
@@ -30,16 +44,14 @@ public class StructureBarrack : Structure
 
         while (elapsedTime < spawnUnitDelay[(int)_unitType])
         {
+            // elapsedTime으로 그 게이지 바 표시하기
             yield return new WaitForSeconds(0.5f);
             elapsedTime += 0.5f;
-
-            // ui에 나타내는 내용
-
-
         }
 
+        isProcessingSpawnUnit = false;
         GameObject unitGo = Instantiate(spawnUnitPrefab[(int)_unitType], spawnPoint, Quaternion.identity);
-        unitGo.GetComponent<SelectableObject>().Init();
+        RequestSpawnUnit();
     }
 
 
@@ -51,4 +63,8 @@ public class StructureBarrack : Structure
     private Vector3 spawnPoint = Vector3.zero;
 
     private NodeUpdateDelegate nodeUpdateCallback = null;
+
+    private List<ESpawnUnitType> listUnit = new List<ESpawnUnitType>();
+
+    private bool isProcessingSpawnUnit = false;
 }
