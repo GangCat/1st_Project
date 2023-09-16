@@ -14,7 +14,6 @@ public class SelectableObject : MonoBehaviour
         nodeIdx = SelectableObjectManager.InitNode(transform.position);
         stateMachine = GetComponent<StateMachine>();
 
-        nodeUpdate.Execute(transform.position, nodeIdx);
 
         if (stateMachine != null)
         {
@@ -25,9 +24,9 @@ public class SelectableObject : MonoBehaviour
             else if (objectType.Equals(ESelectableObjectType.TURRET))
                 StateHold();
         }
+
+        nodeUpdate.Execute(transform.position, nodeIdx);
     }
-
-
 
     public void AttackDmg(int _dmg)
     {

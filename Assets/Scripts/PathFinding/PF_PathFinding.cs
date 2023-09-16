@@ -33,7 +33,7 @@ public class PF_PathFinding : MonoBehaviour
         PF_Node targetNode = grid.GetNodeFromWorldPoint(_targetPos);
 
         if (!targetNode.walkable)
-            targetNode = GetAccessibleNode(targetNode);
+            targetNode = grid.GetAccessibleNode(targetNode);
         if (targetNode != null)
         {
             if (startNode.Equals(targetNode))
@@ -94,23 +94,6 @@ public class PF_PathFinding : MonoBehaviour
         }
 
         finishPathFindCallback?.Invoke(arrWayNode, isPathSuccess);
-    }
-
-    private PF_Node GetAccessibleNode(PF_Node _targetNode)
-    {
-        List<PF_Node> listNeighborNode = grid.GetNeighbors(_targetNode);
-
-        foreach (PF_Node node in listNeighborNode)
-            if (node.walkable)
-                return node;
-
-        foreach(PF_Node node in listNeighborNode)
-        {
-            if (GetAccessibleNode(node) != null)
-                return GetAccessibleNode(node);
-        }
-
-        return null;
     }
 
     /// <summary>

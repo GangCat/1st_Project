@@ -84,6 +84,36 @@ public class PF_Grid : MonoBehaviour
         return neighbours;
     }
 
+    public PF_Node GetAccessibleNode(PF_Node _targetNode)
+    {
+        Queue<PF_Node> queue = new Queue<PF_Node>();
+        HashSet<PF_Node> visited = new HashSet<PF_Node>();
+
+        queue.Enqueue(_targetNode);
+
+        while (queue.Count > 0)
+        {
+            PF_Node currentNode = queue.Dequeue();
+
+            if (currentNode.walkable)
+            {
+                return currentNode;
+            }
+
+            List<PF_Node> neighbors = GetNeighbors(currentNode);
+            foreach (PF_Node neighbor in neighbors)
+            {
+                if (!visited.Contains(neighbor))
+                {
+                    visited.Add(neighbor);
+                    queue.Enqueue(neighbor);
+                }
+            }
+        }
+
+        return null;
+    }
+
     public void UpdateNodeWalkable(PF_Node _node, bool _isWalkable)
     {
         _node.walkable = _isWalkable;

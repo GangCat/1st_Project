@@ -30,6 +30,20 @@ public class SelectableObjectManager : MonoBehaviour
         listNodeUnderUnit[_idx].walkable = false;
     }
 
+    public static bool isCurNodwWalkable(Vector3 _pos)
+    {
+        return grid.GetNodeFromWorldPoint(_pos).walkable;
+    }
+
+    public static Vector3 ResetPosition(Vector3 _pos)
+    {
+        PF_Node unitNode = grid.GetNodeFromWorldPoint(_pos);
+        if (!unitNode.walkable)
+            unitNode = grid.GetAccessibleNode(unitNode);
+
+        return unitNode.worldPos;
+    }
+
     public void AddSelectedObject(SelectableObject _object)
     {
         tempListSelectableObject.Add(_object);

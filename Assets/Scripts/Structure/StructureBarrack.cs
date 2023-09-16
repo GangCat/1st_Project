@@ -7,7 +7,9 @@ public class StructureBarrack : Structure
     public override void Init()
     {
         spawnPoint = transform.position;
-        spawnPoint.x -= 2f;
+        // 스폰 포인트를 노드로 설정하기
+        // 해당 노드가 walkable이 아니면 다음 노드로 이동.
+        // 생성되는 위치는 이 건물 둘러싸도록 설정.
         ArrayBarrackCommand.Add(EBarrackCommand.SPAWN_MELEE, new CommandSpawnUnit(this, ESpawnUnitType.MELEE));
         ArrayBarrackCommand.Add(EBarrackCommand.SPAWN_RANGE, new CommandSpawnUnit(this, ESpawnUnitType.RANGE));
         ArrayBarrackCommand.Add(EBarrackCommand.SPAWN_ROCKET, new CommandSpawnUnit(this, ESpawnUnitType.ROCKET));
@@ -44,6 +46,7 @@ public class StructureBarrack : Structure
 
         isProcessingSpawnUnit = false;
         GameObject unitGo = Instantiate(spawnUnitPrefab[(int)_unitType], spawnPoint, Quaternion.identity);
+        unitGo.transform.position = SelectableObjectManager.ResetPosition(unitGo.transform.position);
         unitGo.GetComponent<SelectableObject>().Init();
         RequestSpawnUnit();
     }

@@ -26,14 +26,30 @@ public class Structure : MonoBehaviour
         transform.position = _targetPos;
     }
 
-    public void UpdateNodeUnWalkable()
+    public virtual void UpdateNodeUnWalkable()
     {
-        curNode = grid.GetNodeFromWorldPoint(transform.position);
+        //curNode = grid.GetNodeFromWorldPoint(transform.position);
 
-        for (int i = 0; i < myXGrid; ++i)
+        //for (int i = 0; i < myGridX; ++i)
+        //{
+        //    for (int j = 0; j < myGridY; ++j)
+        //        grid.UpdateNodeWalkable(grid.GetNodeWithGrid(curNode.gridX + i, curNode.gridY + j), false);
+        //}
+
+        curNode = grid.GetNodeFromWorldPoint(transform.position);
+        int gridX = curNode.gridX;
+        int gridY = curNode.gridY;
+        int idx = 0;
+
+        while (idx < myGridX * myGridY)
         {
-            for (int j = 0; j < myYGrid; ++j)
-                grid.UpdateNodeWalkable(grid.GetNodeWithGrid(curNode.gridX + i, curNode.gridY + j), false);
+            grid.UpdateNodeWalkable(
+                grid.GetNodeWithGrid(
+                    idx % myGridX + gridX,
+                    idx / myGridY + gridY),
+                false);
+
+            ++idx;
         }
     }
 
@@ -50,9 +66,9 @@ public class Structure : MonoBehaviour
 
             curNode = grid.GetNodeFromWorldPoint(transform.position);
 
-            for (int i = 0; i < myXGrid; ++i)
+            for (int i = 0; i < myGridX; ++i)
             {
-                for (int j = 0; j < myYGrid; ++j)
+                for (int j = 0; j < myGridY; ++j)
                 {
                     if (grid.GetNodeIsWalkable(curNode.gridX + i, curNode.gridY + j))
                         continue;
@@ -74,9 +90,11 @@ public class Structure : MonoBehaviour
     
 
     [SerializeField]
-    protected int myXGrid = 1;
+    protected int myGridX = 1;
     [SerializeField]
-    protected int myYGrid = 1;
+    protected int myGridY = 1;
+    [SerializeField]
+    protected Vector3 calcNodeOffset = Vector3.zero;
 
     protected PF_Grid grid = null;
     protected PF_Node curNode = null;
