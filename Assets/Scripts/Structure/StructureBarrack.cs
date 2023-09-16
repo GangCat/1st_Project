@@ -1,20 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Android;
-using UnityEngine.Rendering.HighDefinition;
 
 public class StructureBarrack : Structure
 {
-    public void Init(NodeUpdateDelegate _nodeUpdateCallback)
-    {
-        nodeUpdateCallback = _nodeUpdateCallback;
-    }
-
     public override void Init()
     {
         spawnPoint = transform.position;
-        spawnPoint.y += 4f;
+        spawnPoint.x -= 2f;
         ArrayBarrackCommand.Add(EBarrackCommand.SPAWN_MELEE, new CommandSpawnUnit(this, ESpawnUnitType.MELEE));
         ArrayBarrackCommand.Add(EBarrackCommand.SPAWN_RANGE, new CommandSpawnUnit(this, ESpawnUnitType.RANGE));
         ArrayBarrackCommand.Add(EBarrackCommand.SPAWN_ROCKET, new CommandSpawnUnit(this, ESpawnUnitType.ROCKET));
@@ -51,20 +44,18 @@ public class StructureBarrack : Structure
 
         isProcessingSpawnUnit = false;
         GameObject unitGo = Instantiate(spawnUnitPrefab[(int)_unitType], spawnPoint, Quaternion.identity);
+        unitGo.GetComponent<SelectableObject>().Init();
         RequestSpawnUnit();
     }
 
-
+    [Header("-Melee, Range, Rocket(temp)")]
     [SerializeField]
     private float[] spawnUnitDelay = new float[(int)ESpawnUnitType.LENGTH];
     [SerializeField]
     private GameObject[] spawnUnitPrefab = new GameObject[(int)ESpawnUnitType.LENGTH];
 
-    private Vector3 spawnPoint = Vector3.zero;
-
-    private NodeUpdateDelegate nodeUpdateCallback = null;
-
-    private List<ESpawnUnitType> listUnit = new List<ESpawnUnitType>();
-
     private bool isProcessingSpawnUnit = false;
+
+    private Vector3 spawnPoint = Vector3.zero;
+    private List<ESpawnUnitType> listUnit = new List<ESpawnUnitType>();
 }

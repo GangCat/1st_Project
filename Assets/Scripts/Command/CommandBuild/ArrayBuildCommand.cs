@@ -11,11 +11,6 @@ public class ArrayBuildCommand
         arrCmd[(int)_eCmd] = _cmd;
     }
 
-    public static void Remove(EMainBaseCommnad _eCmd, Command _cmd)
-    {
-        arrCmd[(int)_eCmd] = null;
-    }
-
     public static void Use(EMainBaseCommnad _eCmd)
     {
         arrCmd[(int)_eCmd].Execute();

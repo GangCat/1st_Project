@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: 8204235503644602067}
   - component: {fileID: 7824584007890135282}
   - component: {fileID: 3650822248373926283}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: P_FriendlyUnit
-  m_TagString: Untagged
+  m_TagString: FriendlyUnit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -83,9 +83,9 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 116
+  m_Constraints: 126
   m_CollisionDetection: 0
 --- !u!114 &8204235503644602067
 MonoBehaviour:
@@ -114,7 +114,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectType: 0
-  isControllable: 1
+  isMovable: 1
+  chaseStartRange: 10
+  chaseFinishRange: 12
+  attackRange: 4
+  resetPathDelay: 0.5
+  stopDelay: 2
 --- !u!114 &3650822248373926283
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -131,15 +136,9 @@ MonoBehaviour:
     myTr: {fileID: 0}
     targetTr: {fileID: 0}
     targetPos: {x: 0, y: 0, z: 0}
-    nodeIdx: 0
     moveSpeed: 5
-    traceStartRange: 7
-    traceEndRange: 9
-    attRange: 4
     attRate: 1
     attDmg: 2
-    isHold: 0
-    isAttackMove: 0
 --- !u!1 &3256322658277572286
 GameObject:
   m_ObjectHideFlags: 0

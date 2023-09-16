@@ -11,11 +11,6 @@ public class ArrayUnitButtonCommand
         arrCmd[(int)_eCmd] = _cmd;
     }
 
-    public static void Remove(EUnitButtonCommand _eCmd, Command _cmd)
-    {
-        arrCmd[(int)_eCmd] = null;
-    }
-
     public static void Use(EUnitButtonCommand _eCmd)
     {
         arrCmd[(int)_eCmd].Execute();

@@ -110,7 +110,7 @@ MonoBehaviour:
   - 7
   spawnUnitPrefab:
   - {fileID: 3444044437046430144, guid: dba7bab991d89e945b862c14b0c03313, type: 3}
-  - {fileID: 4774864344998553171, guid: 0ae31c4c6ae257b45bd26f348d90c17a, type: 3}
+  - {fileID: 186232715040071189, guid: 1a6427e02f043fb49b31dd80f757f371, type: 3}
   - {fileID: 203565306222209062, guid: 0939395da08e46742994aea76cf2f25e, type: 3}
 --- !u!1 &2436378062319363825
 GameObject:

@@ -44,7 +44,7 @@ public class PF_Grid : MonoBehaviour
     /// </summary>
     /// <param name="_worldPos"></param>
     /// <returns></returns>
-    public PF_Node NodeFromWorldPoint(Vector3 _worldPos)
+    public PF_Node GetNodeFromWorldPoint(Vector3 _worldPos)
     {
         // grid의 중심이 0이니까 즉 percentX가 0.5일때 worldPos.x가 0이 아니라 gridWorldSize.x * 0.5f니까 이렇게 작성됨.
         float percentX = (_worldPos.x + gridWorldSize.x * 0.5f) / gridWorldSize.x;

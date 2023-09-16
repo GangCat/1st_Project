@@ -8,13 +8,13 @@ public class SelectableObject : MonoBehaviour
     public ESelectableObjectType ObjectType => objectType;
     public Vector3 GetPos => transform.position;
 
-    public void Init(NodeUpdateDelegate _updateNodeCallback = null)
+    public void Init()
     {
-        nodeIdx = SelectableObjectManager.GetNodeIdx();
-        updateNodeCallback = SelectableObjectManager.UpdateNodeWalkable;
+        nodeUpdate = new CommandNodeUpdate();
+        nodeIdx = SelectableObjectManager.InitNode(transform.position);
         stateMachine = GetComponent<StateMachine>();
 
-        updateNodeCallback?.Invoke(transform.position, nodeIdx);
+        nodeUpdate.Execute(transform.position, nodeIdx);
 
         if (stateMachine != null)
         {
@@ -99,7 +99,7 @@ public class SelectableObject : MonoBehaviour
     private void StateIdle()
     {
         stateMachine.TargetTr = null;
-        updateNodeCallback?.Invoke(transform.position, nodeIdx);
+        nodeUpdate.Execute(transform.position, nodeIdx);
         stateMachine.ChangeStateEnum(EState.IDLE);
         StartCoroutine("CheckIsEnemyInChaseStartRangeCoroutine");
     }
@@ -262,7 +262,7 @@ public class SelectableObject : MonoBehaviour
             {
                 ++targetIdx;
 
-                updateNodeCallback?.Invoke(transform.position, nodeIdx);
+                nodeUpdate.Execute(transform.position, nodeIdx);
                 // 목적지에 도착시 
                 if (targetIdx >= arrPath.Length)
                 {
@@ -315,7 +315,7 @@ public class SelectableObject : MonoBehaviour
             if (isTargetInRangeFromMyPos(curWayNode.worldPos, 0.1f))
             {
                 ++targetIdx;
-                updateNodeCallback?.Invoke(transform.position, nodeIdx);
+                nodeUpdate.Execute(transform.position, nodeIdx);
                 if (targetIdx >= arrPath.Length)
                 {
                     Vector3 tempWayPoint = wayPointFrom;
@@ -382,7 +382,7 @@ public class SelectableObject : MonoBehaviour
                 if (isTargetInRangeFromMyPos(curWayNode.worldPos, 0.1f))
                 {
                     ++targetIdx;
-                    updateNodeCallback?.Invoke(transform.position, nodeIdx);
+                    nodeUpdate.Execute(transform.position, nodeIdx);
 
                     if (targetIdx >= arrPath.Length)
                     {
@@ -605,7 +605,7 @@ public class SelectableObject : MonoBehaviour
     private PF_Node[] arrPath = null;
     private PF_Node curWayNode = null;
 
-    private NodeUpdateDelegate updateNodeCallback = null;
-
     private int nodeIdx = 0;
+
+    private CommandNodeUpdate nodeUpdate = null;
 }

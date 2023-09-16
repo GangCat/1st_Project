@@ -28,7 +28,7 @@ public class Structure : MonoBehaviour
 
     public void UpdateNodeUnWalkable()
     {
-        curNode = grid.NodeFromWorldPoint(transform.position);
+        curNode = grid.GetNodeFromWorldPoint(transform.position);
 
         for (int i = 0; i < myXGrid; ++i)
         {
@@ -48,7 +48,7 @@ public class Structure : MonoBehaviour
         {
             isBuildable = true;
 
-            curNode = grid.NodeFromWorldPoint(transform.position);
+            curNode = grid.GetNodeFromWorldPoint(transform.position);
 
             for (int i = 0; i < myXGrid; ++i)
             {

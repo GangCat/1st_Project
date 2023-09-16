@@ -6,12 +6,12 @@ public class PF_Obstacle : MonoBehaviour
 {
     private void OnEnable()
     {
-        grid.UpdateNodeWalkable(grid.NodeFromWorldPoint(transform.position), false);
+        grid.UpdateNodeWalkable(grid.GetNodeFromWorldPoint(transform.position), false);
     }
 
     private void OnDisable()
     {
-        grid.UpdateNodeWalkable(grid.NodeFromWorldPoint(transform.position), true);
+        grid.UpdateNodeWalkable(grid.GetNodeFromWorldPoint(transform.position), true);
     }
 
     [Header("-Test")]

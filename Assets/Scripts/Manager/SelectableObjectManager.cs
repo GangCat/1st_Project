@@ -9,42 +9,25 @@ public class SelectableObjectManager : MonoBehaviour
     public bool IsFriendlyUnit => isFriendlyUnitInList;
     public SelectableObject GetFirstSelectableObjectInList => listSelectedObject[0];
 
-    public void Init(VoidSelectObjectTypeDelegate _selectObjectCallback)
+    public void Init(VoidSelectObjectTypeDelegate _selectObjectCallback, PF_Grid _grid)
     {
         listSelectedObject.Clear();
         tempListSelectableObject.Clear();
         selectObjectCallback = _selectObjectCallback;
-
-        foreach (SelectableObject obj in FindObjectsOfType<SelectableObject>())
-        {
-            if (obj.CompareTag("FriendlyUnit"))
-            {
-                listNodeUnderUnit.Add(grid.NodeFromWorldPoint(obj.GetPos));
-                obj.Init(UpdateNodeWalkable);
-            }
-        }
-
-        foreach (PF_Node node in listNodeUnderUnit)
-            node.walkable = false;
+        grid = _grid;
     }
 
-    public static int GetNodeIdx()
+    public static int InitNode(Vector3 _pos)
     {
-        for(int i = 0; i < listNodeUnderUnit.Count; ++i)
-        {
-            if (listNodeUnderUnit[i] == null)
-                return i;
-        }
-
-        return listNodeUnderUnit.Count;
+        listNodeUnderUnit.Add(grid.GetNodeFromWorldPoint(_pos));
+        return listNodeUnderUnit.Count - 1;
     }
 
     public static void UpdateNodeWalkable(Vector3 _pos, int _idx)
     {
-        PF_Node newNode = grid.NodeFromWorldPoint(_pos);
         listNodeUnderUnit[_idx].walkable = true;
-        listNodeUnderUnit[_idx] = newNode;
-        newNode.walkable = false;
+        listNodeUnderUnit[_idx] = grid.GetNodeFromWorldPoint(_pos);
+        listNodeUnderUnit[_idx].walkable = false;
     }
 
     public void AddSelectedObject(SelectableObject _object)
@@ -228,7 +211,7 @@ public class SelectableObjectManager : MonoBehaviour
 
     [SerializeField]
     private float rangeGroupLimitDist = 5f;
-    [SerializeField]
+    
     private static PF_Grid grid = null;
 
     private VoidSelectObjectTypeDelegate selectObjectCallback = null;

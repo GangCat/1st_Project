@@ -50,7 +50,7 @@ public class StructureManager : MonoBehaviour
         while (true)
         {
             Functions.Picking(1<<LayerMask.NameToLayer("StageFloor"), out hit);
-            curNode = grid.NodeFromWorldPoint(hit.point);
+            curNode = grid.GetNodeFromWorldPoint(hit.point);
             curStructure.SetPos(curNode.worldPos);
             
             yield return null;

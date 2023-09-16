@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
 
         pathMng.Init();
         grid = pathMng.GetComponent<PF_Grid>();
-        selectMng.Init(UnitSelect);
+        selectMng.Init(UnitSelect, grid);
         inputMng.Init(
             MoveUnitByPicking,
             MoveUnitByPickingObject,
@@ -43,7 +43,6 @@ public class GameManager : MonoBehaviour
 
     private void InitCommandList()
     {
-
         ArrayUnitButtonCommand.Add(EUnitButtonCommand.CANCLE, new CommandButtonCancle());
         ArrayUnitButtonCommand.Add(EUnitButtonCommand.MOVE, new CommandButtonMove(inputMng));
         ArrayUnitButtonCommand.Add(EUnitButtonCommand.STOP, new CommandButtonStop(selectMng));
@@ -74,7 +73,7 @@ public class GameManager : MonoBehaviour
         if (selectMng.IsFriendlyUnit)
         {
 
-            // 여기서 각 unit의 pathrequest를 진행
+            // 여기서 각 unit의 pathrequest를 진행?
             
             selectMng.MoveUnitByPicking(_pickPos);
         }

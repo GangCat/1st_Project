@@ -29,8 +29,8 @@ public class PF_PathFinding : MonoBehaviour
         PF_Node[] arrWayNode = new PF_Node[0];
         bool isPathSuccess = false;
 
-        PF_Node startNode = grid.NodeFromWorldPoint(_startPos);
-        PF_Node targetNode = grid.NodeFromWorldPoint(_targetPos);
+        PF_Node startNode = grid.GetNodeFromWorldPoint(_startPos);
+        PF_Node targetNode = grid.GetNodeFromWorldPoint(_targetPos);
 
         if (!targetNode.walkable)
             targetNode = GetAccessibleNode(targetNode);
