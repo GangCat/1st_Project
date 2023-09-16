@@ -62,6 +62,7 @@ public class GameManager : MonoBehaviour
         ArrayBarrackCommand.Add(EBarrackCommand.SPAWN_MELEE, new CommandSpawnUnit(selectMng, ESpawnUnitType.MELEE));
         ArrayBarrackCommand.Add(EBarrackCommand.SPAWN_RANGE, new CommandSpawnUnit(selectMng, ESpawnUnitType.RANGE));
         ArrayBarrackCommand.Add(EBarrackCommand.SPAWN_ROCKET, new CommandSpawnUnit(selectMng, ESpawnUnitType.ROCKET));
+        ArrayBarrackCommand.Add(EBarrackCommand.RALLYPOINT_CONFIRM, new CommandConfirmRallyPoint(selectMng));
     }
 
     private void UnitSelect(ESelectableObjectType _selectObjectType)

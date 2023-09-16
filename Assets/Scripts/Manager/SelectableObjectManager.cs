@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Burst.CompilerServices;
 using UnityEngine;
 
 public class SelectableObjectManager : MonoBehaviour
@@ -48,6 +49,20 @@ public class SelectableObjectManager : MonoBehaviour
     {
         if (listSelectedObject[0].ObjectType.Equals(ESelectableObjectType.BARRACK))
             listSelectedObject[0].GetComponent<StructureBarrack>().SpawnUnit(_unitType);
+    }
+
+    public void SetRallyPoint()
+    {
+        if (listSelectedObject[0].ObjectType.Equals(ESelectableObjectType.BARRACK))
+        {
+            Vector3 pickPos = Vector3.zero;
+            RaycastHit hit;
+
+            if (Functions.Picking(1 << LayerMask.NameToLayer("SelectableObject"), out hit))
+                listSelectedObject[0].GetComponent<StructureBarrack>().SetRallyPoint(hit.transform);
+            else if (Functions.Picking("StageFloor", 1 << LayerMask.NameToLayer("StageFloor"), ref pickPos))
+                listSelectedObject[0].GetComponent<StructureBarrack>().SetRallyPoint(pickPos);
+        }
     }
 
     public void AddSelectedObject(SelectableObject _object)

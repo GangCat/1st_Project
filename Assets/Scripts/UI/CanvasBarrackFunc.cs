@@ -25,6 +25,12 @@ public class CanvasBarrackFunc : CanvasFuncBase
                 ArrayBarrackCommand.Use(EBarrackCommand.SPAWN_ROCKET);
             });
 
+        buttonRallyPoint.onClick.AddListener(
+            () =>
+            {
+                ArrayBarrackCommand.Use(EBarrackCommand.RALLYPOINT);
+            });
+
         gameObject.SetActive(false);
     }
 

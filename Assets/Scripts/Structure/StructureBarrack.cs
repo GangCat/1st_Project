@@ -9,6 +9,19 @@ public class StructureBarrack : Structure
     public override void Init()
     {
         spawnPoint = transform.position;
+        rallyPoint = spawnPoint;
+    }
+
+    public void SetRallyPoint(Vector3 _rallyPoint)
+    {
+        rallyTr = null;
+        rallyPoint = _rallyPoint;
+    }
+
+    public void SetRallyPoint(Transform _rallyTr)
+    {
+        rallyPoint = spawnPoint;
+        rallyTr = _rallyTr;
     }
 
     public void SpawnUnit(ESpawnUnitType _unitType)
@@ -43,7 +56,14 @@ public class StructureBarrack : Structure
         isProcessingSpawnUnit = false;
         GameObject unitGo = Instantiate(spawnUnitPrefab[(int)_unitType], spawnPoint, Quaternion.identity);
         unitGo.transform.position = SelectableObjectManager.ResetPosition(unitGo.transform.position);
-        unitGo.GetComponent<SelectableObject>().Init();
+        SelectableObject tempObj = unitGo.GetComponent<SelectableObject>();
+        tempObj.Init();
+
+        if(!rallyPoint.Equals(spawnPoint))
+            tempObj.MoveByTargetPos(rallyPoint);
+        else if (rallyTr != null)
+            tempObj.FollowTarget(rallyTr);
+
         RequestSpawnUnit();
     }
 
@@ -56,5 +76,7 @@ public class StructureBarrack : Structure
     private bool isProcessingSpawnUnit = false;
 
     private Vector3 spawnPoint = Vector3.zero;
+    private Vector3 rallyPoint = Vector3.zero;
+    private Transform rallyTr = null;
     private List<ESpawnUnitType> listUnit = new List<ESpawnUnitType>();
 }

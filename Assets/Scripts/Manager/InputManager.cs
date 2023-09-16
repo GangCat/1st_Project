@@ -34,7 +34,15 @@ public class InputManager : MonoBehaviour
         selectArea.Init(_selectObjectCallback, _unSelectObjectCallback);
 
     }
-    public bool IsBuildOperation { get; set; }
+    public bool IsBuildOperation 
+    {
+        get => isBuildOperation;
+        set
+        {
+            ClearCurFunc();
+            isBuildOperation = value;
+        } 
+    }
     
     public Vector3 GetMousePos()
     {
@@ -44,24 +52,28 @@ public class InputManager : MonoBehaviour
 
     public void OnClickMoveButton()
     {
+        ClearCurFunc();
         pickPosDisplayGo = Instantiate(pickPosPrefab, transform);
         isMoveClick = true;
     }
 
     public void OnClickAttackButton()
     {
+        ClearCurFunc();
         pickPosDisplayGo = Instantiate(pickPosPrefab, transform);
         isAttackClick = true;
     }
 
     public void OnClickPatrolButton()
     {
+        ClearCurFunc();
         pickPosDisplayGo = Instantiate(pickPosPrefab, transform);
         isPatrolClick = true;
     }
 
     public void OnClickRallyPointButton()
     {
+        ClearCurFunc();
         pickPosDisplayGo = Instantiate(pickPosPrefab, transform);
         isRallyPointClick = true;
     }
@@ -72,93 +84,56 @@ public class InputManager : MonoBehaviour
         isAttackClick = false;
         isPatrolClick = false;
         isRallyPointClick = false;
-        IsBuildOperation = false;
+        isBuildOperation = false;
         // 등등 기능과 관련된 bool값 모두 초기화
     }
 
     private void Update()
     {
         elapsedTime += Time.deltaTime;
+        RaycastHit hit;
+        if (pickPosDisplayGo != null && Functions.Picking(out hit))
+            pickPosDisplayGo.transform.position = hit.point;
 
-
-
-        if (isAttackClick)
+        if (Input.GetMouseButtonDown(0))
         {
-            RaycastHit hit;
-            if (pickPosDisplayGo != null && Functions.Picking(out hit))
-                pickPosDisplayGo.transform.position = hit.point;
-            if (Input.GetMouseButtonDown(0))
-            {
-                Destroy(pickPosDisplayGo);
-                ClearCurFunc();
-                AttackMoveWithMouseClick();
+            if (EventSystem.current.IsPointerOverGameObject())
+                return;
 
-            }
-            else if (Input.GetMouseButtonDown(1))
+            if (IsBuildOperation)
             {
-                Destroy(pickPosDisplayGo);
-                ClearCurFunc();
-            }
-        }
-        else if (isMoveClick)
-        {
-            RaycastHit hit;
-            if(pickPosDisplayGo != null && Functions.Picking(out hit))
-                pickPosDisplayGo.transform.position = hit.point;
-            if (Input.GetMouseButtonDown(0))
-            {
-                Destroy(pickPosDisplayGo);
-                ClearCurFunc();
-                MoveWithMouseClick();
-            }
-            else if(Input.GetMouseButtonDown(1))
-            {
-                Destroy(pickPosDisplayGo);
-                ClearCurFunc();
-            }
-        }
-        else if (isPatrolClick)
-        {
-            RaycastHit hit;
-            if (pickPosDisplayGo != null && Functions.Picking(out hit))
-                pickPosDisplayGo.transform.position = hit.point;
-            if (Input.GetMouseButtonDown(0))
-            {
-                Destroy(pickPosDisplayGo);
-                ClearCurFunc();
-                PatrolWithMouseClick();
-                
-            }
-            else if (Input.GetMouseButtonDown(1))
-            {
-                Destroy(pickPosDisplayGo);
-                ClearCurFunc();
-            }
-        }
-        else if (IsBuildOperation)
-        {
-            if (Input.GetMouseButtonDown(0))
-            {
-                if (EventSystem.current.IsPointerOverGameObject())
-                    return;
-
                 ArrayBuildCommand.Use(EMainBaseCommnad.CONFIRM);
+                return;
             }
-            else if (Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.Escape))
-                ArrayBuildCommand.Use(EMainBaseCommnad.CANCLE);
-        }
-        else if (isRallyPointClick)
-        {
-
-        }
-        else
-        {
-            if (Input.GetMouseButtonDown(0))
-                DragOperateWithMouseClick();
-            else if (Input.GetMouseButtonDown(1))
-            {
+            else if (isAttackClick)
+                AttackMoveWithMouseClick();
+            else if (isMoveClick)
                 MoveWithMouseClick();
+            else if (isPatrolClick)
+                PatrolWithMouseClick();
+            else if (isRallyPointClick)
+                SetRallyPoint();
+            else
+                DragOperateWithMouseClick();
+
+            if (pickPosDisplayGo != null)
+                Destroy(pickPosDisplayGo);
+        }
+        else if (Input.GetMouseButtonDown(1))
+        {
+            if (IsBuildOperation)
+            {
+                ArrayBuildCommand.Use(EMainBaseCommnad.CANCLE);
+                return;
             }
+
+            if (isAttackClick || isMoveClick || isPatrolClick || isRallyPointClick)
+            {
+                Destroy(pickPosDisplayGo);
+                ClearCurFunc();
+            }
+            else
+                MoveWithMouseClick();
         }
     }
 
@@ -166,6 +141,18 @@ public class InputManager : MonoBehaviour
     {
         ZoomCamera();
         MoveCamera();
+    }
+
+    private void SetRallyPoint()
+    {
+        ArrayBarrackCommand.Use(EBarrackCommand.RALLYPOINT_CONFIRM);
+
+        Vector3 pickPos = Vector3.zero;
+        Functions.Picking("StageFloor", 1 << LayerMask.NameToLayer("StageFloor"), ref pickPos);
+        GameObject pickPosDisplayGo = Instantiate(pickPosPrefab, pickPos, Quaternion.identity, transform);
+        StartCoroutine("DestroypickPosDisplay", pickPosDisplayGo);
+
+        ClearCurFunc();
     }
 
     private void MoveWithMouseClick()
@@ -189,6 +176,8 @@ public class InputManager : MonoBehaviour
             StartCoroutine("DestroypickPosDisplay", pickPosDisplayGo);
             pickingCallback?.Invoke(pickPos);
         }
+
+        ClearCurFunc();
     }
 
     private void AttackMoveWithMouseClick()
@@ -211,6 +200,8 @@ public class InputManager : MonoBehaviour
             StartCoroutine("DestroypickPosDisplay", pickPosDisplayGo);
             attackMoveCallback?.Invoke(pickPos);
         }
+
+        ClearCurFunc();
     }
 
     private void PatrolWithMouseClick()
@@ -233,6 +224,8 @@ public class InputManager : MonoBehaviour
             StartCoroutine("DestroypickPosDisplay", pickPosDisplayGo);
             patrolCallback?.Invoke(pickPos);
         }
+
+        ClearCurFunc();
     }
 
     private IEnumerator DestroypickPosDisplay(GameObject _go)
@@ -307,15 +300,18 @@ public class InputManager : MonoBehaviour
     private GameObject pickPosPrefab = null;
     [SerializeField]
     private float pickPosDisplayHideDelay = 0.3f;
+    [SerializeField]
+    private KeyCode cancleKey = KeyCode.Escape;
 
     private float elapsedTime = 0f;
 
     private bool isMoveClick = false;
     private bool isAttackClick = false;
     private bool isPatrolClick = false;
+    private bool isBuildOperation = false;
     private bool isRallyPointClick = false;
 
-    private GameObject pickPosDisplayGo;
+    private GameObject pickPosDisplayGo = null;
 
     private Vector3 dragStartPos = Vector3.zero;
     private Vector3 dragEndPos = Vector3.zero;
