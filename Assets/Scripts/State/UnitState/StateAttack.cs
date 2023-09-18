@@ -16,9 +16,9 @@ public class StateAttack : IState
     {
         if (targetTr != null)
         {
-            Vector3 targetPos = targetTr.position;
-            targetPos.y = myTr.position.y;
-            myTr.rotation = Quaternion.LookRotation(targetPos - myTr.position);
+            dir = targetTr.position - myTr.position;
+            dir.y = 0f;
+            myTr.rotation = Quaternion.LookRotation(dir);
             elapsedTime += Time.deltaTime;
             if (elapsedTime < attRate)
             {
@@ -40,4 +40,6 @@ public class StateAttack : IState
 
     private Transform targetTr = null;
     private Transform myTr = null;
+
+    private Vector3 dir = Vector3.zero;
 }

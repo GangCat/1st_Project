@@ -64,6 +64,11 @@ public class SelectableObject : MonoBehaviour
         gameObject.layer = 1 << LayerMask.GetMask("SelectableObject");
     }
 
+    public void UpdateCurNode()
+    {
+        nodeUpdateCmd.Execute(transform.position, nodeIdx);
+    }
+
     public void GetDmg(float _dmg)
     {
         //Debug.LogFormat("Hit Dmg {0}", _dmg);
@@ -182,7 +187,7 @@ public class SelectableObject : MonoBehaviour
         while (true)
         {
             Collider[] arrCollider = null;
-            arrCollider = Physics.OverlapSphere(transform.position, chaseStartRange, 1 << LayerMask.NameToLayer("SelectableObject"));
+            arrCollider = overlapSphereWithNode(chaseStartRange);
 
             if (arrCollider.Length > 1)
             {
@@ -608,7 +613,7 @@ public class SelectableObject : MonoBehaviour
         while (true)
         {
             Collider[] arrCollider = null;
-            arrCollider = Physics.OverlapSphere(transform.position, attackRange, 1 << LayerMask.NameToLayer("SelectableObject"));
+            arrCollider = overlapSphereWithNode(attackRange);
 
             if (arrCollider.Length > 0)
             {
@@ -642,6 +647,11 @@ public class SelectableObject : MonoBehaviour
     private bool isTargetInRangeFromMyPos(Vector3 _targetPos, float _range)
     {
         return Vector3.SqrMagnitude(transform.position - _targetPos) < Mathf.Pow(_range, 2);
+    }
+
+    private Collider[] overlapSphereWithNode(float _range)
+    {
+        return Physics.OverlapSphere(SelectableObjectManager.listNodeUnderUnit[nodeIdx].worldPos, _range, 1 << LayerMask.NameToLayer("SelectableObject"));
     }
 
 

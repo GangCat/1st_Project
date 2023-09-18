@@ -29,6 +29,7 @@ public class StructureBunker : Structure
             curObj.SetLayer(1 << LayerMask.GetMask("UnitInBunker"));
             curObj.SetAttackDmg(0.3f);
             curObj.SetAttackRange(0.3f);
+            curObj.UpdateCurNode();
             ++curUnitCnt;
         }
     }
