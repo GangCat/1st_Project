@@ -26,7 +26,8 @@ public class StructureBunker : Structure
             curObj.Position = warpPos;
             curObj.transform.parent = transform;
             curObj.Hold();
-            curObj.SetLayer(1 << LayerMask.GetMask("UnitInBunker"));
+            //curObj.SetLayer(1 << LayerMask.GetMask("UnitInBunker"));
+            curObj.SetLayer(LayerMask.NameToLayer("UnitInBunker"));
             curObj.SetAttackDmg(0.3f);
             curObj.SetAttackRange(0.3f);
             curObj.UpdateCurNode();
