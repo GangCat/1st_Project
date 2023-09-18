@@ -702,8 +702,6 @@ public class SelectableObject : MonoBehaviour
     [SerializeField]
     private float attackRange = 0f;
     [SerializeField]
-    private float resetPathDelay = 0.5f;
-    [SerializeField]
     private float stopDelay = 2f;
     [SerializeField]
     private float followOffset = 3f;
