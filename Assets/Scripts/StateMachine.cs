@@ -25,6 +25,7 @@ public class StateMachine : MonoBehaviour
         arrState[(int)EState.ATTACK] = stateAttack;
 
         unitState.myTr = transform;
+        oriDmg = unitState.attDmg;
 
         curState = stateIdle;
         curStateEnum = EState.IDLE;
@@ -46,6 +47,16 @@ public class StateMachine : MonoBehaviour
     {
         get => unitState.targetTr;
         set => unitState.targetTr = value;
+    }
+
+    public void SetAttackDmg(float _ratio)
+    {
+        unitState.attDmg += oriDmg * _ratio;
+    }
+
+    public void ResetAttackDmg()
+    {
+        unitState.attDmg = oriDmg;
     }
 
     public void SetWaitForNewPath(bool _isWaiting)
@@ -93,4 +104,5 @@ public class StateMachine : MonoBehaviour
     private EState curStateEnum = EState.NONE;
 
     private CurStateEnumDelegate curStateEnumCallback = null;
+    private float oriDmg = 0f;
 }

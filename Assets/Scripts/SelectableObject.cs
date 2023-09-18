@@ -6,11 +6,17 @@ public class SelectableObject : MonoBehaviour
 {
     public enum EMoveState { NONE = -1, NORMAL, ATTACK, PATROL, CHASE, FOLLOW, FOLLOW_ENEMY }
     public ESelectableObjectType ObjectType => objectType;
-    public Vector3 GetPos => transform.position;
+    public Vector3 Position 
+    {
+        get => transform.position;
+        set => transform.position = value;
+    }
+
+    public bool IsBunker => isBunker;
 
     public void Init()
     {
-        nodeUpdate = new CommandNodeUpdate();
+        nodeUpdateCmd = new CommandNodeUpdate();
         nodeIdx = SelectableObjectManager.InitNode(transform.position);
         stateMachine = GetComponent<StateMachine>();
 
@@ -24,10 +30,41 @@ public class SelectableObject : MonoBehaviour
                 StateHold();
         }
 
-        nodeUpdate.Execute(transform.position, nodeIdx);
+        oriAttRange = attackRange;
+        nodeUpdateCmd.Execute(transform.position, nodeIdx);
     }
 
-    public void AttackDmg(int _dmg)
+    public void SetAttackDmg(float _ratio)
+    {
+        stateMachine.SetAttackDmg(_ratio);
+    }
+
+    public void ResetAttackDmg()
+    {
+        stateMachine.ResetAttackDmg();
+    }
+
+    public void SetAttackRange(float _ratio)
+    {
+        attackRange += oriAttRange * _ratio;
+    }
+
+    public void ResetAttackRange()
+    {
+        attackRange = oriAttRange;
+    }
+
+    public void SetLayer(int _layerIdx)
+    {
+        gameObject.layer = _layerIdx;
+    }
+
+    public void ResetLayer()
+    {
+        gameObject.layer = 1 << LayerMask.GetMask("SelectableObject");
+    }
+
+    public void GetDmg(float _dmg)
     {
         //Debug.LogFormat("Hit Dmg {0}", _dmg);
     }
@@ -38,15 +75,15 @@ public class SelectableObject : MonoBehaviour
     }
 
 
-    public void FollowTarget(Transform _targetTr)
+    public void FollowTarget(Transform _targetTr, bool _isBunker = false)
     {
         if (isMovable)
         {
-
             if (_targetTr.Equals(transform)) return;
 
             stateMachine.TargetTr = _targetTr;
             targetTr = _targetTr;
+            isBunker = _isBunker;
 
             if (targetTr.CompareTag("EnemyUnit"))
             {
@@ -134,7 +171,7 @@ public class SelectableObject : MonoBehaviour
     {
         stateMachine.TargetTr = null;
         targetTr = null;
-        nodeUpdate.Execute(transform.position, nodeIdx);
+        nodeUpdateCmd.Execute(transform.position, nodeIdx);
         stateMachine.ChangeStateEnum(EState.IDLE);
         StartCoroutine("CheckIsEnemyInChaseStartRangeCoroutine");
     }
@@ -318,7 +355,7 @@ public class SelectableObject : MonoBehaviour
             {
                 ++targetIdx;
 
-                nodeUpdate.Execute(transform.position, nodeIdx);
+                nodeUpdateCmd.Execute(transform.position, nodeIdx);
                 // 목적지에 도착시 
                 if (isAttack)
                     CheckIsTargetInAttackRange();
@@ -377,7 +414,7 @@ public class SelectableObject : MonoBehaviour
             if (isTargetInRangeFromMyPos(curWayNode.worldPos, 0.1f))
             {
                 ++targetIdx;
-                nodeUpdate.Execute(transform.position, nodeIdx);
+                nodeUpdateCmd.Execute(transform.position, nodeIdx);
                 CheckIsTargetInAttackRange();
 
                 if (targetIdx >= arrPath.Length)
@@ -466,12 +503,18 @@ public class SelectableObject : MonoBehaviour
                     if (isTargetInRangeFromMyPos(curWayNode.worldPos, 0.1f))
                     {
                         ++targetIdx;
-                        nodeUpdate.Execute(transform.position, nodeIdx);
+                        nodeUpdateCmd.Execute(transform.position, nodeIdx);
                         if (isAttack)
                             CheckIsTargetInAttackRange();
 
                         if (targetIdx >= arrPath.Length)
                         {
+                            if(isBunker)
+                            {
+                                // 벙커에 들어가는 함수호출
+                                Debug.Log("Bunker");
+                            }
+
                             curWayNode = null;
                             stateMachine.SetWaitForNewPath(true);
                         }
@@ -678,7 +721,9 @@ public class SelectableObject : MonoBehaviour
 
     private int nodeIdx = 0;
 
-    private CommandNodeUpdate nodeUpdate = null;
+    private CommandNodeUpdate nodeUpdateCmd = null;
 
     private bool isAttack = false;
+    private bool isBunker = false;
+    private float oriAttRange = 0f;
 }

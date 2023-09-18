@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class StructureBarrack : Structure
 {
-    public override void Init()
+    public override void Init(int _bunkerIdx = 0)
     {
         spawnPoint = transform.position;
         rallyPoint = spawnPoint;
@@ -24,6 +24,8 @@ public class StructureBarrack : Structure
 
     public void SpawnUnit(ESpawnUnitType _unitType)
     {
+        if (listUnit.Count >= 5) return;
+
         listUnit.Add(_unitType);
         RequestSpawnUnit();
         // ui에 나타내는 내용

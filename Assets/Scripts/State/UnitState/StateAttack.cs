@@ -16,13 +16,15 @@ public class StateAttack : IState
     {
         if (targetTr != null)
         {
-            myTr.rotation = Quaternion.LookRotation(targetTr.position - myTr.position);
+            Vector3 targetPos = targetTr.position;
+            targetPos.y = myTr.position.y;
+            myTr.rotation = Quaternion.LookRotation(targetPos - myTr.position);
             elapsedTime += Time.deltaTime;
             if (elapsedTime < attRate)
             {
                 elapsedTime = 0f;
                 // 공격 애니메이션 출력
-                targetTr.GetComponent<SelectableObject>().AttackDmg(attDmg);
+                targetTr.GetComponent<SelectableObject>().GetDmg(attDmg);
             }
         }
     }
@@ -32,7 +34,7 @@ public class StateAttack : IState
 
     }
 
-    private int attDmg = 0;
+    private float attDmg = 0;
     private float elapsedTime = 0f;
     private float attRate = 0f;
 

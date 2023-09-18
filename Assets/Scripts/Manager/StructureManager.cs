@@ -76,7 +76,10 @@ public class StructureManager : MonoBehaviour
             curStructure.UpdateNodeUnWalkable();
             curStructure.BuildComplete();
             curStructure.transform.parent = null;
-            curStructure.Init();
+            if(curStructure.GetComponent<SelectableObject>().ObjectType.Equals(ESelectableObjectType.BUNKER))
+                curStructure.Init(bunkerIdx++);
+            else
+                curStructure.Init();
             isBlueprint = false;
             return false;
         }
@@ -99,4 +102,6 @@ public class StructureManager : MonoBehaviour
     private PF_Grid grid = null;
     private PF_Node curNode = null;
     private bool isBlueprint = false;
+
+    private int bunkerIdx = 0;
 }

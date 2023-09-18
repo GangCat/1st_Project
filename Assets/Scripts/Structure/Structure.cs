@@ -12,7 +12,7 @@ public class Structure : MonoBehaviour
         StartCoroutine("CheckBuildableCoroutine");
     }
 
-    public virtual void Init() { }
+    public virtual void Init(int _bunkerIdx = 0) { }
 
     public bool IsBuildable => isBuildable;
 

@@ -26,7 +26,7 @@ public struct SUnitState
 
     public float moveSpeed;
     public float attRate;
-    public int attDmg;
+    public float attDmg;
     
 }
 
@@ -40,3 +40,4 @@ public enum EUnitButtonCommand { NONE = -1, CANCLE, MOVE, STOP, HOLD, PATROL, AT
 public enum EMainBaseCommnad { NONE = -1, CANCLE, CONFIRM, BUILD_TURRET, BUILD_BUNKER, BUILD_WALL, BUILD_NUCLEAR, BUILD_BARRACK, DEMOLITION, UPGRADE, LENGTH }
 public enum EBarrackCommand { NONE = -1, CANCLE, SPAWN_MELEE, SPAWN_RANGE, SPAWN_ROCKET, RALLYPOINT, DEMOLITION, UPGRADE, RALLYPOINT_CONFIRM, LENGTH }
 public enum EUnitCommand { NONE = -1, NODE_UPDATE, LENGTH }
+public enum EBunkerCommand { NONE = -1, IN_UNIT, OUT_ONE_UNIT, OUT_ALL_UNIT, LENGTH }

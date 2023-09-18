@@ -117,7 +117,7 @@ public class GameManager : MonoBehaviour
 
     private void MoveCameraWithObject()
     {
-        cameraMng.MoveCameraWithObject(selectMng.GetFirstSelectableObjectInList.GetPos);
+        cameraMng.MoveCameraWithObject(selectMng.GetFirstSelectableObjectInList.Position);
     }
 
     private void AddSelectedObject(SelectableObject _object)

@@ -137,7 +137,7 @@ public class SelectableObjectManager : MonoBehaviour
         {
             Vector3 centerPos = CalcFormationCenterPos(_targetPos.y);
             foreach (SelectableObject obj in listSelectedObject)
-                obj.MoveAttack(_targetPos + CalcPosInFormation(obj.GetPos, centerPos));
+                obj.MoveAttack(_targetPos + CalcPosInFormation(obj.Position, centerPos));
         }
         else if (IsGroupMaxDistOverRange())
         {
@@ -149,7 +149,7 @@ public class SelectableObjectManager : MonoBehaviour
             // 대열 유지하면서 모이기
             Vector3 centerPos = CalcFormationCenterPos(_targetPos.y);
             foreach (SelectableObject obj in listSelectedObject)
-                obj.MoveByPos(_targetPos + CalcPosInFormation(obj.GetPos, centerPos));
+                obj.MoveByPos(_targetPos + CalcPosInFormation(obj.Position, centerPos));
         }
     }
 
@@ -197,8 +197,8 @@ public class SelectableObjectManager : MonoBehaviour
         Vector3 centerPos = Vector3.zero;
         foreach(SelectableObject obj in listSelectedObject)
         {
-            centerPos.x += obj.GetPos.x;
-            centerPos.z += obj.GetPos.z;
+            centerPos.x += obj.Position.x;
+            centerPos.z += obj.Position.z;
         }
 
         centerPos /= listSelectedObject.Count;
@@ -214,7 +214,7 @@ public class SelectableObjectManager : MonoBehaviour
 
     private bool IsGroupMaxDistOverRange()
     {
-        Vector3 objPos = listSelectedObject[0].GetPos;
+        Vector3 objPos = listSelectedObject[0].Position;
         float maxX = objPos.x;
         float minX = objPos.x;
         float maxZ = objPos.z;
@@ -222,7 +222,7 @@ public class SelectableObjectManager : MonoBehaviour
 
         foreach (SelectableObject obj in listSelectedObject)
         {
-            objPos = obj.GetPos;
+            objPos = obj.Position;
             if (objPos.x > maxX) maxX = objPos.x;
             else if (objPos.x < minX) minX = objPos.x;
 
@@ -235,21 +235,36 @@ public class SelectableObjectManager : MonoBehaviour
 
     public void MoveUnitByPicking(Transform _targetTr)
     {
-        foreach (SelectableObject obj in listSelectedObject)
-            obj.FollowTarget(_targetTr);
+        if (_targetTr.GetComponent<SelectableObject>().ObjectType.Equals(ESelectableObjectType.BUNKER))
+        {
+            curBunker = _targetTr.GetComponent<StructureBunker>();
+            foreach (SelectableObject obj in listSelectedObject)
+                obj.FollowTarget(_targetTr, true);
+        }
+        else
+        {
+            foreach (SelectableObject obj in listSelectedObject)
+                obj.FollowTarget(_targetTr);
+        }
     }
+
+    public void InUnitBunker()
+    {
+        
+    }
+
+    [SerializeField]
+    private float rangeGroupLimitDist = 5f;
 
     private bool isFriendlyUnitInList = false;
 
     private List<SelectableObject> tempListSelectableObject = new List<SelectableObject>();
     private List<SelectableObject> listSelectedObject = new List<SelectableObject>();
 
-    [SerializeField]
-    private float rangeGroupLimitDist = 5f;
-    
-    private static PF_Grid grid = null;
-
     private VoidSelectObjectTypeDelegate selectObjectCallback = null;
 
+    private StructureBunker curBunker = null;
+
+    private static PF_Grid grid = null;
     public static List<PF_Node> listNodeUnderUnit = new List<PF_Node>();
 }
