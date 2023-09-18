@@ -179,9 +179,9 @@ GameObject:
   - component: {fileID: 8883937953507251874}
   - component: {fileID: -6141483901220276170}
   - component: {fileID: -4761019630317556292}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: P_TempMainBase
-  m_TagString: Untagged
+  m_TagString: FriendlyStructure
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -256,3 +256,4 @@ MonoBehaviour:
   attackRange: 0
   resetPathDelay: 0.5
   stopDelay: 2
+  followOffset: 3

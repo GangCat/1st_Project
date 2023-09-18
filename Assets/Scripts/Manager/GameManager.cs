@@ -39,6 +39,8 @@ public class GameManager : MonoBehaviour
         cameraMng.Init();
         uiMng.Init();
         buildMng.Init(grid);
+
+        InitPlayer();
     }
 
     private void InitCommandList()
@@ -63,6 +65,11 @@ public class GameManager : MonoBehaviour
         ArrayBarrackCommand.Add(EBarrackCommand.SPAWN_RANGE, new CommandSpawnUnit(selectMng, ESpawnUnitType.RANGE));
         ArrayBarrackCommand.Add(EBarrackCommand.SPAWN_ROCKET, new CommandSpawnUnit(selectMng, ESpawnUnitType.ROCKET));
         ArrayBarrackCommand.Add(EBarrackCommand.RALLYPOINT_CONFIRM, new CommandConfirmRallyPoint(selectMng));
+    }
+
+    private void InitPlayer()
+    {
+        FindAnyObjectByType<UnitHeroIndicator>().Init();
     }
 
     private void UnitSelect(ESelectableObjectType _selectObjectType)

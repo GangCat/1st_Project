@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 7215857622082080455}
   - component: {fileID: 2382400079855685331}
   - component: {fileID: 4556634007579230422}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: P_TempBarrack
-  m_TagString: Untagged
+  m_TagString: FriendlyStructure
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -90,6 +90,7 @@ MonoBehaviour:
   attackRange: 0
   resetPathDelay: 100
   stopDelay: 100
+  followOffset: 3
 --- !u!114 &4556634007579230422
 MonoBehaviour:
   m_ObjectHideFlags: 0

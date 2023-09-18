@@ -20,7 +20,7 @@ TagManager:
   - SelectableObject
   - SelectableArea
   - UnWalkable
-  - 
+  - SelectableStructure
   - 
   - 
   - 

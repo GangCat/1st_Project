@@ -14,12 +14,11 @@ public class SelectableObject : MonoBehaviour
         nodeIdx = SelectableObjectManager.InitNode(transform.position);
         stateMachine = GetComponent<StateMachine>();
 
-
         if (stateMachine != null)
         {
             stateMachine.Init(GetCurState);
 
-            if (objectType.Equals(ESelectableObjectType.UNIT))
+            if (objectType.Equals(ESelectableObjectType.UNIT) || objectType.Equals(ESelectableObjectType.UNIT_HERO))
                 StateIdle();
             else if (objectType.Equals(ESelectableObjectType.TURRET))
                 StateHold();
@@ -41,46 +40,55 @@ public class SelectableObject : MonoBehaviour
 
     public void FollowTarget(Transform _targetTr)
     {
-        if (_targetTr.Equals(transform)) return;
-
-        stateMachine.TargetTr = _targetTr;
-        targetTr = _targetTr;
-
-        if(targetTr.CompareTag("EnemyUnit"))
-            curMoveCondition = EMoveState.FOLLOW_ENEMY;
-        else
-            curMoveCondition = EMoveState.FOLLOW;
-
         if (isMovable)
+        {
+
+            if (_targetTr.Equals(transform)) return;
+
+            stateMachine.TargetTr = _targetTr;
+            targetTr = _targetTr;
+
+            if (targetTr.CompareTag("EnemyUnit"))
+                curMoveCondition = EMoveState.FOLLOW_ENEMY;
+            else
+                curMoveCondition = EMoveState.FOLLOW;
+
             StateMove();
+        }
     }
 
     public void MoveByTargetPos(Vector3 _targetPos)
     {
-        targetPos = _targetPos;
-        curMoveCondition = EMoveState.NORMAL;
-
         if (isMovable)
+        {
+            targetPos = _targetPos;
+            curMoveCondition = EMoveState.NORMAL;
+
             StateMove();
+        }
     }
 
     public void MoveAttack(Vector3 _targetPos)
     {
-        targetPos = _targetPos;
-        curMoveCondition = EMoveState.ATTACK;
-
         if (isMovable)
+        {
+            targetPos = _targetPos;
+            curMoveCondition = EMoveState.ATTACK;
+
             StateMove();
+        }
     }
 
     public void Patrol(Vector3 _wayPointTo)
     {
-        targetPos = _wayPointTo;
-        wayPointStart = transform.position;
-        curMoveCondition = EMoveState.PATROL;
-
         if (isMovable)
+        {
+            targetPos = _wayPointTo;
+            wayPointStart = transform.position;
+            curMoveCondition = EMoveState.PATROL;
+
             StateMove();
+        }
     }
 
     public void Stop()
@@ -370,18 +378,20 @@ public class SelectableObject : MonoBehaviour
             }
             elapsedTime += Time.deltaTime;
 
-            if (elapsedTime > resetPathDelay)
+            if (elapsedTime > stopDelay)
             {
                 elapsedTime = 0f;
+                if (Vector3.SqrMagnitude(transform.position - targetTr.position) > Mathf.Pow(followOffset, 2f))
+                {
+                    curWayNode = null;
+                    PF_PathRequestManager.RequestPath(transform.position, targetTr.position, OnPathFound);
+                    stateMachine.SetWaitForNewPath(true);
+                    while (curWayNode == null)
+                        yield return null;
 
-                curWayNode = null;
-                PF_PathRequestManager.RequestPath(transform.position, targetTr.position, OnPathFound);
-                stateMachine.SetWaitForNewPath(true);
-                while (curWayNode == null)
-                    yield return null;
-                
-                stateMachine.TargetPos = curWayNode.worldPos;
-                stateMachine.SetWaitForNewPath(false);
+                    stateMachine.TargetPos = curWayNode.worldPos;
+                    stateMachine.SetWaitForNewPath(false);
+                }
             }
             else
             {
@@ -599,6 +609,8 @@ public class SelectableObject : MonoBehaviour
     private float resetPathDelay = 0.5f;
     [SerializeField]
     private float stopDelay = 2f;
+    [SerializeField]
+    private float followOffset = 3f;
 
     private EMoveState curMoveCondition = EMoveState.NONE;
     private EMoveState prevMoveCondition = EMoveState.NONE;
@@ -616,4 +628,6 @@ public class SelectableObject : MonoBehaviour
     private int nodeIdx = 0;
 
     private CommandNodeUpdate nodeUpdate = null;
+
+
 }

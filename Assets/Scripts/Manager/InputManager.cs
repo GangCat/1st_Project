@@ -148,7 +148,7 @@ public class InputManager : MonoBehaviour
         ArrayBarrackCommand.Use(EBarrackCommand.RALLYPOINT_CONFIRM);
 
         Vector3 pickPos = Vector3.zero;
-        Functions.Picking("StageFloor", 1 << LayerMask.NameToLayer("StageFloor"), ref pickPos);
+        Functions.Picking("StageFloor", floorLayer, ref pickPos);
         GameObject pickPosDisplayGo = Instantiate(pickPosPrefab, pickPos, Quaternion.identity, transform);
         StartCoroutine("DestroypickPosDisplay", pickPosDisplayGo);
 
@@ -168,9 +168,9 @@ public class InputManager : MonoBehaviour
 
         Vector3 pickPos = Vector3.zero;
         RaycastHit hit;
-        if (Functions.Picking(1 << LayerMask.NameToLayer("SelectableObject"), out hit))
+        if (Functions.Picking(selectableLayer, out hit))
             PickingObjectCallback?.Invoke(hit.transform);
-        else if (Functions.Picking("StageFloor", 1 << LayerMask.NameToLayer("StageFloor"), ref pickPos))
+        else if (Functions.Picking("StageFloor", floorLayer, ref pickPos))
         {
             GameObject pickPosDisplayGo = Instantiate(pickPosPrefab, pickPos, Quaternion.identity, transform);
             StartCoroutine("DestroypickPosDisplay", pickPosDisplayGo);
@@ -192,9 +192,9 @@ public class InputManager : MonoBehaviour
 
         Vector3 pickPos = Vector3.zero;
         RaycastHit hit;
-        if (Functions.Picking(1 << LayerMask.NameToLayer("SelectableObject"), out hit))
+        if (Functions.Picking(selectableLayer, out hit))
             PickingObjectCallback?.Invoke(hit.transform);
-        else if (Functions.Picking("StageFloor", 1 << LayerMask.NameToLayer("StageFloor"), ref pickPos))
+        else if (Functions.Picking("StageFloor", floorLayer, ref pickPos))
         {
             GameObject pickPosDisplayGo = Instantiate(pickPosPrefab, pickPos, Quaternion.identity, transform);
             StartCoroutine("DestroypickPosDisplay", pickPosDisplayGo);
@@ -216,9 +216,9 @@ public class InputManager : MonoBehaviour
 
         Vector3 pickPos = Vector3.zero;
         RaycastHit hit;
-        if (Functions.Picking(1 << LayerMask.NameToLayer("SelectableObject"), out hit))
+        if (Functions.Picking(selectableLayer, out hit))
             PickingObjectCallback?.Invoke(hit.transform);
-        else if (Functions.Picking("StageFloor", 1 << LayerMask.NameToLayer("StageFloor"), ref pickPos))
+        else if (Functions.Picking("StageFloor", floorLayer, ref pickPos))
         {
             GameObject pickPosDisplayGo = Instantiate(pickPosPrefab, pickPos, Quaternion.identity, transform);
             StartCoroutine("DestroypickPosDisplay", pickPosDisplayGo);
@@ -246,7 +246,7 @@ public class InputManager : MonoBehaviour
                 selectObjectCallback?.Invoke(hit.transform.GetComponent<SelectableObject>());
         }
 
-        Functions.Picking("StageFloor", 1 << LayerMask.NameToLayer("StageFloor"), ref dragStartPos);
+        Functions.Picking("StageFloor", floorLayer, ref dragStartPos);
         selectArea.SetPos(dragStartPos);
         selectArea.SetLocalScale(Vector3.zero);
         selectArea.SetActive(true);
@@ -261,7 +261,7 @@ public class InputManager : MonoBehaviour
             if (Input.GetMouseButtonUp(0))
                 break;
 
-            Functions.Picking("StageFloor", 1 << LayerMask.NameToLayer("StageFloor"), ref dragEndPos);
+            Functions.Picking("StageFloor", floorLayer, ref dragEndPos);
             selectArea.SetLocalScale(Quaternion.Euler(0f, -45f, 0f) * (dragEndPos - dragStartPos));
             
             yield return null;
@@ -302,6 +302,10 @@ public class InputManager : MonoBehaviour
     private float pickPosDisplayHideDelay = 0.3f;
     [SerializeField]
     private KeyCode cancleKey = KeyCode.Escape;
+    [SerializeField]
+    private LayerMask floorLayer;
+    [SerializeField]
+    private LayerMask selectableLayer;
 
     private float elapsedTime = 0f;
 

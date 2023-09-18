@@ -96,9 +96,9 @@ GameObject:
   - component: {fileID: 7534801930405887633}
   - component: {fileID: 8964975729645022558}
   - component: {fileID: 6126758822872318196}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: P_TempWall4Y
-  m_TagString: Untagged
+  m_TagString: FriendlyStructure
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -173,6 +173,7 @@ MonoBehaviour:
   attackRange: 0
   resetPathDelay: 0.5
   stopDelay: 2
+  followOffset: 3
 --- !u!114 &6126758822872318196
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -187,3 +188,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myGridX: 1
   myGridY: 4
+  calcNodeOffset: {x: 0, y: 0, z: 0}
+  wallStartPosOffset: {x: 0, y: 0, z: 0}

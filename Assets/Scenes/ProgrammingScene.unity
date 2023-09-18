@@ -445,16 +445,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1056061966}
     m_Modifications:
-    - target: {fileID: 85326528598308137, guid: 1a6427e02f043fb49b31dd80f757f371,
-        type: 3}
-      propertyPath: m_Constraints
-      value: 126
-      objectReference: {fileID: 0}
-    - target: {fileID: 85326528598308137, guid: 1a6427e02f043fb49b31dd80f757f371,
-        type: 3}
-      propertyPath: m_IsKinematic
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 186232715040071189, guid: 1a6427e02f043fb49b31dd80f757f371,
         type: 3}
       propertyPath: m_Name
@@ -744,16 +734,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1056061966}
     m_Modifications:
-    - target: {fileID: 85326528598308137, guid: 1a6427e02f043fb49b31dd80f757f371,
-        type: 3}
-      propertyPath: m_Constraints
-      value: 126
-      objectReference: {fileID: 0}
-    - target: {fileID: 85326528598308137, guid: 1a6427e02f043fb49b31dd80f757f371,
-        type: 3}
-      propertyPath: m_IsKinematic
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 186232715040071189, guid: 1a6427e02f043fb49b31dd80f757f371,
         type: 3}
       propertyPath: m_Name
@@ -2870,16 +2850,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1056061966}
     m_Modifications:
-    - target: {fileID: 85326528598308137, guid: 1a6427e02f043fb49b31dd80f757f371,
-        type: 3}
-      propertyPath: m_Constraints
-      value: 126
-      objectReference: {fileID: 0}
-    - target: {fileID: 85326528598308137, guid: 1a6427e02f043fb49b31dd80f757f371,
-        type: 3}
-      propertyPath: m_IsKinematic
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 186232715040071189, guid: 1a6427e02f043fb49b31dd80f757f371,
         type: 3}
       propertyPath: m_Name
@@ -3059,16 +3029,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1056061966}
     m_Modifications:
-    - target: {fileID: 85326528598308137, guid: 1a6427e02f043fb49b31dd80f757f371,
-        type: 3}
-      propertyPath: m_Constraints
-      value: 126
-      objectReference: {fileID: 0}
-    - target: {fileID: 85326528598308137, guid: 1a6427e02f043fb49b31dd80f757f371,
-        type: 3}
-      propertyPath: m_IsKinematic
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 186232715040071189, guid: 1a6427e02f043fb49b31dd80f757f371,
         type: 3}
       propertyPath: m_Name
@@ -5260,16 +5220,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1056061966}
     m_Modifications:
-    - target: {fileID: 85326528598308137, guid: 1a6427e02f043fb49b31dd80f757f371,
-        type: 3}
-      propertyPath: m_Constraints
-      value: 126
-      objectReference: {fileID: 0}
-    - target: {fileID: 85326528598308137, guid: 1a6427e02f043fb49b31dd80f757f371,
-        type: 3}
-      propertyPath: m_IsKinematic
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 186232715040071189, guid: 1a6427e02f043fb49b31dd80f757f371,
         type: 3}
       propertyPath: m_Name
@@ -5613,16 +5563,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1056061966}
     m_Modifications:
-    - target: {fileID: 85326528598308137, guid: 1a6427e02f043fb49b31dd80f757f371,
-        type: 3}
-      propertyPath: m_Constraints
-      value: 126
-      objectReference: {fileID: 0}
-    - target: {fileID: 85326528598308137, guid: 1a6427e02f043fb49b31dd80f757f371,
-        type: 3}
-      propertyPath: m_IsKinematic
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 186232715040071189, guid: 1a6427e02f043fb49b31dd80f757f371,
         type: 3}
       propertyPath: m_Name
@@ -7741,6 +7681,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1432783268}
   m_CullTransparentMesh: 1
+--- !u!1 &1433866351 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6917241794151303350, guid: b1841c0cd9c4e6d439fd42a2caeb4d6b,
+    type: 3}
+  m_PrefabInstance: {fileID: 1510320194}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1433866358
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1433866351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa4dbfa308457ee468fbbce11117de96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1446206862
 GameObject:
   m_ObjectHideFlags: 0
@@ -7775,7 +7733,7 @@ MonoBehaviour:
   displayUnwalkableNodeGizmos: 1
   unWalkableMask:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 1536
   gridWorldSize: {x: 200, y: 200}
   nodeRadius: 0.5
 --- !u!4 &1446206864
@@ -8080,16 +8038,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1056061966}
     m_Modifications:
-    - target: {fileID: 85326528598308137, guid: 1a6427e02f043fb49b31dd80f757f371,
-        type: 3}
-      propertyPath: m_Constraints
-      value: 126
-      objectReference: {fileID: 0}
-    - target: {fileID: 85326528598308137, guid: 1a6427e02f043fb49b31dd80f757f371,
-        type: 3}
-      propertyPath: m_IsKinematic
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 186232715040071189, guid: 1a6427e02f043fb49b31dd80f757f371,
         type: 3}
       propertyPath: m_Name
@@ -8277,63 +8225,38 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1784176741930829291, guid: b1841c0cd9c4e6d439fd42a2caeb4d6b,
         type: 3}
-      propertyPath: structState.attDmg
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1784176741930829291, guid: b1841c0cd9c4e6d439fd42a2caeb4d6b,
-        type: 3}
-      propertyPath: structState.attRate
+      propertyPath: isMovable
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1784176741930829291, guid: b1841c0cd9c4e6d439fd42a2caeb4d6b,
         type: 3}
-      propertyPath: structState.attRange
+      propertyPath: attackRange
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1784176741930829291, guid: b1841c0cd9c4e6d439fd42a2caeb4d6b,
         type: 3}
-      propertyPath: structState.moveSpeed
-      value: 5
+      propertyPath: resetPathDelay
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 1784176741930829291, guid: b1841c0cd9c4e6d439fd42a2caeb4d6b,
         type: 3}
-      propertyPath: structState.traceEndRange
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 1784176741930829291, guid: b1841c0cd9c4e6d439fd42a2caeb4d6b,
-        type: 3}
-      propertyPath: structState.traceStartRange
+      propertyPath: chaseStartRange
       value: 7
       objectReference: {fileID: 0}
-    - target: {fileID: 4205126466673021810, guid: b1841c0cd9c4e6d439fd42a2caeb4d6b,
+    - target: {fileID: 1784176741930829291, guid: b1841c0cd9c4e6d439fd42a2caeb4d6b,
         type: 3}
-      propertyPath: grid
-      value: 
-      objectReference: {fileID: 1446206863}
-    - target: {fileID: 6825190610509680595, guid: b1841c0cd9c4e6d439fd42a2caeb4d6b,
-        type: 3}
-      propertyPath: m_Constraints
-      value: 126
-      objectReference: {fileID: 0}
-    - target: {fileID: 6825190610509680595, guid: b1841c0cd9c4e6d439fd42a2caeb4d6b,
-        type: 3}
-      propertyPath: m_IsKinematic
-      value: 1
+      propertyPath: chaseFinishRange
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 6917241794151303350, guid: b1841c0cd9c4e6d439fd42a2caeb4d6b,
         type: 3}
       propertyPath: m_Name
       value: P_Player
       objectReference: {fileID: 0}
-    - target: {fileID: 6917241794151303350, guid: b1841c0cd9c4e6d439fd42a2caeb4d6b,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7175020197789139696, guid: b1841c0cd9c4e6d439fd42a2caeb4d6b,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.79999995
+      value: 3.5
       objectReference: {fileID: 0}
     - target: {fileID: 7175020197789139696, guid: b1841c0cd9c4e6d439fd42a2caeb4d6b,
         type: 3}
@@ -8343,7 +8266,7 @@ PrefabInstance:
     - target: {fileID: 7175020197789139696, guid: b1841c0cd9c4e6d439fd42a2caeb4d6b,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -6.99
+      value: -3.5
       objectReference: {fileID: 0}
     - target: {fileID: 7175020197789139696, guid: b1841c0cd9c4e6d439fd42a2caeb4d6b,
         type: 3}
@@ -8380,11 +8303,29 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 4205126466673021810, guid: b1841c0cd9c4e6d439fd42a2caeb4d6b, type: 3}
+    - target: {fileID: 7330500162855589593, guid: b1841c0cd9c4e6d439fd42a2caeb4d6b,
+        type: 3}
+      propertyPath: unitState.attDmg
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7330500162855589593, guid: b1841c0cd9c4e6d439fd42a2caeb4d6b,
+        type: 3}
+      propertyPath: unitState.attRate
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7330500162855589593, guid: b1841c0cd9c4e6d439fd42a2caeb4d6b,
+        type: 3}
+      propertyPath: unitState.moveSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6917241794151303350, guid: b1841c0cd9c4e6d439fd42a2caeb4d6b,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1433866358}
   m_SourcePrefab: {fileID: 100100000, guid: b1841c0cd9c4e6d439fd42a2caeb4d6b, type: 3}
 --- !u!1 &1516383883
 GameObject:
@@ -8643,16 +8584,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1056061966}
     m_Modifications:
-    - target: {fileID: 85326528598308137, guid: 1a6427e02f043fb49b31dd80f757f371,
-        type: 3}
-      propertyPath: m_Constraints
-      value: 126
-      objectReference: {fileID: 0}
-    - target: {fileID: 85326528598308137, guid: 1a6427e02f043fb49b31dd80f757f371,
-        type: 3}
-      propertyPath: m_IsKinematic
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 186232715040071189, guid: 1a6427e02f043fb49b31dd80f757f371,
         type: 3}
       propertyPath: m_Name
@@ -8856,6 +8787,13 @@ MonoBehaviour:
   pickPosPrefab: {fileID: 52691291055329485, guid: 58ef200a9ea84df48a81a49db5dc2f39,
     type: 3}
   pickPosDisplayHideDelay: 0.3
+  cancleKey: 27
+  floorLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  selectableLayer:
+    serializedVersion: 2
+    m_Bits: 1152
 --- !u!4 &1606740354
 Transform:
   m_ObjectHideFlags: 0
@@ -9117,16 +9055,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1056061966}
     m_Modifications:
-    - target: {fileID: 85326528598308137, guid: 1a6427e02f043fb49b31dd80f757f371,
-        type: 3}
-      propertyPath: m_Constraints
-      value: 126
-      objectReference: {fileID: 0}
-    - target: {fileID: 85326528598308137, guid: 1a6427e02f043fb49b31dd80f757f371,
-        type: 3}
-      propertyPath: m_IsKinematic
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 186232715040071189, guid: 1a6427e02f043fb49b31dd80f757f371,
         type: 3}
       propertyPath: m_Name
@@ -11079,16 +11007,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1056061966}
     m_Modifications:
-    - target: {fileID: 85326528598308137, guid: 1a6427e02f043fb49b31dd80f757f371,
-        type: 3}
-      propertyPath: m_Constraints
-      value: 126
-      objectReference: {fileID: 0}
-    - target: {fileID: 85326528598308137, guid: 1a6427e02f043fb49b31dd80f757f371,
-        type: 3}
-      propertyPath: m_IsKinematic
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 186232715040071189, guid: 1a6427e02f043fb49b31dd80f757f371,
         type: 3}
       propertyPath: m_Name
@@ -11852,16 +11770,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1056061966}
     m_Modifications:
-    - target: {fileID: 85326528598308137, guid: 1a6427e02f043fb49b31dd80f757f371,
-        type: 3}
-      propertyPath: m_Constraints
-      value: 126
-      objectReference: {fileID: 0}
-    - target: {fileID: 85326528598308137, guid: 1a6427e02f043fb49b31dd80f757f371,
-        type: 3}
-      propertyPath: m_IsKinematic
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 186232715040071189, guid: 1a6427e02f043fb49b31dd80f757f371,
         type: 3}
       propertyPath: m_Name

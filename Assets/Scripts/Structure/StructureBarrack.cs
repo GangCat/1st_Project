@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class StructureBarrack : Structure
 {
-    private ArrayBarrackCommand arrBarrackCmd = new ArrayBarrackCommand();
-
     public override void Init()
     {
         spawnPoint = transform.position;
@@ -67,7 +65,7 @@ public class StructureBarrack : Structure
         RequestSpawnUnit();
     }
 
-    [Header("-Melee, Range, Rocket(temp)")]
+    [Header("-Melee(temp), Range, Rocket(temp)")]
     [SerializeField]
     private float[] spawnUnitDelay = new float[(int)ESpawnUnitType.LENGTH];
     [SerializeField]
