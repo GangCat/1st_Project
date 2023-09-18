@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class CommandInUnit : Command
 {
-    public CommandInUnit(StructureBunker _bunker)
+    public CommandInUnit(SelectableObjectManager _selMng)
     {
-        bunker = _bunker;
+        selMng = _selMng;
     }
 
     public override void Execute()
     {
-        bunker.InUnit();
+        SelectableObject tempObj = selMng.InUnit();
+        selMng.RemoveUnitAtList(tempObj);
     }
 
-    StructureBunker bunker = null;
+    SelectableObjectManager selMng = null;
 }

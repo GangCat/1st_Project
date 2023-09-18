@@ -12,9 +12,21 @@ public class Structure : MonoBehaviour
         StartCoroutine("CheckBuildableCoroutine");
     }
 
-    public virtual void Init(int _bunkerIdx = 0) { }
+    public virtual void Init() { }
 
     public bool IsBuildable => isBuildable;
+
+    public void SetGrid(int _gridX, int _gridY)
+    {
+        myGridX = _gridX;
+        myGridY = _gridY;
+    }
+
+    public void SetFactor(int _factorGridX, int _factorGridY)
+    {
+        factorGridX = _factorGridX;
+        factorGridY = _factorGridY;
+    }
 
     public void SetColliderEnable(bool _isEnable)
     {
@@ -28,14 +40,6 @@ public class Structure : MonoBehaviour
 
     public virtual void UpdateNodeUnWalkable()
     {
-        //curNode = grid.GetNodeFromWorldPoint(transform.position);
-
-        //for (int i = 0; i < myGridX; ++i)
-        //{
-        //    for (int j = 0; j < myGridY; ++j)
-        //        grid.UpdateNodeWalkable(grid.GetNodeWithGrid(curNode.gridX + i, curNode.gridY + j), false);
-        //}
-
         curNode = grid.GetNodeFromWorldPoint(transform.position);
         int gridX = curNode.gridX;
         int gridY = curNode.gridY;
@@ -45,8 +49,8 @@ public class Structure : MonoBehaviour
         {
             grid.UpdateNodeWalkable(
                 grid.GetNodeWithGrid(
-                    idx % myGridX + gridX,
-                    idx / myGridY + gridY),
+                    (idx % myGridX) * factorGridX + gridX,
+                    (idx / myGridY) * factorGridY + gridY),
                 false);
 
             ++idx;
@@ -58,23 +62,36 @@ public class Structure : MonoBehaviour
         StopCoroutine("CheckBuildableCoroutine");
     }
 
-    protected IEnumerator CheckBuildableCoroutine()
+    protected virtual IEnumerator CheckBuildableCoroutine()
     {
         while (true)
         {
             isBuildable = true;
 
+            //for (int i = 0; i < myGridX; ++i)
+            //{
+            //    for (int j = 0; j < myGridY; ++j)
+            //    {
+            //        if (grid.GetNodeIsWalkable(curNode.gridX + i, curNode.gridY + j))
+            //            continue;
+
+            //        isBuildable = false;
+            //    }
+            //}
+
             curNode = grid.GetNodeFromWorldPoint(transform.position);
-
-            for (int i = 0; i < myGridX; ++i)
+            int gridX = curNode.gridX;
+            int gridY = curNode.gridY;
+            int idx = 0;
+            while (idx < myGridX * myGridY)
             {
-                for (int j = 0; j < myGridY; ++j)
+                if (!grid.GetNodeWithGrid((idx % myGridX) * factorGridX + gridX, (idx / myGridY) * factorGridY + gridY).walkable)
                 {
-                    if (grid.GetNodeIsWalkable(curNode.gridX + i, curNode.gridY + j))
-                        continue;
-
                     isBuildable = false;
+                    break;
                 }
+
+                ++idx;
             }
 
             SetColor();
@@ -100,6 +117,9 @@ public class Structure : MonoBehaviour
     protected PF_Node curNode = null;
     protected Color oriColor = Color.magenta;
     protected Material mt = null;
+
+    protected int factorGridX = 1;
+    protected int factorGridY = 1;
 
     protected bool isBuildable = true;
 }

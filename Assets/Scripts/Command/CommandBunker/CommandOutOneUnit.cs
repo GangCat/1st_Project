@@ -4,8 +4,15 @@ using UnityEngine;
 
 public class CommandOutOneUnit : Command
 {
+    public CommandOutOneUnit(SelectableObjectManager _selMng)
+    {
+        selMng = _selMng;
+    }
+
     public override void Execute()
     {
-        throw new System.NotImplementedException();
+        selMng.OutOneUnit();
     }
+
+    SelectableObjectManager selMng = null;
 }

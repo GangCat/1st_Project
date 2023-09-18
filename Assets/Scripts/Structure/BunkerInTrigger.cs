@@ -4,14 +4,29 @@ using UnityEngine;
 
 public class BunkerInTrigger : MonoBehaviour
 {
-    public void Init(int _bunkerIdx)
-    {
-        bunkerIdx = _bunkerIdx;
-    }
-
     public SelectableObject GetCurObj()
     {
         return unitObj;
+    }
+
+    public void ResetObj()
+    {
+        unitObj = null;
+    }
+
+    public void Init(int _capa)
+    {
+        capacity = _capa;
+    }
+
+    public void UpdateCapacity(int _capa)
+    {
+        capacity = _capa;
+    }
+
+    public void UpdateUnitCnt(int _cnt)
+    {
+        curUnitCnt = _cnt;
     }
 
     private void OnTriggerEnter(Collider _other)
@@ -19,11 +34,17 @@ public class BunkerInTrigger : MonoBehaviour
         if (_other.CompareTag("FriendlyUnit"))
         {
             unitObj = _other.GetComponent<SelectableObject>();
-            if (unitObj.IsBunker)
-                ListBunkerCommand.Use(EBunkerCommand.IN_UNIT, bunkerIdx);
+            if (unitObj.IsBunker && curUnitCnt < capacity)
+                ArrayBunkerCommand.Use(EBunkerCommand.IN_UNIT);
+            else
+            {
+                unitObj.IsBunker = false;
+                unitObj = null;
+            }
         }
     }
 
-    private int bunkerIdx = 0;
     private SelectableObject unitObj = null;
+    private int capacity = 0;
+    private int curUnitCnt = 0;
 }

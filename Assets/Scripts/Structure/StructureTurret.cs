@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class StructureTurret : Structure
 {
-    public override void Init(int _bunkerIdx = 0)
+    public override void Init()
     {
         selectObj = GetComponentInChildren<SelectableObject>();
         selectObj.Init();

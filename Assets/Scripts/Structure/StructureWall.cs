@@ -6,23 +6,76 @@ public class StructureWall : Structure
 {
     public override void UpdateNodeUnWalkable()
     {
-        curNode = grid.GetNodeFromWorldPoint(transform.position + wallStartPosOffset);
+        curNode = grid.GetNodeFromWorldPoint(transform.position);
         int gridX = curNode.gridX;
         int gridY = curNode.gridY;
         int idx = 0;
 
-        while(idx < myGridX * myGridY)
+        if (myGridX > myGridY)
         {
-            grid.UpdateNodeWalkable(
-                grid.GetNodeWithGrid(
-                    idx % myGridX + gridX, 
-                    idx % myGridY + gridY),
-                false);
+            while (idx < myGridX * myGridY)
+            {
+                grid.UpdateNodeWalkable(
+                    grid.GetNodeWithGrid( (idx % myGridX) * factorGridX + gridX, gridY), false);
 
-            ++idx;
+                ++idx;
+            }
+        }
+        else
+        {
+            while (idx < myGridX * myGridY)
+            {
+                grid.UpdateNodeWalkable(
+                    grid.GetNodeWithGrid(gridX, (idx % myGridY) * factorGridY + gridY), false);
+
+                ++idx;
+            }
         }
     }
 
-    [SerializeField]
-    private Vector3 wallStartPosOffset = Vector3.zero;
+    protected override IEnumerator CheckBuildableCoroutine()
+    {
+        while (true)
+        {
+            isBuildable = true;
+
+            curNode = grid.GetNodeFromWorldPoint(transform.position);
+            int gridX = curNode.gridX;
+            int gridY = curNode.gridY;
+            int idx = 0;
+
+            if (myGridX > myGridY)
+            {
+                while (idx < myGridX * myGridY)
+                {
+                    if (!grid.GetNodeWithGrid((idx % myGridX) * factorGridX + gridX, gridY).walkable)
+                    {
+                        isBuildable = false;
+                        break;
+                    }
+
+                    ++idx;
+                }
+
+                SetColor();
+                yield return null;
+            }
+            else
+            {
+                while (idx < myGridX * myGridY)
+                {
+                    if (!grid.GetNodeWithGrid(gridX, (idx % myGridY) * factorGridY + gridY).walkable)
+                    {
+                        isBuildable = false;
+                        break;
+                    }
+
+                    ++idx;
+                }
+
+                SetColor();
+                yield return null;
+            }
+        }
+    }
 }

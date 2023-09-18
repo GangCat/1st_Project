@@ -27,11 +27,11 @@ public class GameManager : MonoBehaviour
         inputMng.Init(
             MoveUnitByPicking,
             MoveUnitByPickingObject,
-            ZoomCamera, 
-            MoveCameraWithMouse, 
-            MoveCameraWithKey, 
-            AddSelectedObject, 
-            RemoveSelectedObject, 
+            ZoomCamera,
+            MoveCameraWithMouse,
+            MoveCameraWithKey,
+            AddSelectedObject,
+            RemoveSelectedObject,
             SelectFinish,
             MoveCameraWithObject,
             AttackMove,
@@ -56,7 +56,6 @@ public class GameManager : MonoBehaviour
         ArrayBuildCommand.Add(EMainBaseCommnad.CONFIRM, new CommandBuildConfirm(buildMng, inputMng));
         ArrayBuildCommand.Add(EMainBaseCommnad.BUILD_TURRET, new CommandBuildTurret(buildMng, inputMng));
         ArrayBuildCommand.Add(EMainBaseCommnad.BUILD_BUNKER, new CommandBuildBunker(buildMng, inputMng));
-        ArrayBuildCommand.Add(EMainBaseCommnad.BUILD_WALL, new CommandBuildWall(buildMng, inputMng));
         ArrayBuildCommand.Add(EMainBaseCommnad.BUILD_NUCLEAR, new CommandBuildNuclear(buildMng, inputMng));
         ArrayBuildCommand.Add(EMainBaseCommnad.BUILD_BARRACK, new CommandBuildBarrack(buildMng, inputMng));
 
@@ -65,6 +64,11 @@ public class GameManager : MonoBehaviour
         ArrayBarrackCommand.Add(EBarrackCommand.SPAWN_RANGE, new CommandSpawnUnit(selectMng, ESpawnUnitType.RANGE));
         ArrayBarrackCommand.Add(EBarrackCommand.SPAWN_ROCKET, new CommandSpawnUnit(selectMng, ESpawnUnitType.ROCKET));
         ArrayBarrackCommand.Add(EBarrackCommand.RALLYPOINT_CONFIRM, new CommandConfirmRallyPoint(selectMng));
+
+        ArrayBunkerCommand.Add(EBunkerCommand.IN_UNIT, new CommandInUnit(selectMng));
+        ArrayBunkerCommand.Add(EBunkerCommand.OUT_ONE_UNIT, new CommandOutOneUnit(selectMng));
+        ArrayBunkerCommand.Add(EBunkerCommand.OUT_ALL_UNIT, new CommandOutAllUnit(selectMng));
+        ArrayBunkerCommand.Add(EBunkerCommand.EXPAND_WALL, new CommandExpandWall(selectMng, buildMng, inputMng));
     }
 
     private void InitPlayer()
@@ -85,7 +89,7 @@ public class GameManager : MonoBehaviour
         {
 
             // 여기서 각 unit의 pathrequest를 진행?
-            
+
             selectMng.MoveUnitByPicking(_pickPos);
         }
     }

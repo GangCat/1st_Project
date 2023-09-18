@@ -241,7 +241,10 @@ public class InputManager : MonoBehaviour
 
         RaycastHit hit;
         if (Functions.Picking(LayerMask.NameToLayer("SelectableObject"), out hit))
-            selectObjectCallback?.Invoke(hit.transform.GetComponent<SelectableObject>());
+        {
+            if(hit.transform.GetComponent<SelectableObject>())
+                selectObjectCallback?.Invoke(hit.transform.GetComponent<SelectableObject>());
+        }
 
         Functions.Picking("StageFloor", floorLayer, ref dragStartPos);
         selectArea.SetPos(dragStartPos);

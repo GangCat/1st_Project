@@ -12,7 +12,13 @@ public class SelectableObject : MonoBehaviour
         set => transform.position = value;
     }
 
-    public bool IsBunker => isBunker;
+    public bool IsBunker
+    {
+        get => isBunker;
+        set => isBunker = value;
+    }
+
+    public int NodeIdx => nodeIdx;
 
     public void Init()
     {

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class StructureBarrack : Structure
 {
-    public override void Init(int _bunkerIdx = 0)
+    public override void Init()
     {
         spawnPoint = transform.position;
         rallyPoint = spawnPoint;

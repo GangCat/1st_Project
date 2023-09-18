@@ -19,10 +19,10 @@ public class CanvasMainBaseFunc : CanvasFuncBase
                 ArrayBuildCommand.Use(EMainBaseCommnad.BUILD_BUNKER);
             });
 
-        btnBuildWall.onClick.AddListener(
+        btnBuildBarrack.onClick.AddListener(
             () =>
             {
-                ArrayBuildCommand.Use(EMainBaseCommnad.BUILD_WALL);
+                ArrayBuildCommand.Use(EMainBaseCommnad.BUILD_BARRACK);
             });
 
         btnBuildNuclear.onClick.AddListener(
@@ -31,15 +31,8 @@ public class CanvasMainBaseFunc : CanvasFuncBase
                 ArrayBuildCommand.Use(EMainBaseCommnad.BUILD_NUCLEAR);
             });
 
-        btnBuildBarrack.onClick.AddListener(
-            () =>
-            {
-                ArrayBuildCommand.Use(EMainBaseCommnad.BUILD_BARRACK);
-            });
-
         gameObject.SetActive(false);
     }
-
 
 
     [SerializeField]
@@ -47,9 +40,7 @@ public class CanvasMainBaseFunc : CanvasFuncBase
     [SerializeField]
     private Button btnBuildBunker = null;
     [SerializeField]
-    private Button btnBuildWall = null;
+    private Button btnBuildBarrack = null;
     [SerializeField]
     private Button btnBuildNuclear = null;
-    [SerializeField]
-    private Button btnBuildBarrack = null;
 }

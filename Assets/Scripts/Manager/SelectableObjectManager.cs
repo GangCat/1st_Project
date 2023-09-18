@@ -45,11 +45,46 @@ public class SelectableObjectManager : MonoBehaviour
         return unitNode.worldPos;
     }
 
+    public void RemoveUnitAtList(SelectableObject _removeObj)
+    {
+        if (_removeObj == null) return;
+
+        foreach (SelectableObject obj in listSelectedObject)
+        {
+            if (obj.Equals(_removeObj))
+            {
+                listSelectedObject.Remove(obj);
+                return;
+            }
+        }
+    }
+
     public void SpawnUnit(ESpawnUnitType _unitType)
     {
         if (listSelectedObject[0].ObjectType.Equals(ESelectableObjectType.BARRACK))
             listSelectedObject[0].GetComponent<StructureBarrack>().SpawnUnit(_unitType);
     }
+
+    public SelectableObject InUnit()
+    {
+        if (curBunker != null)
+            return curBunker.InUnit();
+
+        return null;
+    }
+
+    public void OutOneUnit()
+    {
+        if (listSelectedObject[0].ObjectType.Equals(ESelectableObjectType.BUNKER))
+            listSelectedObject[0].GetComponent<StructureBunker>().OutOneUnit();
+    }
+
+    public void OutAllUnit()
+    {
+        if (listSelectedObject[0].ObjectType.Equals(ESelectableObjectType.BUNKER))
+            listSelectedObject[0].GetComponent<StructureBunker>().OutAllUnit();
+    }
+
 
     public void SetRallyPoint()
     {
@@ -124,7 +159,8 @@ public class SelectableObjectManager : MonoBehaviour
             listSelectedObject.Add(tempObj);
         }
 
-        selectObjectCallback?.Invoke(listSelectedObject[0].ObjectType);
+        if(listSelectedObject.Count > 0)
+            selectObjectCallback?.Invoke(listSelectedObject[0].ObjectType);
 
         tempListSelectableObject.Clear();
 
