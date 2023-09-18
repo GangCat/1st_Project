@@ -149,7 +149,7 @@ public class SelectableObjectManager : MonoBehaviour
             // 대열 유지하면서 모이기
             Vector3 centerPos = CalcFormationCenterPos(_targetPos.y);
             foreach (SelectableObject obj in listSelectedObject)
-                obj.MoveByTargetPos(_targetPos + CalcPosInFormation(obj.GetPos, centerPos));
+                obj.MoveByPos(_targetPos + CalcPosInFormation(obj.GetPos, centerPos));
         }
     }
 
@@ -188,7 +188,7 @@ public class SelectableObjectManager : MonoBehaviour
             if(_isPatrol)
                 listSelectedObject[i].Patrol(destPos);
             else
-                listSelectedObject[i].MoveByTargetPos(destPos);
+                listSelectedObject[i].MoveByPos(destPos);
         }
     }
 

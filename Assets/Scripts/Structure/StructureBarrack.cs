@@ -58,7 +58,7 @@ public class StructureBarrack : Structure
         tempObj.Init();
 
         if(!rallyPoint.Equals(spawnPoint))
-            tempObj.MoveByTargetPos(rallyPoint);
+            tempObj.MoveByPos(rallyPoint);
         else if (rallyTr != null)
             tempObj.FollowTarget(rallyTr);
 

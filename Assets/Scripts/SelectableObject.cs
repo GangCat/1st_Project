@@ -49,19 +49,29 @@ public class SelectableObject : MonoBehaviour
             targetTr = _targetTr;
 
             if (targetTr.CompareTag("EnemyUnit"))
+            {
+                isAttack = true;
                 curMoveCondition = EMoveState.FOLLOW_ENEMY;
+            }
             else
+            {
+                isAttack = false;
                 curMoveCondition = EMoveState.FOLLOW;
+            }
 
             StateMove();
         }
     }
 
-    public void MoveByTargetPos(Vector3 _targetPos)
+    public void MoveByPos(Vector3 _Pos)
     {
         if (isMovable)
         {
-            targetPos = _targetPos;
+            stateMachine.TargetTr = null;
+            targetTr = null;
+
+            isAttack = false;
+            targetPos = _Pos;
             curMoveCondition = EMoveState.NORMAL;
 
             StateMove();
@@ -72,6 +82,10 @@ public class SelectableObject : MonoBehaviour
     {
         if (isMovable)
         {
+            stateMachine.TargetTr = null;
+            targetTr = null;
+             
+            isAttack = true;
             targetPos = _targetPos;
             curMoveCondition = EMoveState.ATTACK;
 
@@ -83,6 +97,7 @@ public class SelectableObject : MonoBehaviour
     {
         if (isMovable)
         {
+            isAttack = true;
             targetPos = _wayPointTo;
             wayPointStart = transform.position;
             curMoveCondition = EMoveState.PATROL;
@@ -94,13 +109,23 @@ public class SelectableObject : MonoBehaviour
     public void Stop()
     {
         if (isMovable)
+        {
+            stateMachine.TargetTr = null;
+            targetTr = null;
+            isAttack = false;
             StateStop();  
+        }
     }
 
     public void Hold()
     {
         if (isMovable)
+        {
+            stateMachine.TargetTr = null;
+            targetTr = null;
+            isAttack = true;
             StateHold();
+        }
     }
 
 
@@ -108,6 +133,7 @@ public class SelectableObject : MonoBehaviour
     private void StateIdle()
     {
         stateMachine.TargetTr = null;
+        targetTr = null;
         nodeUpdate.Execute(transform.position, nodeIdx);
         stateMachine.ChangeStateEnum(EState.IDLE);
         StartCoroutine("CheckIsEnemyInChaseStartRangeCoroutine");
@@ -125,10 +151,22 @@ public class SelectableObject : MonoBehaviour
             {
                 foreach (Collider c in arrCollider)
                 {
-                    if (c.CompareTag("EnemyUnit"))
+                    if (targetTr != null)
+                    {
+                        if (c.Equals(targetTr))
+                        {
+                            prevMoveCondition = curMoveCondition;
+                            isAttack = true;
+                            curMoveCondition = EMoveState.CHASE;
+                            StateMove();
+                            yield break;
+                        }
+                    }
+                    else if (c.CompareTag("EnemyUnit"))
                     {
                         stateMachine.TargetTr = c.transform;
                         targetTr = c.transform;
+                        isAttack = true;
                         prevMoveCondition = curMoveCondition;
                         curMoveCondition = EMoveState.CHASE;
                         StateMove();
@@ -161,21 +199,30 @@ public class SelectableObject : MonoBehaviour
         }
     }
 
-    private IEnumerator CheckIsTargetInAttackRangeCoroutine()
-    {
-        yield return new WaitForSeconds(0.5f);
+    //private IEnumerator CheckIsTargetInAttackRangeCoroutine()
+    //{
+    //    yield return new WaitForSeconds(0.5f);
 
-        while (true)
+    //    while (true)
+    //    {
+    //        if (targetTr != null)
+    //        {
+    //            if (isTargetInRangeFromMyPos(targetTr.position, attackRange))
+    //            {
+    //                StateAttack();
+    //                yield break;
+    //            }
+    //        }
+    //        yield return null;
+    //    }
+    //}
+
+    private void CheckIsTargetInAttackRange()
+    {
+        if (targetTr != null)
         {
-            if (targetTr != null)
-            {
-                if (isTargetInRangeFromMyPos(targetTr.position, attackRange))
-                {
-                    StateAttack();
-                    yield break;
-                }
-            }
-            yield return null;
+            if (isTargetInRangeFromMyPos(targetTr.position, attackRange))
+                StateAttack();
         }
     }
 
@@ -211,7 +258,7 @@ public class SelectableObject : MonoBehaviour
                 {
                     StartCoroutine("CheckFollowMoveCoroutine");
                     StartCoroutine("CheckIsTargetInChaseFinishRangeCoroutine");
-                    StartCoroutine("CheckIsTargetInAttackRangeCoroutine");
+                    //StartCoroutine("CheckIsTargetInAttackRangeCoroutine");
                 }
                 break;
             case EMoveState.FOLLOW:
@@ -237,8 +284,6 @@ public class SelectableObject : MonoBehaviour
 
     private IEnumerator CheckNormalMoveCoroutine()
     {
-        stateMachine.TargetTr = null;
-
         PF_PathRequestManager.RequestPath(transform.position, targetPos, OnPathFound);
         stateMachine.SetWaitForNewPath(true);
 
@@ -275,6 +320,9 @@ public class SelectableObject : MonoBehaviour
 
                 nodeUpdate.Execute(transform.position, nodeIdx);
                 // 목적지에 도착시 
+                if (isAttack)
+                    CheckIsTargetInAttackRange();
+
                 if (targetIdx >= arrPath.Length)
                 {
                     //curWayNode = null;
@@ -330,6 +378,8 @@ public class SelectableObject : MonoBehaviour
             {
                 ++targetIdx;
                 nodeUpdate.Execute(transform.position, nodeIdx);
+                CheckIsTargetInAttackRange();
+
                 if (targetIdx >= arrPath.Length)
                 {
                     Vector3 tempWayPoint = wayPointFrom;
@@ -356,7 +406,6 @@ public class SelectableObject : MonoBehaviour
 
     private IEnumerator CheckFollowMoveCoroutine()
     {
-        targetTr = stateMachine.TargetTr;
         PF_PathRequestManager.RequestPath(transform.position, targetTr.position, OnPathFound);
         stateMachine.SetWaitForNewPath(true);
 
@@ -418,6 +467,8 @@ public class SelectableObject : MonoBehaviour
                     {
                         ++targetIdx;
                         nodeUpdate.Execute(transform.position, nodeIdx);
+                        if (isAttack)
+                            CheckIsTargetInAttackRange();
 
                         if (targetIdx >= arrPath.Length)
                         {
@@ -629,5 +680,5 @@ public class SelectableObject : MonoBehaviour
 
     private CommandNodeUpdate nodeUpdate = null;
 
-
+    private bool isAttack = false;
 }
