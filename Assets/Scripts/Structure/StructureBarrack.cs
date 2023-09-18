@@ -37,7 +37,6 @@ public class StructureBarrack : Structure
         {
             isProcessingSpawnUnit = true;
             ESpawnUnitType unitType = listUnit[0];
-            listUnit.RemoveAt(0);
             StartCoroutine("SpawnUnitCoroutine", unitType);
         }
     }
@@ -64,6 +63,7 @@ public class StructureBarrack : Structure
         else if (rallyTr != null)
             tempObj.FollowTarget(rallyTr);
 
+        listUnit.RemoveAt(0);
         RequestSpawnUnit();
     }
 

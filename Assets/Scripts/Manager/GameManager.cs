@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
         uiMng = FindAnyObjectByType<UIManager>();
         buildMng = FindAnyObjectByType<StructureManager>();
         pathMng = FindAnyObjectByType<PF_PathRequestManager>();
+        enemyMng = FindAnyObjectByType<EnemyManager>();
     }
 
     private void Start()
@@ -39,6 +40,11 @@ public class GameManager : MonoBehaviour
         cameraMng.Init();
         uiMng.Init();
         buildMng.Init(grid);
+        enemyMng.Init();
+
+        for(int i = 0; i < 5; ++i)
+            enemyMng.SpawnEnemy();
+        
 
         InitPlayer();
     }
@@ -171,6 +177,7 @@ public class GameManager : MonoBehaviour
     private UIManager uiMng = null;
     private StructureManager buildMng = null;
     private PF_PathRequestManager pathMng = null;
+    private EnemyManager enemyMng = null;
 
     private PF_Grid grid = null;
 }

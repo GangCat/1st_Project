@@ -86,11 +86,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectType: 8
-  isMovable: 0
-  chaseStartRange: 0
-  chaseFinishRange: 0
-  attackRange: 0
-  resetPathDelay: 0.5
+  isMovable: 1
+  chaseStartRange: 3
+  chaseFinishRange: 4
+  attackRange: 2
+  resetPathDelay: 1
   stopDelay: 2
   followOffset: 3
 --- !u!114 &4815547369824481657

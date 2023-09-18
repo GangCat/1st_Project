@@ -4,8 +4,32 @@ using UnityEngine;
 
 public class SelectableObject : MonoBehaviour
 {
-    public enum EMoveState { NONE = -1, NORMAL, ATTACK, PATROL, CHASE, FOLLOW, FOLLOW_ENEMY }
+    private enum EMoveState { NONE = -1, NORMAL, ATTACK, PATROL, CHASE, FOLLOW, FOLLOW_ENEMY }
+    public void Init()
+    {
+        nodeIdx = SelectableObjectManager.InitNode(transform.position);
+        stateMachine = GetComponent<StateMachine>();
+        statusHp = GetComponent<StatusHp>();
+        statusHp.Init();
+
+        if (stateMachine != null)
+        {
+            stateMachine.Init(GetCurState);
+
+            if (objectType.Equals(ESelectableObjectType.UNIT) || 
+                objectType.Equals(ESelectableObjectType.UNIT_HERO) ||
+                objectType.Equals(ESelectableObjectType.ENEMY_UNIT))
+                StateIdle();
+            else if (objectType.Equals(ESelectableObjectType.TURRET))
+                StateHold();
+        }
+
+        oriAttRange = attackRange;
+        SelectableObjectManager.UpdateNodeWalkable(transform.position, nodeIdx);
+    }
+
     public ESelectableObjectType ObjectType => objectType;
+
     public Vector3 Position 
     {
         get => transform.position;
@@ -19,26 +43,6 @@ public class SelectableObject : MonoBehaviour
     }
 
     public int NodeIdx => nodeIdx;
-
-    public void Init()
-    {
-        nodeUpdateCmd = new CommandNodeUpdate();
-        nodeIdx = SelectableObjectManager.InitNode(transform.position);
-        stateMachine = GetComponent<StateMachine>();
-
-        if (stateMachine != null)
-        {
-            stateMachine.Init(GetCurState);
-
-            if (objectType.Equals(ESelectableObjectType.UNIT) || objectType.Equals(ESelectableObjectType.UNIT_HERO))
-                StateIdle();
-            else if (objectType.Equals(ESelectableObjectType.TURRET))
-                StateHold();
-        }
-
-        oriAttRange = attackRange;
-        nodeUpdateCmd.Execute(transform.position, nodeIdx);
-    }
 
     public void SetAttackDmg(float _ratio)
     {
@@ -72,7 +76,7 @@ public class SelectableObject : MonoBehaviour
 
     public void UpdateCurNode()
     {
-        nodeUpdateCmd.Execute(transform.position, nodeIdx);
+        SelectableObjectManager.UpdateNodeWalkable(transform.position, nodeIdx);
     }
 
     public void GetDmg(float _dmg)
@@ -182,7 +186,7 @@ public class SelectableObject : MonoBehaviour
     {
         stateMachine.TargetTr = null;
         targetTr = null;
-        nodeUpdateCmd.Execute(transform.position, nodeIdx);
+        SelectableObjectManager.UpdateNodeWalkable(transform.position, nodeIdx);
         stateMachine.ChangeStateEnum(EState.IDLE);
         StartCoroutine("CheckIsEnemyInChaseStartRangeCoroutine");
     }
@@ -246,24 +250,6 @@ public class SelectableObject : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
         }
     }
-
-    //private IEnumerator CheckIsTargetInAttackRangeCoroutine()
-    //{
-    //    yield return new WaitForSeconds(0.5f);
-
-    //    while (true)
-    //    {
-    //        if (targetTr != null)
-    //        {
-    //            if (isTargetInRangeFromMyPos(targetTr.position, attackRange))
-    //            {
-    //                StateAttack();
-    //                yield break;
-    //            }
-    //        }
-    //        yield return null;
-    //    }
-    //}
 
     private void CheckIsTargetInAttackRange()
     {
@@ -366,7 +352,7 @@ public class SelectableObject : MonoBehaviour
             {
                 ++targetIdx;
 
-                nodeUpdateCmd.Execute(transform.position, nodeIdx);
+                SelectableObjectManager.UpdateNodeWalkable(transform.position, nodeIdx);
                 // 목적지에 도착시 
                 if (isAttack)
                     CheckIsTargetInAttackRange();
@@ -425,7 +411,7 @@ public class SelectableObject : MonoBehaviour
             if (isTargetInRangeFromMyPos(curWayNode.worldPos, 0.1f))
             {
                 ++targetIdx;
-                nodeUpdateCmd.Execute(transform.position, nodeIdx);
+                SelectableObjectManager.UpdateNodeWalkable(transform.position, nodeIdx);
                 CheckIsTargetInAttackRange();
 
                 if (targetIdx >= arrPath.Length)
@@ -514,7 +500,7 @@ public class SelectableObject : MonoBehaviour
                     if (isTargetInRangeFromMyPos(curWayNode.worldPos, 0.1f))
                     {
                         ++targetIdx;
-                        nodeUpdateCmd.Execute(transform.position, nodeIdx);
+                        SelectableObjectManager.UpdateNodeWalkable(transform.position, nodeIdx);
                         if (isAttack)
                             CheckIsTargetInAttackRange();
 
@@ -735,11 +721,10 @@ public class SelectableObject : MonoBehaviour
     private PF_Node[] arrPath = null;
     private PF_Node curWayNode = null;
 
+    private StatusHp statusHp = null;
+
     private int nodeIdx = 0;
-
-    private CommandNodeUpdate nodeUpdateCmd = null;
-
+    private float oriAttRange = 0f;
     private bool isAttack = false;
     private bool isBunker = false;
-    private float oriAttRange = 0f;
 }
