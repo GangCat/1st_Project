@@ -150,21 +150,14 @@ public class PF_Grid : MonoBehaviour
 
     [SerializeField]
     private bool displayUnwalkableNodeGizmos;
-    // 해당 노드가 이동 가능한지 알기 위해 확인할 레이어.
-    // 생성한 노드가 자리하는 위치에 레이어 마스크가 unWalkableMask인 오브젝트가 있으면 해당 노드는 unwalkable이 되는 방식
     [SerializeField]
     private LayerMask unWalkableMask;
     [SerializeField]
-    // 그리드의 총 크기, 맵의 크기라고 생각해도 될듯. 현재는 128*128
     private Vector2 gridWorldSize;
     [SerializeField]
-    // 노드의 반지름. 노드의 크기를 결정하는 요소이다. 현재는 0.5로 설정되어있다.
     private float nodeRadius;
 
-    // diameter = 지름
     private float nodeDiameter;
-    // size라고 해두었지만 실제로는 각각 grid내에 만들어지는 노드들의 열 개수, 행 개수이다.
-    // Node형 2차원 배열인 grid의 크기를 설정하기 위한 변수
     private int gridSizeX, gridSizeY;
 
     private PF_Node[,] grid;

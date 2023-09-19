@@ -118,8 +118,6 @@ public class StructureManager : MonoBehaviour
                 curStructure.SetPos(wallPos);
             }
 
-            Debug.Log(angle);
-
             yield return null;
         }
     }

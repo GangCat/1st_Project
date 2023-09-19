@@ -14,6 +14,8 @@ public class PF_PathFinding : MonoBehaviour
         grid = GetComponent<PF_Grid>();
         grid.Init();
         finishPathFindCallback = _finishPathFindCallback;
+
+        openSet = new PF_Heap<PF_Node>(grid.MaxSize);
     }
 
     public void StartFindPath(Vector3 _startPos, Vector3 _targetPos)
@@ -43,10 +45,14 @@ public class PF_PathFinding : MonoBehaviour
                 yield break;
             }
 
-            PF_Heap<PF_Node> openSet = new PF_Heap<PF_Node>(grid.MaxSize);
-            // haseSet: key값 없이 value 그 자체로 key가 된다.
-            // 즉 value의 중복을 허용하지 않는다.
-            HashSet<PF_Node> closedSet = new HashSet<PF_Node>();
+            while (openSet.Count > 0)
+                openSet.RemoveFirstItem();
+            closedSet.Clear();
+
+            //PF_Heap<PF_Node> openSet = new PF_Heap<PF_Node>(grid.MaxSize);
+            //// haseSet: key값 없이 value 그 자체로 key가 된다.
+            //// 즉 value의 중복을 허용하지 않는다.
+            //HashSet<PF_Node> closedSet = new HashSet<PF_Node>();
             openSet.Add(startNode);
 
             while (openSet.Count > 0)
@@ -64,24 +70,46 @@ public class PF_PathFinding : MonoBehaviour
                     break;
                 }
 
-                foreach (PF_Node neighborNode in grid.GetNeighbors(curNode))
+                List<PF_Node> listNeighbor = grid.GetNeighbors(curNode);
+
+                for (int i = 0; i < listNeighbor.Count; ++i)
                 {
-                    if (!neighborNode.walkable || closedSet.Contains(neighborNode)) continue;
+                    PF_Node neighbor = listNeighbor[i];
+                    if (!neighbor.walkable || closedSet.Contains(neighbor)) continue;
 
-                    int newGCostToNeighbor = curNode.gCost + CalcLowestCostWithNode(curNode, neighborNode);
+                    int newGCostToNeighbor = curNode.gCost + CalcLowestCostWithNode(curNode, neighbor);
 
-                    if (newGCostToNeighbor < neighborNode.gCost || !openSet.Contains(neighborNode))
+                    if (newGCostToNeighbor < neighbor.gCost || !openSet.Contains(neighbor))
                     {
-                        neighborNode.gCost = newGCostToNeighbor;
-                        neighborNode.hCost = CalcLowestCostWithNode(neighborNode, targetNode);
-                        neighborNode.parentNode = curNode;
+                        neighbor.gCost = newGCostToNeighbor;
+                        neighbor.hCost = CalcLowestCostWithNode(neighbor, targetNode);
+                        neighbor.parentNode = curNode;
 
-                        if (!openSet.Contains(neighborNode))
-                            openSet.Add(neighborNode);
+                        if (!openSet.Contains(neighbor))
+                            openSet.Add(neighbor);
                         else
-                            openSet.UpdateItem(neighborNode);
+                            openSet.UpdateItem(neighbor);
                     }
                 }
+
+                //foreach (PF_Node neighborNode in grid.GetNeighbors(curNode))
+                //{
+                //    if (!neighborNode.walkable || closedSet.Contains(neighborNode)) continue;
+
+                //    int newGCostToNeighbor = curNode.gCost + CalcLowestCostWithNode(curNode, neighborNode);
+
+                //    if (newGCostToNeighbor < neighborNode.gCost || !openSet.Contains(neighborNode))
+                //    {
+                //        neighborNode.gCost = newGCostToNeighbor;
+                //        neighborNode.hCost = CalcLowestCostWithNode(neighborNode, targetNode);
+                //        neighborNode.parentNode = curNode;
+
+                //        if (!openSet.Contains(neighborNode))
+                //            openSet.Add(neighborNode);
+                //        else
+                //            openSet.UpdateItem(neighborNode);
+                //    }
+                //}
             }
         }
 
@@ -159,4 +187,7 @@ public class PF_PathFinding : MonoBehaviour
     private PF_Grid grid;
 
     private FinishPathFindDelegate finishPathFindCallback = null;
+
+    private PF_Heap<PF_Node> openSet = null;
+    private HashSet<PF_Node> closedSet = new HashSet<PF_Node>();
 }

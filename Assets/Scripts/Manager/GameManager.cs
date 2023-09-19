@@ -42,11 +42,14 @@ public class GameManager : MonoBehaviour
         buildMng.Init(grid);
         enemyMng.Init();
 
-        //for(int i = 0; i < 5; ++i)
-        enemyMng.SpawnEnemy();
-
+        Invoke("StartWave", 30f);
 
         InitPlayer();
+    }
+
+    private void StartWave()
+    {
+        enemyMng.SpawnEnemy(Vector3.zero, 30);
     }
 
     private void InitCommandList()

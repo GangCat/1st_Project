@@ -232,7 +232,7 @@ public class SelectableObject : MonoBehaviour
         {
             if (targetTr == null)
             {
-                ResetState();
+                FinishState();
                 yield break;
             }
             elapsedTime += Time.deltaTime;
