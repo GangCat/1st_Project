@@ -20,7 +20,7 @@ public class StateAttack : IState
             dir.y = 0f;
             myTr.rotation = Quaternion.LookRotation(dir);
             elapsedTime += Time.deltaTime;
-            if (elapsedTime < attRate)
+            if (elapsedTime > attRate)
             {
                 elapsedTime = 0f;
                 // 공격 애니메이션 출력
