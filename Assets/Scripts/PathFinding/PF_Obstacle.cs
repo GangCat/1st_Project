@@ -16,6 +16,6 @@ public class PF_Obstacle : MonoBehaviour
 
     [Header("-Test")]
     [SerializeField]
-    private PF_Grid grid = null;
+    private GPT_Grid grid = null;
 
 }

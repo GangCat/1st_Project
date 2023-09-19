@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 // 시간 측정하려고 추가한 네임스페이스
-using System.Diagnostics;
+//using System.Diagnostics;
 using System;
 
 public class PF_PathFinding : MonoBehaviour
@@ -25,10 +25,6 @@ public class PF_PathFinding : MonoBehaviour
 
     private IEnumerator FindPath(Vector3 _startPos, Vector3 _targetPos)
     {
-        Stopwatch sw = new Stopwatch();
-        sw.Start();
-
-        PF_Node[] arrWayNode = new PF_Node[0];
         bool isPathSuccess = false;
 
         PF_Node startNode = grid.GetNodeFromWorldPoint(_startPos);
@@ -38,25 +34,23 @@ public class PF_PathFinding : MonoBehaviour
             targetNode = grid.GetAccessibleNode(targetNode);
         if (targetNode != null)
         {
+            listWayNode.Clear();
+
             if (startNode.Equals(targetNode))
             {
                 // 새로 설정한 targetNode가 startNode와 같아질 경우 pathSuccess를 실패로 전달하여 길찾기를 하지 못하게 함.
-                finishPathFindCallback?.Invoke(arrWayNode, isPathSuccess);
+                finishPathFindCallback?.Invoke(null, isPathSuccess);
                 yield break;
             }
 
             while (openSet.Count > 0)
                 openSet.RemoveFirstItem();
             closedSet.Clear();
-
-            //PF_Heap<PF_Node> openSet = new PF_Heap<PF_Node>(grid.MaxSize);
-            //// haseSet: key값 없이 value 그 자체로 key가 된다.
-            //// 즉 value의 중복을 허용하지 않는다.
-            //HashSet<PF_Node> closedSet = new HashSet<PF_Node>();
             openSet.Add(startNode);
 
             while (openSet.Count > 0)
             {
+                listNeighbor.Clear();
                 PF_Node curNode = openSet.RemoveFirstItem();
 
                 closedSet.Add(curNode);
@@ -64,13 +58,13 @@ public class PF_PathFinding : MonoBehaviour
                 // 도착했다면
                 if (curNode.Equals(targetNode))
                 {
-                    sw.Stop();
+                    //sw.Stop();
                     //print("path found: " + sw.ElapsedMilliseconds + "ms");
                     isPathSuccess = true;
                     break;
                 }
 
-                List<PF_Node> listNeighbor = grid.GetNeighbors(curNode);
+                listNeighbor = grid.GetNeighbors(curNode);
 
                 for (int i = 0; i < listNeighbor.Count; ++i)
                 {
@@ -91,25 +85,6 @@ public class PF_PathFinding : MonoBehaviour
                             openSet.UpdateItem(neighbor);
                     }
                 }
-
-                //foreach (PF_Node neighborNode in grid.GetNeighbors(curNode))
-                //{
-                //    if (!neighborNode.walkable || closedSet.Contains(neighborNode)) continue;
-
-                //    int newGCostToNeighbor = curNode.gCost + CalcLowestCostWithNode(curNode, neighborNode);
-
-                //    if (newGCostToNeighbor < neighborNode.gCost || !openSet.Contains(neighborNode))
-                //    {
-                //        neighborNode.gCost = newGCostToNeighbor;
-                //        neighborNode.hCost = CalcLowestCostWithNode(neighborNode, targetNode);
-                //        neighborNode.parentNode = curNode;
-
-                //        if (!openSet.Contains(neighborNode))
-                //            openSet.Add(neighborNode);
-                //        else
-                //            openSet.UpdateItem(neighborNode);
-                //    }
-                //}
             }
         }
 
@@ -117,11 +92,11 @@ public class PF_PathFinding : MonoBehaviour
 
         if (isPathSuccess)
         {
-            arrWayNode = RetracePath(startNode, targetNode);
+            listWayNode = RetracePath(startNode, targetNode);
             //UnityEngine.Debug.Log("true");
         }
 
-        finishPathFindCallback?.Invoke(arrWayNode, isPathSuccess);
+        finishPathFindCallback?.Invoke(listWayNode.ToArray(), isPathSuccess);
     }
 
     /// <summary>
@@ -129,7 +104,7 @@ public class PF_PathFinding : MonoBehaviour
     /// </summary>
     /// <param name="_startNode"></param>
     /// <param name="_endNode"></param>
-    private PF_Node[] RetracePath(PF_Node _startNode, PF_Node _endNode)
+    private List<PF_Node> RetracePath(PF_Node _startNode, PF_Node _endNode)
     {
         List<PF_Node> path = new List<PF_Node>();
         PF_Node curNode = _endNode;
@@ -142,7 +117,7 @@ public class PF_PathFinding : MonoBehaviour
 
         //Vector3[] waypoints = SimplifyPath(path);
         path.Reverse();
-        return path.ToArray();
+        return path;
     }
 
     /// <summary>
@@ -190,4 +165,6 @@ public class PF_PathFinding : MonoBehaviour
 
     private PF_Heap<PF_Node> openSet = null;
     private HashSet<PF_Node> closedSet = new HashSet<PF_Node>();
+    private List<PF_Node> listNeighbor = new List<PF_Node>();
+    private List<PF_Node> listWayNode = new List<PF_Node>();
 }
