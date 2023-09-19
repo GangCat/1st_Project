@@ -9,7 +9,7 @@ public class CommandButtonHold : Command
         selectMng = _selectMng;
     }
 
-    public override void Execute()
+    public override void Execute(params object[] _objects)
     {
         selectMng.Hold();
     }

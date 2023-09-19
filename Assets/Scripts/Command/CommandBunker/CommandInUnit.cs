@@ -9,10 +9,12 @@ public class CommandInUnit : Command
         selMng = _selMng;
     }
 
-    public override void Execute()
+    public override void Execute(params object[] _value)
     {
-        SelectableObject tempObj = selMng.InUnit();
+        FriendlyObject tempObj = (FriendlyObject)_value[0];
+        selMng.InUnit(tempObj);
         selMng.RemoveUnitAtList(tempObj);
+        selMng.ResetTargetBunker();
     }
 
     SelectableObjectManager selMng = null;

@@ -10,30 +10,27 @@ public class StructureBunker : Structure
         trigger = GetComponentInChildren<BunkerInTrigger>();
         warpPos = transform.position;
         warpPos.y += height;
-        trigger.Init(capacity);
+        trigger.Init(transform);
     }
 
-    public SelectableObject InUnit()
+    public void InUnit(FriendlyObject _curObj)
     {
-        SelectableObject curObj = trigger.GetCurObj();
+        if (IsBunkerFull()) return;
 
-        if (curObj == null) return null;
+        if (_curObj == null) return;
 
-        if (curObj.ObjectType.Equals(ESelectableObjectType.UNIT_HERO)) return null;
+        if (_curObj.ObjectType.Equals(ESelectableObjectType.UNIT_HERO)) return;
 
-        curObj.Position = warpPos;
-        curObj.transform.parent = transform;
-        curObj.Hold();
+        _curObj.Position = warpPos;
+        _curObj.transform.parent = transform;
+        _curObj.Hold();
         //curObj.SetLayer(1 << LayerMask.GetMask("UnitInBunker"));
-        curObj.SetLayer(LayerMask.NameToLayer("UnitInBunker"));
-        curObj.SetAttackDmg(buffRatio);
-        curObj.SetAttackRange(buffRatio);
-        curObj.UpdateCurNode();
-        curObj.IsBunker = false;
-        ++curUnitCnt;
+        _curObj.SetLayer(LayerMask.NameToLayer("UnitInBunker"));
+        _curObj.SetAttackDmg(buffRatio);
+        _curObj.SetAttackRange(buffRatio);
+        _curObj.UpdateCurNode();
+        queueUnitInBunker.Enqueue(_curObj);
         trigger.ResetObj();
-        trigger.UpdateUnitCnt(curUnitCnt);
-        return curObj;
     }
 
     public void OutOneUnit()
@@ -41,23 +38,17 @@ public class StructureBunker : Structure
         // 내 주위의 노드 중 walkable 탐색
         // 부모 변경
         // 결과 노드에 내 자식 위치 이동
-        SelectableObject[] obj = GetComponentsInChildren<SelectableObject>();
-        if (obj.Length > 1)
-        {
-            SelectableObject unitObj = obj[1];
-            unitObj.transform.parent = null;
-            unitObj.Position = SelectableObjectManager.ResetPosition(transform.position);
-            // 레이어, 공격력, 공격범위 리셋
-            unitObj.ResetAttackDmg();
-            unitObj.ResetAttackRange();
-            unitObj.ResetLayer();
-            unitObj.UpdateCurNode();
-            // 내 위치 walkable false로 변경
-            grid.UpdateNodeWalkable(grid.GetNodeFromWorldPoint(transform.position), false);
-            // curUnitCnt 감소
-            --curUnitCnt;
-            trigger.UpdateUnitCnt(curUnitCnt);
-        }
+        FriendlyObject unitObj = queueUnitInBunker.Dequeue();
+        unitObj.transform.parent = null;
+        unitObj.Position = SelectableObjectManager.ResetPosition(transform.position);
+        // 레이어, 공격력, 공격범위 리셋
+        unitObj.ResetAttackDmg();
+        unitObj.ResetAttackRange();
+        unitObj.ResetLayer();
+        unitObj.UpdateCurNode();
+        // 내 위치 walkable false로 변경
+        grid.UpdateNodeWalkable(grid.GetNodeFromWorldPoint(transform.position), false);
+        // curUnitCnt 감소
     }
 
     public void OutAllUnit()
@@ -67,21 +58,28 @@ public class StructureBunker : Structure
 
     private IEnumerator OutAllUnitCoroutine()
     {
-        while (curUnitCnt > 0)
+        while (queueUnitInBunker.Count() > 0)
         {
             OutOneUnit();
             yield return new WaitForSeconds(1f);
         }
     }
 
+    private bool IsBunkerFull()
+    {
+        return queueUnitInBunker.Count() >= capacity;
+    }
+
     [SerializeField, Range(0, 1)]
     private float buffRatio = 0f;
     [SerializeField]
     private float height = 5f;
+    [SerializeField]
+    private int capacity = 1;
 
     private BunkerInTrigger trigger = null;
     private Vector3 warpPos = Vector3.zero;
 
-    private int capacity = 1;
-    private int curUnitCnt = 0;
+
+    private Queue<FriendlyObject> queueUnitInBunker = new Queue<FriendlyObject>();
 }

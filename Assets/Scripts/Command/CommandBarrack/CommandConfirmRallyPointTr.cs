@@ -2,16 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CommandOutAllUnit : Command
+public class CommandConfirmRallyPointTr : Command
 {
-    public CommandOutAllUnit(SelectableObjectManager _selMng)
+    public CommandConfirmRallyPointTr(SelectableObjectManager _selMng)
     {
         selMng = _selMng;
     }
-
     public override void Execute(params object[] _objects)
     {
-        selMng.OutAllUnit();
+        selMng.SetRallyPoint((Transform)_objects[0]);
     }
 
     SelectableObjectManager selMng = null;

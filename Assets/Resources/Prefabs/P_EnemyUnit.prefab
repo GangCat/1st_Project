@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 6892984012615317130}
   - component: {fileID: 8491137552510769540}
   - component: {fileID: 8204235503644602067}
-  - component: {fileID: 7824584007890135282}
   - component: {fileID: 4815547369824481657}
+  - component: {fileID: 4548737042386696750}
   m_Layer: 7
   m_Name: P_EnemyUnit
   m_TagString: EnemyUnit
@@ -73,26 +73,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   curHp: 0
   maxHp: 100
---- !u!114 &7824584007890135282
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 186232715040071189}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb507dc23adf3a24ab9f5abbf56ea7d7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  objectType: 8
-  isMovable: 1
-  chaseStartRange: 3
-  chaseFinishRange: 4
-  attackRange: 2
-  resetPathDelay: 1
-  stopDelay: 2
-  followOffset: 3
 --- !u!114 &4815547369824481657
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -110,9 +90,27 @@ MonoBehaviour:
     targetTr: {fileID: 0}
     targetPos: {x: 0, y: 0, z: 0}
     isWaitForNewPath: 0
-    moveSpeed: 2
+    moveSpeed: 3
     attRate: 3
     attDmg: 1
+--- !u!114 &4548737042386696750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 186232715040071189}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bfe62406890e574f973e96c726a010b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectType: 8
+  chaseStartRange: 4
+  chaseFinishRange: 5
+  attackRange: 2
+  stopDelay: 2
+  followOffset: 1
 --- !u!1 &3256322658277572286
 GameObject:
   m_ObjectHideFlags: 0

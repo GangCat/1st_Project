@@ -95,9 +95,9 @@ GameObject:
   - component: {fileID: 7175020197789139696}
   - component: {fileID: 5330385086193909519}
   - component: {fileID: 5209549203731370052}
-  - component: {fileID: 1784176741930829291}
   - component: {fileID: 7330500162855589593}
   - component: {fileID: 4758474295568534800}
+  - component: {fileID: 7179781643778605711}
   m_Layer: 7
   m_Name: P_Player
   m_TagString: FriendlyUnit
@@ -157,27 +157,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   curHp: 0
-  maxHp: 100
---- !u!114 &1784176741930829291
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6917241794151303350}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb507dc23adf3a24ab9f5abbf56ea7d7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  objectType: 1
-  isMovable: 1
-  chaseStartRange: 7
-  chaseFinishRange: 9
-  attackRange: 5
-  resetPathDelay: 1.5
-  stopDelay: 2
-  followOffset: 3
+  maxHp: 200
 --- !u!114 &7330500162855589593
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -210,6 +190,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa4dbfa308457ee468fbbce11117de96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7179781643778605711
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6917241794151303350}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6eca46bfe7e9fb4cbc5c505397e1931, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectType: 1
+  chaseStartRange: 5
+  chaseFinishRange: 7
+  attackRange: 4
+  stopDelay: 2
+  followOffset: 3
+  isMovable: 1
 --- !u!1 &8384109406464263701
 GameObject:
   m_ObjectHideFlags: 0

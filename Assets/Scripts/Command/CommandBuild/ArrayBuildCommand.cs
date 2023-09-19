@@ -11,8 +11,7 @@ public class ArrayBuildCommand
         arrCmd[(int)_eCmd] = _cmd;
     }
 
-    public static void Use(EMainBaseCommnad _eCmd)
+    public static void Use(EMainBaseCommnad _eCmd, params object[] _objects)
     {
-        arrCmd[(int)_eCmd].Execute();
-    }
+        arrCmd[(int)_eCmd].Execute(_objects);    }
 }

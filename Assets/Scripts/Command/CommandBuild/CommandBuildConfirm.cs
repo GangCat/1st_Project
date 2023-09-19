@@ -10,7 +10,7 @@ public class CommandBuildConfirm : Command
         inputMng = _inputMng;
     }
 
-    public override void Execute()
+    public override void Execute(params object[] _objects)
     {
         inputMng.IsBuildOperation = buildMng.BuildStructure();
     }

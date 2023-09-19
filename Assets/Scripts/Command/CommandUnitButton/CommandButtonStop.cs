@@ -9,7 +9,7 @@ public class CommandButtonStop : Command
         selectableObjMng = _selectableObjMng;
     }
 
-    public override void Execute()
+    public override void Execute(params object[] _objects)
     {
         selectableObjMng.Stop();
     }

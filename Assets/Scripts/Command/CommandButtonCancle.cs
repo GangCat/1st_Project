@@ -6,7 +6,7 @@ public class CommandButtonCancle : Command
 {
     public CommandButtonCancle() { }
 
-    public override void Execute()
+    public override void Execute(params object[] _objects)
     {
         Debug.Log("Cancle");
     }

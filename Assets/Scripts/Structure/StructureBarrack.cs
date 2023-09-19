@@ -55,7 +55,7 @@ public class StructureBarrack : Structure
         isProcessingSpawnUnit = false;
         GameObject unitGo = Instantiate(spawnUnitPrefab[(int)_unitType], spawnPoint, Quaternion.identity);
         unitGo.transform.position = SelectableObjectManager.ResetPosition(unitGo.transform.position);
-        SelectableObject tempObj = unitGo.GetComponent<SelectableObject>();
+        FriendlyObject tempObj = unitGo.GetComponent<FriendlyObject>();
         tempObj.Init();
 
         if(!rallyPoint.Equals(spawnPoint))

@@ -6,7 +6,7 @@ public class StructureTurret : Structure
 {
     public override void Init()
     {
-        selectObj = GetComponentInChildren<SelectableObject>();
+        selectObj = GetComponentInChildren<FriendlyObject>();
         selectObj.Init();
         selectObj.SetMyTr(turretHeadTr);
     }
@@ -14,5 +14,5 @@ public class StructureTurret : Structure
     [SerializeField]
     private Transform turretHeadTr = null;
 
-    private SelectableObject selectObj = null;
+    private FriendlyObject selectObj = null;
 }

@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 1632788441464564600}
   - component: {fileID: 5820420590409694958}
   - component: {fileID: -4126558870323492602}
-  - component: {fileID: -5857869707569600026}
   - component: {fileID: -3197271653552490133}
+  - component: {fileID: 4335736936896054379}
   m_Layer: 10
   m_Name: P_TempBunker
   m_TagString: FriendlyStructure
@@ -72,26 +72,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   curHp: 0
   maxHp: 100
---- !u!114 &-5857869707569600026
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 541031336262926454}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb507dc23adf3a24ab9f5abbf56ea7d7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  objectType: 4
-  isMovable: 0
-  chaseStartRange: 0
-  chaseFinishRange: 0
-  attackRange: 0
-  resetPathDelay: 0
-  stopDelay: 0
-  followOffset: 0
 --- !u!114 &-3197271653552490133
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -107,7 +87,28 @@ MonoBehaviour:
   myGridX: 1
   myGridY: 1
   calcNodeOffset: {x: 0, y: 0, z: 0}
-  buffRatio: 0
+  buffRatio: 0.5
+  height: 5
+  capacity: 1
+--- !u!114 &4335736936896054379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 541031336262926454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6eca46bfe7e9fb4cbc5c505397e1931, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectType: 4
+  chaseStartRange: 0
+  chaseFinishRange: 0
+  attackRange: 0
+  stopDelay: 0
+  followOffset: 0
+  isMovable: 0
 --- !u!1 &3279103662162741560
 GameObject:
   m_ObjectHideFlags: 0
@@ -120,7 +121,7 @@ GameObject:
   - component: {fileID: 4240410739574375475}
   - component: {fileID: 892515419223854720}
   - component: {fileID: 5755086746060537024}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: BunkerInTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}

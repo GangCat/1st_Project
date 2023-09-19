@@ -9,7 +9,7 @@ public class CommandRallypoint : Command
         inputMng = _inputMng;
     }
 
-    public override void Execute()
+    public override void Execute(params object[] _objects)
     {
         inputMng.OnClickRallyPointButton();
     }

@@ -145,10 +145,14 @@ public class InputManager : MonoBehaviour
 
     private void SetRallyPoint()
     {
-        ArrayBarrackCommand.Use(EBarrackCommand.RALLYPOINT_CONFIRM);
-
         Vector3 pickPos = Vector3.zero;
-        Functions.Picking("StageFloor", floorLayer, ref pickPos);
+        RaycastHit hit;
+
+        if (Functions.Picking(selectableLayer, out hit))
+            ArrayBarrackCommand.Use(EBarrackCommand.RALLYPOINT_CONFIRM_TR, hit.transform);
+        else if (Functions.Picking("StageFloor", floorLayer, ref pickPos))
+            ArrayBarrackCommand.Use(EBarrackCommand.RALLYPOINT_CONFIRM_POS, pickPos);
+
         GameObject pickPosDisplayGo = Instantiate(pickPosPrefab, pickPos, Quaternion.identity, transform);
         StartCoroutine("DestroypickPosDisplay", pickPosDisplayGo);
 

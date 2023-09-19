@@ -9,7 +9,7 @@ public class CommandButtonAttack : Command
         inputMng = _inputMng;
     }
 
-    public override void Execute()
+    public override void Execute(params object[] _objects)
     {
         inputMng.OnClickAttackButton();
     }

@@ -11,8 +11,8 @@ public class ArrayBarrackCommand
         arrCmd[(int)_eCmd] = _cmd;
     }
 
-    public static void Use(EBarrackCommand _eCmd)
+    public static void Use(EBarrackCommand _eCmd, params object[] _objects)
     {
-        arrCmd[(int)_eCmd].Execute();
+        arrCmd[(int)_eCmd].Execute(_objects);
     }
 }

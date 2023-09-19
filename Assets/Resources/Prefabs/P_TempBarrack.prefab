@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 7809138230621168798}
   - component: {fileID: 575481851630255535}
   - component: {fileID: 7215857622082080455}
-  - component: {fileID: 2382400079855685331}
   - component: {fileID: 4556634007579230422}
+  - component: {fileID: 3774082440511637135}
   m_Layer: 10
   m_Name: P_TempBarrack
   m_TagString: FriendlyStructure
@@ -71,26 +71,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   curHp: 0
   maxHp: 100
---- !u!114 &2382400079855685331
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1877717811974592186}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb507dc23adf3a24ab9f5abbf56ea7d7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  objectType: 6
-  isMovable: 0
-  chaseStartRange: 0
-  chaseFinishRange: 0
-  attackRange: 0
-  resetPathDelay: 100
-  stopDelay: 100
-  followOffset: 3
 --- !u!114 &4556634007579230422
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -114,6 +94,25 @@ MonoBehaviour:
   - {fileID: 3444044437046430144, guid: dba7bab991d89e945b862c14b0c03313, type: 3}
   - {fileID: 186232715040071189, guid: 1a6427e02f043fb49b31dd80f757f371, type: 3}
   - {fileID: 203565306222209062, guid: 0939395da08e46742994aea76cf2f25e, type: 3}
+--- !u!114 &3774082440511637135
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1877717811974592186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6eca46bfe7e9fb4cbc5c505397e1931, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectType: 6
+  chaseStartRange: 0
+  chaseFinishRange: 0
+  attackRange: 0
+  stopDelay: 0
+  followOffset: 0
+  isMovable: 0
 --- !u!1 &2436378062319363825
 GameObject:
   m_ObjectHideFlags: 0

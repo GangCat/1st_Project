@@ -13,16 +13,13 @@ public class EnemyManager : MonoBehaviour
     {
         GameObject enemyGo = memoryPool.ActivatePoolItem(5, transform);
 
-        SelectableObject enemyObj = enemyGo.GetComponent<SelectableObject>();
-        enemyObj.Init();
+        EnemyObject enemyObj = enemyGo.GetComponent<EnemyObject>();
         enemyObj.Position = spawnPos;
+        enemyObj.Init();
+        spawnPos.x += 1f;
     }
 
-
-
-
-
-    MemoryPool memoryPool = null;
+    private MemoryPool memoryPool = null;
 
     [SerializeField]
     private GameObject enemyPrefab = null;

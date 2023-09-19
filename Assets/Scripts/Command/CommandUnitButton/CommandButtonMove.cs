@@ -4,9 +4,11 @@ public class CommandButtonMove : Command
     {
         inputMng = _inputMng;
     }
-    public override void Execute()
+
+    public override void Execute(params object[] _value)
     {
         inputMng.OnClickMoveButton();
+
     }
 
     private InputManager inputMng = null;

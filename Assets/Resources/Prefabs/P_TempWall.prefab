@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 7534801930405887633}
   - component: {fileID: 8964975729645022558}
   - component: {fileID: 6126758822872318196}
+  - component: {fileID: -6226364378777565952}
   m_Layer: 10
   m_Name: P_TempWall
   m_TagString: FriendlyStructure
@@ -167,11 +168,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectType: 5
-  isMovable: 0
   chaseStartRange: 0
   chaseFinishRange: 0
   attackRange: 0
-  resetPathDelay: 0.5
   stopDelay: 2
   followOffset: 3
 --- !u!114 &6126758822872318196
@@ -189,4 +188,22 @@ MonoBehaviour:
   myGridX: 4
   myGridY: 1
   calcNodeOffset: {x: 0, y: 0, z: 0}
-  wallStartPosOffset: {x: 0, y: 0, z: 0}
+--- !u!114 &-6226364378777565952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8162044424758329862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6eca46bfe7e9fb4cbc5c505397e1931, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectType: 5
+  chaseStartRange: 0
+  chaseFinishRange: 0
+  attackRange: 0
+  stopDelay: 0
+  followOffset: 0
+  isMovable: 0

@@ -42,9 +42,9 @@ public class GameManager : MonoBehaviour
         buildMng.Init(grid);
         enemyMng.Init();
 
-        for(int i = 0; i < 5; ++i)
-            enemyMng.SpawnEnemy();
-        
+        //for(int i = 0; i < 5; ++i)
+        enemyMng.SpawnEnemy();
+
 
         InitPlayer();
     }
@@ -60,16 +60,12 @@ public class GameManager : MonoBehaviour
 
         ArrayBuildCommand.Add(EMainBaseCommnad.CANCLE, new CommandBuildCancle(buildMng, inputMng));
         ArrayBuildCommand.Add(EMainBaseCommnad.CONFIRM, new CommandBuildConfirm(buildMng, inputMng));
-        ArrayBuildCommand.Add(EMainBaseCommnad.BUILD_TURRET, new CommandBuildTurret(buildMng, inputMng));
-        ArrayBuildCommand.Add(EMainBaseCommnad.BUILD_BUNKER, new CommandBuildBunker(buildMng, inputMng));
-        ArrayBuildCommand.Add(EMainBaseCommnad.BUILD_NUCLEAR, new CommandBuildNuclear(buildMng, inputMng));
-        ArrayBuildCommand.Add(EMainBaseCommnad.BUILD_BARRACK, new CommandBuildBarrack(buildMng, inputMng));
+        ArrayBuildCommand.Add(EMainBaseCommnad.BUILD_STRUCTURE, new CommandBuildStructure(buildMng, inputMng));
 
         ArrayBarrackCommand.Add(EBarrackCommand.RALLYPOINT, new CommandRallypoint(inputMng));
-        ArrayBarrackCommand.Add(EBarrackCommand.SPAWN_MELEE, new CommandSpawnUnit(selectMng, ESpawnUnitType.MELEE));
-        ArrayBarrackCommand.Add(EBarrackCommand.SPAWN_RANGE, new CommandSpawnUnit(selectMng, ESpawnUnitType.RANGE));
-        ArrayBarrackCommand.Add(EBarrackCommand.SPAWN_ROCKET, new CommandSpawnUnit(selectMng, ESpawnUnitType.ROCKET));
-        ArrayBarrackCommand.Add(EBarrackCommand.RALLYPOINT_CONFIRM, new CommandConfirmRallyPoint(selectMng));
+        ArrayBarrackCommand.Add(EBarrackCommand.SPAWN_UNIT, new CommandSpawnUnit(selectMng));
+        ArrayBarrackCommand.Add(EBarrackCommand.RALLYPOINT_CONFIRM_POS, new CommandConfirmRallyPointPos(selectMng));
+        ArrayBarrackCommand.Add(EBarrackCommand.RALLYPOINT_CONFIRM_TR, new CommandConfirmRallyPointTr(selectMng));
 
         ArrayBunkerCommand.Add(EBunkerCommand.IN_UNIT, new CommandInUnit(selectMng));
         ArrayBunkerCommand.Add(EBunkerCommand.OUT_ONE_UNIT, new CommandOutOneUnit(selectMng));
@@ -127,7 +123,7 @@ public class GameManager : MonoBehaviour
 
     private void MoveCameraWithObject()
     {
-        cameraMng.MoveCameraWithObject(selectMng.GetFirstSelectableObjectInList.Position);
+        cameraMng.MoveCameraWithObject(selectMng.GetFirstSelectedObjectInList.Position);
     }
 
     private void AddSelectedObject(SelectableObject _object)

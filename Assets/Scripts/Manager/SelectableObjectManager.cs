@@ -6,13 +6,13 @@ using UnityEngine;
 public class SelectableObjectManager : MonoBehaviour
 {
     public delegate void VoidSelectObjectTypeDelegate(ESelectableObjectType _objectType);
-    public bool IsListEmpty => listSelectedObject.Count < 1;
+    public bool IsListEmpty => listSelectedFriendlyObject.Count < 1;
     public bool IsFriendlyUnit => isFriendlyUnitInList;
-    public SelectableObject GetFirstSelectableObjectInList => listSelectedObject[0];
+    public FriendlyObject GetFirstSelectedObjectInList => listSelectedFriendlyObject[0];
 
     public void Init(VoidSelectObjectTypeDelegate _selectObjectCallback, PF_Grid _grid)
     {
-        listSelectedObject.Clear();
+        listSelectedFriendlyObject.Clear();
         tempListSelectableObject.Clear();
         selectObjectCallback = _selectObjectCallback;
         grid = _grid;
@@ -45,59 +45,51 @@ public class SelectableObjectManager : MonoBehaviour
         return unitNode.worldPos;
     }
 
-    public void RemoveUnitAtList(SelectableObject _removeObj)
+    public void RemoveUnitAtList(FriendlyObject _removeObj)
     {
         if (_removeObj == null) return;
 
-        foreach (SelectableObject obj in listSelectedObject)
+        foreach (FriendlyObject obj in listSelectedFriendlyObject)
         {
             if (obj.Equals(_removeObj))
             {
-                listSelectedObject.Remove(obj);
+                listSelectedFriendlyObject.Remove(obj);
                 return;
             }
         }
     }
 
-    public void SpawnUnit(ESpawnUnitType _unitType)
+    public void InUnit(FriendlyObject _friObj)
     {
-        if (listSelectedObject[0].ObjectType.Equals(ESelectableObjectType.BARRACK))
-            listSelectedObject[0].GetComponent<StructureBarrack>().SpawnUnit(_unitType);
-    }
-
-    public SelectableObject InUnit()
-    {
-        if (curBunker != null)
-            return curBunker.InUnit();
-
-        return null;
+        curBunker.InUnit(_friObj);
     }
 
     public void OutOneUnit()
     {
-        if (listSelectedObject[0].ObjectType.Equals(ESelectableObjectType.BUNKER))
-            listSelectedObject[0].GetComponent<StructureBunker>().OutOneUnit();
+        if (listSelectedFriendlyObject[0].ObjectType.Equals(ESelectableObjectType.BUNKER))
+            listSelectedFriendlyObject[0].GetComponent<StructureBunker>().OutOneUnit();
     }
 
     public void OutAllUnit()
     {
-        if (listSelectedObject[0].ObjectType.Equals(ESelectableObjectType.BUNKER))
-            listSelectedObject[0].GetComponent<StructureBunker>().OutAllUnit();
+        if (listSelectedFriendlyObject[0].ObjectType.Equals(ESelectableObjectType.BUNKER))
+            listSelectedFriendlyObject[0].GetComponent<StructureBunker>().OutAllUnit();
     }
 
-
-    public void SetRallyPoint()
+    public void SpawnUnit(ESpawnUnitType _unitType)
     {
-        if (listSelectedObject[0].ObjectType.Equals(ESelectableObjectType.BARRACK))
-        {
-            Vector3 pickPos = Vector3.zero;
-            RaycastHit hit;
+        if (listSelectedFriendlyObject[0].ObjectType.Equals(ESelectableObjectType.BARRACK))
+            listSelectedFriendlyObject[0].GetComponent<StructureBarrack>().SpawnUnit(_unitType);
+    }
 
-            if (Functions.Picking(1 << LayerMask.NameToLayer("SelectableObject"), out hit))
-                listSelectedObject[0].GetComponent<StructureBarrack>().SetRallyPoint(hit.transform);
-            else if (Functions.Picking("StageFloor", 1 << LayerMask.NameToLayer("StageFloor"), ref pickPos))
-                listSelectedObject[0].GetComponent<StructureBarrack>().SetRallyPoint(pickPos);
-        }
+    public void SetRallyPoint(Vector3 _pos)
+    {
+        listSelectedFriendlyObject[0].GetComponent<StructureBarrack>().SetRallyPoint(_pos);
+    }
+
+    public void SetRallyPoint(Transform _targetTr)
+    {
+        listSelectedFriendlyObject[0].GetComponent<StructureBarrack>().SetRallyPoint(_targetTr);
     }
 
     public void AddSelectedObject(SelectableObject _object)
@@ -110,12 +102,18 @@ public class SelectableObjectManager : MonoBehaviour
         tempListSelectableObject.Remove(_object);
     }
 
-    public SelectableObject[] SelectFinish()
+    public void SelectFinish()
     {
-        listSelectedObject.Clear();
-        if (tempListSelectableObject.Count < 1) return tempListSelectableObject.ToArray();
+        listSelectedFriendlyObject.Clear();
+        if (tempListSelectableObject.Count < 1)
+        {
+            selectObjectCallback?.Invoke(ESelectableObjectType.NONE);
+            return;
+        }
 
         SelectableObject tempObj = null;
+        bool isFriendlyStructure = false;
+        bool isEnemyObject = false;
         isFriendlyUnitInList = false;
         // 오브젝트를 하나하나 검사.
         foreach (SelectableObject obj in tempListSelectableObject)
@@ -128,12 +126,13 @@ public class SelectableObjectManager : MonoBehaviour
                 case ESelectableObjectType.UNIT_HERO:
                     if (!isFriendlyUnitInList)
                     {
-                        listSelectedObject.Clear();
-                        listSelectedObject.Add(obj);
+                        listSelectedFriendlyObject.Add(obj.GetComponent<FriendlyObject>());
                         isFriendlyUnitInList = true;
+                        isFriendlyStructure = false;
+                        isEnemyObject = false;
                     }
                     else
-                        listSelectedObject.Add(obj);
+                        listSelectedFriendlyObject.Add(obj.GetComponent<FriendlyObject>());
                     break;
                 case ESelectableObjectType.MAIN_BASE:
                 case ESelectableObjectType.TURRET:
@@ -142,29 +141,46 @@ public class SelectableObjectManager : MonoBehaviour
                 case ESelectableObjectType.BARRACK:
                 case ESelectableObjectType.NUCLEAR:
                     if (isFriendlyUnitInList) break;
+                    isFriendlyStructure = true;
+                    isEnemyObject = false;
                     if (!tempObj) tempObj = obj;
-                    if (!tempObj.ObjectType.Equals(obj.ObjectType))
-                        tempObj = obj;
                     break;
                 case ESelectableObjectType.ENEMY_UNIT:
                 case ESelectableObjectType.ENEMY_STRUCTURE:
                     if (isFriendlyUnitInList) break;
+                    if (isFriendlyStructure) break;
+                    isEnemyObject = true;
                     if (!tempObj) tempObj = obj;
+                    break;
+                default:
                     break;
             }
         }
 
-        if (!isFriendlyUnitInList)
+        if(isEnemyObject)
         {
-            listSelectedObject.Add(tempObj);
+            selectedEnemyObject = tempObj.GetComponent<EnemyObject>();
+            selectObjectCallback?.Invoke(selectedEnemyObject.ObjectType);
+            tempListSelectableObject.Clear();
+            return;
         }
 
-        if(listSelectedObject.Count > 0)
-            selectObjectCallback?.Invoke(listSelectedObject[0].ObjectType);
+        if (isFriendlyStructure)
+            listSelectedFriendlyObject.Add(tempObj.GetComponent<FriendlyObject>());
+
+        //if (listSelectedFriendlyObject[0] != null)
+            selectObjectCallback?.Invoke(listSelectedFriendlyObject[0].ObjectType);
+        //else
+        //    selectObjectCallback?.Invoke(ESelectableObjectType.NONE);
 
         tempListSelectableObject.Clear();
+        return;
+    }
 
-        return listSelectedObject.ToArray();
+    public void ResetTargetBunker()
+    {
+        foreach (FriendlyObject obj in listSelectedFriendlyObject)
+            obj.ResetTargetBunker();
     }
 
     public void MoveUnitByPicking(Vector3 _targetPos, bool isAttackMove = false)
@@ -172,7 +188,7 @@ public class SelectableObjectManager : MonoBehaviour
         if (isAttackMove)
         {
             Vector3 centerPos = CalcFormationCenterPos(_targetPos.y);
-            foreach (SelectableObject obj in listSelectedObject)
+            foreach (FriendlyObject obj in listSelectedFriendlyObject)
                 obj.MoveAttack(_targetPos + CalcPosInFormation(obj.Position, centerPos));
         }
         else if (IsGroupMaxDistOverRange())
@@ -184,20 +200,20 @@ public class SelectableObjectManager : MonoBehaviour
         {
             // 대열 유지하면서 모이기
             Vector3 centerPos = CalcFormationCenterPos(_targetPos.y);
-            foreach (SelectableObject obj in listSelectedObject)
+            foreach (FriendlyObject obj in listSelectedFriendlyObject)
                 obj.MoveByPos(_targetPos + CalcPosInFormation(obj.Position, centerPos));
         }
     }
 
     public void Stop()
     {
-        foreach (SelectableObject obj in listSelectedObject)
+        foreach (FriendlyObject obj in listSelectedFriendlyObject)
             obj.Stop();
     }
 
     public void Hold()
     {
-        foreach (SelectableObject obj in listSelectedObject)
+        foreach (FriendlyObject obj in listSelectedFriendlyObject)
             obj.Hold();
     }
 
@@ -208,7 +224,7 @@ public class SelectableObjectManager : MonoBehaviour
 
     private void CalcNewFormation(Vector3 _targetPos, bool _isPatrol = false)
     {
-        int unitCnt = listSelectedObject.Count;
+        int unitCnt = listSelectedFriendlyObject.Count;
         int col = Mathf.Clamp(unitCnt, 1, 5);
 
         float posX = 0f;
@@ -222,22 +238,22 @@ public class SelectableObjectManager : MonoBehaviour
             destPos = _targetPos + new Vector3(posX, 0f, posZ);
 
             if(_isPatrol)
-                listSelectedObject[i].Patrol(destPos);
+                listSelectedFriendlyObject[i].Patrol(destPos);
             else
-                listSelectedObject[i].MoveByPos(destPos);
+                listSelectedFriendlyObject[i].MoveByPos(destPos);
         }
     }
 
     private Vector3 CalcFormationCenterPos(float _targetPosY)
     {
         Vector3 centerPos = Vector3.zero;
-        foreach(SelectableObject obj in listSelectedObject)
+        foreach(FriendlyObject obj in listSelectedFriendlyObject)
         {
             centerPos.x += obj.Position.x;
             centerPos.z += obj.Position.z;
         }
 
-        centerPos /= listSelectedObject.Count;
+        centerPos /= listSelectedFriendlyObject.Count;
         centerPos.y += _targetPosY;
 
         return centerPos;
@@ -250,13 +266,13 @@ public class SelectableObjectManager : MonoBehaviour
 
     private bool IsGroupMaxDistOverRange()
     {
-        Vector3 objPos = listSelectedObject[0].Position;
+        Vector3 objPos = listSelectedFriendlyObject[0].Position;
         float maxX = objPos.x;
         float minX = objPos.x;
         float maxZ = objPos.z;
         float minZ = objPos.z;
 
-        foreach (SelectableObject obj in listSelectedObject)
+        foreach (FriendlyObject obj in listSelectedFriendlyObject)
         {
             objPos = obj.Position;
             if (objPos.x > maxX) maxX = objPos.x;
@@ -274,19 +290,14 @@ public class SelectableObjectManager : MonoBehaviour
         if (_targetTr.GetComponent<SelectableObject>().ObjectType.Equals(ESelectableObjectType.BUNKER))
         {
             curBunker = _targetTr.GetComponent<StructureBunker>();
-            foreach (SelectableObject obj in listSelectedObject)
+            foreach (FriendlyObject obj in listSelectedFriendlyObject)
                 obj.FollowTarget(_targetTr, true);
         }
         else
         {
-            foreach (SelectableObject obj in listSelectedObject)
+            foreach (FriendlyObject obj in listSelectedFriendlyObject)
                 obj.FollowTarget(_targetTr);
         }
-    }
-
-    public void InUnitBunker()
-    {
-        
     }
 
     [SerializeField]
@@ -295,7 +306,9 @@ public class SelectableObjectManager : MonoBehaviour
     private bool isFriendlyUnitInList = false;
 
     private List<SelectableObject> tempListSelectableObject = new List<SelectableObject>();
-    private List<SelectableObject> listSelectedObject = new List<SelectableObject>();
+    //private List<SelectableObject> listSelectedObject = new List<SelectableObject>();
+    private List<FriendlyObject> listSelectedFriendlyObject = new List<FriendlyObject>();
+    private EnemyObject selectedEnemyObject = null;
 
     private VoidSelectObjectTypeDelegate selectObjectCallback = null;
 

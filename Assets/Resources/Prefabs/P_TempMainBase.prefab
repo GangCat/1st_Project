@@ -178,7 +178,7 @@ GameObject:
   - component: {fileID: 3845910304497348173}
   - component: {fileID: 8883937953507251874}
   - component: {fileID: -6141483901220276170}
-  - component: {fileID: -4761019630317556292}
+  - component: {fileID: 4801781719797432397}
   m_Layer: 10
   m_Name: P_TempMainBase
   m_TagString: FriendlyStructure
@@ -237,7 +237,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   curHp: 0
   maxHp: 3000
---- !u!114 &-4761019630317556292
+--- !u!114 &4801781719797432397
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -246,14 +246,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 8162044424758329862}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb507dc23adf3a24ab9f5abbf56ea7d7, type: 3}
+  m_Script: {fileID: 11500000, guid: b6eca46bfe7e9fb4cbc5c505397e1931, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   objectType: 2
-  isMovable: 0
   chaseStartRange: 0
   chaseFinishRange: 0
   attackRange: 0
-  resetPathDelay: 0.5
-  stopDelay: 2
-  followOffset: 3
+  stopDelay: 0
+  followOffset: 0
+  isMovable: 0

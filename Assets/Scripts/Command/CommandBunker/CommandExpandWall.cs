@@ -11,9 +11,9 @@ public class CommandExpandWall : Command
         inputMng = _inputMng;
     }
 
-    public override void Execute()
+    public override void Execute(params object[] _value)
     {
-        SelectableObject bunkerObj = selMng.GetFirstSelectableObjectInList;
+        FriendlyObject bunkerObj = selMng.GetFirstSelectedObjectInList;
         buildMng.ShowBluepirnt(bunkerObj.transform);
         inputMng.IsBuildOperation = true;
     }

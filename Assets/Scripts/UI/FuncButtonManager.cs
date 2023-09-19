@@ -121,5 +121,5 @@ public class FuncButtonManager : MonoBehaviour
     private CanvasHeroFunc canvasHeroFunc = null;
     private CanvasCancleFunc cancleFunc = null;
 
-    private ESelectableObjectType curActiveBtnFunc = ESelectableObjectType.None;
+    private ESelectableObjectType curActiveBtnFunc = ESelectableObjectType.NONE;
 }

@@ -2,20 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CommandBuildBunker : Command
+public class CommandBuildStructure : Command
 {
-    public CommandBuildBunker(StructureManager _buildMng, InputManager _inputMng)
+    public CommandBuildStructure(StructureManager _buildMng, InputManager _inputMng)
     {
         buildMng = _buildMng;
         inputMng = _inputMng;
     }
 
-    public override void Execute()
+    public override void Execute(params object[] _objects)
     {
-        buildMng.ShowBluepirnt(ESelectableObjectType.BUNKER);
+        buildMng.ShowBluepirnt((ESelectableObjectType)_objects[0]);
         inputMng.IsBuildOperation = true;
     }
-
 
     private StructureManager buildMng = null;
     private InputManager inputMng = null;
