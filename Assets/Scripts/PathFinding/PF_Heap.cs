@@ -5,7 +5,6 @@ using System.Collections.Generic;
 
 public class PF_Heap<T> where T : IHeapItem<T>
 {
-
     public int Count => curItemCount;
 
     public PF_Heap(int _maxHeapSize)

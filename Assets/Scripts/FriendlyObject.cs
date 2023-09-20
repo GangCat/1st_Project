@@ -278,7 +278,7 @@ public class FriendlyObject : SelectableObject
             {
                 ++targetIdx;
 
-                //SelectableObjectManager.UpdateNodeWalkable(transform.position, nodeIdx);
+                SelectableObjectManager.UpdateNodeWalkable(transform.position, nodeIdx);
                 // 목적지에 도착시 
                 if (isAttack)
                     CheckIsTargetInAttackRange();
@@ -334,7 +334,7 @@ public class FriendlyObject : SelectableObject
             if (isTargetInRangeFromMyPos(curWayNode.worldPos, 0.1f))
             {
                 ++targetIdx;
-                //SelectableObjectManager.UpdateNodeWalkable(transform.position, nodeIdx);
+                SelectableObjectManager.UpdateNodeWalkable(transform.position, nodeIdx);
                 CheckIsTargetInAttackRange();
 
                 if (targetIdx >= arrPath.Length)
@@ -418,7 +418,7 @@ public class FriendlyObject : SelectableObject
                     if (isTargetInRangeFromMyPos(curWayNode.worldPos, 0.1f))
                     {
                         ++targetIdx;
-                        //SelectableObjectManager.UpdateNodeWalkable(transform.position, nodeIdx);
+                        SelectableObjectManager.UpdateNodeWalkable(transform.position, nodeIdx);
                         if (isAttack)
                             CheckIsTargetInAttackRange();
 

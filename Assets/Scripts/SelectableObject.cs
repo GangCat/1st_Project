@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class SelectableObject : MonoBehaviour
@@ -198,7 +199,7 @@ public class SelectableObject : MonoBehaviour
             {
                 ++targetIdx;
 
-                //SelectableObjectManager.UpdateNodeWalkable(transform.position, nodeIdx);
+                SelectableObjectManager.UpdateNodeWalkable(transform.position, nodeIdx);
                 // 목적지에 도착시 
                 CheckIsTargetInAttackRange();
 
@@ -275,7 +276,7 @@ public class SelectableObject : MonoBehaviour
                     if (isTargetInRangeFromMyPos(curWayNode.worldPos, 0.1f))
                     {
                         ++targetIdx;
-                        //SelectableObjectManager.UpdateNodeWalkable(transform.position, nodeIdx);
+                        SelectableObjectManager.UpdateNodeWalkable(transform.position, nodeIdx);
                         CheckIsTargetInAttackRange();
 
                         if (targetIdx >= arrPath.Length)
@@ -310,7 +311,8 @@ public class SelectableObject : MonoBehaviour
         {
             arrPath = _newPath;
             targetIdx = 0;
-            UpdateTargetPos();
+            if(arrPath.Length > 0)
+                UpdateTargetPos();
         }
         else
         {
@@ -328,7 +330,8 @@ public class SelectableObject : MonoBehaviour
 
     protected void ResearchPath()
     {
-        PF_PathRequestManager.RequestPath(transform.position, targetTr.position, OnPathFound);
+        if(targetTr != null)
+            PF_PathRequestManager.RequestPath(transform.position, targetTr.position, OnPathFound);
     }
     #endregion
 

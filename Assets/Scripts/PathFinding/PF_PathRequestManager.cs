@@ -19,6 +19,7 @@ public class PF_PathRequestManager : MonoBehaviour
         instance.TryProcessNext();
     }
 
+
     private struct SPathRequest
     {
         public Vector3 pathStart;

@@ -84,15 +84,23 @@ public class PF_Grid : MonoBehaviour
         return neighbours;
     }
 
+    private Queue<PF_Node> queue = new Queue<PF_Node>();
+    private HashSet<PF_Node> visited = new HashSet<PF_Node>();
+    private List<PF_Node> neighbors = new List<PF_Node>();
+
     public PF_Node GetAccessibleNode(PF_Node _targetNode)
     {
-        Queue<PF_Node> queue = new Queue<PF_Node>();
-        HashSet<PF_Node> visited = new HashSet<PF_Node>();
+        queue.Clear();
+        visited.Clear();
+
+        //Queue<PF_Node> queue = new Queue<PF_Node>();
+        //HashSet<PF_Node> visited = new HashSet<PF_Node>();
 
         queue.Enqueue(_targetNode);
 
         while (queue.Count > 0)
         {
+            neighbors.Clear();
             PF_Node currentNode = queue.Dequeue();
 
             if (currentNode.walkable)
@@ -100,7 +108,53 @@ public class PF_Grid : MonoBehaviour
                 return currentNode;
             }
 
-            List<PF_Node> neighbors = GetNeighbors(currentNode);
+            neighbors = GetNeighbors(currentNode);
+            foreach (PF_Node neighbor in neighbors)
+            {
+                if (!visited.Contains(neighbor))
+                {
+                    visited.Add(neighbor);
+                    queue.Enqueue(neighbor);
+                }
+            }
+        }
+
+        return null;
+    }
+
+
+    public PF_Node GetAccessibleNodeWithoutTargetNode(PF_Node _targetNode)
+    {
+        queue.Clear();
+        visited.Clear();
+
+        //Queue<PF_Node> queue = new Queue<PF_Node>();
+        //HashSet<PF_Node> visited = new HashSet<PF_Node>();
+        neighbors.Clear();
+
+        neighbors = GetNeighbors(_targetNode);
+        foreach (PF_Node neighbor in neighbors)
+        {
+            if (!visited.Contains(neighbor))
+            {
+                visited.Add(neighbor);
+                queue.Enqueue(neighbor);
+            }
+        }
+
+        //queue.Enqueue(_targetNode);
+
+        while (queue.Count > 0)
+        {
+            neighbors.Clear();
+            PF_Node currentNode = queue.Dequeue();
+
+            if (currentNode.walkable)
+            {
+                return currentNode;
+            }
+
+            neighbors = GetNeighbors(currentNode);
             foreach (PF_Node neighbor in neighbors)
             {
                 if (!visited.Contains(neighbor))

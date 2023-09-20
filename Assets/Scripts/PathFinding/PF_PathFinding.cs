@@ -1,8 +1,6 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-// 시간 측정하려고 추가한 네임스페이스
-//using System.Diagnostics;
 using System;
 
 public class PF_PathFinding : MonoBehaviour
@@ -20,46 +18,68 @@ public class PF_PathFinding : MonoBehaviour
 
     public void StartFindPath(Vector3 _startPos, Vector3 _targetPos)
     {
-        StartCoroutine(FindPath(_startPos, _targetPos));
-    }
-
-    private IEnumerator FindPath(Vector3 _startPos, Vector3 _targetPos)
-    {
-        bool isPathSuccess = false;
-
         PF_Node startNode = grid.GetNodeFromWorldPoint(_startPos);
         PF_Node targetNode = grid.GetNodeFromWorldPoint(_targetPos);
 
+        if (startNode.Equals(targetNode))
+        {
+            finishPathFindCallback?.Invoke(null, false);
+            return;
+        }
+
+        StartCoroutine(FindPath(startNode, targetNode));
+        ++i;
+    }
+
+    private int i = 0;
+
+    private IEnumerator FindPath(PF_Node startNode, PF_Node targetNode)
+    {
+        bool isPathSuccess = false;
+
         if (!targetNode.walkable)
-            targetNode = grid.GetAccessibleNode(targetNode);
+        {
+            targetNode = grid.GetAccessibleNodeWithoutTargetNode(targetNode);
+            //Debug.Log("walkable");
+            //finishPathFindCallback?.Invoke(null, false);
+            //yield break;
+        }
         if (targetNode != null)
         {
             listWayNode.Clear();
+            listNeighbor.Clear();
+            curNode = null;
+            neighbor = null;
 
-            if (startNode.Equals(targetNode))
+            listNeighbor = grid.GetNeighbors(targetNode);
+
+            bool isTargetAccessible = false;
+            for (int i = 0; i < listNeighbor.Count; ++i)
             {
-                // 새로 설정한 targetNode가 startNode와 같아질 경우 pathSuccess를 실패로 전달하여 길찾기를 하지 못하게 함.
-                finishPathFindCallback?.Invoke(null, isPathSuccess);
-                yield break;
+                if (listNeighbor[i].walkable)
+                {
+                    isTargetAccessible = true;
+                    break;
+                }
             }
+            if (!isTargetAccessible)
+                targetNode = grid.GetAccessibleNodeWithoutTargetNode(targetNode);
 
             while (openSet.Count > 0)
                 openSet.RemoveFirstItem();
             closedSet.Clear();
             openSet.Add(startNode);
 
-            while (openSet.Count > 0)
+            while (openSet.Count > 0 && openSet.Count < 1000)
             {
                 listNeighbor.Clear();
-                PF_Node curNode = openSet.RemoveFirstItem();
+                curNode = openSet.RemoveFirstItem();
 
                 closedSet.Add(curNode);
 
                 // 도착했다면
                 if (curNode.Equals(targetNode))
                 {
-                    //sw.Stop();
-                    //print("path found: " + sw.ElapsedMilliseconds + "ms");
                     isPathSuccess = true;
                     break;
                 }
@@ -68,7 +88,7 @@ public class PF_PathFinding : MonoBehaviour
 
                 for (int i = 0; i < listNeighbor.Count; ++i)
                 {
-                    PF_Node neighbor = listNeighbor[i];
+                    neighbor = listNeighbor[i];
                     if (!neighbor.walkable || closedSet.Contains(neighbor)) continue;
 
                     int newGCostToNeighbor = curNode.gCost + CalcLowestCostWithNode(curNode, neighbor);
@@ -98,6 +118,9 @@ public class PF_PathFinding : MonoBehaviour
 
         finishPathFindCallback?.Invoke(listWayNode.ToArray(), isPathSuccess);
     }
+
+    private PF_Node curNode = null;
+    private PF_Node neighbor = null;
 
     /// <summary>
     /// 해당 노드의 부모를 타고 올라가서 경로를 역탐색하고 마지막에 다시 순서를 뒤집어서 경로를 설정함.

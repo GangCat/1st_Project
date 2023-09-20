@@ -42,7 +42,7 @@ public class GameManager : MonoBehaviour
         buildMng.Init(grid);
         enemyMng.Init();
 
-        Invoke("StartWave", 30f);
+        Invoke("StartWave", 1f);
 
         InitPlayer();
     }
