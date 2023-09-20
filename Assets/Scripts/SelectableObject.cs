@@ -205,6 +205,17 @@ public class SelectableObject : MonoBehaviour
 
                 if (targetIdx >= arrPath.Length)
                 {
+                    if(Vector3.SqrMagnitude(targetPos - transform.position) > Mathf.Pow(1.4f, 2f))
+                    {
+                        PF_PathRequestManager.RequestPath(transform.position, targetPos, OnPathFound);
+                        stateMachine.SetWaitForNewPath(true);
+                        while (curWayNode == null)
+                            yield return null;
+
+                        stateMachine.SetWaitForNewPath(false);
+                        continue;
+                    }
+
                     ResetState();
                     stateMachine.SetWaitForNewPath(false);
                     yield break;

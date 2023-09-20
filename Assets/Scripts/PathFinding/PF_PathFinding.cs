@@ -32,9 +32,11 @@ public class PF_PathFinding : MonoBehaviour
     }
 
     private int i = 0;
+    private int j = 0;
 
     private IEnumerator FindPath(PF_Node startNode, PF_Node targetNode)
     {
+        bool isNeedRetrace = false;
         bool isPathSuccess = false;
 
         if (!targetNode.walkable)
@@ -70,12 +72,20 @@ public class PF_PathFinding : MonoBehaviour
             closedSet.Clear();
             openSet.Add(startNode);
 
-            while (openSet.Count > 0 && openSet.Count < 1000)
+            while (openSet.Count > 0)
             {
+                ++j;
+
                 listNeighbor.Clear();
                 curNode = openSet.RemoveFirstItem();
 
                 closedSet.Add(curNode);
+
+                if(openSet.Count > 100)
+                {
+                    isPathSuccess = true;
+                    break;
+                }
 
                 // µµÂøÇß´Ù¸é
                 if (curNode.Equals(targetNode))
@@ -112,7 +122,7 @@ public class PF_PathFinding : MonoBehaviour
 
         if (isPathSuccess)
         {
-            listWayNode = RetracePath(startNode, targetNode);
+            listWayNode = RetracePath(startNode, curNode);
             //UnityEngine.Debug.Log("true");
         }
 

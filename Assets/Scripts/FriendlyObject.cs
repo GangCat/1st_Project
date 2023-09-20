@@ -285,6 +285,17 @@ public class FriendlyObject : SelectableObject
 
                 if (targetIdx >= arrPath.Length)
                 {
+                    if (Vector3.SqrMagnitude(targetPos - transform.position) > Mathf.Pow(1.4f, 2f))
+                    {
+                        PF_PathRequestManager.RequestPath(transform.position, targetPos, OnPathFound);
+                        stateMachine.SetWaitForNewPath(true);
+                        while (curWayNode == null)
+                            yield return null;
+
+                        stateMachine.SetWaitForNewPath(false);
+                        continue;
+                    }
+
                     curWayNode = null;
                     ResetState();
                     stateMachine.SetWaitForNewPath(false);
@@ -339,6 +350,17 @@ public class FriendlyObject : SelectableObject
 
                 if (targetIdx >= arrPath.Length)
                 {
+                    if (Vector3.SqrMagnitude(transform.position - wayPointTo) > Mathf.Pow(1.4f, 2f))
+                    {
+                        PF_PathRequestManager.RequestPath(transform.position, wayPointTo, OnPathFound);
+                        stateMachine.SetWaitForNewPath(true);
+                        while (curWayNode == null)
+                            yield return null;
+
+                        stateMachine.SetWaitForNewPath(false);
+                        continue;
+                    }
+
                     Vector3 tempWayPoint = wayPointFrom;
                     wayPointFrom = wayPointTo;
                     wayPointTo = tempWayPoint;
