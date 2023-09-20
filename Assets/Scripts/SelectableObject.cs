@@ -142,6 +142,7 @@ public class SelectableObject : MonoBehaviour
         StopAllCoroutines();
         curWayNode = null;
         stateMachine.SetWaitForNewPath(false);
+        SelectableObjectManager.UpdateNodeWalkable(transform.position, nodeIdx);
 
         switch (curMoveCondition)
         {
@@ -197,7 +198,7 @@ public class SelectableObject : MonoBehaviour
             {
                 ++targetIdx;
 
-                SelectableObjectManager.UpdateNodeWalkable(transform.position, nodeIdx);
+                //SelectableObjectManager.UpdateNodeWalkable(transform.position, nodeIdx);
                 // 목적지에 도착시 
                 CheckIsTargetInAttackRange();
 
@@ -274,7 +275,7 @@ public class SelectableObject : MonoBehaviour
                     if (isTargetInRangeFromMyPos(curWayNode.worldPos, 0.1f))
                     {
                         ++targetIdx;
-                        SelectableObjectManager.UpdateNodeWalkable(transform.position, nodeIdx);
+                        //SelectableObjectManager.UpdateNodeWalkable(transform.position, nodeIdx);
                         CheckIsTargetInAttackRange();
 
                         if (targetIdx >= arrPath.Length)
@@ -336,6 +337,7 @@ public class SelectableObject : MonoBehaviour
     {
         StopAllCoroutines();
         stateMachine.ChangeStateEnum(EState.STOP);
+        SelectableObjectManager.UpdateNodeWalkable(transform.position, nodeIdx);
         StartCoroutine("CheckStopCoroutine");
     }
 
@@ -352,6 +354,7 @@ public class SelectableObject : MonoBehaviour
     {
         StopAllCoroutines();
         stateMachine.ChangeStateEnum(EState.ATTACK);
+        SelectableObjectManager.UpdateNodeWalkable(transform.position, nodeIdx);
         StartCoroutine("AttackCoroutine");
         //StartCoroutine("CheckIsEnemyInAttackRangeCoroutine");
     }
