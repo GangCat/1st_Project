@@ -129,15 +129,14 @@ public static class Functions
     /// <param name="_layerMask"></param>
     /// <param name="_hit"></param>
     /// <returns></returns>
-    public static bool Picking(int _layerMask, out RaycastHit _hit)
+    public static bool Picking(LayerMask _layerMask, out RaycastHit _hit)
     {
-        Vector3 mousePos = Input.mousePosition;
-        Ray ray = Camera.main.ScreenPointToRay(mousePos);
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
+        Debug.DrawRay(ray.origin, ray.direction * 1000f, Color.red, 3f);
         if (Physics.Raycast(ray, out _hit, 1000f, _layerMask))
-        {
             return true;
-        }
+
         return false;
     }
 

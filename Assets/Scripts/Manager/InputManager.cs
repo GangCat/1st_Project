@@ -240,11 +240,9 @@ public class InputManager : MonoBehaviour
 
     private void DragOperateWithMouseClick()
     {
-        if (EventSystem.current.IsPointerOverGameObject())
-            return;
-
         RaycastHit hit;
-        if (Functions.Picking(LayerMask.NameToLayer("SelectableObject"), out hit))
+        
+        if (Functions.Picking(selectableLayer, out hit))
         {
             if(hit.transform.GetComponent<SelectableObject>())
                 selectObjectCallback?.Invoke(hit.transform.GetComponent<SelectableObject>());
