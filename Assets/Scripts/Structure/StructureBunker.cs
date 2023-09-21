@@ -35,6 +35,7 @@ public class StructureBunker : Structure
 
     public void OutOneUnit()
     {
+        if (queueUnitInBunker.Count < 1) return;
         // 내 주위의 노드 중 walkable 탐색
         // 부모 변경
         // 결과 노드에 내 자식 위치 이동

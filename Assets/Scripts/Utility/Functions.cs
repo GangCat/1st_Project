@@ -106,7 +106,7 @@ public static class Functions
     /// <param name="_layerMask"></param>
     /// <param name="_point"></param>
     /// <returns></returns>
-    public static bool Picking(string _tag, int _layerMask, ref Vector3 _point)
+    public static bool Picking(string _tag, LayerMask _layerMask, ref Vector3 _point)
     {
         Vector3 mousePos = Input.mousePosition;
         Ray ray = Camera.main.ScreenPointToRay(mousePos);
