@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Burst.CompilerServices;
 using UnityEngine;
 
 public class SelectableObjectManager : MonoBehaviour
@@ -39,8 +38,9 @@ public class SelectableObjectManager : MonoBehaviour
     public static Vector3 ResetPosition(Vector3 _pos)
     {
         PF_Node unitNode = grid.GetNodeFromWorldPoint(_pos);
-        if (!unitNode.walkable)
-            unitNode = grid.GetAccessibleNode(unitNode);
+
+        if (!grid.GetNodeFromWorldPoint(_pos).walkable)
+            return grid.GetAccessibleNodeWithoutTargetNode(unitNode).worldPos;
 
         return unitNode.worldPos;
     }

@@ -4,13 +4,21 @@ using UnityEngine;
 
 public class EnemyObject : SelectableObject
 {
-    public void SetArrPath(PF_Node[] _arrPath)
+    [System.Serializable]
+    public enum EEnemySpawnType { NONE = -1, WAVE_SPAWN, MAP_SPAWN, LENGTH }
+
+    public void Init(EEnemySpawnType _spawnType, int _myIdx)
     {
-        arrPath = _arrPath;
+        spawnType = _spawnType;
+        myIdx = _myIdx;
+        gameObject.layer = LayerMask.NameToLayer("SelectableObject");
+    }
+    public override void GetDmg(float _dmg)
+    {
+        if (statusHp.DecreaseHpAndCheckIsDead(_dmg))
+            ArrayEnemyObjectCommand.Use((EEnemyObjectCommand)spawnType, gameObject, myIdx);
     }
 
-    public void MoveAttackByArrPath()
-    {
-
-    }
+    private EEnemySpawnType spawnType = EEnemySpawnType.NONE;
+    private int myIdx = 0;
 }

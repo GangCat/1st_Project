@@ -36,15 +36,11 @@ public class PF_PathFinding : MonoBehaviour
 
     private IEnumerator FindPath(PF_Node startNode, PF_Node targetNode)
     {
-        bool isNeedRetrace = false;
         bool isPathSuccess = false;
 
         if (!targetNode.walkable)
         {
             targetNode = grid.GetAccessibleNodeWithoutTargetNode(targetNode);
-            //Debug.Log("walkable");
-            //finishPathFindCallback?.Invoke(null, false);
-            //yield break;
         }
         if (targetNode != null)
         {
@@ -81,7 +77,7 @@ public class PF_PathFinding : MonoBehaviour
 
                 closedSet.Add(curNode);
 
-                if(openSet.Count > 100)
+                if(openSet.Count > 50)
                 {
                     isPathSuccess = true;
                     break;

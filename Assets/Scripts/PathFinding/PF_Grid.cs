@@ -84,83 +84,72 @@ public class PF_Grid : MonoBehaviour
         return neighbours;
     }
 
-    private Queue<PF_Node> queue = new Queue<PF_Node>();
-    private HashSet<PF_Node> visited = new HashSet<PF_Node>();
-    private List<PF_Node> neighbors = new List<PF_Node>();
+    //public PF_Node GetAccessibleNode(PF_Node _targetNode)
+    //{
+    //    queueNotVisitedNode.Clear();
+    //    hashSetVisitedNode.Clear();
 
-    public PF_Node GetAccessibleNode(PF_Node _targetNode)
-    {
-        queue.Clear();
-        visited.Clear();
+    //    queueNotVisitedNode.Enqueue(_targetNode);
 
-        //Queue<PF_Node> queue = new Queue<PF_Node>();
-        //HashSet<PF_Node> visited = new HashSet<PF_Node>();
+    //    while (queueNotVisitedNode.Count > 0)
+    //    {
+    //        listNeighborNode.Clear();
+    //        PF_Node currentNode = queueNotVisitedNode.Dequeue();
 
-        queue.Enqueue(_targetNode);
+    //        if (currentNode.walkable)
+    //        {
+    //            return currentNode;
+    //        }
 
-        while (queue.Count > 0)
-        {
-            neighbors.Clear();
-            PF_Node currentNode = queue.Dequeue();
+    //        listNeighborNode = GetNeighbors(currentNode);
+    //        foreach (PF_Node neighbor in listNeighborNode)
+    //        {
+    //            if (!hashSetVisitedNode.Contains(neighbor))
+    //            {
+    //                hashSetVisitedNode.Add(neighbor);
+    //                queueNotVisitedNode.Enqueue(neighbor);
+    //            }
+    //        }
+    //    }
 
-            if (currentNode.walkable)
-            {
-                return currentNode;
-            }
-
-            neighbors = GetNeighbors(currentNode);
-            foreach (PF_Node neighbor in neighbors)
-            {
-                if (!visited.Contains(neighbor))
-                {
-                    visited.Add(neighbor);
-                    queue.Enqueue(neighbor);
-                }
-            }
-        }
-
-        return null;
-    }
+    //    return null;
+    //}
 
 
     public PF_Node GetAccessibleNodeWithoutTargetNode(PF_Node _targetNode)
     {
-        queue.Clear();
-        visited.Clear();
+        queueNotVisitedNode.Clear();
+        hashSetVisitedNode.Clear();
 
-        //Queue<PF_Node> queue = new Queue<PF_Node>();
-        //HashSet<PF_Node> visited = new HashSet<PF_Node>();
-        neighbors.Clear();
+        listNeighborNode.Clear();
 
-        neighbors = GetNeighbors(_targetNode);
-        foreach (PF_Node neighbor in neighbors)
+        listNeighborNode = GetNeighbors(_targetNode);
+        foreach (PF_Node neighbor in listNeighborNode)
         {
-            if (!visited.Contains(neighbor))
+            if (!hashSetVisitedNode.Contains(neighbor))
             {
-                visited.Add(neighbor);
-                queue.Enqueue(neighbor);
+                hashSetVisitedNode.Add(neighbor);
+                queueNotVisitedNode.Enqueue(neighbor);
             }
         }
 
-        //queue.Enqueue(_targetNode);
-
-        while (queue.Count > 0)
+        while (queueNotVisitedNode.Count > 0)
         {
-            neighbors.Clear();
-            PF_Node currentNode = queue.Dequeue();
+            listNeighborNode.Clear();
+            PF_Node currentNode = queueNotVisitedNode.Dequeue();
 
             if (currentNode.walkable)
             {
                 return currentNode;
             }
 
-            neighbors = GetNeighbors(currentNode);
-            foreach (PF_Node neighbor in neighbors)
+            listNeighborNode = GetNeighbors(currentNode);
+            foreach (PF_Node neighbor in listNeighborNode)
             {
-                if (!visited.Contains(neighbor))
+                if (!hashSetVisitedNode.Contains(neighbor))
                 {
-                    visited.Add(neighbor);
-                    queue.Enqueue(neighbor);
+                    hashSetVisitedNode.Add(neighbor);
+                    queueNotVisitedNode.Enqueue(neighbor);
                 }
             }
         }
@@ -213,6 +202,10 @@ public class PF_Grid : MonoBehaviour
 
     private float nodeDiameter;
     private int gridSizeX, gridSizeY;
+
+    private Queue<PF_Node> queueNotVisitedNode = new Queue<PF_Node>();
+    private HashSet<PF_Node> hashSetVisitedNode = new HashSet<PF_Node>();
+    private List<PF_Node> listNeighborNode = new List<PF_Node>();
 
     private PF_Node[,] grid;
 }

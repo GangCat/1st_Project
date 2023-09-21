@@ -34,7 +34,7 @@ public class SelectableObject : MonoBehaviour
         SelectableObjectManager.UpdateNodeWalkable(transform.position, nodeIdx);
     }
 
-    public void GetDmg(float _dmg)
+    public virtual void GetDmg(float _dmg)
     {
         Debug.LogFormat("{0}Get Dmg {1}", transform.name, _dmg);
     }
@@ -137,6 +137,19 @@ public class SelectableObject : MonoBehaviour
         }
     }
 
+    protected IEnumerator CheckIsTargetInAttackRangeCoroutine()
+    {
+        while (true)
+        {
+            if (targetTr != null)
+            {
+                if (isTargetInRangeFromMyPos(targetTr.position, attackRange))
+                    StateAttack();
+            }
+            yield return new WaitForSeconds(0.1f);
+        }
+    }
+
     #region StateMoveConditions
     protected virtual void StateMove()
     {
@@ -152,12 +165,13 @@ public class SelectableObject : MonoBehaviour
                 StartCoroutine("CheckIsEnemyInChaseStartRangeCoroutine");
                 break;
             case EMoveState.CHASE:
-                if (targetTr == null)
+                if (targetTr == null || targetTr != stateMachine.TargetTr)
                     StateStop();
                 else
                 {
                     StartCoroutine("CheckFollowMoveCoroutine");
                     StartCoroutine("CheckIsTargetInChaseFinishRangeCoroutine");
+                    StartCoroutine("CheckIsTargetInAttackRangeCoroutine");
                 }
                 break;
             default:
@@ -190,7 +204,7 @@ public class SelectableObject : MonoBehaviour
                 stateMachine.SetWaitForNewPath(false);
             }
 
-            if (Physics.Linecast(transform.position, curWayNode.worldPos, 1 << LayerMask.NameToLayer("SelectableObject")))
+            if (IsObjectFront())
                 yield return new WaitForSeconds(0.3f);
 
 
@@ -280,7 +294,7 @@ public class SelectableObject : MonoBehaviour
                         stateMachine.SetWaitForNewPath(false);
                     }
 
-                    if (Physics.Linecast(transform.position, curWayNode.worldPos, 1 << LayerMask.NameToLayer("SelectableObject")))
+                    if (IsObjectFront())
                         yield return new WaitForSeconds(0.3f);
 
 
@@ -327,6 +341,8 @@ public class SelectableObject : MonoBehaviour
         }
         else
         {
+            stateMachine.TargetTr = null;
+            targetTr = null;
             curWayNode = null;
             stateMachine.SetWaitForNewPath(true);
             Invoke("ResearchPath", 3f);
@@ -343,6 +359,19 @@ public class SelectableObject : MonoBehaviour
     {
         if(targetTr != null)
             PF_PathRequestManager.RequestPath(transform.position, targetTr.position, OnPathFound);
+    }
+
+    protected bool IsObjectFront()
+    {
+        curPos = transform.position;
+        if (Physics.Linecast(curPos, curWayNode.worldPos, 1 << LayerMask.NameToLayer("SelectableObject"))) 
+            return true;
+        if (Physics.Linecast(curPos + transform.right * 0.5f, curWayNode.worldPos + transform.right * 0.5f, 1 << LayerMask.NameToLayer("SelectableObject")))
+            return true;
+        if (Physics.Linecast(curPos - transform.right * 0.5f, curWayNode.worldPos - transform.right * 0.5f, 1 << LayerMask.NameToLayer("SelectableObject")))
+            return true;
+
+        return false;
     }
     #endregion
 
@@ -383,6 +412,11 @@ public class SelectableObject : MonoBehaviour
             if (targetTr == null)
             {
                 // 추격, 정찰, 대기, 홀드 등 뭐든간에 이전으로 돌아감.
+                FinishState();
+                yield break;
+            }
+            else if (targetTr != stateMachine.TargetTr)
+            {
                 FinishState();
                 yield break;
             }
@@ -481,6 +515,7 @@ public class SelectableObject : MonoBehaviour
     protected StateMachine stateMachine = null;
 
     protected Vector3 targetPos = Vector3.zero;
+    protected Vector3 curPos = Vector3.zero;
 
     protected Transform targetTr = null;
 

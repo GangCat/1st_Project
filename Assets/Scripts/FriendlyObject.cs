@@ -218,6 +218,7 @@ public class FriendlyObject : SelectableObject
                 {
                     StartCoroutine("CheckFollowMoveCoroutine");
                     StartCoroutine("CheckIsTargetInChaseFinishRangeCoroutine");
+                    StartCoroutine("CheckIsTargetInAttackRangeCoroutine");
                 }
                 break;
             case EMoveState.FOLLOW:
@@ -265,7 +266,7 @@ public class FriendlyObject : SelectableObject
                 stateMachine.SetWaitForNewPath(false);
             }
 
-            if (Physics.Linecast(transform.position, curWayNode.worldPos, 1 << LayerMask.NameToLayer("SelectableObject")))
+            if (IsObjectFront())
             {
                 stateMachine.SetWaitForNewPath(true);
                 yield return new WaitForSeconds(0.5f);
@@ -335,9 +336,11 @@ public class FriendlyObject : SelectableObject
                 stateMachine.SetWaitForNewPath(false);
             }
 
-            if (Physics.Linecast(transform.position, curWayNode.worldPos, 1 << LayerMask.NameToLayer("SelectableObject")))
+            if (IsObjectFront())
             {
-                yield return new WaitForSeconds(0.3f);
+                stateMachine.SetWaitForNewPath(true);
+                yield return new WaitForSeconds(0.5f);
+                stateMachine.SetWaitForNewPath(false);
             }
 
 
@@ -434,8 +437,12 @@ public class FriendlyObject : SelectableObject
                         stateMachine.SetWaitForNewPath(false);
                     }
 
-                    if (Physics.Linecast(transform.position, curWayNode.worldPos, 1 << LayerMask.NameToLayer("SelectableObject")))
-                        yield return new WaitForSeconds(0.1f);
+                    if (IsObjectFront())
+                    {
+                        stateMachine.SetWaitForNewPath(true);
+                        yield return new WaitForSeconds(0.5f);
+                        stateMachine.SetWaitForNewPath(false);
+                    }
 
                     if (isTargetInRangeFromMyPos(curWayNode.worldPos, 0.1f))
                     {
@@ -461,8 +468,6 @@ public class FriendlyObject : SelectableObject
     }
     #endregion
 
-
-
     #region StateHoldCondition
     private void StateHold()
     {
@@ -486,7 +491,8 @@ public class FriendlyObject : SelectableObject
                 {
                     if (c.CompareTag("EnemyUnit"))
                     {
-                        stateMachine.TargetTr = c.transform;
+                        targetTr = c.transform;
+                        stateMachine.TargetTr = targetTr;
                         StateAttack();
                         yield break;
                     }

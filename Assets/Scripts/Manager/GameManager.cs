@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
         uiMng = FindAnyObjectByType<UIManager>();
         buildMng = FindAnyObjectByType<StructureManager>();
         pathMng = FindAnyObjectByType<PF_PathRequestManager>();
-        enemyMng = FindAnyObjectByType<EnemyManager>();
+        enemyObjMng = FindAnyObjectByType<EnemyManager>();
     }
 
     private void Start()
@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour
         cameraMng.Init();
         uiMng.Init();
         buildMng.Init(grid);
-        enemyMng.Init();
+        enemyObjMng.Init();
 
         Invoke("StartWave", 1f);
 
@@ -49,7 +49,7 @@ public class GameManager : MonoBehaviour
 
     private void StartWave()
     {
-        enemyMng.SpawnEnemy(Vector3.zero, 30);
+        enemyObjMng.SpawnWaveEnemy(Vector3.zero, 45);
     }
 
     private void InitCommandList()
@@ -74,6 +74,9 @@ public class GameManager : MonoBehaviour
         ArrayBunkerCommand.Add(EBunkerCommand.OUT_ONE_UNIT, new CommandOutOneUnit(selectMng));
         ArrayBunkerCommand.Add(EBunkerCommand.OUT_ALL_UNIT, new CommandOutAllUnit(selectMng));
         ArrayBunkerCommand.Add(EBunkerCommand.EXPAND_WALL, new CommandExpandWall(selectMng, buildMng, inputMng));
+
+        ArrayEnemyObjectCommand.Add(EEnemyObjectCommand.WAVE_ENEMY_DEAD, new CommandWaveEnemyDead(enemyObjMng));
+        ArrayEnemyObjectCommand.Add(EEnemyObjectCommand.MAP_ENEMY_DEAD, new CommandMapEnemyDead(enemyObjMng));
     }
 
     private void InitPlayer()
@@ -176,7 +179,7 @@ public class GameManager : MonoBehaviour
     private UIManager uiMng = null;
     private StructureManager buildMng = null;
     private PF_PathRequestManager pathMng = null;
-    private EnemyManager enemyMng = null;
+    private EnemyManager enemyObjMng = null;
 
     private PF_Grid grid = null;
 }
