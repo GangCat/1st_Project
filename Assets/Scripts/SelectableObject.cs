@@ -181,7 +181,7 @@ public class SelectableObject : MonoBehaviour
                 {
                     StartCoroutine("CheckFollowMoveCoroutine");
                     StartCoroutine("CheckIsTargetInChaseFinishRangeCoroutine");
-                    StartCoroutine("CheckIsTargetInAttackRangeCoroutine");
+                    //StartCoroutine("CheckIsTargetInAttackRangeCoroutine");
                 }
                 break;
             default:
@@ -466,6 +466,8 @@ public class SelectableObject : MonoBehaviour
     protected void ResetState()
     {
         StopAllCoroutines();
+        targetTr = null;
+        stateMachine.TargetTr = null;
         stateMachine.ResetStateEnum();
     }
 

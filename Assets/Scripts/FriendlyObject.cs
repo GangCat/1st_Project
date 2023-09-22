@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class FriendlyObject : SelectableObject
@@ -215,7 +216,7 @@ public class FriendlyObject : SelectableObject
                 {
                     StartCoroutine("CheckFollowMoveCoroutine");
                     StartCoroutine("CheckIsTargetInChaseFinishRangeCoroutine");
-                    StartCoroutine("CheckIsTargetInAttackRangeCoroutine");
+                    //StartCoroutine("CheckIsTargetInAttackRangeCoroutine");
                 }
                 break;
             case EMoveState.FOLLOW:
@@ -242,6 +243,7 @@ public class FriendlyObject : SelectableObject
     {
         PF_PathRequestManager.RequestPath(transform.position, targetPos, OnPathFound);
         stateMachine.SetWaitForNewPath(true);
+        PF_Node targetNode = null;
 
         while (curWayNode == null)
             yield return null;
@@ -269,12 +271,10 @@ public class FriendlyObject : SelectableObject
                 stateMachine.SetWaitForNewPath(false);
             }
 
-
             // 노드에 도착할 때마다 새로운 노드로 이동 갱신
             if (isTargetInRangeFromMyPos(stateMachine.TargetPos, 0.1f))
             {
                 ++targetIdx;
-
                 SelectableObjectManager.UpdateNodeWalkable(transform.position, nodeIdx);
                 // 목적지에 도착시 
                 if (isAttack)
@@ -396,7 +396,7 @@ public class FriendlyObject : SelectableObject
 
         while (true)
         {
-            if (targetTr == null)
+            if (targetTr == null || targetTr.gameObject.activeSelf == false)
             {
                 ResetState();
                 yield break;
@@ -515,6 +515,9 @@ public class FriendlyObject : SelectableObject
                 break;
             case EState.ATTACK:
                 StateAttack();
+                break;
+            case EState.HOLD:
+                StateHold();
                 break;
             default:
                 break;

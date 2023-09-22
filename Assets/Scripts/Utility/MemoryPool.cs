@@ -139,7 +139,7 @@ public class MemoryPool
                 poolGo.SetActive(false);
                 poolListEnable.Remove(poolGo);
                 poolQueueDisable.Enqueue(poolGo);
-                poolGo.transform.position = tempStorePos;
+                //poolGo.transform.position = tempStorePos;
 
                 --activeCnt;
 
@@ -162,7 +162,7 @@ public class MemoryPool
                 poolGo.SetActive(false);
                 arrList[arrIdx].RemoveAt(i);
                 poolQueueDisable.Enqueue(poolGo);
-                poolGo.transform.position = tempStorePos;
+                //poolGo.transform.position = tempStorePos;
 
                 --activeCnt;
 
