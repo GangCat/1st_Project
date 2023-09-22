@@ -3542,7 +3542,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraOffset: {x: -7, y: 17, z: -7}
   zoomSpeed: 5
-  camMoveSpeed: 0
+  camMoveSpeed: 3000
   minZoom: 5
   maxZoom: 20
   smoothTime: 0.2
