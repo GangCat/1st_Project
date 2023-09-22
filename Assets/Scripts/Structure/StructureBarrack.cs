@@ -8,6 +8,15 @@ public class StructureBarrack : Structure
     {
         spawnPoint = transform.position;
         rallyPoint = spawnPoint;
+        arrMemoryPool = new MemoryPool[arrUnitPrefab.Length];
+
+        for (int i = 0; i < arrUnitPrefab.Length; ++i)
+            arrMemoryPool[i] = new MemoryPool(arrUnitPrefab[i],3,transform);
+    }
+
+    public void Init(int _barrackIdx)
+    {
+        barrackIdx = _barrackIdx;
     }
 
     public void SetRallyPoint(Vector3 _rallyPoint)
@@ -31,6 +40,11 @@ public class StructureBarrack : Structure
         // ui에 나타내는 내용
     }
 
+    public void DeactivateUnit(GameObject _removeGo, ESpawnUnitType _type)
+    {
+        arrMemoryPool[(int)_type].DeactivatePoolItem(_removeGo);
+    }
+
     private void RequestSpawnUnit()
     {
         if (!isProcessingSpawnUnit && listUnit.Count > 0)
@@ -51,14 +65,16 @@ public class StructureBarrack : Structure
             yield return new WaitForSeconds(0.5f);
             elapsedTime += 0.5f;
         }
+        //GameObject unitGo = Instantiate(arrUnitPrefab[(int)_unitType], spawnPoint, Quaternion.identity);
 
         isProcessingSpawnUnit = false;
-        GameObject unitGo = Instantiate(spawnUnitPrefab[(int)_unitType], spawnPoint, Quaternion.identity);
-        unitGo.transform.position = SelectableObjectManager.ResetPosition(unitGo.transform.position);
-        FriendlyObject tempObj = unitGo.GetComponent<FriendlyObject>();
+        FriendlyObject tempObj = arrMemoryPool[(int)_unitType].ActivatePoolItem(spawnPoint, 3, transform).GetComponent<FriendlyObject>();
+        tempObj.Position = SelectableObjectManager.ResetPosition(tempObj.Position);
         tempObj.Init();
+        tempObj.Init(barrackIdx);
+        
 
-        if(!rallyPoint.Equals(spawnPoint))
+        if (!rallyPoint.Equals(spawnPoint))
             tempObj.MoveByPos(rallyPoint);
         else if (rallyTr != null)
             tempObj.FollowTarget(rallyTr);
@@ -71,12 +87,16 @@ public class StructureBarrack : Structure
     [SerializeField]
     private float[] spawnUnitDelay = new float[(int)ESpawnUnitType.LENGTH];
     [SerializeField]
-    private GameObject[] spawnUnitPrefab = new GameObject[(int)ESpawnUnitType.LENGTH];
+    private GameObject[] arrUnitPrefab = new GameObject[(int)ESpawnUnitType.LENGTH];
 
     private bool isProcessingSpawnUnit = false;
+
+    private int barrackIdx = -1;
 
     private Vector3 spawnPoint = Vector3.zero;
     private Vector3 rallyPoint = Vector3.zero;
     private Transform rallyTr = null;
     private List<ESpawnUnitType> listUnit = new List<ESpawnUnitType>();
+
+    private MemoryPool[] arrMemoryPool = null;
 }

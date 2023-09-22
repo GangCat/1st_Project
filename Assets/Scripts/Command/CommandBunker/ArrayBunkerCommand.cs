@@ -11,13 +11,8 @@ public class ArrayBunkerCommand
         arrCmd[(int)_eCmd] = _cmd;
     }
 
-    public static void Use(EBunkerCommand _eCmd)
+    public static void Use(EBunkerCommand _eCmd, params object[] _objects)
     {
-        arrCmd[(int)_eCmd].Execute();
-    }
-
-    public static void Use(EBunkerCommand _eCmd, FriendlyObject _friObj)
-    {
-        arrCmd[(int)_eCmd].Execute(_friObj);
+        arrCmd[(int)_eCmd].Execute(_objects);
     }
 }

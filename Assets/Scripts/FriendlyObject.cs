@@ -25,7 +25,22 @@ public class FriendlyObject : SelectableObject
         SelectableObjectManager.UpdateNodeWalkable(transform.position, nodeIdx);
     }
 
+    public void Init(int _barrackIdx)
+    {
+        barrackIdx = _barrackIdx;
+    }
+
     public Transform TargetBunker => targetBunker;
+
+    public override void GetDmg(float _dmg) 
+    {
+        if (statusHp.DecreaseHpAndCheckIsDead(_dmg))
+        {
+            StopAllCoroutines();
+            SelectableObjectManager.ResetNodeWalkable(transform.position, nodeIdx);
+            ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.DEAD, gameObject, unitType, barrackIdx);
+        }
+    }
 
     public void ResetTargetBunker()
     {
@@ -528,12 +543,16 @@ public class FriendlyObject : SelectableObject
     [Header("-Friendly Unit Attribute")]
     [SerializeField]
     private bool isMovable = false;
+    [SerializeField]
+    private ESpawnUnitType unitType = ESpawnUnitType.NONE;
 
     private Vector3 wayPointStart = Vector3.zero;
     private EMoveState prevMoveCondition = EMoveState.NONE;
 
+    private int barrackIdx = -1;
     private float oriAttRange = 0f;
     private bool isAttack = false;
 
     private Transform targetBunker = null;
+
 }

@@ -11,13 +11,8 @@ public class ArrayEnemyObjectCommand
         arrCmd[(int)_eCmd] = _cmd;
     }
 
-    public static void Use(EEnemyObjectCommand _eCmd)
+    public static void Use(EEnemyObjectCommand _eCmd, params object[] _objects)
     {
-        arrCmd[(int)_eCmd].Execute();
-    }
-
-    public static void Use(EEnemyObjectCommand _eCmd, GameObject _removeGo, int _idx)
-    {
-        arrCmd[(int)_eCmd].Execute(_removeGo, _idx);
+        arrCmd[(int)_eCmd].Execute(_objects);
     }
 }

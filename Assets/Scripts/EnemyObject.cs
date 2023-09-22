@@ -16,7 +16,11 @@ public class EnemyObject : SelectableObject
     public override void GetDmg(float _dmg)
     {
         if (statusHp.DecreaseHpAndCheckIsDead(_dmg))
+        {
+            StopAllCoroutines();
+            SelectableObjectManager.ResetNodeWalkable(transform.position, myIdx);
             ArrayEnemyObjectCommand.Use((EEnemyObjectCommand)spawnType, gameObject, myIdx);
+        }
     }
 
     private EEnemySpawnType spawnType = EEnemySpawnType.NONE;

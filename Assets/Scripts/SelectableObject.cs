@@ -34,10 +34,7 @@ public class SelectableObject : MonoBehaviour
         SelectableObjectManager.UpdateNodeWalkable(transform.position, nodeIdx);
     }
 
-    public virtual void GetDmg(float _dmg)
-    {
-        Debug.LogFormat("{0}Get Dmg {1}", transform.name, _dmg);
-    }
+    public virtual void GetDmg(float _dmg) { }
 
     public virtual void MoveAttack(Vector3 _targetPos)
     {
@@ -453,7 +450,7 @@ public class SelectableObject : MonoBehaviour
 
     protected Collider[] overlapSphereWithNode(float _range)
     {
-        return Physics.OverlapSphere(SelectableObjectManager.listNodeUnderUnit[nodeIdx].worldPos, _range, 1 << LayerMask.NameToLayer("SelectableObject"));
+        return Physics.OverlapSphere(transform.position, _range, 1 << LayerMask.NameToLayer("SelectableObject"));
     }
 
     protected virtual void GetCurState(EState _curStateEnum)

@@ -87,6 +87,23 @@ public class MemoryPool
         return poolGo;
     }
 
+    public GameObject ActivatePoolItem(Vector3 _spawnPos, int _increaseCnt = 5, Transform _parentTr = null)
+    {
+        if (poolListEnable == null || poolQueueDisable == null) return null;
+
+        if (poolQueueDisable.Count <= 0)
+            InstantiateObjects(_increaseCnt, _parentTr);
+
+        GameObject poolGo = poolQueueDisable.Dequeue();
+        poolListEnable.Add(poolGo);
+        poolGo.transform.position = _spawnPos;
+        poolGo.SetActive(true);
+
+        ++activeCnt;
+
+        return poolGo;
+    }
+
 
     public GameObject ActivatePoolItemWithIdx(int _idx, int _increaseCnt = 5, Transform _parentTr = null)
     {

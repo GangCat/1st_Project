@@ -68,17 +68,6 @@ public class Structure : MonoBehaviour
         {
             isBuildable = true;
 
-            //for (int i = 0; i < myGridX; ++i)
-            //{
-            //    for (int j = 0; j < myGridY; ++j)
-            //    {
-            //        if (grid.GetNodeIsWalkable(curNode.gridX + i, curNode.gridY + j))
-            //            continue;
-
-            //        isBuildable = false;
-            //    }
-            //}
-
             curNode = grid.GetNodeFromWorldPoint(transform.position);
             int gridX = curNode.gridX;
             int gridY = curNode.gridY;

@@ -7,11 +7,16 @@ public class StructureManager : MonoBehaviour
     public void Init(PF_Grid _grid)
     {
         grid = _grid;
+        listBarrack = new List<StructureBarrack>();
     }
 
     public void ShowBluepirnt(ESelectableObjectType _buildingType)
     {
-        if (isBlueprint) return;
+        if (isBlueprint)
+        {
+            Destroy(curStructure.gameObject);
+            StopAllCoroutines();
+        }
 
         switch (_buildingType)
         {
@@ -35,8 +40,6 @@ public class StructureManager : MonoBehaviour
 
     public void ShowBluepirnt(Transform _bunkerTr)
     {
-        if (isBlueprint) return;
-
         curStructure = Instantiate(wallPrefab, transform).GetComponent<Structure>();
         StartCoroutine("ShowWallBlueprint", _bunkerTr);
     }
@@ -140,13 +143,25 @@ public class StructureManager : MonoBehaviour
             curStructure.SetColliderEnable(true);
             curStructure.UpdateNodeUnWalkable();
             curStructure.BuildComplete();
-            curStructure.transform.parent = null;
+            curStructure.transform.parent = transform;
             curStructure.Init();
             isBlueprint = false;
+            StructureBarrack barrack = curStructure.GetComponent<StructureBarrack>();
+            if (barrack != null)
+            {
+                barrack.Init(listBarrack.Count);
+                listBarrack.Add(barrack);
+            }
+
             return false;
         }
 
         return true;
+    }
+
+    public void DeactivateUnit(GameObject _removeGo, ESpawnUnitType _unitType, int _barrackIdx)
+    {
+        listBarrack[_barrackIdx].DeactivateUnit(_removeGo, _unitType);
     }
 
     [SerializeField]
@@ -160,6 +175,7 @@ public class StructureManager : MonoBehaviour
     [SerializeField]
     private GameObject barrackPrefab = null;
 
+    private List<StructureBarrack> listBarrack = null;
     private Structure curStructure = null;
     private PF_Grid grid = null;
     private PF_Node curNode = null;

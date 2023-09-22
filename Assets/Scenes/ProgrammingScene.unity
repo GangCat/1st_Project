@@ -1391,7 +1391,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8f11c2f0869a2749a2431ddd165fac5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rangeGroupLimitDist: 10
+  rangeGroupLimitDist: 3
 --- !u!1 &357329358
 GameObject:
   m_ObjectHideFlags: 0
@@ -3313,7 +3313,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraOffset: {x: -7, y: 17, z: -7}
   zoomSpeed: 5
-  camMoveSpeed: 3000
+  camMoveSpeed: 0
   minZoom: 5
   maxZoom: 20
   smoothTime: 0.2
@@ -9092,6 +9092,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_TagString
       value: FriendlyStructure
+      objectReference: {fileID: 0}
+    - target: {fileID: 8883937953507251874, guid: 84ef0facb01956b449c682e9f37929e0,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

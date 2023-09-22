@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
         cameraMng = FindAnyObjectByType<CameraManager>();
         selectMng = FindAnyObjectByType<SelectableObjectManager>();
         uiMng = FindAnyObjectByType<UIManager>();
-        buildMng = FindAnyObjectByType<StructureManager>();
+        structureMng = FindAnyObjectByType<StructureManager>();
         pathMng = FindAnyObjectByType<PF_PathRequestManager>();
         enemyObjMng = FindAnyObjectByType<EnemyManager>();
     }
@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
             PatrolMove);
         cameraMng.Init();
         uiMng.Init();
-        buildMng.Init(grid);
+        structureMng.Init(grid);
         enemyObjMng.Init();
 
         Invoke("StartWave", 1f);
@@ -61,9 +61,9 @@ public class GameManager : MonoBehaviour
         ArrayUnitButtonCommand.Add(EUnitButtonCommand.PATROL, new CommandButtonPatrol(inputMng));
         ArrayUnitButtonCommand.Add(EUnitButtonCommand.ATTACK, new CommandButtonAttack(inputMng));
 
-        ArrayBuildCommand.Add(EMainBaseCommnad.CANCLE, new CommandBuildCancle(buildMng, inputMng));
-        ArrayBuildCommand.Add(EMainBaseCommnad.CONFIRM, new CommandBuildConfirm(buildMng, inputMng));
-        ArrayBuildCommand.Add(EMainBaseCommnad.BUILD_STRUCTURE, new CommandBuildStructure(buildMng, inputMng));
+        ArrayBuildCommand.Add(EMainBaseCommnad.CANCLE, new CommandBuildCancle(structureMng, inputMng));
+        ArrayBuildCommand.Add(EMainBaseCommnad.CONFIRM, new CommandBuildConfirm(structureMng, inputMng));
+        ArrayBuildCommand.Add(EMainBaseCommnad.BUILD_STRUCTURE, new CommandBuildStructure(structureMng, inputMng));
 
         ArrayBarrackCommand.Add(EBarrackCommand.RALLYPOINT, new CommandRallypoint(inputMng));
         ArrayBarrackCommand.Add(EBarrackCommand.SPAWN_UNIT, new CommandSpawnUnit(selectMng));
@@ -73,10 +73,12 @@ public class GameManager : MonoBehaviour
         ArrayBunkerCommand.Add(EBunkerCommand.IN_UNIT, new CommandInUnit(selectMng));
         ArrayBunkerCommand.Add(EBunkerCommand.OUT_ONE_UNIT, new CommandOutOneUnit(selectMng));
         ArrayBunkerCommand.Add(EBunkerCommand.OUT_ALL_UNIT, new CommandOutAllUnit(selectMng));
-        ArrayBunkerCommand.Add(EBunkerCommand.EXPAND_WALL, new CommandExpandWall(selectMng, buildMng, inputMng));
+        ArrayBunkerCommand.Add(EBunkerCommand.EXPAND_WALL, new CommandExpandWall(selectMng, structureMng, inputMng));
 
         ArrayEnemyObjectCommand.Add(EEnemyObjectCommand.WAVE_ENEMY_DEAD, new CommandWaveEnemyDead(enemyObjMng));
         ArrayEnemyObjectCommand.Add(EEnemyObjectCommand.MAP_ENEMY_DEAD, new CommandMapEnemyDead(enemyObjMng));
+
+        ArrayFriendlyObjectCommand.Add(EFriendlyObjectCommand.DEAD, new CommandFriendlyDead(structureMng, selectMng));
     }
 
     private void InitPlayer()
@@ -167,7 +169,7 @@ public class GameManager : MonoBehaviour
 
     private void BuildButtonOnClick(int _buildingType)
     {
-        buildMng.ShowBluepirnt((ESelectableObjectType)_buildingType);
+        structureMng.ShowBluepirnt((ESelectableObjectType)_buildingType);
     }
 
 
@@ -177,7 +179,7 @@ public class GameManager : MonoBehaviour
     private CameraManager cameraMng = null;
     private SelectableObjectManager selectMng = null;
     private UIManager uiMng = null;
-    private StructureManager buildMng = null;
+    private StructureManager structureMng = null;
     private PF_PathRequestManager pathMng = null;
     private EnemyManager enemyObjMng = null;
 

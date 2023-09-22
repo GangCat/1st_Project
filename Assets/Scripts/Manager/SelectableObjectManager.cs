@@ -30,6 +30,12 @@ public class SelectableObjectManager : MonoBehaviour
         listNodeUnderUnit[_idx].walkable = false;
     }
 
+    public static void ResetNodeWalkable(Vector3 _pos, int _idx)
+    {
+        listNodeUnderUnit[_idx].walkable = true;
+        grid.GetNodeFromWorldPoint(_pos).walkable = true;
+    }
+
     public static bool isCurNodwWalkable(Vector3 _pos)
     {
         return grid.GetNodeFromWorldPoint(_pos).walkable;
@@ -306,7 +312,6 @@ public class SelectableObjectManager : MonoBehaviour
     private bool isFriendlyUnitInList = false;
 
     private List<SelectableObject> tempListSelectableObject = new List<SelectableObject>();
-    //private List<SelectableObject> listSelectedObject = new List<SelectableObject>();
     private List<FriendlyObject> listSelectedFriendlyObject = new List<FriendlyObject>();
     private EnemyObject selectedEnemyObject = null;
 
@@ -315,5 +320,5 @@ public class SelectableObjectManager : MonoBehaviour
     private StructureBunker curBunker = null;
 
     private static PF_Grid grid = null;
-    public static List<PF_Node> listNodeUnderUnit = new List<PF_Node>();
+    private static List<PF_Node> listNodeUnderUnit = new List<PF_Node>();
 }
