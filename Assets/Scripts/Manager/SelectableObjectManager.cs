@@ -17,24 +17,49 @@ public class SelectableObjectManager : MonoBehaviour
         grid = _grid;
     }
 
+    //public static int InitNode(Vector3 _pos)
+    //{
+    //    listNodeUnderUnit.Add(grid.GetNodeFromWorldPoint(_pos));
+    //    return listNodeUnderUnit.Count - 1;
+    //}
+
+    //public static void UpdateNodeWalkable(Vector3 _pos, int _idx)
+    //{
+    //    listNodeUnderUnit[_idx].walkable = true;
+    //    listNodeUnderUnit[_idx] = grid.GetNodeFromWorldPoint(_pos);
+    //    listNodeUnderUnit[_idx].walkable = false;
+    //}
+
+    //public static void ResetNodeWalkable(Vector3 _pos, int _idx)
+    //{
+    //    listNodeUnderUnit[_idx].walkable = true;
+    //    grid.GetNodeFromWorldPoint(_pos).walkable = true;
+    //}
+
     public static int InitNode(Vector3 _pos)
     {
-        listNodeUnderUnit.Add(grid.GetNodeFromWorldPoint(_pos));
-        return listNodeUnderUnit.Count - 1;
+        dicNodeUnderUnit.Add(dicNodeUnderUnit.Count, grid.GetNodeFromWorldPoint(_pos));
+        return dicNodeUnderUnit.Count - 1;
     }
 
     public static void UpdateNodeWalkable(Vector3 _pos, int _idx)
     {
-        listNodeUnderUnit[_idx].walkable = true;
-        listNodeUnderUnit[_idx] = grid.GetNodeFromWorldPoint(_pos);
-        listNodeUnderUnit[_idx].walkable = false;
+        PF_Node tempNode = null;
+        if (dicNodeUnderUnit.TryGetValue(_idx, out tempNode))
+            tempNode.walkable = true;
+
+        tempNode = grid.GetNodeFromWorldPoint(_pos);
+        tempNode.walkable = false;
+        dicNodeUnderUnit[_idx] = tempNode;
     }
 
     public static void ResetNodeWalkable(Vector3 _pos, int _idx)
     {
-        listNodeUnderUnit[_idx].walkable = true;
+        dicNodeUnderUnit[_idx].walkable = true;
         grid.GetNodeFromWorldPoint(_pos).walkable = true;
     }
+
+
 
     public static bool isCurNodwWalkable(Vector3 _pos)
     {
@@ -126,6 +151,8 @@ public class SelectableObjectManager : MonoBehaviour
         {
             if (obj == null) continue;
 
+            if (listSelectedFriendlyObject.Count > 11) break;
+
             switch (obj.ObjectType)
             {
                 case ESelectableObjectType.UNIT:
@@ -174,10 +201,7 @@ public class SelectableObjectManager : MonoBehaviour
         if (isFriendlyStructure)
             listSelectedFriendlyObject.Add(tempObj.GetComponent<FriendlyObject>());
 
-        //if (listSelectedFriendlyObject[0] != null)
-            selectObjectCallback?.Invoke(listSelectedFriendlyObject[0].ObjectType);
-        //else
-        //    selectObjectCallback?.Invoke(ESelectableObjectType.NONE);
+        selectObjectCallback?.Invoke(listSelectedFriendlyObject[0].ObjectType);
 
         tempListSelectableObject.Clear();
         return;
@@ -320,5 +344,5 @@ public class SelectableObjectManager : MonoBehaviour
     private StructureBunker curBunker = null;
 
     private static PF_Grid grid = null;
-    private static List<PF_Node> listNodeUnderUnit = new List<PF_Node>();
+    private static Dictionary<int, PF_Node> dicNodeUnderUnit = new Dictionary<int, PF_Node>();
 }

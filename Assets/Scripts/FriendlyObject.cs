@@ -92,7 +92,6 @@ public class FriendlyObject : SelectableObject
             isAttack = false;
             targetPos = _Pos;
             curMoveCondition = EMoveState.NORMAL;
-
             StateMove();
         }
     }
@@ -113,9 +112,7 @@ public class FriendlyObject : SelectableObject
             targetTr = _targetTr;
 
             if (_isTargetBunker)
-            {
                 targetBunker = _targetTr;
-            }
 
             if (targetTr.CompareTag("EnemyUnit"))
             {
@@ -127,7 +124,6 @@ public class FriendlyObject : SelectableObject
                 isAttack = false;
                 curMoveCondition = EMoveState.FOLLOW;
             }
-
             StateMove();
         }
     }
@@ -140,7 +136,6 @@ public class FriendlyObject : SelectableObject
             targetPos = _wayPointTo;
             wayPointStart = transform.position;
             curMoveCondition = EMoveState.PATROL;
-
             StateMove();
         }
     }
@@ -173,18 +168,7 @@ public class FriendlyObject : SelectableObject
             {
                 foreach (Collider c in arrCollider)
                 {
-                    if (targetTr != null)
-                    {
-                        if (c.Equals(targetTr))
-                        {
-                            prevMoveCondition = curMoveCondition;
-                            isAttack = true;
-                            curMoveCondition = EMoveState.CHASE;
-                            StateMove();
-                            yield break;
-                        }
-                    }
-                    else if (c.CompareTag("EnemyUnit"))
+                    if (c.CompareTag("EnemyUnit"))
                     {
                         stateMachine.TargetTr = c.transform;
                         targetTr = c.transform;
@@ -207,7 +191,6 @@ public class FriendlyObject : SelectableObject
         curWayNode = null;
         stateMachine.SetWaitForNewPath(false);
         SelectableObjectManager.UpdateNodeWalkable(transform.position, nodeIdx);
-
         switch (curMoveCondition)
         {
             case EMoveState.NORMAL:
@@ -227,7 +210,6 @@ public class FriendlyObject : SelectableObject
                     curMoveCondition = prevMoveCondition;
                     prevMoveCondition = EMoveState.NONE;
                     StateMove();
-                    break;
                 }
                 else
                 {
@@ -241,7 +223,6 @@ public class FriendlyObject : SelectableObject
                     ResetState();
                 else
                     StartCoroutine("CheckFollowMoveCoroutine");
-
                 break;
             case EMoveState.FOLLOW_ENEMY:
                 if (targetTr == null)
@@ -303,6 +284,7 @@ public class FriendlyObject : SelectableObject
                 {
                     if (Vector3.SqrMagnitude(targetPos - transform.position) > Mathf.Pow(1.4f, 2f))
                     {
+                        curWayNode = null;
                         PF_PathRequestManager.RequestPath(transform.position, targetPos, OnPathFound);
                         stateMachine.SetWaitForNewPath(true);
                         while (curWayNode == null)
@@ -547,12 +529,10 @@ public class FriendlyObject : SelectableObject
     private ESpawnUnitType unitType = ESpawnUnitType.NONE;
 
     private Vector3 wayPointStart = Vector3.zero;
-    private EMoveState prevMoveCondition = EMoveState.NONE;
 
     private int barrackIdx = -1;
     private float oriAttRange = 0f;
     private bool isAttack = false;
 
     private Transform targetBunker = null;
-
 }

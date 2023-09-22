@@ -208,6 +208,7 @@ MonoBehaviour:
   stopDelay: 0
   followOffset: 0
   isMovable: 0
+  unitType: -1
 --- !u!1001 &6285625735997527779
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -219,17 +220,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 73b11cf80cf017e44a6d12eea63ea21e,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.8
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 73b11cf80cf017e44a6d12eea63ea21e,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.8
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 73b11cf80cf017e44a6d12eea63ea21e,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.8
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 73b11cf80cf017e44a6d12eea63ea21e,
         type: 3}

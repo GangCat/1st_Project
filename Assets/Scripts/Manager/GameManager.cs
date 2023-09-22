@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
         uiMng = FindAnyObjectByType<UIManager>();
         structureMng = FindAnyObjectByType<StructureManager>();
         pathMng = FindAnyObjectByType<PF_PathRequestManager>();
-        enemyObjMng = FindAnyObjectByType<EnemyManager>();
+        enemyMng = FindAnyObjectByType<EnemyManager>();
     }
 
     private void Start()
@@ -40,16 +40,24 @@ public class GameManager : MonoBehaviour
         cameraMng.Init();
         uiMng.Init();
         structureMng.Init(grid);
-        enemyObjMng.Init();
+        enemyMng.Init();
 
-        Invoke("StartWave", 1f);
+        //Invoke("StartWave", 1f);
+
+        SpawnMapEnemy(10);
+
 
         InitPlayer();
     }
 
     private void StartWave()
     {
-        enemyObjMng.SpawnWaveEnemy(Vector3.zero, 45);
+        enemyMng.SpawnWaveEnemy(Vector3.zero, 45);
+    }
+
+    private void SpawnMapEnemy(int _count)
+    {
+        enemyMng.SpawnMapEnemy(_count);
     }
 
     private void InitCommandList()
@@ -75,8 +83,8 @@ public class GameManager : MonoBehaviour
         ArrayBunkerCommand.Add(EBunkerCommand.OUT_ALL_UNIT, new CommandOutAllUnit(selectMng));
         ArrayBunkerCommand.Add(EBunkerCommand.EXPAND_WALL, new CommandExpandWall(selectMng, structureMng, inputMng));
 
-        ArrayEnemyObjectCommand.Add(EEnemyObjectCommand.WAVE_ENEMY_DEAD, new CommandWaveEnemyDead(enemyObjMng));
-        ArrayEnemyObjectCommand.Add(EEnemyObjectCommand.MAP_ENEMY_DEAD, new CommandMapEnemyDead(enemyObjMng));
+        ArrayEnemyObjectCommand.Add(EEnemyObjectCommand.WAVE_ENEMY_DEAD, new CommandWaveEnemyDead(enemyMng));
+        ArrayEnemyObjectCommand.Add(EEnemyObjectCommand.MAP_ENEMY_DEAD, new CommandMapEnemyDead(enemyMng));
 
         ArrayFriendlyObjectCommand.Add(EFriendlyObjectCommand.DEAD, new CommandFriendlyDead(structureMng, selectMng));
     }
@@ -174,14 +182,13 @@ public class GameManager : MonoBehaviour
 
 
 
-
     private InputManager inputMng = null;
     private CameraManager cameraMng = null;
     private SelectableObjectManager selectMng = null;
     private UIManager uiMng = null;
     private StructureManager structureMng = null;
     private PF_PathRequestManager pathMng = null;
-    private EnemyManager enemyObjMng = null;
+    private EnemyManager enemyMng = null;
 
     private PF_Grid grid = null;
 }

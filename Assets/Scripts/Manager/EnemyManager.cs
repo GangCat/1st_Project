@@ -18,10 +18,9 @@ public class EnemyManager : MonoBehaviour
         StartCoroutine(SpawnWaveEnemyCoroutine(_targetPos, _count));
     }
 
-    public void SpawnMapEnemy(Vector3 _spawnPos, int _count)
+    public void SpawnMapEnemy(int _count)
     {
-        Vector3 spawnPos = _spawnPos + Functions.GetRandomPosition(20f, 0f);
-        StartCoroutine(SpawnMapEnemyCoroutine(spawnPos, _count));
+        StartCoroutine(SpawnMapEnemyCoroutine(_count));
     }
 
     public void DeactivateWaveEnemy(GameObject _removeGo, int _waveEnemyIdx)
@@ -56,34 +55,45 @@ public class EnemyManager : MonoBehaviour
             else
                 spawnPos.x += 1f;
 
-            yield return new WaitForSeconds(0.05f);
+            yield return null;
         }
     }
 
-    private IEnumerator SpawnMapEnemyCoroutine(Vector3 _spawnPos, int _count)
+    private IEnumerator SpawnMapEnemyCoroutine(int _count)
     {
-        int unitCnt = 0;
-        while (unitCnt < _count)
+        for (int i = 0; i < arrEnemySpawnPoint.Length; ++i)
         {
-            GameObject enemyGo = memoryPoolMap.ActivatePoolItemWithIdx(mapEnemyIdx, 5, mapEnemyHolder);
-            EnemyObject enemyObj = enemyGo.GetComponent<EnemyObject>();
-            enemyObj.Position = _spawnPos;
-            enemyObj.Init();
-            enemyObj.Init(EnemyObject.EEnemySpawnType.MAP_SPAWN, mapEnemyIdx);
-            ++mapEnemyIdx;
-            ++unitCnt;
-
-            yield return new WaitForSeconds(0.05f);
+            int unitCnt = 0;
+            while (unitCnt < _count)
+            {
+                Vector3 spawnPos = arrEnemySpawnPoint[i].GetPos + Functions.GetRandomPosition(outerCircleRad, innerCircleRad);
+                GameObject enemyGo = memoryPoolMap.ActivatePoolItemWithIdx(mapEnemyIdx, 5, mapEnemyHolder);
+                EnemyObject enemyObj = enemyGo.GetComponent<EnemyObject>();
+                enemyObj.Position = spawnPos;
+                enemyObj.Init();
+                enemyObj.Init(EnemyObject.EEnemySpawnType.MAP_SPAWN, mapEnemyIdx);
+                ++mapEnemyIdx;
+                ++unitCnt;
+            }
+            yield return null;
         }
     }
-
-    private MemoryPool memoryPoolWave = null;
-    private MemoryPool memoryPoolMap = null;
 
     [SerializeField]
     private GameObject enemyPrefab = null;
     [SerializeField]
     private Vector3 spawnPos = Vector3.zero;
+    [SerializeField]
+    private EnemySpawnPoint[] arrEnemySpawnPoint = null;
+
+    [Header("-Enemy Map Random Spawn(outer > inner)")]
+    [SerializeField]
+    private float outerCircleRad = 0f;
+    [SerializeField]
+    private float innerCircleRad = 0f;
+
+    private MemoryPool memoryPoolWave = null;
+    private MemoryPool memoryPoolMap = null;
 
     private Transform waveEnemyHolder = null;
     private Transform mapEnemyHolder = null;

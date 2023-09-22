@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class SelectableObject : MonoBehaviour
@@ -40,10 +41,8 @@ public class SelectableObject : MonoBehaviour
     {
         stateMachine.TargetTr = null;
         targetTr = null;
-
         targetPos = _targetPos;
         curMoveCondition = EMoveState.ATTACK;
-
         StateMove();
     }
 
@@ -76,27 +75,16 @@ public class SelectableObject : MonoBehaviour
             {
                 foreach (Collider c in arrCollider)
                 {
-                    if (targetTr != null)
-                    {
-                        if (c.Equals(targetTr))
-                        {
-                            curMoveCondition = EMoveState.CHASE;
-                            StateMove();
-                            yield break;
-                        }
-                    }
-                    else
-                    {
-                        ESelectableObjectType targetType = c.GetComponent<SelectableObject>().ObjectType;
+                    ESelectableObjectType targetType = c.GetComponent<SelectableObject>().ObjectType;
 
-                        if (!targetType.Equals(ESelectableObjectType.ENEMY_UNIT))
-                        {
-                            stateMachine.TargetTr = c.transform;
-                            targetTr = c.transform;
-                            curMoveCondition = EMoveState.CHASE;
-                            StateMove();
-                            yield break;
-                        }
+                    if (!targetType.Equals(ESelectableObjectType.ENEMY_UNIT))
+                    {
+                        stateMachine.TargetTr = c.transform;
+                        targetTr = c.transform;
+                        prevMoveCondition = curMoveCondition;
+                        curMoveCondition = EMoveState.CHASE;
+                        StateMove();
+                        yield break;
                     }
                 }
             }
@@ -110,24 +98,40 @@ public class SelectableObject : MonoBehaviour
 
         while (true)
         {
-            if (targetTr != null)
+            if (targetTr == null)
             {
-                if (!isTargetInRangeFromMyPos(targetTr.position, chaseFinishRange))
-                {
-                    stateMachine.TargetTr = null;
-                    targetTr = null;
-                    FinishState();
-                    yield break;
-                }
+                stateMachine.TargetTr = null;
+                FinishState();
+                yield break;
             }
-
+            else if (targetTr.gameObject.activeSelf.Equals(false))
+            {
+                stateMachine.TargetTr = null;
+                targetTr = null;
+                FinishState();
+                yield break;
+            }
+            else if (!targetTr.Equals(stateMachine.TargetTr))
+            {
+                stateMachine.TargetTr = null;
+                targetTr = null;
+                FinishState();
+                yield break;
+            }
+            else if(!isTargetInRangeFromMyPos(targetTr.position, chaseFinishRange))
+            {
+                stateMachine.TargetTr = null;
+                targetTr = null;
+                FinishState();
+                yield break;
+            }
             yield return new WaitForSeconds(0.5f);
         }
     }
 
     protected void CheckIsTargetInAttackRange()
     {
-        if (targetTr != null)
+        if (targetTr != null && targetTr.gameObject.activeSelf.Equals(true))
         {
             if (isTargetInRangeFromMyPos(targetTr.position, attackRange))
                 StateAttack();
@@ -138,7 +142,7 @@ public class SelectableObject : MonoBehaviour
     {
         while (true)
         {
-            if (targetTr != null)
+            if (targetTr != null && targetTr.gameObject.activeSelf.Equals(true))
             {
                 if (isTargetInRangeFromMyPos(targetTr.position, attackRange))
                     StateAttack();
@@ -162,8 +166,17 @@ public class SelectableObject : MonoBehaviour
                 StartCoroutine("CheckIsEnemyInChaseStartRangeCoroutine");
                 break;
             case EMoveState.CHASE:
-                if (targetTr == null || targetTr != stateMachine.TargetTr)
-                    StateStop();
+                if (targetTr == null)
+                {
+                    if (prevMoveCondition != EMoveState.NONE)
+                    {
+                        curMoveCondition = prevMoveCondition;
+                        prevMoveCondition = EMoveState.NONE;
+                        StateMove();
+                    }
+                    else
+                        StateStop();
+                }
                 else
                 {
                     StartCoroutine("CheckFollowMoveCoroutine");
@@ -256,6 +269,13 @@ public class SelectableObject : MonoBehaviour
         {
             if (targetTr == null)
             {
+                FinishState();
+                yield break;
+            }
+            else if (targetTr.gameObject.activeSelf.Equals(false))
+            {
+                targetTr = null;
+                stateMachine.TargetTr = null;
                 FinishState();
                 yield break;
             }
@@ -396,7 +416,6 @@ public class SelectableObject : MonoBehaviour
         stateMachine.ChangeStateEnum(EState.ATTACK);
         SelectableObjectManager.UpdateNodeWalkable(transform.position, nodeIdx);
         StartCoroutine("AttackCoroutine");
-        //StartCoroutine("CheckIsEnemyInAttackRangeCoroutine");
     }
 
     protected IEnumerator AttackCoroutine()
@@ -405,10 +424,17 @@ public class SelectableObject : MonoBehaviour
         targetTr = stateMachine.TargetTr;
         while (true)
         {
-            // 적이 없음
-            if (targetTr == null)
+            if(targetTr == null)
+            {
+                stateMachine.TargetTr = null;
+                FinishState();
+                yield break;
+            }
+            else if (targetTr.gameObject.activeSelf == false)
             {
                 // 추격, 정찰, 대기, 홀드 등 뭐든간에 이전으로 돌아감.
+                targetTr = null;
+                stateMachine.TargetTr = null;
                 FinishState();
                 yield break;
             }
@@ -509,6 +535,7 @@ public class SelectableObject : MonoBehaviour
     protected float followOffset = 3f;
 
     protected EMoveState curMoveCondition = EMoveState.NONE;
+    protected EMoveState prevMoveCondition = EMoveState.NONE;
     protected StateMachine stateMachine = null;
 
     protected Vector3 targetPos = Vector3.zero;
@@ -523,4 +550,5 @@ public class SelectableObject : MonoBehaviour
     protected StatusHp statusHp = null;
 
     protected int nodeIdx = 0;
+    //protected Stack<EMoveState> stackMoveState = new Stack<EMoveState>();
 }
