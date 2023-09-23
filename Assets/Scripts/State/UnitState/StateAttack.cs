@@ -14,18 +14,19 @@ public class StateAttack : IState
 
     public void Update(ref SUnitState _structState)
     {
-        if (targetTr != null)
+        if (targetTr == null) return;
+        if (targetTr.gameObject.activeSelf == false) return;
+     
+        dir = targetTr.position - myTr.position;
+        dir.y = 0f;
+        myTr.rotation = Quaternion.LookRotation(dir);
+        elapsedTime += Time.deltaTime;
+
+        if (elapsedTime > attRate)
         {
-            dir = targetTr.position - myTr.position;
-            dir.y = 0f;
-            myTr.rotation = Quaternion.LookRotation(dir);
-            elapsedTime += Time.deltaTime;
-            if (elapsedTime > attRate)
-            {
-                elapsedTime = 0f;
-                // 공격 애니메이션 출력
-                targetTr.GetComponent<SelectableObject>().GetDmg(attDmg);
-            }
+            elapsedTime = 0f;
+            // 공격 애니메이션 출력
+            targetTr.GetComponent<SelectableObject>().GetDmg(attDmg);
         }
     }
 

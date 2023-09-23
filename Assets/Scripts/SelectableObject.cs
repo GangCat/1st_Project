@@ -17,6 +17,7 @@ public class SelectableObject : MonoBehaviour
         if (stateMachine != null)
         {
             stateMachine.Init(GetCurState);
+            ResetStateStack();
             StateIdle();
         }
 
@@ -43,6 +44,8 @@ public class SelectableObject : MonoBehaviour
         targetTr = null;
         targetPos = _targetPos;
         curMoveCondition = EMoveState.ATTACK;
+        ResetStateStack();
+        PushState();
         StateMove();
     }
 
@@ -50,6 +53,8 @@ public class SelectableObject : MonoBehaviour
     {
         stateMachine.TargetTr = null;
         targetTr = null;
+        ResetStateStack();
+        PushState();
         StateStop();
     }
 
@@ -59,7 +64,7 @@ public class SelectableObject : MonoBehaviour
         stateMachine.TargetTr = null;
         targetTr = null;
         SelectableObjectManager.UpdateNodeWalkable(transform.position, nodeIdx);
-        stateMachine.ChangeStateEnum(EState.IDLE);
+        ChangeState(EState.IDLE);
         StartCoroutine("CheckIsEnemyInChaseStartRangeCoroutine");
     }
     #endregion
@@ -83,6 +88,7 @@ public class SelectableObject : MonoBehaviour
                         targetTr = c.transform;
                         prevMoveCondition = curMoveCondition;
                         curMoveCondition = EMoveState.CHASE;
+                        PushState();
                         StateMove();
                         yield break;
                     }
@@ -94,35 +100,33 @@ public class SelectableObject : MonoBehaviour
 
     protected IEnumerator CheckIsTargetInChaseFinishRangeCoroutine()
     {
-        yield return new WaitForSeconds(0.5f);
-
         while (true)
         {
             if (targetTr == null)
             {
                 stateMachine.TargetTr = null;
-                FinishState();
+                StateMove();
                 yield break;
             }
             else if (targetTr.gameObject.activeSelf.Equals(false))
             {
                 stateMachine.TargetTr = null;
                 targetTr = null;
-                FinishState();
+                StateMove();
                 yield break;
             }
             else if (!targetTr.Equals(stateMachine.TargetTr))
             {
                 stateMachine.TargetTr = null;
                 targetTr = null;
-                FinishState();
+                StateMove();
                 yield break;
             }
             else if(!isTargetInRangeFromMyPos(targetTr.position, chaseFinishRange))
             {
                 stateMachine.TargetTr = null;
                 targetTr = null;
-                FinishState();
+                StateMove();
                 yield break;
             }
             yield return new WaitForSeconds(0.5f);
@@ -156,8 +160,9 @@ public class SelectableObject : MonoBehaviour
     {
         StopAllCoroutines();
         curWayNode = null;
-        stateMachine.SetWaitForNewPath(false);
+        stateMachine.SetWaitForNewPath(true);
         SelectableObjectManager.UpdateNodeWalkable(transform.position, nodeIdx);
+        ChangeState(EState.MOVE);
 
         switch (curMoveCondition)
         {
@@ -166,7 +171,7 @@ public class SelectableObject : MonoBehaviour
                 StartCoroutine("CheckIsEnemyInChaseStartRangeCoroutine");
                 break;
             case EMoveState.CHASE:
-                if (targetTr == null)
+                if (targetTr == null || targetTr.gameObject.activeSelf == false)
                 {
                     if (prevMoveCondition != EMoveState.NONE)
                     {
@@ -175,7 +180,11 @@ public class SelectableObject : MonoBehaviour
                         StateMove();
                     }
                     else
+                    {
+                        ResetStateStack();
+                        PushState();
                         StateStop();
+                    }
                 }
                 else
                 {
@@ -192,12 +201,10 @@ public class SelectableObject : MonoBehaviour
     protected virtual IEnumerator CheckNormalMoveCoroutine()
     {
         PF_PathRequestManager.RequestPath(transform.position, targetPos, OnPathFound);
-        stateMachine.SetWaitForNewPath(true);
 
         while (curWayNode == null)
             yield return null;
 
-        stateMachine.ChangeStateEnum(EState.MOVE);
         stateMachine.SetWaitForNewPath(false);
         while (true)
         {
@@ -214,22 +221,26 @@ public class SelectableObject : MonoBehaviour
                 stateMachine.SetWaitForNewPath(false);
             }
 
-            if (IsObjectFront())
-                yield return new WaitForSeconds(0.3f);
-
+            if (IsObjectBlocked())
+            {
+                stateMachine.SetWaitForNewPath(true);
+                yield return new WaitForSeconds(0.5f);
+                stateMachine.SetWaitForNewPath(false);
+            }
 
             // 노드에 도착할 때마다 새로운 노드로 이동 갱신
             if (isTargetInRangeFromMyPos(stateMachine.TargetPos, 0.1f))
             {
                 ++targetIdx;
-
                 SelectableObjectManager.UpdateNodeWalkable(transform.position, nodeIdx);
                 // 목적지에 도착시 
                 CheckIsTargetInAttackRange();
 
                 if (targetIdx >= arrPath.Length)
                 {
-                    if(Vector3.SqrMagnitude(targetPos - transform.position) > Mathf.Pow(1.4f, 2f))
+                    curWayNode = null;
+
+                    if (Vector3.SqrMagnitude(targetPos - transform.position) > Mathf.Pow(1.4f, 2f))
                     {
                         PF_PathRequestManager.RequestPath(transform.position, targetPos, OnPathFound);
                         stateMachine.SetWaitForNewPath(true);
@@ -239,12 +250,11 @@ public class SelectableObject : MonoBehaviour
                         stateMachine.SetWaitForNewPath(false);
                         continue;
                     }
-
-                    ResetState();
+                    
+                    FinishState();
                     stateMachine.SetWaitForNewPath(false);
                     yield break;
                 }
-
                 UpdateTargetPos();
             }
 
@@ -255,20 +265,18 @@ public class SelectableObject : MonoBehaviour
     protected virtual IEnumerator CheckFollowMoveCoroutine()
     {
         PF_PathRequestManager.RequestPath(transform.position, targetTr.position, OnPathFound);
-        stateMachine.SetWaitForNewPath(true);
 
         while (curWayNode == null)
             yield return null;
 
         float elapsedTime = 0f;
-
-        stateMachine.ChangeStateEnum(EState.MOVE);
         stateMachine.SetWaitForNewPath(false);
 
         while (true)
         {
             if (targetTr == null)
             {
+                stateMachine.TargetTr = null;
                 FinishState();
                 yield break;
             }
@@ -311,8 +319,12 @@ public class SelectableObject : MonoBehaviour
                         stateMachine.SetWaitForNewPath(false);
                     }
 
-                    if (IsObjectFront())
-                        yield return new WaitForSeconds(0.3f);
+                    if (IsObjectBlocked())
+                    {
+                        stateMachine.SetWaitForNewPath(true);
+                        yield return new WaitForSeconds(0.5f);
+                        stateMachine.SetWaitForNewPath(false);
+                    }
 
 
                     if (isTargetInRangeFromMyPos(curWayNode.worldPos, 0.1f))
@@ -327,20 +339,19 @@ public class SelectableObject : MonoBehaviour
                             stateMachine.SetWaitForNewPath(true);
                         }
                         else
-                        {
                             UpdateTargetPos();
-                        }
                     }
                 }
                 else
                 {
-                    PF_PathRequestManager.RequestPath(transform.position, targetTr.position, OnPathFound);
                     stateMachine.SetWaitForNewPath(true);
+                    //PF_PathRequestManager.RequestPath(transform.position, targetTr.position, OnPathFound);
+                    //stateMachine.SetWaitForNewPath(true);
 
-                    while (curWayNode == null)
-                        yield return null;
+                    //while (curWayNode == null)
+                    //    yield return null;
 
-                    stateMachine.SetWaitForNewPath(false);
+                    //stateMachine.SetWaitForNewPath(false);
                 }
             }
             yield return null;
@@ -358,11 +369,12 @@ public class SelectableObject : MonoBehaviour
         }
         else
         {
+            StopAllCoroutines();
             stateMachine.TargetTr = null;
             targetTr = null;
             curWayNode = null;
             stateMachine.SetWaitForNewPath(true);
-            Invoke("ResearchPath", 3f);
+            Invoke("StateMove", 2f);
         }
     }
 
@@ -378,7 +390,7 @@ public class SelectableObject : MonoBehaviour
             PF_PathRequestManager.RequestPath(transform.position, targetTr.position, OnPathFound);
     }
 
-    protected bool IsObjectFront()
+    protected bool IsObjectBlocked()
     {
         curPos = transform.position;
         if (Physics.Linecast(curPos, curWayNode.worldPos, 1 << LayerMask.NameToLayer("SelectableObject"))) 
@@ -396,7 +408,7 @@ public class SelectableObject : MonoBehaviour
     protected void StateStop()
     {
         StopAllCoroutines();
-        stateMachine.ChangeStateEnum(EState.STOP);
+        ChangeState(EState.STOP);
         SelectableObjectManager.UpdateNodeWalkable(transform.position, nodeIdx);
         StartCoroutine("CheckStopCoroutine");
     }
@@ -405,7 +417,7 @@ public class SelectableObject : MonoBehaviour
     {
         yield return new WaitForSeconds(stopDelay);
 
-        ResetState();
+        FinishState();
     }
     #endregion
 
@@ -413,7 +425,8 @@ public class SelectableObject : MonoBehaviour
     protected void StateAttack()
     {
         StopAllCoroutines();
-        stateMachine.ChangeStateEnum(EState.ATTACK);
+        PushState();
+        ChangeState(EState.ATTACK);
         SelectableObjectManager.UpdateNodeWalkable(transform.position, nodeIdx);
         StartCoroutine("AttackCoroutine");
     }
@@ -443,13 +456,10 @@ public class SelectableObject : MonoBehaviour
                 FinishState();
                 yield break;
             }
-            else // 적이 공격 사거리를 벗어남
+            else if(!isTargetInRangeFromMyPos(targetTr.position, attackRange))
             {
-                if (!isTargetInRangeFromMyPos(targetTr.position, attackRange))
-                {
-                    FinishState();
-                    yield break;
-                }
+                FinishState();
+                yield break;
             }
 
             yield return null;
@@ -460,15 +470,25 @@ public class SelectableObject : MonoBehaviour
     protected void FinishState()
     {
         StopAllCoroutines();
-        stateMachine.FinishStateEnum();
+        stateMachine.FinishState();
     }
 
-    protected void ResetState()
+    protected void ResetStateStack()
     {
         StopAllCoroutines();
         targetTr = null;
         stateMachine.TargetTr = null;
-        stateMachine.ResetStateEnum();
+        stateMachine.ResetState();
+    }
+
+    protected void PushState()
+    {
+        stateMachine.PushCurState();
+    }
+
+    protected void ChangeState(EState _state)
+    {
+        stateMachine.ChangeState(_state);
     }
 
     protected bool isTargetInRangeFromMyPos(Vector3 _targetPos, float _range)

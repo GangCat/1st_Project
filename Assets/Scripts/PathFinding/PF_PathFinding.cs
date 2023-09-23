@@ -23,7 +23,7 @@ public class PF_PathFinding : MonoBehaviour
 
         if (startNode.Equals(targetNode))
         {
-            finishPathFindCallback?.Invoke(null, false);
+            finishPathFindCallback?.Invoke(new PF_Node[1] { targetNode }, true);
             return;
         }
 
@@ -77,7 +77,7 @@ public class PF_PathFinding : MonoBehaviour
 
                 closedSet.Add(curNode);
 
-                if(openSet.Count > 50)
+                if (openSet.Count > 50)
                 {
                     isPathSuccess = true;
                     break;

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Rendering.InspectorCurveEditor;
 
 public class StateMachine : MonoBehaviour
 {
@@ -63,29 +64,49 @@ public class StateMachine : MonoBehaviour
     {
         unitState.isWaitForNewPath = _isWaiting;
     }
-
-    public void FinishStateEnum()
+    public void ChangeState(EState _newState)
     {
-        curStateEnumCallback?.Invoke(stackStateEnum.Pop());
-    }
+        //curState.End(ref unitState);
+        //if (curStateEnum != _newState)
+        //{
+        //    stackStateEnum.Push(curStateEnum);
+        //    curStateEnum = _newState;
+        //    curState = arrState[(int)curStateEnum];
+        //}
+        //curState.Start(ref unitState);
 
-    public void ChangeStateEnum(EState _newState)
-    {
         curState.End(ref unitState);
-        if (curStateEnum != _newState)
-        {
-            stackStateEnum.Push(curStateEnum);
-            curStateEnum = _newState;
-            curState = arrState[(int)curStateEnum];
-        }
+
+        //stackStateEnum.Push(curStateEnum);
+        curStateEnum = _newState;
+        curState = arrState[(int)curStateEnum];
+
         curState.Start(ref unitState);
     }
 
-    public void ResetStateEnum()
+    public void FinishState()
     {
-        stackStateEnum.Clear();
-        curStateEnumCallback?.Invoke(EState.IDLE);
+        //curState.End(ref unitState);
+
+        //curStateEnum = stackStateEnum.Pop();
+        //curState = arrState[(int)curStateEnum];
+        curStateEnumCallback?.Invoke(stackStateEnum.Pop());
+
+        //curState.Start(ref unitState);
     }
+
+    public void PushCurState()
+    {
+        stackStateEnum.Push(curStateEnum);
+    }
+
+    public void ResetState()
+    {
+        //stackStateEnum.Clear();
+        stackStateEnum.Clear();
+        curStateEnum = EState.IDLE;
+    }
+
 
     private void Update()
     {

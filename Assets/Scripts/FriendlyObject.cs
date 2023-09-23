@@ -15,7 +15,7 @@ public class FriendlyObject : SelectableObject
         if (stateMachine != null)
         {
             stateMachine.Init(GetCurState);
-
+            ResetStateStack();
             if (objectType.Equals(ESelectableObjectType.TURRET))
                 StateHold();
             else
@@ -93,6 +93,8 @@ public class FriendlyObject : SelectableObject
             isAttack = false;
             targetPos = _Pos;
             curMoveCondition = EMoveState.NORMAL;
+            ResetStateStack();
+            PushState();
             StateMove();
         }
     }
@@ -125,6 +127,8 @@ public class FriendlyObject : SelectableObject
                 isAttack = false;
                 curMoveCondition = EMoveState.FOLLOW;
             }
+            ResetStateStack();
+            PushState();
             StateMove();
         }
     }
@@ -137,6 +141,8 @@ public class FriendlyObject : SelectableObject
             targetPos = _wayPointTo;
             wayPointStart = transform.position;
             curMoveCondition = EMoveState.PATROL;
+            ResetStateStack();
+            PushState();
             StateMove();
         }
     }
@@ -154,6 +160,8 @@ public class FriendlyObject : SelectableObject
             stateMachine.TargetTr = null;
             targetTr = null;
             isAttack = true;
+            ResetStateStack();
+            PushState();
             StateHold();
         }
     }
@@ -176,6 +184,7 @@ public class FriendlyObject : SelectableObject
                         isAttack = true;
                         prevMoveCondition = curMoveCondition;
                         curMoveCondition = EMoveState.CHASE;
+                        PushState();
                         StateMove();
                         yield break;
                     }
@@ -190,8 +199,10 @@ public class FriendlyObject : SelectableObject
     {
         StopAllCoroutines();
         curWayNode = null;
-        stateMachine.SetWaitForNewPath(false);
+        stateMachine.SetWaitForNewPath(true);
         SelectableObjectManager.UpdateNodeWalkable(transform.position, nodeIdx);
+        ChangeState(EState.MOVE);
+
         switch (curMoveCondition)
         {
             case EMoveState.NORMAL:
@@ -206,11 +217,14 @@ public class FriendlyObject : SelectableObject
                 StartCoroutine("CheckIsEnemyInChaseStartRangeCoroutine");
                 break;
             case EMoveState.CHASE:
-                if (targetTr == null)
+                if (targetTr == null || targetTr.gameObject.activeSelf == false)
                 {
-                    curMoveCondition = prevMoveCondition;
-                    prevMoveCondition = EMoveState.NONE;
-                    StateMove();
+                    if (prevMoveCondition != EMoveState.NONE)
+                    {
+                        curMoveCondition = prevMoveCondition;
+                        prevMoveCondition = EMoveState.NONE;
+                    }
+                        FinishState();
                 }
                 else
                 {
@@ -220,14 +234,14 @@ public class FriendlyObject : SelectableObject
                 }
                 break;
             case EMoveState.FOLLOW:
-                if (targetTr == null)
-                    ResetState();
+                if (targetTr == null || targetTr.gameObject.activeSelf == false)
+                    FinishState();
                 else
                     StartCoroutine("CheckFollowMoveCoroutine");
                 break;
             case EMoveState.FOLLOW_ENEMY:
-                if (targetTr == null)
-                    ResetState();
+                if (targetTr == null || targetTr.gameObject.activeSelf == false)
+                    FinishState();
                 else
                 {
                     StartCoroutine("CheckFollowMoveCoroutine");
@@ -242,13 +256,10 @@ public class FriendlyObject : SelectableObject
     protected override IEnumerator CheckNormalMoveCoroutine()
     {
         PF_PathRequestManager.RequestPath(transform.position, targetPos, OnPathFound);
-        stateMachine.SetWaitForNewPath(true);
-        PF_Node targetNode = null;
 
         while (curWayNode == null)
             yield return null;
 
-        stateMachine.ChangeStateEnum(EState.MOVE);
         stateMachine.SetWaitForNewPath(false);
         while (true)
         {
@@ -264,7 +275,7 @@ public class FriendlyObject : SelectableObject
                 stateMachine.SetWaitForNewPath(false);
             }
 
-            if (IsObjectFront())
+            if (IsObjectBlocked())
             {
                 stateMachine.SetWaitForNewPath(true);
                 yield return new WaitForSeconds(0.5f);
@@ -282,9 +293,10 @@ public class FriendlyObject : SelectableObject
 
                 if (targetIdx >= arrPath.Length)
                 {
-                    if (Vector3.SqrMagnitude(targetPos - transform.position) > Mathf.Pow(1.4f, 2f))
+                    curWayNode = null;
+
+                    if (Vector3.SqrMagnitude(targetPos - transform.position) > Mathf.Pow(2f, 2f))
                     {
-                        curWayNode = null;
                         PF_PathRequestManager.RequestPath(transform.position, targetPos, OnPathFound);
                         stateMachine.SetWaitForNewPath(true);
                         while (curWayNode == null)
@@ -294,15 +306,14 @@ public class FriendlyObject : SelectableObject
                         continue;
                     }
 
-                    curWayNode = null;
-                    ResetState();
+                    FinishState();
                     stateMachine.SetWaitForNewPath(false);
                     yield break;
                 }
                 UpdateTargetPos();
             }
 
-            yield return null;
+            yield return new WaitForEndOfFrame();
         }
     }
 
@@ -312,11 +323,9 @@ public class FriendlyObject : SelectableObject
         Vector3 wayPointTo = targetPos;
 
         PF_PathRequestManager.RequestPath(transform.position, wayPointTo, OnPathFound);
-        stateMachine.SetWaitForNewPath(true);
         while (curWayNode == null)
             yield return null;
 
-        stateMachine.ChangeStateEnum(EState.MOVE);
         stateMachine.SetWaitForNewPath(false);
 
         while (true)
@@ -333,13 +342,12 @@ public class FriendlyObject : SelectableObject
                 stateMachine.SetWaitForNewPath(false);
             }
 
-            if (IsObjectFront())
+            if (IsObjectBlocked())
             {
                 stateMachine.SetWaitForNewPath(true);
                 yield return new WaitForSeconds(0.5f);
                 stateMachine.SetWaitForNewPath(false);
             }
-
 
             // 노드에 도착할 때마다 새로운 노드로 이동 갱신
             if (isTargetInRangeFromMyPos(curWayNode.worldPos, 0.1f))
@@ -350,7 +358,7 @@ public class FriendlyObject : SelectableObject
 
                 if (targetIdx >= arrPath.Length)
                 {
-                    if (Vector3.SqrMagnitude(transform.position - wayPointTo) > Mathf.Pow(1.4f, 2f))
+                    if (Vector3.SqrMagnitude(transform.position - wayPointTo) > Mathf.Pow(2f, 2f))
                     {
                         PF_PathRequestManager.RequestPath(transform.position, wayPointTo, OnPathFound);
                         stateMachine.SetWaitForNewPath(true);
@@ -384,21 +392,28 @@ public class FriendlyObject : SelectableObject
     protected override IEnumerator CheckFollowMoveCoroutine()
     {
         PF_PathRequestManager.RequestPath(transform.position, targetTr.position, OnPathFound);
-        stateMachine.SetWaitForNewPath(true);
 
         while (curWayNode == null)
             yield return null;
 
         float elapsedTime = 0f;
-
-        stateMachine.ChangeStateEnum(EState.MOVE);
         stateMachine.SetWaitForNewPath(false);
 
         while (true)
         {
-            if (targetTr == null || targetTr.gameObject.activeSelf == false)
+            if (targetTr == null)
             {
-                ResetState();
+                stateMachine.TargetTr = null;
+                PushState();
+                FinishState();
+                yield break;
+            }
+            else if (targetTr.gameObject.activeSelf.Equals(false))
+            {
+                targetTr = null;
+                stateMachine.TargetTr = null;
+                PushState();
+                FinishState();
                 yield break;
             }
             elapsedTime += Time.deltaTime;
@@ -408,10 +423,9 @@ public class FriendlyObject : SelectableObject
                 elapsedTime = 0f;
                 if (Vector3.SqrMagnitude(transform.position - targetTr.position) > Mathf.Pow(followOffset, 2f))
                 {
+                    curWayNode = null;
                     PF_PathRequestManager.RequestPath(transform.position, targetTr.position, OnPathFound);
                     stateMachine.SetWaitForNewPath(true);
-                    curWayNode = null;
-
                     while (curWayNode == null)
                         yield return null;
 
@@ -434,7 +448,7 @@ public class FriendlyObject : SelectableObject
                         stateMachine.SetWaitForNewPath(false);
                     }
 
-                    if (IsObjectFront())
+                    if (IsObjectBlocked())
                     {
                         stateMachine.SetWaitForNewPath(true);
                         yield return new WaitForSeconds(0.5f);
@@ -469,7 +483,7 @@ public class FriendlyObject : SelectableObject
     private void StateHold()
     {
         StopAllCoroutines();
-        stateMachine.ChangeStateEnum(EState.HOLD);
+        ChangeState(EState.HOLD);
         SelectableObjectManager.UpdateNodeWalkable(transform.position, nodeIdx);
         StartCoroutine("CheckHoldCoroutine");
     }
