@@ -5,12 +5,14 @@ using UnityEngine;
 
 public class StructureBunker : Structure
 {
-    public override void Init()
+    public override void Init(int _structureIdx)
     {
+        base.Init(_structureIdx);
         trigger = GetComponentInChildren<BunkerInTrigger>();
         warpPos = transform.position;
         warpPos.y += height;
         trigger.Init(transform);
+        myIdx = _structureIdx;
     }
 
     public void InUnit(FriendlyObject _curObj)

@@ -112,6 +112,9 @@ MonoBehaviour:
   attackRange: 3
   stopDelay: 2
   followOffset: 4
+  overlapLayerMask:
+    serializedVersion: 2
+    m_Bits: 128
   isMovable: 1
   unitType: 1
 --- !u!1 &3256322658277572286

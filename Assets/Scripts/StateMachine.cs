@@ -102,7 +102,6 @@ public class StateMachine : MonoBehaviour
 
     public void ResetState()
     {
-        //stackStateEnum.Clear();
         stackStateEnum.Clear();
         curStateEnum = EState.IDLE;
     }

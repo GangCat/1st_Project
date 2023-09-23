@@ -15,9 +15,4 @@ public class ArrayFriendlyObjectCommand
     {
         arrCmd[(int)_eCmd].Execute(_objects);
     }
-
-    //public static void Use(EFriendlyObjectCommand _eCmd, GameObject _removeGo, ESpawnUnitType _type, int _barrackIdx)
-    //{
-    //    arrCmd[(int)_eCmd].Execute(_removeGo, _type, _barrackIdx);
-    //}
 }

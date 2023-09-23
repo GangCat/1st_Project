@@ -17,25 +17,6 @@ public class SelectableObjectManager : MonoBehaviour
         grid = _grid;
     }
 
-    //public static int InitNode(Vector3 _pos)
-    //{
-    //    listNodeUnderUnit.Add(grid.GetNodeFromWorldPoint(_pos));
-    //    return listNodeUnderUnit.Count - 1;
-    //}
-
-    //public static void UpdateNodeWalkable(Vector3 _pos, int _idx)
-    //{
-    //    listNodeUnderUnit[_idx].walkable = true;
-    //    listNodeUnderUnit[_idx] = grid.GetNodeFromWorldPoint(_pos);
-    //    listNodeUnderUnit[_idx].walkable = false;
-    //}
-
-    //public static void ResetNodeWalkable(Vector3 _pos, int _idx)
-    //{
-    //    listNodeUnderUnit[_idx].walkable = true;
-    //    grid.GetNodeFromWorldPoint(_pos).walkable = true;
-    //}
-
     public static int InitNode(Vector3 _pos)
     {
         dicNodeUnderUnit.Add(dicNodeUnderUnit.Count, grid.GetNodeFromWorldPoint(_pos));

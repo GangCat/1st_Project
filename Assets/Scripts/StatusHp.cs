@@ -17,7 +17,7 @@ public class StatusHp : MonoBehaviour
     public bool DecreaseHpAndCheckIsDead(float _dmg)
     {
         curHp -= _dmg;
-        return curHp < 0 ? true : false;
+        return curHp <= 0 ? true : false;
     }
 
     public void IncreaseCurHp(float _heal)

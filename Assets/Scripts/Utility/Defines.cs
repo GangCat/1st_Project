@@ -42,4 +42,4 @@ public enum EBarrackCommand { NONE = -1, CANCLE, SPAWN_UNIT, RALLYPOINT, DEMOLIT
 public enum EUnitCommand { NONE = -1, NODE_UPDATE, LENGTH }
 public enum EBunkerCommand { NONE = -1, IN_UNIT, OUT_ONE_UNIT, OUT_ALL_UNIT, EXPAND_WALL, LENGTH }
 public enum EEnemyObjectCommand { NONE = -1, WAVE_ENEMY_DEAD, MAP_ENEMY_DEAD, LENGTH }
-public enum EFriendlyObjectCommand { NONE = -1, DEAD, LENGTH }
+public enum EFriendlyObjectCommand { NONE = -1, DEAD, DESTROY, LENGTH }

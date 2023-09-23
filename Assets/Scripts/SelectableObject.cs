@@ -74,7 +74,7 @@ public class SelectableObject : MonoBehaviour
         while (true)
         {
             Collider[] arrCollider = null;
-            arrCollider = overlapSphereWithNode(chaseStartRange);
+            arrCollider = overlapSphere(chaseStartRange);
 
             if (arrCollider.Length > 1)
             {
@@ -496,9 +496,9 @@ public class SelectableObject : MonoBehaviour
         return Vector3.SqrMagnitude(transform.position - _targetPos) < Mathf.Pow(_range, 2);
     }
 
-    protected Collider[] overlapSphereWithNode(float _range)
+    protected Collider[] overlapSphere(float _range)
     {
-        return Physics.OverlapSphere(transform.position, _range, 1 << LayerMask.NameToLayer("SelectableObject"));
+        return Physics.OverlapSphere(transform.position, _range, overlapLayerMask);
     }
 
     protected virtual void GetCurState(EState _curStateEnum)
@@ -555,6 +555,8 @@ public class SelectableObject : MonoBehaviour
     protected float stopDelay = 2f;
     [SerializeField]
     protected float followOffset = 3f;
+    [SerializeField]
+    protected LayerMask overlapLayerMask;
 
     protected EMoveState curMoveCondition = EMoveState.NONE;
     protected EMoveState prevMoveCondition = EMoveState.NONE;
@@ -572,5 +574,4 @@ public class SelectableObject : MonoBehaviour
     protected StatusHp statusHp = null;
 
     protected int nodeIdx = 0;
-    //protected Stack<EMoveState> stackMoveState = new Stack<EMoveState>();
 }

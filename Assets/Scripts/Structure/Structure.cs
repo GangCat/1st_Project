@@ -12,9 +12,14 @@ public class Structure : MonoBehaviour
         StartCoroutine("CheckBuildableCoroutine");
     }
 
-    public virtual void Init() { }
+    public virtual void Init(int _structureIdx) 
+    {
+        GetComponent<SelectableObject>().Init();
+        myIdx = _structureIdx;
+    }
 
     public bool IsBuildable => isBuildable;
+    public int StructureIdx => myIdx;
 
     public void SetGrid(int _gridX, int _gridY)
     {
@@ -57,9 +62,35 @@ public class Structure : MonoBehaviour
         }
     }
 
+    protected void UpdateNodeWalkableAndInstantiateRuinGo(GameObject _ruinStructure)
+    {
+        curNode = grid.GetNodeFromWorldPoint(transform.position);
+        int gridX = curNode.gridX;
+        int gridY = curNode.gridY;
+        int idx = 0;
+
+        while (idx < myGridX * myGridY)
+        {
+            PF_Node curRuinNode = grid.GetNodeWithGrid(
+                    (idx % myGridX) * factorGridX + gridX,
+                    (idx / myGridY) * factorGridY + gridY);
+            Instantiate(_ruinStructure, curRuinNode.worldPos, Quaternion.identity);
+            grid.UpdateNodeWalkable(curRuinNode, true);
+
+            ++idx;
+        }
+    }
+
     public void BuildComplete()
     {
         StopCoroutine("CheckBuildableCoroutine");
+    }
+
+    public void DestroyStructure(GameObject _ruinStructure)
+    {
+        UpdateNodeWalkableAndInstantiateRuinGo(_ruinStructure);
+        //Instantiate(_ruinStructure,transform.position, Quaternion.identity);
+        gameObject.SetActive(false);
     }
 
     protected virtual IEnumerator CheckBuildableCoroutine()
@@ -93,14 +124,12 @@ public class Structure : MonoBehaviour
         mt.color = isBuildable ? oriColor : Color.red;
     }
 
-    
+
 
     [SerializeField]
     protected int myGridX = 1;
     [SerializeField]
     protected int myGridY = 1;
-    [SerializeField]
-    protected Vector3 calcNodeOffset = Vector3.zero;
 
     protected PF_Grid grid = null;
     protected PF_Node curNode = null;
@@ -109,6 +138,7 @@ public class Structure : MonoBehaviour
 
     protected int factorGridX = 1;
     protected int factorGridY = 1;
+    protected int myIdx = -1;
 
     protected bool isBuildable = true;
 }

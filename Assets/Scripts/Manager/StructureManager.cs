@@ -8,6 +8,8 @@ public class StructureManager : MonoBehaviour
     {
         grid = _grid;
         listBarrack = new List<StructureBarrack>();
+        dicStructure = new Dictionary<int, Structure>();
+        listStructure = new List<Structure>();
     }
 
     public void ShowBluepirnt(ESelectableObjectType _buildingType)
@@ -42,6 +44,13 @@ public class StructureManager : MonoBehaviour
     {
         curStructure = Instantiate(wallPrefab, transform).GetComponent<Structure>();
         StartCoroutine("ShowWallBlueprint", _bunkerTr);
+    }
+
+    public void DestroyStructure(int _structureIdx)
+    {
+        Structure structure = null;
+        dicStructure.TryGetValue(_structureIdx, out structure);
+        structure.DestroyStructure(ruinPrefab);
     }
 
     private IEnumerator ShowBlueprint()
@@ -144,8 +153,10 @@ public class StructureManager : MonoBehaviour
             curStructure.UpdateNodeUnWalkable();
             curStructure.BuildComplete();
             curStructure.transform.parent = transform;
-            curStructure.Init();
+            curStructure.Init(structureIdx);
             isBlueprint = false;
+            dicStructure.Add(structureIdx, curStructure);
+            ++structureIdx;
             StructureBarrack barrack = curStructure.GetComponent<StructureBarrack>();
             if (barrack != null)
             {
@@ -174,10 +185,15 @@ public class StructureManager : MonoBehaviour
     private GameObject nuclearPrefab = null;
     [SerializeField]
     private GameObject barrackPrefab = null;
+    [SerializeField]
+    private GameObject ruinPrefab = null;
 
     private List<StructureBarrack> listBarrack = null;
+    private List<Structure> listStructure = null;
+    private Dictionary<int, Structure> dicStructure = null;
     private Structure curStructure = null;
     private PF_Grid grid = null;
     private PF_Node curNode = null;
     private bool isBlueprint = false;
+    private int structureIdx = 0;
 }

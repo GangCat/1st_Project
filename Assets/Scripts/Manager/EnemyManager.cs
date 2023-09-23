@@ -67,8 +67,7 @@ public class EnemyManager : MonoBehaviour
             while (unitCnt < _count)
             {
                 Vector3 spawnPos = arrEnemySpawnPoint[i].GetPos + Functions.GetRandomPosition(outerCircleRad, innerCircleRad);
-                GameObject enemyGo = memoryPoolMap.ActivatePoolItemWithIdx(mapEnemyIdx, 5, mapEnemyHolder);
-                EnemyObject enemyObj = enemyGo.GetComponent<EnemyObject>();
+                EnemyObject enemyObj = memoryPoolMap.ActivatePoolItemWithIdx(mapEnemyIdx, 5, mapEnemyHolder).GetComponent<EnemyObject>();
                 enemyObj.Position = spawnPos;
                 enemyObj.Init();
                 enemyObj.Init(EnemyObject.EEnemySpawnType.MAP_SPAWN, mapEnemyIdx);

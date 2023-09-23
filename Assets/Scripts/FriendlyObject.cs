@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class FriendlyObject : SelectableObject
@@ -14,6 +13,7 @@ public class FriendlyObject : SelectableObject
 
         if (stateMachine != null)
         {
+            oriAttRange = attackRange;
             stateMachine.Init(GetCurState);
             ResetStateStack();
             if (objectType.Equals(ESelectableObjectType.TURRET))
@@ -22,7 +22,6 @@ public class FriendlyObject : SelectableObject
                 StateIdle();
         }
 
-        oriAttRange = attackRange;
         SelectableObjectManager.UpdateNodeWalkable(transform.position, nodeIdx);
     }
 
@@ -39,7 +38,11 @@ public class FriendlyObject : SelectableObject
         {
             StopAllCoroutines();
             SelectableObjectManager.ResetNodeWalkable(transform.position, nodeIdx);
-            ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.DEAD, gameObject, unitType, barrackIdx);
+
+            if(objectType.Equals(ESelectableObjectType.UNIT))
+                ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.DEAD, gameObject, unitType, barrackIdx);
+            else
+                ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.DESTROY, gameObject);
         }
     }
 
@@ -85,8 +88,8 @@ public class FriendlyObject : SelectableObject
 
     public void MoveByPos(Vector3 _Pos)
     {
-        if (isMovable)
-        {
+        //if (isMovable)
+        //{
             stateMachine.TargetTr = null;
             targetTr = null;
 
@@ -96,7 +99,7 @@ public class FriendlyObject : SelectableObject
             ResetStateStack();
             PushState();
             StateMove();
-        }
+        //}
     }
 
     public override void MoveAttack(Vector3 _targetPos)
@@ -171,7 +174,7 @@ public class FriendlyObject : SelectableObject
         while (true)
         {
             Collider[] arrCollider = null;
-            arrCollider = overlapSphereWithNode(chaseStartRange);
+            arrCollider = overlapSphere(chaseStartRange);
 
             if (arrCollider.Length > 1)
             {
@@ -494,7 +497,7 @@ public class FriendlyObject : SelectableObject
         while (true)
         {
             Collider[] arrCollider = null;
-            arrCollider = overlapSphereWithNode(attackRange);
+            arrCollider = overlapSphere(attackRange);
 
             if (arrCollider.Length > 0)
             {

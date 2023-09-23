@@ -4,19 +4,16 @@ using UnityEngine;
 
 public class StructureBarrack : Structure
 {
-    public override void Init()
+    public override void Init(int _structureIdx)
     {
+        base.Init(_structureIdx);
         spawnPoint = transform.position;
         rallyPoint = spawnPoint;
         arrMemoryPool = new MemoryPool[arrUnitPrefab.Length];
+        structureIdx = _structureIdx;
 
         for (int i = 0; i < arrUnitPrefab.Length; ++i)
             arrMemoryPool[i] = new MemoryPool(arrUnitPrefab[i],3,transform);
-    }
-
-    public void Init(int _barrackIdx)
-    {
-        barrackIdx = _barrackIdx;
     }
 
     public void SetRallyPoint(Vector3 _rallyPoint)
@@ -71,7 +68,7 @@ public class StructureBarrack : Structure
         FriendlyObject tempObj = arrMemoryPool[(int)_unitType].ActivatePoolItem(spawnPoint, 3, transform).GetComponent<FriendlyObject>();
         tempObj.Position = SelectableObjectManager.ResetPosition(tempObj.Position);
         tempObj.Init();
-        tempObj.Init(barrackIdx);
+        tempObj.Init(structureIdx);
         
 
         if (!rallyPoint.Equals(spawnPoint))
@@ -91,7 +88,7 @@ public class StructureBarrack : Structure
 
     private bool isProcessingSpawnUnit = false;
 
-    private int barrackIdx = -1;
+    private int structureIdx = -1;
 
     private Vector3 spawnPoint = Vector3.zero;
     private Vector3 rallyPoint = Vector3.zero;

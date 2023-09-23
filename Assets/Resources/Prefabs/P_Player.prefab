@@ -208,7 +208,11 @@ MonoBehaviour:
   attackRange: 4
   stopDelay: 2
   followOffset: 3
+  overlapLayerMask:
+    serializedVersion: 2
+    m_Bits: 128
   isMovable: 1
+  unitType: -1
 --- !u!1 &8384109406464263701
 GameObject:
   m_ObjectHideFlags: 0
