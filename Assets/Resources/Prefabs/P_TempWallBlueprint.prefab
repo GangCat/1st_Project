@@ -92,13 +92,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3845910304497348173}
-  - component: {fileID: 8883937953507251874}
   - component: {fileID: 7534801930405887633}
   - component: {fileID: 8964975729645022558}
   - component: {fileID: 6126758822872318196}
   - component: {fileID: -6226364378777565952}
   m_Layer: 10
-  m_Name: P_TempWall
+  m_Name: P_TempWallBlueprint
   m_TagString: FriendlyStructure
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -121,27 +120,6 @@ Transform:
   - {fileID: 5814637709956935944}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &8883937953507251874
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8162044424758329862}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 3.9, y: 4, z: 0.9}
-  m_Center: {x: -1.5, y: 2, z: 0}
 --- !u!114 &7534801930405887633
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -296,7 +274,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 0588248e935fc1e42b3af38bf3976dc2, type: 2}
+      objectReference: {fileID: 2100000, guid: 54ee677ea9a331c4ba6fa43d25eb82d3, type: 2}
     - target: {fileID: 919132149155446097, guid: 73b11cf80cf017e44a6d12eea63ea21e,
         type: 3}
       propertyPath: m_Name

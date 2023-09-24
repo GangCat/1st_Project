@@ -10,7 +10,6 @@ public class StructureBarrack : Structure
         spawnPoint = transform.position;
         rallyPoint = spawnPoint;
         arrMemoryPool = new MemoryPool[arrUnitPrefab.Length];
-        structureIdx = _structureIdx;
 
         for (int i = 0; i < arrUnitPrefab.Length; ++i)
             arrMemoryPool[i] = new MemoryPool(arrUnitPrefab[i],3,transform);
@@ -37,7 +36,7 @@ public class StructureBarrack : Structure
         // ui에 나타내는 내용
     }
 
-    public void DeactivateUnit(GameObject _removeGo, ESpawnUnitType _type)
+    public override void DeactivateUnit(GameObject _removeGo, ESpawnUnitType _type)
     {
         arrMemoryPool[(int)_type].DeactivatePoolItem(_removeGo);
     }
@@ -62,13 +61,12 @@ public class StructureBarrack : Structure
             yield return new WaitForSeconds(0.5f);
             elapsedTime += 0.5f;
         }
-        //GameObject unitGo = Instantiate(arrUnitPrefab[(int)_unitType], spawnPoint, Quaternion.identity);
 
         isProcessingSpawnUnit = false;
         FriendlyObject tempObj = arrMemoryPool[(int)_unitType].ActivatePoolItem(spawnPoint, 3, transform).GetComponent<FriendlyObject>();
         tempObj.Position = SelectableObjectManager.ResetPosition(tempObj.Position);
         tempObj.Init();
-        tempObj.Init(structureIdx);
+        tempObj.Init(myIdx);
         
 
         if (!rallyPoint.Equals(spawnPoint))
@@ -87,8 +85,6 @@ public class StructureBarrack : Structure
     private GameObject[] arrUnitPrefab = new GameObject[(int)ESpawnUnitType.LENGTH];
 
     private bool isProcessingSpawnUnit = false;
-
-    private int structureIdx = -1;
 
     private Vector3 spawnPoint = Vector3.zero;
     private Vector3 rallyPoint = Vector3.zero;

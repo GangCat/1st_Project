@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 3588986183097559166}
   - component: {fileID: 4845166205377459093}
   - component: {fileID: -6538640064712938232}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: P_TempRuin
-  m_TagString: Untagged
+  m_TagString: FriendlyStructure
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -67,6 +67,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dfeeb2de900ee643af7438a6cfb8142, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myGridX: 1
+  myGridY: 1
 --- !u!1 &7315214676662184248
 GameObject:
   m_ObjectHideFlags: 0

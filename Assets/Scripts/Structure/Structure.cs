@@ -12,7 +12,7 @@ public class Structure : MonoBehaviour
         StartCoroutine("CheckBuildableCoroutine");
     }
 
-    public virtual void Init(int _structureIdx) 
+    public virtual void Init(int _structureIdx)
     {
         GetComponent<SelectableObject>().Init();
         myIdx = _structureIdx;
@@ -20,6 +20,10 @@ public class Structure : MonoBehaviour
 
     public bool IsBuildable => isBuildable;
     public int StructureIdx => myIdx;
+    public int GridX => myGridX;
+    public int GridY => myGridY;
+    public int FactorX => factorGridX;
+    public int FactorY => factorGridY;
 
     public void SetGrid(int _gridX, int _gridY)
     {
@@ -33,17 +37,12 @@ public class Structure : MonoBehaviour
         factorGridY = _factorGridY;
     }
 
-    public void SetColliderEnable(bool _isEnable)
-    {
-        GetComponent<Collider>().enabled = _isEnable;
-    }
-
     public void SetPos(Vector3 _targetPos)
     {
         transform.position = _targetPos;
     }
 
-    public virtual void UpdateNodeUnWalkable()
+    public virtual void UpdateNodeWalkable(bool _walkable)
     {
         curNode = grid.GetNodeFromWorldPoint(transform.position);
         int gridX = curNode.gridX;
@@ -56,47 +55,30 @@ public class Structure : MonoBehaviour
                 grid.GetNodeWithGrid(
                     (idx % myGridX) * factorGridX + gridX,
                     (idx / myGridY) * factorGridY + gridY),
-                false);
+                _walkable);
 
             ++idx;
         }
     }
 
-    protected void UpdateNodeWalkableAndInstantiateRuinGo(GameObject _ruinStructure)
-    {
-        curNode = grid.GetNodeFromWorldPoint(transform.position);
-        int gridX = curNode.gridX;
-        int gridY = curNode.gridY;
-        int idx = 0;
-
-        while (idx < myGridX * myGridY)
-        {
-            PF_Node curRuinNode = grid.GetNodeWithGrid(
-                    (idx % myGridX) * factorGridX + gridX,
-                    (idx / myGridY) * factorGridY + gridY);
-            Instantiate(_ruinStructure, curRuinNode.worldPos, Quaternion.identity);
-            grid.UpdateNodeWalkable(curRuinNode, true);
-
-            ++idx;
-        }
-    }
+    public virtual void DeactivateUnit(GameObject _removeGo, ESpawnUnitType _type) { }
 
     public void BuildComplete()
     {
         StopCoroutine("CheckBuildableCoroutine");
     }
 
-    public void DestroyStructure(GameObject _ruinStructure)
+    public void DestroyStructure()
     {
-        UpdateNodeWalkableAndInstantiateRuinGo(_ruinStructure);
-        //Instantiate(_ruinStructure,transform.position, Quaternion.identity);
-        gameObject.SetActive(false);
+        Destroy(gameObject);
     }
 
     protected virtual IEnumerator CheckBuildableCoroutine()
     {
         while (true)
         {
+            yield return null;
+
             isBuildable = true;
 
             curNode = grid.GetNodeFromWorldPoint(transform.position);
@@ -110,12 +92,10 @@ public class Structure : MonoBehaviour
                     isBuildable = false;
                     break;
                 }
-
                 ++idx;
             }
 
             SetColor();
-            yield return null;
         }
     }
 
@@ -123,7 +103,6 @@ public class Structure : MonoBehaviour
     {
         mt.color = isBuildable ? oriColor : Color.red;
     }
-
 
 
     [SerializeField]

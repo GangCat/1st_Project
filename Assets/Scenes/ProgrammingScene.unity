@@ -5290,18 +5290,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9d1150675266254ebcd54e4e2b9c8ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  turretPrefab: {fileID: 8421938389435490942, guid: 1f700fe65f7afaa4ba8bb82e28500dfc,
-    type: 3}
-  bunkerPrefab: {fileID: 541031336262926454, guid: 5b7ed6a29ed6b8849a9a3bd7564238ef,
-    type: 3}
-  wallPrefab: {fileID: 8162044424758329862, guid: 152072d177982054cb1999c396f13724,
-    type: 3}
-  nuclearPrefab: {fileID: 541031336262926454, guid: 5b7ed6a29ed6b8849a9a3bd7564238ef,
-    type: 3}
-  barrackPrefab: {fileID: 1877717811974592186, guid: 46a3f45540dec584685d6470c55a9fe0,
-    type: 3}
+  arrStructurePrefab:
+  - {fileID: 8421938389435490942, guid: 1f700fe65f7afaa4ba8bb82e28500dfc, type: 3}
+  - {fileID: 541031336262926454, guid: 5b7ed6a29ed6b8849a9a3bd7564238ef, type: 3}
+  - {fileID: 1877717811974592186, guid: 46a3f45540dec584685d6470c55a9fe0, type: 3}
+  - {fileID: 541031336262926454, guid: 5b7ed6a29ed6b8849a9a3bd7564238ef, type: 3}
+  - {fileID: 8162044424758329862, guid: 152072d177982054cb1999c396f13724, type: 3}
+  arrBlueprintPrefab:
+  - {fileID: 8421938389435490942, guid: f7492d777091d0b458d96b1ad318f2a2, type: 3}
+  - {fileID: 541031336262926454, guid: a26823a836c991b40987cb45726a546d, type: 3}
+  - {fileID: 1877717811974592186, guid: 4472c2189a4b74741a2980e236a6119d, type: 3}
+  - {fileID: 541031336262926454, guid: a26823a836c991b40987cb45726a546d, type: 3}
+  - {fileID: 8162044424758329862, guid: b5c44286a6193a54aaf8a64e9b5c6a37, type: 3}
   ruinPrefab: {fileID: 553641470947927007, guid: a9f2468b6f6365b4ea7db8918c523bf2,
     type: 3}
+  HBeamPrefab: {fileID: 829568684450581014, guid: 0afea8a02fadbb643af09cf3c81821b1,
+    type: 3}
+  buildDelay:
+  - 20
+  - 10
+  - 2
+  - 5
+  - 3
 --- !u!1 &1179648701
 GameObject:
   m_ObjectHideFlags: 0
@@ -9504,6 +9514,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1164142512}
     m_Modifications:
+    - target: {fileID: 3143580946574777160, guid: 84ef0facb01956b449c682e9f37929e0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3845910304497348173, guid: 84ef0facb01956b449c682e9f37929e0,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -9553,6 +9568,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4350492468846402617, guid: 84ef0facb01956b449c682e9f37929e0,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8162044424758329862, guid: 84ef0facb01956b449c682e9f37929e0,
         type: 3}

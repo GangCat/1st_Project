@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class StructureWall : Structure
 {
-    public override void UpdateNodeUnWalkable()
+    public override void UpdateNodeWalkable(bool _walkable)
     {
         curNode = grid.GetNodeFromWorldPoint(transform.position);
         int gridX = curNode.gridX;
@@ -16,7 +16,7 @@ public class StructureWall : Structure
             while (idx < myGridX * myGridY)
             {
                 grid.UpdateNodeWalkable(
-                    grid.GetNodeWithGrid( (idx % myGridX) * factorGridX + gridX, gridY), false);
+                    grid.GetNodeWithGrid( (idx % myGridX) * factorGridX + gridX, gridY), _walkable);
 
                 ++idx;
             }
@@ -26,7 +26,7 @@ public class StructureWall : Structure
             while (idx < myGridX * myGridY)
             {
                 grid.UpdateNodeWalkable(
-                    grid.GetNodeWithGrid(gridX, (idx % myGridY) * factorGridY + gridY), false);
+                    grid.GetNodeWithGrid(gridX, (idx % myGridY) * factorGridY + gridY), _walkable);
 
                 ++idx;
             }

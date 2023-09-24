@@ -41,6 +41,8 @@ public class FriendlyObject : SelectableObject
 
             if(objectType.Equals(ESelectableObjectType.UNIT))
                 ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.DEAD, gameObject, unitType, barrackIdx);
+            else if(objectType.Equals(ESelectableObjectType.HBEAM))
+                ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.DESTROY_HBEAM, gameObject, unitType, barrackIdx);
             else
                 ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.DESTROY, gameObject);
         }
