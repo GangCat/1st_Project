@@ -152,7 +152,6 @@ public class Structure : MonoBehaviour
         GetComponentInChildren<MeshRenderer>().enabled = true;
     }
 
-
     [SerializeField]
     protected int myGridX = 1;
     [SerializeField]

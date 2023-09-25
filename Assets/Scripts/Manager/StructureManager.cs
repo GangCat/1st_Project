@@ -12,6 +12,16 @@ public class StructureManager : MonoBehaviour
         listNuclearStructure = new List<StructureNuclear>();
     }
 
+    public static int UpgradeLimit
+    {
+        get => upgradeLimit;
+        set 
+        { 
+            if(value < 4)
+                upgradeLimit = value; 
+        }
+    }
+
     public void ShowBluepirnt(EObjectType _buildingType)
     {
         if (isBlueprint)
@@ -292,12 +302,14 @@ public class StructureManager : MonoBehaviour
     private float[] buildDelay = new float[(int)EStructureType.LENGTH];
 
     private Dictionary<int, Structure> dicStructure = null;
+    private List<StructureNuclear> listNuclearStructure = null;
     private EStructureType curStructureType = EStructureType.NONE;
     private Structure curStructure = null;
     private PF_Grid grid = null;
     private PF_Node curNode = null;
-    private List<StructureNuclear> listNuclearStructure = null;
 
     private bool isBlueprint = false;
     private int structureIdx = 0;
+
+    private static int upgradeLimit = 1;
 }

@@ -12,7 +12,7 @@ public class StructureBarrack : Structure
         arrMemoryPool = new MemoryPool[arrUnitPrefab.Length];
 
         for (int i = 0; i < arrUnitPrefab.Length; ++i)
-            arrMemoryPool[i] = new MemoryPool(arrUnitPrefab[i],3,transform);
+            arrMemoryPool[i] = new MemoryPool(arrUnitPrefab[i], 3, transform);
     }
 
     public void SetRallyPoint(Vector3 _rallyPoint)
@@ -67,7 +67,6 @@ public class StructureBarrack : Structure
         tempObj.Position = SelectableObjectManager.ResetPosition(tempObj.Position);
         tempObj.Init();
         tempObj.Init(myIdx);
-        
 
         if (!rallyPoint.Equals(spawnPoint))
             tempObj.MoveByPos(rallyPoint);
