@@ -6904,6 +6904,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 588287e3a1564954b91cfb072cf39ec5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  btnLaunchNuclear: {fileID: 1118288387}
 --- !u!1 &1432783268
 GameObject:
   m_ObjectHideFlags: 0
@@ -8068,6 +8069,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0628680798bfea4d9163f5ea56e151e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  btnSpawnMissile: {fileID: 1547233289}
 --- !u!1 &1680809947
 GameObject:
   m_ObjectHideFlags: 0

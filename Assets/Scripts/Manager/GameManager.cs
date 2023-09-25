@@ -68,6 +68,7 @@ public class GameManager : MonoBehaviour
         ArrayUnitButtonCommand.Add(EUnitButtonCommand.HOLD, new CommandButtonHold(selectMng));
         ArrayUnitButtonCommand.Add(EUnitButtonCommand.PATROL, new CommandButtonPatrol(inputMng));
         ArrayUnitButtonCommand.Add(EUnitButtonCommand.ATTACK, new CommandButtonAttack(inputMng));
+        ArrayUnitButtonCommand.Add(EUnitButtonCommand.LAUNCH_NUCLEAR, new CommandButtonLaunchNuclear(inputMng));
 
         ArrayBuildCommand.Add(EMainBaseCommnad.CANCLE, new CommandBuildCancle(structureMng, inputMng));
         ArrayBuildCommand.Add(EMainBaseCommnad.CONFIRM, new CommandBuildConfirm(structureMng, inputMng));
@@ -90,7 +91,8 @@ public class GameManager : MonoBehaviour
         ArrayFriendlyObjectCommand.Add(EFriendlyObjectCommand.DESTROY, new CommandFriendlyDestroy(structureMng));
         ArrayFriendlyObjectCommand.Add(EFriendlyObjectCommand.DEMOLISH, new CommandFriendlyDemolish(structureMng, selectMng));
 
-        ArrayNuclearCommand.Add(ENuclearCommand.SPAWN_MISSILE, new CommandSpawnMissile(structureMng, selectMng));
+        ArrayNuclearCommand.Add(ENuclearCommand.SPAWN_NUCLEAR, new CommandSpawnNuclear(structureMng, selectMng));
+        ArrayNuclearCommand.Add(ENuclearCommand.LAUNCH_NUCLEAR, new CommandLaunchNuclear(structureMng));
     }
 
     private void InitPlayer()

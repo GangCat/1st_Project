@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CommandSpawnMissile : Command
+public class CommandSpawnNuclear : Command
 {
-    public CommandSpawnMissile(StructureManager _structureMng, SelectableObjectManager _selMng)
+    public CommandSpawnNuclear(StructureManager _structureMng, SelectableObjectManager _selMng)
     {
         structureMng = _structureMng;
         selMng = _selMng;
@@ -12,7 +12,7 @@ public class CommandSpawnMissile : Command
 
     public override void Execute(params object[] _objects)
     {
-        structureMng.SpawnMissile(selMng.GetFirstSelectedObjectInList.GetComponent<Structure>().StructureIdx);
+        structureMng.SpawnNuclear(selMng.GetFirstSelectedObjectInList.GetComponent<Structure>().StructureIdx);
     }
 
     private StructureManager structureMng = null;

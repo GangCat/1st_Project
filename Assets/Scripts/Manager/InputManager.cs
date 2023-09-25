@@ -78,6 +78,13 @@ public class InputManager : MonoBehaviour
         isRallyPointClick = true;
     }
 
+    public void OnClickLaunchNuclearButton()
+    {
+        ClearCurFunc();
+        pickPosDisplayGo = Instantiate(pickPosPrefab, transform);
+        isLaunchNuclearClick = true;
+    }
+
     private void ClearCurFunc()
     {
         isMoveClick = false;
@@ -85,6 +92,7 @@ public class InputManager : MonoBehaviour
         isPatrolClick = false;
         isRallyPointClick = false;
         isBuildOperation = false;
+        isLaunchNuclearClick = false;
         // 등등 기능과 관련된 bool값 모두 초기화
     }
 
@@ -113,6 +121,8 @@ public class InputManager : MonoBehaviour
                 PatrolWithMouseClick();
             else if (isRallyPointClick)
                 SetRallyPoint();
+            else if (isLaunchNuclearClick)
+                LaunchNuclear();
             else
                 DragOperateWithMouseClick();
 
@@ -155,6 +165,16 @@ public class InputManager : MonoBehaviour
 
         GameObject pickPosDisplayGo = Instantiate(pickPosPrefab, pickPos, Quaternion.identity, transform);
         StartCoroutine("DestroypickPosDisplay", pickPosDisplayGo);
+
+        ClearCurFunc();
+    }
+
+    private void LaunchNuclear()
+    {
+        Vector3 pickPos = Vector3.zero;
+
+        if (Functions.Picking("StageFloor", floorLayer, ref pickPos))
+            ArrayNuclearCommand.Use(ENuclearCommand.LAUNCH_NUCLEAR, pickPos);
 
         ClearCurFunc();
     }
@@ -316,6 +336,7 @@ public class InputManager : MonoBehaviour
     private bool isPatrolClick = false;
     private bool isBuildOperation = false;
     private bool isRallyPointClick = false;
+    private bool isLaunchNuclearClick = false;
 
     private GameObject pickPosDisplayGo = null;
 

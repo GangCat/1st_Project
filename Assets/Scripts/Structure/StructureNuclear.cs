@@ -7,41 +7,43 @@ public class StructureNuclear : Structure
     public override void Init(int _structureIdx)
     {
         base.Init(_structureIdx);
-        myMissile = GetComponentInChildren<MissileNuclear>();
-        myMissile.SetActive(false);
+        myNuclear = GetComponentInChildren<MissileNuclear>();
+        myNuclear.SetActive(false);
     }
 
-    public void SpawnMissile()
+    public void SpawnNuclear(VoidNuclearDelegate _spwnCompleteCallback)
     {
-        StartCoroutine("SpawnMissileCoroutine");
+        StartCoroutine("SpawnNuclearCoroutine", _spwnCompleteCallback);
     }
 
-    private IEnumerator SpawnMissileCoroutine()
+    private IEnumerator SpawnNuclearCoroutine(VoidNuclearDelegate _spwnCompleteCallback)
     {
-        float buildFinishTime = Time.time + missileProduceDelay;
+        float buildFinishTime = Time.time + NuclearProduceDelay;
         while (buildFinishTime > Time.time)
         {
             // ui Ç¥½Ã
             yield return new WaitForSeconds(0.5f);
         }
 
-        SpawnComplete();
+        SpawnComplete(_spwnCompleteCallback);
     }
 
-    private void SpawnComplete()
+    private void SpawnComplete(VoidNuclearDelegate _spwnCompleteCallback)
     {
-        myMissile.SetActive(true);
+        myNuclear.SetActive(true);
+        _spwnCompleteCallback?.Invoke(this);
     }
 
     public void LaunchNuclear(Vector3 _destPos)
     {
-        myMissile.Launch(_destPos);
+        Debug.Log(StructureIdx);
+        myNuclear.Launch(_destPos);
     }
 
 
     [SerializeField]
-    private float missileProduceDelay = 0f;
+    private float NuclearProduceDelay = 0f;
 
-    private MissileNuclear myMissile = null;
+    private MissileNuclear myNuclear = null;
 
 }

@@ -155,7 +155,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   curHp: 0
-  maxHp: 1000
+  maxHp: 10
 --- !u!114 &-4067709134023557582
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -193,7 +193,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myGridX: 1
   myGridY: 1
-  missileProduceDelay: 2
+  NuclearProduceDelay: 0
 --- !u!1001 &109404280035626104
 PrefabInstance:
   m_ObjectHideFlags: 0

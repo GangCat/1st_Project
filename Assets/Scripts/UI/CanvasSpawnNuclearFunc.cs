@@ -10,7 +10,7 @@ public class CanvasSpawnNuclearFunc : CanvasFuncBase
         btnSpawnMissile.onClick.AddListener(
             () =>
             {
-                ArrayNuclearCommand.Use(ENuclearCommand.SPAWN_MISSILE);
+                ArrayNuclearCommand.Use(ENuclearCommand.SPAWN_NUCLEAR);
             });
 
         gameObject.SetActive(false);

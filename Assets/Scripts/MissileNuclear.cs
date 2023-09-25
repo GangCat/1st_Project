@@ -12,5 +12,6 @@ public class MissileNuclear : MonoBehaviour
     public void Launch(Vector3 _destPos)
     {
         Debug.Log(_destPos + "Launch");
+        SetActive(false);
     }
 }

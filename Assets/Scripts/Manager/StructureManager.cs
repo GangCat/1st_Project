@@ -9,6 +9,7 @@ public class StructureManager : MonoBehaviour
     {
         grid = _grid;
         dicStructure = new Dictionary<int, Structure>();
+        listNuclearStructure = new List<StructureNuclear>();
     }
 
     public void ShowBluepirnt(EObjectType _buildingType)
@@ -82,6 +83,8 @@ public class StructureManager : MonoBehaviour
         InstantiateRuin(structure);
         structure.UpdateNodeWalkable(true);
         dicStructure.Remove(_structureIdx);
+        if (structure.GetComponent<FriendlyObject>().GetObjectType().Equals(EObjectType.NUCLEAR))
+            listNuclearStructure.Remove(structure.GetComponent<StructureNuclear>());
         structure.DestroyStructure();
     }
 
@@ -245,12 +248,30 @@ public class StructureManager : MonoBehaviour
         barrack.DeactivateUnit(_removeGo, _unitType);
     }
 
-    public void SpawnMissile(int _structureIdx)
+    public void SpawnNuclear(int _structureIdx)
     {
         Structure nuclearStructure = null;
         dicStructure.TryGetValue(_structureIdx, out nuclearStructure);
 
-        nuclearStructure.GetComponent<StructureNuclear>().SpawnMissile();
+        if (nuclearStructure != null)
+        {
+            StructureNuclear nuclear = nuclearStructure.GetComponent<StructureNuclear>();
+            nuclear.SpawnNuclear(SpawnNuclearComplete);
+        }
+    }
+
+    private void SpawnNuclearComplete(StructureNuclear _nuclear)
+    {
+        listNuclearStructure.Add(_nuclear);
+    }
+
+    public void LaunchNuclear(Vector3 _destPos)
+    {
+        if (listNuclearStructure.Count > 0)
+        {
+            listNuclearStructure[0].LaunchNuclear(_destPos);
+            listNuclearStructure.RemoveAt(0);
+        }
     }
 
 
@@ -275,6 +296,7 @@ public class StructureManager : MonoBehaviour
     private Structure curStructure = null;
     private PF_Grid grid = null;
     private PF_Node curNode = null;
+    private List<StructureNuclear> listNuclearStructure = null;
 
     private bool isBlueprint = false;
     private int structureIdx = 0;
