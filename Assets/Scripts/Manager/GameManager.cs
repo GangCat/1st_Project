@@ -89,6 +89,8 @@ public class GameManager : MonoBehaviour
         ArrayFriendlyObjectCommand.Add(EFriendlyObjectCommand.DEAD, new CommandFriendlyDead(structureMng, selectMng));
         ArrayFriendlyObjectCommand.Add(EFriendlyObjectCommand.DESTROY, new CommandFriendlyDestroy(structureMng));
         ArrayFriendlyObjectCommand.Add(EFriendlyObjectCommand.DEMOLISH, new CommandFriendlyDemolish(structureMng, selectMng));
+
+        ArrayNuclearCommand.Add(ENuclearCommand.SPAWN_MISSILE, new CommandSpawnMissile(structureMng, selectMng));
     }
 
     private void InitPlayer()

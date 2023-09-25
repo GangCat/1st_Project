@@ -245,6 +245,14 @@ public class StructureManager : MonoBehaviour
         barrack.DeactivateUnit(_removeGo, _unitType);
     }
 
+    public void SpawnMissile(int _structureIdx)
+    {
+        Structure nuclearStructure = null;
+        dicStructure.TryGetValue(_structureIdx, out nuclearStructure);
+
+        nuclearStructure.GetComponent<StructureNuclear>().SpawnMissile();
+    }
+
 
     [Header("-StructurePrefab(TURRET, BUNKER, BARRACK, NUCLEAR, WALL)")]
     [SerializeField]

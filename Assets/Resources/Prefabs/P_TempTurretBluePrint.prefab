@@ -296,7 +296,7 @@ GameObject:
   - component: {fileID: 5513323762786753887}
   - component: {fileID: 6523300460082605746}
   m_Layer: 10
-  m_Name: P_TempTurretBluePrint
+  m_Name: P_TempTurretBlueprint
   m_TagString: FriendlyStructure
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

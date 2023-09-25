@@ -59,6 +59,10 @@ public class FuncButtonManager : MonoBehaviour
                 canvasStructureBaseFunc.SetActive(true);
                 canvasBarrackFunc.SetActive(true);
                 break;
+            case EObjectType.NUCLEAR:
+                canvasStructureBaseFunc.SetActive(true);
+                canvasSpawnNuclearFunc.SetActive(true);
+                break;
             case EObjectType.HBEAM:
                 canvasStructureBaseFunc.SetActive(true);
                 break;
@@ -108,6 +112,10 @@ public class FuncButtonManager : MonoBehaviour
             case EObjectType.BARRACK:
                 canvasStructureBaseFunc.SetActive(false);
                 canvasBarrackFunc.SetActive(false);
+                break;
+            case EObjectType.NUCLEAR:
+                canvasStructureBaseFunc.SetActive(false);
+                canvasSpawnNuclearFunc.SetActive(false);
                 break;
             default:
                 break;

@@ -42,3 +42,4 @@ public enum EUnitCommand { NONE = -1, NODE_UPDATE, LENGTH }
 public enum EBunkerCommand { NONE = -1, IN_UNIT, OUT_ONE_UNIT, OUT_ALL_UNIT, EXPAND_WALL, LENGTH }
 public enum EEnemyObjectCommand { NONE = -1, WAVE_ENEMY_DEAD, MAP_ENEMY_DEAD, LENGTH }
 public enum EFriendlyObjectCommand { NONE = -1, DEAD, DESTROY, DESTROY_HBEAM, DEMOLISH, LENGTH }
+public enum ENuclearCommand { NONE = -1, SPAWN_MISSILE, LAUNCH_MISSILE, LENGTH }

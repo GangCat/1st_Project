@@ -21,6 +21,7 @@ public class Structure : MonoBehaviour
     {
         GetComponent<SelectableObject>().Init();
         myIdx = _structureIdx;
+        upgradeLevel = 1;
         ShowHBeam();
         HideModel();
     }
@@ -50,6 +51,11 @@ public class Structure : MonoBehaviour
     public void SetPos(Vector3 _targetPos)
     {
         transform.position = _targetPos;
+    }
+
+    public virtual void Upgrade() 
+    {
+        
     }
 
     public virtual void UpdateNodeWalkable(bool _walkable)
@@ -161,6 +167,7 @@ public class Structure : MonoBehaviour
     protected int factorGridX = 1;
     protected int factorGridY = 1;
     protected int myIdx = -1;
+    protected int upgradeLevel = 0;
 
     protected bool isBuildable = true;
 }
