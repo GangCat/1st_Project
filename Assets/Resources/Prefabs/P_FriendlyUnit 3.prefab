@@ -107,11 +107,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectType: 0
-  chaseStartRange: 5
+  chaseStartRange: 6
   chaseFinishRange: 7
-  attackRange: 3
+  attackRange: 5
   stopDelay: 2
-  followOffset: 4
+  followOffset: 3
   overlapLayerMask:
     serializedVersion: 2
     m_Bits: 128

@@ -92,7 +92,7 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType
                     }
                 }
             }
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.05f);
         }
     }
 
