@@ -10,7 +10,7 @@ public class UIManager : MonoBehaviour
         canvasFuncButton.Init();
     }
 
-    public void ShowFuncButton(ESelectableObjectType _selectObjectType)
+    public void ShowFuncButton(EObjectType _selectObjectType)
     {
         canvasFuncButton.ShowFuncButton(_selectObjectType);
     }

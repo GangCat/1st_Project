@@ -31,10 +31,9 @@ public struct SUnitState
 }
 
 [System.Serializable]
-public enum ESelectableObjectType { NONE = -1, UNIT, UNIT_HERO, MAIN_BASE, TURRET, BUNKER, WALL, BARRACK, NUCLEAR, ENEMY_UNIT, ENEMY_STRUCTURE, HBEAM, LENGTH }
+public enum EObjectType { NONE = -1, UNIT, UNIT_HERO, MAIN_BASE, TURRET, BUNKER, WALL, BARRACK, NUCLEAR, ENEMY_UNIT, ENEMY_STRUCTURE, HBEAM, LENGTH }
 public enum EState { NONE = -1, IDLE, MOVE, STOP, HOLD, ATTACK, LENGTH }
 public enum ESpawnUnitType { NONE = -1, MELEE, RANGE, ROCKET, LENGTH }
-
 
 public enum EUnitButtonCommand { NONE = -1, CANCLE, MOVE, STOP, HOLD, PATROL, ATTACK, LENGTH }
 public enum EMainBaseCommnad { NONE = -1, CANCLE, CONFIRM, BUILD_STRUCTURE, DEMOLITION, UPGRADE, LENGTH }

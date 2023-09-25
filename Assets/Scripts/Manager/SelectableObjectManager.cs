@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SelectableObjectManager : MonoBehaviour
 {
-    public delegate void VoidSelectObjectTypeDelegate(ESelectableObjectType _objectType);
+    public delegate void VoidSelectObjectTypeDelegate(EObjectType _objectType);
     public bool IsListEmpty => listSelectedFriendlyObject.Count < 1;
     public bool IsFriendlyUnit => isFriendlyUnitInList;
     public FriendlyObject GetFirstSelectedObjectInList => listSelectedFriendlyObject[0];
@@ -78,19 +78,19 @@ public class SelectableObjectManager : MonoBehaviour
 
     public void OutOneUnit()
     {
-        if (listSelectedFriendlyObject[0].ObjectType.Equals(ESelectableObjectType.BUNKER))
+        if (listSelectedFriendlyObject[0].GetObjectType().Equals(EObjectType.BUNKER))
             listSelectedFriendlyObject[0].GetComponent<StructureBunker>().OutOneUnit();
     }
 
     public void OutAllUnit()
     {
-        if (listSelectedFriendlyObject[0].ObjectType.Equals(ESelectableObjectType.BUNKER))
+        if (listSelectedFriendlyObject[0].GetObjectType().Equals(EObjectType.BUNKER))
             listSelectedFriendlyObject[0].GetComponent<StructureBunker>().OutAllUnit();
     }
 
     public void SpawnUnit(ESpawnUnitType _unitType)
     {
-        if (listSelectedFriendlyObject[0].ObjectType.Equals(ESelectableObjectType.BARRACK))
+        if (listSelectedFriendlyObject[0].GetObjectType().Equals(EObjectType.BARRACK))
             listSelectedFriendlyObject[0].GetComponent<StructureBarrack>().SpawnUnit(_unitType);
     }
 
@@ -119,14 +119,14 @@ public class SelectableObjectManager : MonoBehaviour
         listSelectedFriendlyObject.Clear();
         if (tempListSelectableObject.Count < 1)
         {
-            selectObjectCallback?.Invoke(ESelectableObjectType.NONE);
+            selectObjectCallback?.Invoke(EObjectType.NONE);
             return;
         }
 
         SelectableObject tempObj = null;
+        isFriendlyUnitInList = false;
         bool isFriendlyStructure = false;
         bool isEnemyObject = false;
-        isFriendlyUnitInList = false;
         // 오브젝트를 하나하나 검사.
         foreach (SelectableObject obj in tempListSelectableObject)
         {
@@ -134,10 +134,10 @@ public class SelectableObjectManager : MonoBehaviour
 
             if (listSelectedFriendlyObject.Count > 11) break;
 
-            switch (obj.ObjectType)
+            switch (obj.GetObjectType())
             {
-                case ESelectableObjectType.UNIT:
-                case ESelectableObjectType.UNIT_HERO:
+                case EObjectType.UNIT:
+                case EObjectType.UNIT_HERO:
                     if (!isFriendlyUnitInList)
                     {
                         listSelectedFriendlyObject.Add(obj.GetComponent<FriendlyObject>());
@@ -148,19 +148,19 @@ public class SelectableObjectManager : MonoBehaviour
                     else
                         listSelectedFriendlyObject.Add(obj.GetComponent<FriendlyObject>());
                     break;
-                case ESelectableObjectType.MAIN_BASE:
-                case ESelectableObjectType.TURRET:
-                case ESelectableObjectType.BUNKER:
-                case ESelectableObjectType.WALL:
-                case ESelectableObjectType.BARRACK:
-                case ESelectableObjectType.NUCLEAR:
+                case EObjectType.MAIN_BASE:
+                case EObjectType.TURRET:
+                case EObjectType.BUNKER:
+                case EObjectType.WALL:
+                case EObjectType.BARRACK:
+                case EObjectType.NUCLEAR:
                     if (isFriendlyUnitInList) break;
                     isFriendlyStructure = true;
                     isEnemyObject = false;
                     if (!tempObj) tempObj = obj;
                     break;
-                case ESelectableObjectType.ENEMY_UNIT:
-                case ESelectableObjectType.ENEMY_STRUCTURE:
+                case EObjectType.ENEMY_UNIT:
+                case EObjectType.ENEMY_STRUCTURE:
                     if (isFriendlyUnitInList) break;
                     if (isFriendlyStructure) break;
                     isEnemyObject = true;
@@ -171,18 +171,21 @@ public class SelectableObjectManager : MonoBehaviour
             }
         }
 
-        if(isEnemyObject)
+        if (isEnemyObject)
         {
             selectedEnemyObject = tempObj.GetComponent<EnemyObject>();
-            selectObjectCallback?.Invoke(selectedEnemyObject.ObjectType);
-            tempListSelectableObject.Clear();
-            return;
+            selectObjectCallback?.Invoke(selectedEnemyObject.GetObjectType());
         }
-
-        if (isFriendlyStructure)
+        else if (isFriendlyStructure)
+        {
             listSelectedFriendlyObject.Add(tempObj.GetComponent<FriendlyObject>());
-
-        selectObjectCallback?.Invoke(listSelectedFriendlyObject[0].ObjectType);
+            if (tempObj.GetComponent<Structure>().IsUnderConstruction)
+                selectObjectCallback?.Invoke(EObjectType.HBEAM);
+            else
+                selectObjectCallback?.Invoke(listSelectedFriendlyObject[0].GetObjectType());
+        }
+        else if (isFriendlyUnitInList)
+            selectObjectCallback?.Invoke(listSelectedFriendlyObject[0].GetObjectType());
 
         tempListSelectableObject.Clear();
         return;
@@ -298,7 +301,7 @@ public class SelectableObjectManager : MonoBehaviour
 
     public void MoveUnitByPicking(Transform _targetTr)
     {
-        if (_targetTr.GetComponent<SelectableObject>().ObjectType.Equals(ESelectableObjectType.BUNKER))
+        if (_targetTr.GetComponent<IGetObjectType>().GetObjectType().Equals(EObjectType.BUNKER))
         {
             curBunker = _targetTr.GetComponent<StructureBunker>();
             foreach (FriendlyObject obj in listSelectedFriendlyObject)

@@ -106,14 +106,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectType: 8
-  chaseStartRange: 4
-  chaseFinishRange: 5
-  attackRange: 2
+  chaseStartRange: 5
+  chaseFinishRange: 6
+  attackRange: 4
   stopDelay: 2
   followOffset: 1
   overlapLayerMask:
     serializedVersion: 2
-    m_Bits: 1152
+    m_Bits: 16512
 --- !u!1 &3256322658277572286
 GameObject:
   m_ObjectHideFlags: 0

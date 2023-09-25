@@ -5307,8 +5307,8 @@ MonoBehaviour:
   HBeamPrefab: {fileID: 829568684450581014, guid: 0afea8a02fadbb643af09cf3c81821b1,
     type: 3}
   buildDelay:
-  - 20
-  - 10
+  - 3
+  - 3
   - 2
   - 5
   - 3

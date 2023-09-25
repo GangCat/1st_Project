@@ -12,7 +12,7 @@ public class CommandBuildStructure : Command
 
     public override void Execute(params object[] _objects)
     {
-        buildMng.ShowBluepirnt((ESelectableObjectType)_objects[0]);
+        buildMng.ShowBluepirnt((EObjectType)_objects[0]);
         inputMng.IsBuildOperation = true;
     }
 

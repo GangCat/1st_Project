@@ -11,7 +11,7 @@ public class StructureManager : MonoBehaviour
         dicStructure = new Dictionary<int, Structure>();
     }
 
-    public void ShowBluepirnt(ESelectableObjectType _buildingType)
+    public void ShowBluepirnt(EObjectType _buildingType)
     {
         if (isBlueprint)
         {
@@ -21,25 +21,25 @@ public class StructureManager : MonoBehaviour
 
         switch (_buildingType)
         {
-            case ESelectableObjectType.TURRET:
+            case EObjectType.TURRET:
                 {
                     curStructureType = EStructureType.TURRET;
                     curStructure = Instantiate(arrBlueprintPrefab[(int)EStructureType.TURRET], transform).GetComponent<Structure>();
                 }
                 break;
-            case ESelectableObjectType.BUNKER:
+            case EObjectType.BUNKER:
                 {
                     curStructureType = EStructureType.BUNKER;
                     curStructure = Instantiate(arrBlueprintPrefab[(int)EStructureType.BUNKER], transform).GetComponent<Structure>();
                 }
                 break;
-            case ESelectableObjectType.NUCLEAR:
+            case EObjectType.NUCLEAR:
                 {
                     curStructureType = EStructureType.NUCLEAR;
                     curStructure = Instantiate(arrBlueprintPrefab[(int)EStructureType.NUCLEAR], transform).GetComponent<Structure>();
                 }
                 break;
-            case ESelectableObjectType.BARRACK:
+            case EObjectType.BARRACK:
                 {
                     curStructureType = EStructureType.BARRACK;
                     curStructure = Instantiate(arrBlueprintPrefab[(int)EStructureType.BARRACK], transform).GetComponent<Structure>();
@@ -62,13 +62,11 @@ public class StructureManager : MonoBehaviour
     {
         Structure structure = null;
         dicStructure.TryGetValue(_structureIdx, out structure);
-        InstantiateRuin(_structureIdx);
+        //InstantiateRuin(_structureIdx);
+        InstantiateRuin(structure);
+        structure.UpdateNodeWalkable(true);
+        dicStructure.Remove(_structureIdx);
         structure.DestroyStructure();
-    }
-
-    public void DestroyStructure()
-    {
-        isStructureDestroy = true;
     }
 
     private IEnumerator ShowBlueprint()
@@ -82,10 +80,10 @@ public class StructureManager : MonoBehaviour
         RaycastHit hit;
         while (true)
         {
-            Functions.Picking(1<<LayerMask.NameToLayer("StageFloor"), out hit);
+            Functions.Picking(1 << LayerMask.NameToLayer("StageFloor"), out hit);
             curNode = grid.GetNodeFromWorldPoint(hit.point);
             curStructure.SetPos(curNode.worldPos);
-            
+
             yield return null;
         }
     }
@@ -153,7 +151,7 @@ public class StructureManager : MonoBehaviour
     public bool CancleBuild()
     {
         StopAllCoroutines();
-        curStructure.BuildComplete();
+        curStructure.BuildCancle();
         Destroy(curStructure.gameObject);
         isBlueprint = false;
         return false;
@@ -180,100 +178,50 @@ public class StructureManager : MonoBehaviour
 
     private IEnumerator BuildStructureCoroutine()
     {
-        Structure newStructure = Instantiate(arrStructurePrefab[(int)curStructureType], curStructure.transform.position, Quaternion.identity).GetComponent<Structure>();
+        Structure newStructure = Instantiate(arrStructurePrefab[(int)curStructureType], curStructure.transform.position, curStructure.transform.rotation).GetComponent<Structure>();
+        if (curStructureType.Equals(EStructureType.WALL))
+        {
+            newStructure.SetGrid(curStructure.GridX, curStructure.GridY);
+            newStructure.SetFactor(curStructure.FactorX, curStructure.FactorY);
+        }
+
+        Destroy(curStructure.gameObject);
+        newStructure.Init(grid);
+        newStructure.Init(structureIdx);
         dicStructure.Add(structureIdx, newStructure);
         ++structureIdx;
-        newStructure.gameObject.SetActive(false);
-        List<GameObject> listHBeam = new List<GameObject>();
-        InstantiateHBeam(listHBeam);
-        Destroy(curStructure.gameObject);
+        newStructure.BuildStart();
+        newStructure.UpdateNodeWalkable(false);
         isBlueprint = false;
 
         float buildFinishTime = Time.time + buildDelay[(int)curStructureType];
         while (buildFinishTime > Time.time)
         {
             // ui Ç¥½Ã
-            if (isStructureDestroy)
-            {
-                DestroyHBeam(listHBeam);
-                Destroy(newStructure.gameObject);
-                isStructureDestroy = false;
-                yield break;
-            }
-
-            yield return null;
+            yield return new WaitForSeconds(0.5f);
         }
 
-        DestroyHBeam(listHBeam);
-        //curStructure.DestroyHBeam();
-        //newStructure.SetColliderEnable(true);
-        newStructure.gameObject.SetActive(true);
-        newStructure.Init(grid);
-        newStructure.Init(structureIdx);
-        newStructure.BuildComplete();
-        newStructure.UpdateNodeWalkable(false);
-        newStructure.transform.parent = transform;
-        
-        yield return null;
-    }
-
-    #region HBeam
-    private void InstantiateHBeam(List<GameObject> _listHBeam)
-    {
-        curNode = grid.GetNodeFromWorldPoint(curStructure.transform.position);
-        int gridX = curNode.gridX;
-        int gridY = curNode.gridY;
-        int structureGirdX = curStructure.GridX;
-        int structureGirdY = curStructure.GridY;
-        int StructureFactorX = curStructure.FactorX;
-        int StructureFactorY = curStructure.FactorY;
-        int idx = 0;
-
-        while (idx < structureGirdX * structureGirdY)
+        if (newStructure != null)
         {
-            PF_Node curRuinNode = grid.GetNodeWithGrid(idx % structureGirdX * StructureFactorX + gridX, idx / structureGirdY * StructureFactorY + gridY);
-            _listHBeam.Add(Instantiate(HBeamPrefab, curRuinNode.worldPos, Quaternion.identity));
-            _listHBeam[idx].GetComponent<Structure>().Init(grid);
-            _listHBeam[idx].GetComponent<Structure>().Init(grid);
-            grid.UpdateNodeWalkable(curRuinNode, false);
-            ++idx;
+            newStructure.BuildComplete();
+            newStructure.transform.parent = transform;
         }
     }
-
-    private void DestroyHBeam(List<GameObject> _listHBeam)
-    {
-        for (int i = 0; i < _listHBeam.Count; ++i)
-        {
-            _listHBeam[i].GetComponent<Structure>().UpdateNodeWalkable(false);
-            Destroy(_listHBeam[i]);
-        }
-        _listHBeam.Clear();
-    }
-    #endregion
 
     #region Ruin
-    private void InstantiateRuin(int _structureIdx)
+    private void InstantiateRuin(Structure _structure)
     {
-        Structure tempStructure = null;
-        dicStructure.TryGetValue(_structureIdx, out tempStructure);
-        curNode = grid.GetNodeFromWorldPoint(tempStructure.transform.position);
-        int gridX = curNode.gridX;
-        int gridY = curNode.gridY;
-        int stuructureGridX = tempStructure.GridX;
-        int stuructureGridY = tempStructure.GridY;
-        int StructureFactorX = tempStructure.FactorX;
-        int StructureFactorY = tempStructure.FactorY;
-        int idx = 0;
+        StructureCollider[] arrCol = _structure.GetComponentsInChildren<StructureCollider>();
 
-        while (idx < stuructureGridX * stuructureGridY)
+        for (int i = 0; i < arrCol.Length; ++i)
         {
-            PF_Node curRuinNode = grid.GetNodeWithGrid(idx % stuructureGridX * StructureFactorX + gridX, idx / stuructureGridY * StructureFactorY + gridY);
-            Instantiate(ruinPrefab, curRuinNode.worldPos, Quaternion.identity).GetComponent<Structure>().Init(grid);
-            grid.UpdateNodeWalkable(curRuinNode, true);
-            ++idx;
+            GameObject ruinGo = Instantiate(ruinPrefab, arrCol[i].transform.position, Quaternion.identity);
+            //grid.UpdateNodeWalkable(grid.GetNodeFromWorldPoint(ruinGo.transform.position),true);
+            ruinGo.GetComponent<Structure>().Init();
         }
     }
     #endregion
+
     public void DeactivateUnit(GameObject _removeGo, ESpawnUnitType _unitType, int _barrackIdx)
     {
         Structure barrack = null;
@@ -307,6 +255,5 @@ public class StructureManager : MonoBehaviour
     private PF_Node curNode = null;
 
     private bool isBlueprint = false;
-    private bool isStructureDestroy = false;
     private int structureIdx = 0;
 }

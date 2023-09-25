@@ -21,7 +21,7 @@ public class StructureBunker : Structure
 
         if (_curObj == null) return;
 
-        if (_curObj.ObjectType.Equals(ESelectableObjectType.UNIT_HERO)) return;
+        if (_curObj.GetObjectType().Equals(EObjectType.UNIT_HERO)) return;
 
         _curObj.Position = warpPos;
         _curObj.transform.parent = transform;

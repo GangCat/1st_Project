@@ -27,37 +27,40 @@ public class FuncButtonManager : MonoBehaviour
         cancleFunc.Init();
     }
 
-    public void ShowFuncButton(ESelectableObjectType _selectObjectType)
+    public void ShowFuncButton(EObjectType _selectObjectType)
     {
         HideFuncButton();
 
         switch (_selectObjectType)
         {
-            case ESelectableObjectType.UNIT:
+            case EObjectType.UNIT:
                 canvasUnitBaseFunc.SetActive(true);
                 break;
-            case ESelectableObjectType.UNIT_HERO:
+            case EObjectType.UNIT_HERO:
                 canvasUnitBaseFunc.SetActive(true);
                 canvasHeroFunc.SetActive(true);
                 break;
-            case ESelectableObjectType.MAIN_BASE:
+            case EObjectType.MAIN_BASE:
                 canvasMainBaseFunc.SetActive(true);
                 canvasStructureBaseFunc.SetActive(true);
                 break;
-            case ESelectableObjectType.TURRET:
+            case EObjectType.TURRET:
                 canvasStructureBaseFunc.SetActive(true);
                 canvasTurretFunc.SetActive(true);
                 break;
-            case ESelectableObjectType.BUNKER:
+            case EObjectType.BUNKER:
                 canvasStructureBaseFunc.SetActive(true);
                 canvasBunkerFunc.SetActive(true);
                 break;
-            case ESelectableObjectType.WALL:
+            case EObjectType.WALL:
                 canvasStructureBaseFunc.SetActive(true);
                 break;
-            case ESelectableObjectType.BARRACK:
+            case EObjectType.BARRACK:
                 canvasStructureBaseFunc.SetActive(true);
                 canvasBarrackFunc.SetActive(true);
+                break;
+            case EObjectType.HBEAM:
+                canvasStructureBaseFunc.SetActive(true);
                 break;
             default:
                 break;
@@ -80,29 +83,29 @@ public class FuncButtonManager : MonoBehaviour
     {
         switch (curActiveBtnFunc)
         {
-            case ESelectableObjectType.UNIT:
+            case EObjectType.UNIT:
                 canvasUnitBaseFunc.SetActive(false);
                 break;
-            case ESelectableObjectType.UNIT_HERO:
+            case EObjectType.UNIT_HERO:
                 canvasUnitBaseFunc.SetActive(false);
                 canvasHeroFunc.SetActive(false);
                 break;
-            case ESelectableObjectType.MAIN_BASE:
+            case EObjectType.MAIN_BASE:
                 canvasStructureBaseFunc.SetActive(false);
                 canvasMainBaseFunc.SetActive(false);
                 break;
-            case ESelectableObjectType.TURRET:
+            case EObjectType.TURRET:
                 canvasStructureBaseFunc.SetActive(false);
                 canvasTurretFunc.SetActive(false);
                 break;
-            case ESelectableObjectType.BUNKER:
+            case EObjectType.BUNKER:
                 canvasStructureBaseFunc.SetActive(false);
                 canvasBunkerFunc.SetActive(false);
                 break;
-            case ESelectableObjectType.WALL:
+            case EObjectType.WALL:
                 canvasStructureBaseFunc.SetActive(false);
                 break;
-            case ESelectableObjectType.BARRACK:
+            case EObjectType.BARRACK:
                 canvasStructureBaseFunc.SetActive(false);
                 canvasBarrackFunc.SetActive(false);
                 break;
@@ -121,5 +124,5 @@ public class FuncButtonManager : MonoBehaviour
     private CanvasHeroFunc canvasHeroFunc = null;
     private CanvasCancleFunc cancleFunc = null;
 
-    private ESelectableObjectType curActiveBtnFunc = ESelectableObjectType.NONE;
+    private EObjectType curActiveBtnFunc = EObjectType.NONE;
 }

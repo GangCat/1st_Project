@@ -10,25 +10,25 @@ public class CanvasMainBaseFunc : CanvasFuncBase
         btnBuildTurret.onClick.AddListener(
             () =>
             {
-                ArrayBuildCommand.Use(EMainBaseCommnad.BUILD_STRUCTURE, ESelectableObjectType.TURRET);
+                ArrayBuildCommand.Use(EMainBaseCommnad.BUILD_STRUCTURE, EObjectType.TURRET);
             });
 
         btnBuildBunker.onClick.AddListener(
             () =>
             {
-                ArrayBuildCommand.Use(EMainBaseCommnad.BUILD_STRUCTURE, ESelectableObjectType.BUNKER);
+                ArrayBuildCommand.Use(EMainBaseCommnad.BUILD_STRUCTURE, EObjectType.BUNKER);
             });
 
         btnBuildBarrack.onClick.AddListener(
             () =>
             {
-                ArrayBuildCommand.Use(EMainBaseCommnad.BUILD_STRUCTURE, ESelectableObjectType.BARRACK);
+                ArrayBuildCommand.Use(EMainBaseCommnad.BUILD_STRUCTURE, EObjectType.BARRACK);
             });
 
         btnBuildNuclear.onClick.AddListener(
             () =>
             {
-                ArrayBuildCommand.Use(EMainBaseCommnad.BUILD_STRUCTURE, ESelectableObjectType.NUCLEAR);
+                ArrayBuildCommand.Use(EMainBaseCommnad.BUILD_STRUCTURE, EObjectType.NUCLEAR);
             });
 
         gameObject.SetActive(false);

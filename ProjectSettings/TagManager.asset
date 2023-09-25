@@ -24,7 +24,7 @@ TagManager:
   - UnitInBunker
   - EnemyDead
   - RuinStructure
-  - 
+  - DamageableCollider
   - 
   - 
   - 

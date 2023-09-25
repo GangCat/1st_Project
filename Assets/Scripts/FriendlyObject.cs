@@ -16,11 +16,23 @@ public class FriendlyObject : SelectableObject
             oriAttRange = attackRange;
             stateMachine.Init(GetCurState);
             ResetStateStack();
-            if (objectType.Equals(ESelectableObjectType.TURRET))
+            if (objectType.Equals(EObjectType.TURRET))
+            {
+                StructureCollider[] arrCollider = GetComponentsInChildren<StructureCollider>();
+                for (int i = 0; i < arrCollider.Length; ++i)
+                    arrCollider[i].Init(GetDmg, objectType);
+
                 StateHold();
+            }
             else
                 StateIdle();
         }
+        else
+        {
+            StructureCollider[] arrCollider = GetComponentsInChildren<StructureCollider>();
+            for (int i = 0; i < arrCollider.Length; ++i)
+                arrCollider[i].Init(GetDmg, objectType);
+        }   
 
         SelectableObjectManager.UpdateNodeWalkable(transform.position, nodeIdx);
     }
@@ -39,9 +51,9 @@ public class FriendlyObject : SelectableObject
             StopAllCoroutines();
             SelectableObjectManager.ResetNodeWalkable(transform.position, nodeIdx);
 
-            if(objectType.Equals(ESelectableObjectType.UNIT))
+            if(objectType.Equals(EObjectType.UNIT))
                 ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.DEAD, gameObject, unitType, barrackIdx);
-            else if(objectType.Equals(ESelectableObjectType.HBEAM))
+            else if(objectType.Equals(EObjectType.HBEAM))
                 ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.DESTROY_HBEAM, gameObject, unitType, barrackIdx);
             else
                 ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.DESTROY, gameObject);
@@ -90,18 +102,12 @@ public class FriendlyObject : SelectableObject
 
     public void MoveByPos(Vector3 _Pos)
     {
-        //if (isMovable)
-        //{
-            stateMachine.TargetTr = null;
-            targetTr = null;
-
-            isAttack = false;
-            targetPos = _Pos;
-            curMoveCondition = EMoveState.NORMAL;
-            ResetStateStack();
-            PushState();
-            StateMove();
-        //}
+        isAttack = false;
+        targetPos = _Pos;
+        curMoveCondition = EMoveState.NORMAL;
+        ResetStateStack();
+        PushState();
+        StateMove();
     }
 
     public override void MoveAttack(Vector3 _targetPos)
@@ -115,6 +121,8 @@ public class FriendlyObject : SelectableObject
         if (isMovable)
         {
             if (_targetTr.Equals(transform)) return;
+
+            ResetStateStack();
 
             stateMachine.TargetTr = _targetTr;
             targetTr = _targetTr;
@@ -132,7 +140,6 @@ public class FriendlyObject : SelectableObject
                 isAttack = false;
                 curMoveCondition = EMoveState.FOLLOW;
             }
-            ResetStateStack();
             PushState();
             StateMove();
         }
@@ -162,8 +169,6 @@ public class FriendlyObject : SelectableObject
     {
         if (isMovable)
         {
-            stateMachine.TargetTr = null;
-            targetTr = null;
             isAttack = true;
             ResetStateStack();
             PushState();
@@ -182,7 +187,22 @@ public class FriendlyObject : SelectableObject
             {
                 foreach (Collider c in arrCollider)
                 {
-                    if (c.CompareTag("EnemyUnit"))
+                    EObjectType targetType = c.GetComponent<IGetObjectType>().GetObjectType();
+
+                    if (targetTr != null)
+                    {
+                        if (c.transform.Equals(targetTr))
+                        {
+                            prevMoveCondition = curMoveCondition;
+                            curMoveCondition = EMoveState.CHASE;
+                            PushState();
+                            StateMove();
+                            yield break;
+                        }
+                        continue;
+                    }
+
+                    if (targetType.Equals(EObjectType.ENEMY_UNIT))
                     {
                         stateMachine.TargetTr = c.transform;
                         targetTr = c.transform;
@@ -195,7 +215,7 @@ public class FriendlyObject : SelectableObject
                     }
                 }
             }
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.1f);
         }
     }
 
@@ -426,7 +446,7 @@ public class FriendlyObject : SelectableObject
             if (elapsedTime > stopDelay)
             {
                 elapsedTime = 0f;
-                if (Vector3.SqrMagnitude(transform.position - targetTr.position) > Mathf.Pow(followOffset, 2f))
+                if (!isTargetInRangeFromMyPos(targetTr.position, followOffset))
                 {
                     curWayNode = null;
                     PF_PathRequestManager.RequestPath(transform.position, targetTr.position, OnPathFound);

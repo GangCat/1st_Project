@@ -13,6 +13,7 @@ public class EnemyObject : SelectableObject
         myIdx = _myIdx;
         gameObject.layer = LayerMask.NameToLayer("SelectableObject");
     }
+
     public override void GetDmg(float _dmg)
     {
         if (statusHp.DecreaseHpAndCheckIsDead(_dmg))

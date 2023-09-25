@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class StructureRuin : Structure
 {
-    public override void Init(PF_Grid _grid)
+    public override void Init()
     {
-        grid = _grid;
         StartCoroutine("AutoDestroyCoroutine");
     }
 

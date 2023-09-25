@@ -8,6 +8,10 @@ public class Structure : MonoBehaviour
     {
         oriColor = GetComponentInChildren<MeshRenderer>().material.color;
         mt = GetComponentInChildren<MeshRenderer>().material;
+        arrCollider = GetComponentsInChildren<StructureCollider>();
+        for (int i = 0; i < arrCollider.Length; ++i)
+            arrCollider[i].Init();
+        HideHBeam();
         grid = _grid;
         StartCoroutine("CheckBuildableCoroutine");
     }
@@ -16,7 +20,11 @@ public class Structure : MonoBehaviour
     {
         GetComponent<SelectableObject>().Init();
         myIdx = _structureIdx;
+        ShowHBeam();
+        HideModel();
     }
+
+    public virtual void Init() { }
 
     public bool IsBuildable => isBuildable;
     public int StructureIdx => myIdx;
@@ -24,6 +32,7 @@ public class Structure : MonoBehaviour
     public int GridY => myGridY;
     public int FactorX => factorGridX;
     public int FactorY => factorGridY;
+    public bool IsUnderConstruction { get; private set; }
 
     public void SetGrid(int _gridX, int _gridY)
     {
@@ -63,9 +72,22 @@ public class Structure : MonoBehaviour
 
     public virtual void DeactivateUnit(GameObject _removeGo, ESpawnUnitType _type) { }
 
-    public void BuildComplete()
+    public void BuildCancle()
     {
         StopCoroutine("CheckBuildableCoroutine");
+    }
+
+    public void BuildStart()
+    {
+        StopCoroutine("CheckBuildableCoroutine");
+        IsUnderConstruction = true;
+    }
+
+    public void BuildComplete()
+    {
+        IsUnderConstruction = false;
+        HideHBeam();
+        ShowModel();
     }
 
     public void DestroyStructure()
@@ -94,7 +116,6 @@ public class Structure : MonoBehaviour
                 }
                 ++idx;
             }
-
             SetColor();
         }
     }
@@ -102,6 +123,28 @@ public class Structure : MonoBehaviour
     protected void SetColor()
     {
         mt.color = isBuildable ? oriColor : Color.red;
+    }
+
+    private void ShowHBeam()
+    {
+        for (int i = 0; i < arrCollider.Length; ++i)
+            arrCollider[i].ShowHBeam();
+    }
+
+    private void HideHBeam()
+    {
+        for (int i = 0; i < arrCollider.Length; ++i)
+            arrCollider[i].HideHBeam();
+    }
+
+    private void HideModel()
+    {
+        GetComponentInChildren<MeshRenderer>().enabled = false;
+    }
+
+    private void ShowModel()
+    {
+        GetComponentInChildren<MeshRenderer>().enabled = true;
     }
 
 
@@ -115,6 +158,7 @@ public class Structure : MonoBehaviour
     protected Color oriColor = Color.magenta;
     protected Material mt = null;
 
+    protected StructureCollider[] arrCollider = null;
     protected int factorGridX = 1;
     protected int factorGridY = 1;
     protected int myIdx = -1;

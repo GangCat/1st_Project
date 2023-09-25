@@ -1,10 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
-public class SelectableObject : MonoBehaviour
+public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType
 {
     protected enum EMoveState { NONE = -1, NORMAL, ATTACK, PATROL, CHASE, FOLLOW, FOLLOW_ENEMY }
     public virtual void Init()
@@ -24,7 +22,10 @@ public class SelectableObject : MonoBehaviour
         SelectableObjectManager.UpdateNodeWalkable(transform.position, nodeIdx);
     }
 
-    public ESelectableObjectType ObjectType => objectType;
+    public EObjectType GetObjectType()
+    {
+        return objectType;
+    }
 
     public Vector3 Position
     {
@@ -36,12 +37,12 @@ public class SelectableObject : MonoBehaviour
         SelectableObjectManager.UpdateNodeWalkable(transform.position, nodeIdx);
     }
 
-    public virtual void GetDmg(float _dmg) { }
+    public virtual void GetDmg(float _dmg)
+    {
+    }
 
     public virtual void MoveAttack(Vector3 _targetPos)
     {
-        stateMachine.TargetTr = null;
-        targetTr = null;
         targetPos = _targetPos;
         curMoveCondition = EMoveState.ATTACK;
         ResetStateStack();
@@ -51,8 +52,6 @@ public class SelectableObject : MonoBehaviour
 
     public virtual void Stop()
     {
-        stateMachine.TargetTr = null;
-        targetTr = null;
         ResetStateStack();
         PushState();
         StateStop();
@@ -80,9 +79,8 @@ public class SelectableObject : MonoBehaviour
             {
                 foreach (Collider c in arrCollider)
                 {
-                    ESelectableObjectType targetType = c.GetComponent<SelectableObject>().ObjectType;
-
-                    if (!targetType.Equals(ESelectableObjectType.ENEMY_UNIT))
+                    EObjectType targetType = c.GetComponent<IGetObjectType>().GetObjectType();
+                    if (!targetType.Equals(EObjectType.ENEMY_UNIT))
                     {
                         stateMachine.TargetTr = c.transform;
                         targetTr = c.transform;
@@ -539,9 +537,10 @@ public class SelectableObject : MonoBehaviour
         }
     }
 
+
     [Header("-Unit Attribute")]
     [SerializeField]
-    protected ESelectableObjectType objectType = ESelectableObjectType.NONE;
+    protected EObjectType objectType = EObjectType.NONE;
 
 
     [Header("-Unit Control Values")]

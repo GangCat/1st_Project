@@ -26,7 +26,7 @@ public class StateAttack : IState
         {
             elapsedTime = 0f;
             // 공격 애니메이션 출력
-            targetTr.GetComponent<SelectableObject>().GetDmg(attDmg);
+            targetTr.GetComponent<IDamageable>().GetDmg(attDmg);
         }
     }
 

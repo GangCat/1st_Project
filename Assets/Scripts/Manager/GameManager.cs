@@ -95,32 +95,21 @@ public class GameManager : MonoBehaviour
         FindAnyObjectByType<UnitHeroIndicator>().Init();
     }
 
-    private void UnitSelect(ESelectableObjectType _selectObjectType)
+    private void UnitSelect(EObjectType _selectObjectType)
     {
         uiMng.ShowFuncButton(_selectObjectType);
     }
 
     private void MoveUnitByPicking(Vector3 _pickPos)
     {
-        if (selectMng.IsListEmpty) return;
-
         if (selectMng.IsFriendlyUnit)
-        {
-
-            // 여기서 각 unit의 pathrequest를 진행?
-
             selectMng.MoveUnitByPicking(_pickPos);
-        }
     }
 
     private void MoveUnitByPickingObject(Transform _targetTr)
     {
-        if (selectMng.IsListEmpty) return;
-
         if (selectMng.IsFriendlyUnit)
-        {
             selectMng.MoveUnitByPicking(_targetTr);
-        }
     }
 
     private void ZoomCamera(float _zoomRatio)
@@ -178,7 +167,7 @@ public class GameManager : MonoBehaviour
 
     private void BuildButtonOnClick(int _buildingType)
     {
-        structureMng.ShowBluepirnt((ESelectableObjectType)_buildingType);
+        structureMng.ShowBluepirnt((EObjectType)_buildingType);
     }
 
 
