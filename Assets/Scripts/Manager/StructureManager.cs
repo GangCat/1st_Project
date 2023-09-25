@@ -58,11 +58,27 @@ public class StructureManager : MonoBehaviour
         StartCoroutine("ShowWallBlueprint", _bunkerTr);
     }
 
+    public void Demolish(int _structureIdx)
+    {
+        StartCoroutine("DemolishCoroutine", _structureIdx);
+    }
+
+    private IEnumerator DemolishCoroutine(int _structureIdx)
+    {
+        float demolishTime = Time.time + 4f;
+        while (demolishTime > Time.time)
+        {
+            // ui Ç¥½Ã
+            yield return new WaitForSeconds(0.5f);
+        }
+
+        DestroyStructure(_structureIdx);
+    }
+
     public void DestroyStructure(int _structureIdx)
     {
         Structure structure = null;
         dicStructure.TryGetValue(_structureIdx, out structure);
-        //InstantiateRuin(_structureIdx);
         InstantiateRuin(structure);
         structure.UpdateNodeWalkable(true);
         dicStructure.Remove(_structureIdx);
