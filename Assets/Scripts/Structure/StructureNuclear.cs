@@ -13,11 +13,13 @@ public class StructureNuclear : Structure
 
     public void SpawnNuclear(VoidNuclearDelegate _spwnCompleteCallback)
     {
-        StartCoroutine("SpawnNuclearCoroutine", _spwnCompleteCallback);
+        if(!hasNuclear)
+            StartCoroutine("SpawnNuclearCoroutine", _spwnCompleteCallback);
     }
 
     private IEnumerator SpawnNuclearCoroutine(VoidNuclearDelegate _spwnCompleteCallback)
     {
+        hasNuclear = true;
         float buildFinishTime = Time.time + NuclearProduceDelay;
         while (buildFinishTime > Time.time)
         {
@@ -38,6 +40,7 @@ public class StructureNuclear : Structure
     {
         Debug.Log(StructureIdx);
         myNuclear.Launch(_destPos);
+        hasNuclear = false;
     }
 
 
@@ -45,5 +48,5 @@ public class StructureNuclear : Structure
     private float NuclearProduceDelay = 0f;
 
     private MissileNuclear myNuclear = null;
-
+    private bool hasNuclear = false;
 }

@@ -193,7 +193,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myGridX: 1
   myGridY: 1
-  NuclearProduceDelay: 0
+  NuclearProduceDelay: 3
 --- !u!1001 &109404280035626104
 PrefabInstance:
   m_ObjectHideFlags: 0
