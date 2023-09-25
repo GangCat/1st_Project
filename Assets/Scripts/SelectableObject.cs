@@ -32,6 +32,11 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType
         get => transform.position;
         set => transform.position = value;
     }
+
+    public void Rotate(float _angle)
+    {
+        Functions.RotateYaw(transform, _angle);
+    }
     public void UpdateCurNode()
     {
         SelectableObjectManager.UpdateNodeWalkable(transform.position, nodeIdx);

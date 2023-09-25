@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
-    public void Init()
+    public void Init(PF_Grid _grid)
     {
+        grid = _grid;
+
         waveEnemyHolder = GetComponentInChildren<WaveEnemyHolder>().GetTransform();
         mapEnemyHolder = GetComponentInChildren<MapEnemyHolder>().GetTransform();
 
@@ -20,7 +22,7 @@ public class EnemyManager : MonoBehaviour
 
     public void SpawnMapEnemy(int _count)
     {
-        StartCoroutine(SpawnMapEnemyCoroutine(_count));
+        StartCoroutine("SpawnMapEnemyCoroutine", _count);
     }
 
     public void DeactivateWaveEnemy(GameObject _removeGo, int _waveEnemyIdx)
@@ -67,8 +69,13 @@ public class EnemyManager : MonoBehaviour
             while (unitCnt < _count)
             {
                 Vector3 spawnPos = arrEnemySpawnPoint[i].GetPos + Functions.GetRandomPosition(outerCircleRad, innerCircleRad);
+                PF_Node spawnNode = grid.GetNodeFromWorldPoint(spawnPos);
+                if (!spawnNode.walkable)
+                    continue;
+
                 EnemyObject enemyObj = memoryPoolMap.ActivatePoolItemWithIdx(mapEnemyIdx, 5, mapEnemyHolder).GetComponent<EnemyObject>();
-                enemyObj.Position = spawnPos;
+                enemyObj.Position = spawnNode.worldPos;
+                enemyObj.Rotate(Random.Range(0,360));
                 enemyObj.Init();
                 enemyObj.Init(EnemyObject.EEnemySpawnType.MAP_SPAWN, mapEnemyIdx);
                 ++mapEnemyIdx;
@@ -99,4 +106,6 @@ public class EnemyManager : MonoBehaviour
 
     private int waveEnemyIdx = 0;
     private int mapEnemyIdx = 0;
+
+    private PF_Grid grid = null;
 }

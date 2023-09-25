@@ -40,8 +40,6 @@ public class SelectableObjectManager : MonoBehaviour
         grid.GetNodeFromWorldPoint(_pos).walkable = true;
     }
 
-
-
     public static bool isCurNodwWalkable(Vector3 _pos)
     {
         return grid.GetNodeFromWorldPoint(_pos).walkable;

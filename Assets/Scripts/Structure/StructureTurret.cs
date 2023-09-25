@@ -13,6 +13,12 @@ public class StructureTurret : Structure
         myIdx = _structureIdx;
     }
 
+    public override void BuildComplete()
+    {
+        base.BuildComplete();
+        GetComponent<FriendlyObject>().Hold();
+    }
+
     [SerializeField]
     private Transform turretHeadTr = null;
 

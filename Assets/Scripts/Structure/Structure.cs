@@ -9,6 +9,7 @@ public class Structure : MonoBehaviour
         oriColor = GetComponentInChildren<MeshRenderer>().material.color;
         mt = GetComponentInChildren<MeshRenderer>().material;
         arrCollider = GetComponentsInChildren<StructureCollider>();
+
         for (int i = 0; i < arrCollider.Length; ++i)
             arrCollider[i].Init();
         HideHBeam();
@@ -61,9 +62,7 @@ public class Structure : MonoBehaviour
         while (idx < myGridX * myGridY)
         {
             grid.UpdateNodeWalkable(
-                grid.GetNodeWithGrid(
-                    (idx % myGridX) * factorGridX + gridX,
-                    (idx / myGridY) * factorGridY + gridY),
+                grid.GetNodeWithGrid((idx % myGridX) * factorGridX + gridX, (idx / myGridY) * factorGridY + gridY),
                 _walkable);
 
             ++idx;
@@ -83,7 +82,7 @@ public class Structure : MonoBehaviour
         IsUnderConstruction = true;
     }
 
-    public void BuildComplete()
+    public virtual void BuildComplete()
     {
         IsUnderConstruction = false;
         HideHBeam();

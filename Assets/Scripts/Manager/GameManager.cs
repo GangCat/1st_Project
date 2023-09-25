@@ -40,14 +40,14 @@ public class GameManager : MonoBehaviour
         cameraMng.Init();
         uiMng.Init();
         structureMng.Init(grid);
-        enemyMng.Init();
+        enemyMng.Init(grid);
 
-        //Invoke("StartWave", 1f);
+        Invoke("StartWave", 1f);
 
         SpawnMapEnemy(10);
 
-
         InitPlayer();
+        InitMainBase();
     }
 
     private void StartWave()
@@ -93,6 +93,11 @@ public class GameManager : MonoBehaviour
     private void InitPlayer()
     {
         FindAnyObjectByType<UnitHeroIndicator>().Init();
+    }
+
+    private void InitMainBase()
+    {
+        FindAnyObjectByType<StructureMainBase>().Init();
     }
 
     private void UnitSelect(EObjectType _selectObjectType)

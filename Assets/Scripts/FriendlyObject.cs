@@ -21,11 +21,8 @@ public class FriendlyObject : SelectableObject
                 StructureCollider[] arrCollider = GetComponentsInChildren<StructureCollider>();
                 for (int i = 0; i < arrCollider.Length; ++i)
                     arrCollider[i].Init(GetDmg, objectType);
-
-                StateHold();
             }
-            else
-                StateIdle();
+            StateIdle();
         }
         else
         {
