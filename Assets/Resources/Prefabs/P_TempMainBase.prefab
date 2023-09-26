@@ -227,7 +227,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4757c067b9c3f8047860a8ee579b36ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  curHp: 3000
+  curHp: 0
   maxHp: 3000
 --- !u!114 &4801781719797432397
 MonoBehaviour:
@@ -287,6 +287,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myGridX: 4
   myGridY: 4
+  upgradeDelay: 3
+  upgradeHpAmount: 100
 --- !u!1001 &1959242873054519360
 PrefabInstance:
   m_ObjectHideFlags: 0

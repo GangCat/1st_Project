@@ -68,12 +68,14 @@ public class Structure : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
         }
 
-        ++upgradeLevel;
         UpgradeComplete();
         // 여기서 그 방문자 패턴? 하기
     }
 
-    protected virtual void UpgradeComplete() { }
+    protected virtual void UpgradeComplete() 
+    {
+        ++upgradeLevel;
+    }
 
     public virtual void UpdateNodeWalkable(bool _walkable)
     {

@@ -39,15 +39,14 @@ public class GameManager : MonoBehaviour
             PatrolMove);
         cameraMng.Init();
         uiMng.Init();
-        structureMng.Init(grid);
         enemyMng.Init(grid);
 
-        Invoke("StartWave", 1f);
+        InitPlayer();
+        
+        structureMng.Init(grid, InitMainBase());
 
         SpawnMapEnemy(10);
-
-        InitPlayer();
-        InitMainBase();
+        Invoke("StartWave", 30f);
     }
 
     private void StartWave()
@@ -102,9 +101,11 @@ public class GameManager : MonoBehaviour
         FindAnyObjectByType<UnitHeroIndicator>().Init();
     }
 
-    private void InitMainBase()
+    private StructureMainBase InitMainBase()
     {
-        FindAnyObjectByType<StructureMainBase>().Init();
+        StructureMainBase mainBase = FindAnyObjectByType<StructureMainBase>();
+        mainBase.Init(0);
+        return mainBase;
     }
 
     private void UnitSelect(EObjectType _selectObjectType)

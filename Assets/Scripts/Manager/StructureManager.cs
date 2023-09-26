@@ -5,20 +5,24 @@ using UnityEngine;
 public class StructureManager : MonoBehaviour
 {
     private enum EStructureType { NONE = -1, TURRET, BUNKER, BARRACK, NUCLEAR, WALL, LENGTH }
-    public void Init(PF_Grid _grid)
+    public void Init(PF_Grid _grid, StructureMainBase _mainBase)
     {
         grid = _grid;
         dicStructure = new Dictionary<int, Structure>();
         listNuclearStructure = new List<StructureNuclear>();
+        dicStructure.Add(0, _mainBase);
+        ++structureIdx;
     }
 
     public static int UpgradeLimit
     {
         get => upgradeLimit;
         set 
-        { 
-            if(value < 4)
-                upgradeLimit = value; 
+        {
+            if (value < 4)
+                upgradeLimit = value;
+            else
+                upgradeLimit = 3;
         }
     }
 
@@ -318,5 +322,5 @@ public class StructureManager : MonoBehaviour
     private bool isBlueprint = false;
     private int structureIdx = 0;
 
-    private static int upgradeLimit = 2;
+    private static int upgradeLimit = 1;
 }

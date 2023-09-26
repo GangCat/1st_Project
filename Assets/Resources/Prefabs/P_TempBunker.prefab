@@ -66,9 +66,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myGridX: 1
   myGridY: 1
+  upgradeDelay: 3
   buffRatio: 0.5
   height: 5
   capacity: 1
+  increaseBuffRatioAmount: 0.1
+  increaseHpAmount: 30
 --- !u!114 &4335736936896054379
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -13,11 +13,27 @@ public class StructureBunker : Structure
         warpPos.y += height;
         trigger.Init(transform);
         myIdx = _structureIdx;
+        upgradeHpCmd = new CommandUpgradeHP(GetComponent<StatusHp>());
+        upgradeBuffRatioCmd = new CommandUpgradeBuffRatio(this);
     }
 
     protected override void UpgradeComplete()
     {
+        base.UpgradeComplete();
+        upgradeHpCmd.Execute(increaseHpAmount);
+        upgradeBuffRatioCmd.Execute();
         Debug.Log("UpgradeCompleteBunker");
+    }
+
+    public void UpgradeBuffRatio()
+    {
+        buffRatio += increaseBuffRatioAmount;
+        if (IsBunkerFull())
+        {
+            FriendlyObject tempObj = queueUnitInBunker.Peek();
+            tempObj.SetAttackDmg(buffRatio);
+            tempObj.SetAttackRange(buffRatio);
+        }
     }
 
     public void InUnit(FriendlyObject _curObj)
@@ -31,7 +47,6 @@ public class StructureBunker : Structure
         _curObj.Position = warpPos;
         _curObj.transform.parent = transform;
         _curObj.Hold();
-        //curObj.SetLayer(1 << LayerMask.GetMask("UnitInBunker"));
         _curObj.SetLayer(LayerMask.NameToLayer("UnitInBunker"));
         _curObj.SetAttackDmg(buffRatio);
         _curObj.SetAttackRange(buffRatio);
@@ -56,7 +71,6 @@ public class StructureBunker : Structure
         unitObj.UpdateCurNode();
         // 내 위치 walkable false로 변경
         grid.UpdateNodeWalkable(grid.GetNodeFromWorldPoint(transform.position), false);
-        // curUnitCnt 감소
     }
 
     public void OutAllUnit()
@@ -84,10 +98,15 @@ public class StructureBunker : Structure
     private float height = 5f;
     [SerializeField]
     private int capacity = 1;
+    [SerializeField]
+    private float increaseBuffRatioAmount = 0f;
+    [SerializeField]
+    private float increaseHpAmount = 0f;
 
     private BunkerInTrigger trigger = null;
     private Vector3 warpPos = Vector3.zero;
-
+    private CommandUpgradeHP upgradeHpCmd = null;
+    private CommandUpgradeBuffRatio upgradeBuffRatioCmd = null;
 
     private Queue<FriendlyObject> queueUnitInBunker = new Queue<FriendlyObject>();
 }
