@@ -2,17 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CommandUpgradeBuffRatio : MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
+public class CommandUpgradeBuffRatio : Command
+{ 
+    public CommandUpgradeBuffRatio(StructureBunker _bunker)
     {
-        
+        bunker = _bunker;
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void Execute(params object[] _objects)
     {
-        
+        bunker.UpgradeBuffRatio();
     }
+
+    private StructureBunker bunker = null;
 }

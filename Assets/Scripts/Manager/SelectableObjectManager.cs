@@ -327,4 +327,5 @@ public class SelectableObjectManager : MonoBehaviour
 
     private static PF_Grid grid = null;
     private static Dictionary<int, PF_Node> dicNodeUnderUnit = new Dictionary<int, PF_Node>();
+    private static int unitUpgradeLimit = 1;
 }

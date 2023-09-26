@@ -11,6 +11,7 @@ public class StructureTurret : Structure
         selectObj.Init();
         selectObj.SetMyTr(turretHeadTr);
         myIdx = _structureIdx;
+        upgradeHpCmd = new CommandUpgradeHP(GetComponent<StatusHp>());
         upgradeDmgCmd = new CommandUpgradeAttDmg(selectObj);
         upgradeRangeCmd = new CommandUpgradeAttRange(selectObj);
     }
@@ -23,6 +24,8 @@ public class StructureTurret : Structure
 
     protected override void UpgradeComplete()
     {
+        base.UpgradeComplete();
+        upgradeHpCmd.Execute(upgradeHpAmount);
         upgradeDmgCmd.Execute(upgradeDmgAmount);
         upgradeRangeCmd.Execute(upgradeRangeAmount);
         Debug.Log("UpgradeCompleteTurret");
@@ -30,12 +33,18 @@ public class StructureTurret : Structure
 
     [SerializeField]
     private Transform turretHeadTr = null;
+
+    [Header("-Upgrade Attribute")]
     [SerializeField]
     private float upgradeDmgAmount = 0f;
     [SerializeField]
     private float upgradeRangeAmount = 0f;
+    [SerializeField]
+    private float upgradeHpAmount = 0f;
+
 
     private FriendlyObject selectObj = null;
+    private CommandUpgradeHP upgradeHpCmd = null;
     private CommandUpgradeAttDmg upgradeDmgCmd = null;
     private CommandUpgradeAttRange upgradeRangeCmd = null;
 }

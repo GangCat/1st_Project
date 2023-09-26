@@ -53,10 +53,15 @@ public class Structure : MonoBehaviour
         transform.position = _targetPos;
     }
 
-    public virtual void UpgradeStart() 
+    public virtual void StartUpgrade() 
     {
         if (upgradeLevel < StructureManager.UpgradeLimit)
             StartCoroutine("UpgradeCoroutine");
+    }
+
+    public virtual void StartUnitUpgrade()
+    {
+        if(unitUpgradeLevel < StructureManager.UpgradeLimit)
     }
 
     protected virtual IEnumerator UpgradeCoroutine()
@@ -68,12 +73,14 @@ public class Structure : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
         }
 
-        ++upgradeLevel;
         UpgradeComplete();
         // 여기서 그 방문자 패턴? 하기
     }
 
-    protected virtual void UpgradeComplete() { }
+    protected virtual void UpgradeComplete() 
+    {
+        ++upgradeLevel;
+    }
 
     public virtual void UpdateNodeWalkable(bool _walkable)
     {

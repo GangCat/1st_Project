@@ -356,6 +356,7 @@ MonoBehaviour:
   turretHeadTr: {fileID: 3077076975496337010}
   upgradeDmgAmount: 5
   upgradeRangeAmount: 3
+  upgradeHpAmount: 30
 --- !u!114 &5513323762786753887
 MonoBehaviour:
   m_ObjectHideFlags: 0

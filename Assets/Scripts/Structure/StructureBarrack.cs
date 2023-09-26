@@ -10,9 +10,16 @@ public class StructureBarrack : Structure
         spawnPoint = transform.position;
         rallyPoint = spawnPoint;
         arrMemoryPool = new MemoryPool[arrUnitPrefab.Length];
+        upgradeHpCmd = new CommandUpgradeHP(GetComponent<StatusHp>());
 
         for (int i = 0; i < arrUnitPrefab.Length; ++i)
             arrMemoryPool[i] = new MemoryPool(arrUnitPrefab[i], 3, transform);
+    }
+
+    protected override void UpgradeComplete()
+    {
+        base.UpgradeComplete();
+        upgradeHpCmd.Execute(upgradeHpAmount);
     }
 
     public void SetRallyPoint(Vector3 _rallyPoint)
@@ -83,7 +90,13 @@ public class StructureBarrack : Structure
     [SerializeField]
     private GameObject[] arrUnitPrefab = new GameObject[(int)ESpawnUnitType.LENGTH];
 
+    [Header("-Upgrade Attribute")]
+    [SerializeField]
+    private float upgradeHpAmount = 0f;
+
     private bool isProcessingSpawnUnit = false;
+
+    private CommandUpgradeHP upgradeHpCmd = null;
 
     private Vector3 spawnPoint = Vector3.zero;
     private Vector3 rallyPoint = Vector3.zero;
