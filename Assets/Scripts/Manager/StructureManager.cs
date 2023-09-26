@@ -292,9 +292,15 @@ public class StructureManager : MonoBehaviour
     {
         Structure structure = null;
         dicStructure.TryGetValue(_structureIdx, out structure);
-        structure.UpgradeStart();
+        structure.StartUpgrade();
     }
 
+    public void UpgradeUnit(int _structureIdx)
+    {
+        Structure structure = null;
+        dicStructure.TryGetValue(_structureIdx, out structure);
+        structure.StartUnitUpgrade();
+    }
 
     [Header("-StructurePrefab(TURRET, BUNKER, BARRACK, NUCLEAR, WALL)")]
     [SerializeField]

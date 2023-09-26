@@ -53,10 +53,15 @@ public class Structure : MonoBehaviour
         transform.position = _targetPos;
     }
 
-    public virtual void UpgradeStart() 
+    public virtual void StartUpgrade() 
     {
         if (upgradeLevel < StructureManager.UpgradeLimit)
             StartCoroutine("UpgradeCoroutine");
+    }
+
+    public virtual void StartUnitUpgrade()
+    {
+        if(unitUpgradeLevel < StructureManager.UpgradeLimit)
     }
 
     protected virtual IEnumerator UpgradeCoroutine()

@@ -72,6 +72,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myGridX: 3
   myGridY: 3
+  upgradeDelay: 5
   spawnUnitDelay:
   - 2
   - 1
@@ -80,6 +81,7 @@ MonoBehaviour:
   - {fileID: 186232715040071189, guid: 1a6427e02f043fb49b31dd80f757f371, type: 3}
   - {fileID: 186232715040071189, guid: 1d5cc84301d48b94e942f2403a988fbd, type: 3}
   - {fileID: 186232715040071189, guid: 6e1afefd5c9748745bcd4b0fd2800fe0, type: 3}
+  upgradeHpAmount: 50
 --- !u!114 &3774082440511637135
 MonoBehaviour:
   m_ObjectHideFlags: 0
