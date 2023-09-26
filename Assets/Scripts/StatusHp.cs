@@ -26,6 +26,11 @@ public class StatusHp : MonoBehaviour
         if (curHp > maxHp) curHp = maxHp;
     }
 
+    public void UpgradeHp(float _increaseHp)
+    {
+        maxHp += _increaseHp;
+        curHp += _increaseHp;
+    }
 
     [SerializeField]
     private float curHp = 0f;

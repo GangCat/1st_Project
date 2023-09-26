@@ -4,8 +4,14 @@ using UnityEngine;
 
 public class StructureWall : Structure
 {
+    public override void Init(int _structureIdx)
+    {
+        base.Init(_structureIdx);
+        upgradeHpCmd = new CommandUpgradeHP(GetComponent<StatusHp>());
+    }
     protected override void UpgradeComplete()
     {
+        upgradeHpCmd.Execute(30f);
         Debug.Log("UpgradeCompleteWall");
     }
 
@@ -83,4 +89,9 @@ public class StructureWall : Structure
             }
         }
     }
+
+    [SerializeField]
+    private float upgradeHpAmount = 0f;
+
+    private CommandUpgradeHP upgradeHpCmd = null;
 }
