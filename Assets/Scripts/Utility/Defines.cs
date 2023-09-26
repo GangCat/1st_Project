@@ -44,4 +44,5 @@ public enum EBunkerCommand { NONE = -1, IN_UNIT, OUT_ONE_UNIT, OUT_ALL_UNIT, EXP
 public enum EEnemyObjectCommand { NONE = -1, WAVE_ENEMY_DEAD, MAP_ENEMY_DEAD, LENGTH }
 public enum EFriendlyObjectCommand { NONE = -1, DEAD, DESTROY, DESTROY_HBEAM, LENGTH }
 public enum ENuclearCommand { NONE = -1, SPAWN_NUCLEAR, LAUNCH_NUCLEAR, LENGTH }
-public enum EStructureButtonCommand { NONT = -1, DEMOLISH, UPGRADE, LENGTH }
+public enum EStructureButtonCommand { NONE = -1, DEMOLISH, UPGRADE, LENGTH }
+public enum EUpgradeCommand { NONE = -1, HP, ATTACK_DAMAGE, ATTACK_RANGE, BUFF_RATIO, ENERGY_INCOME, LENGTH }

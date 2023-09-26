@@ -354,6 +354,8 @@ MonoBehaviour:
   myGridY: 2
   upgradeDelay: 3
   turretHeadTr: {fileID: 3077076975496337010}
+  upgradeDmgAmount: 5
+  upgradeRangeAmount: 3
 --- !u!114 &5513323762786753887
 MonoBehaviour:
   m_ObjectHideFlags: 0

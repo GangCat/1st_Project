@@ -50,6 +50,12 @@ public class StateMachine : MonoBehaviour
         set => unitState.targetTr = value;
     }
 
+    public void UpgradeAttDmg(float _increaseDmg)
+    {
+        oriDmg += _increaseDmg;
+        unitState.attDmg += _increaseDmg;
+    }
+
     public void SetAttackDmg(float _ratio)
     {
         unitState.attDmg += oriDmg * _ratio;

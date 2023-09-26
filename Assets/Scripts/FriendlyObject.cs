@@ -97,6 +97,17 @@ public class FriendlyObject : SelectableObject
         stateMachine.SetMyTr(_myTr);
     }
 
+    public void UpgradeAttackDmg(float _increaseDmg)
+    {
+        stateMachine.UpgradeAttDmg(_increaseDmg);
+    }
+
+    public void UpgradeAttackRange(float _increaseRange)
+    {
+        oriAttRange += _increaseRange;
+        attackRange += _increaseRange;
+    }
+
     public void MoveByPos(Vector3 _Pos)
     {
         isAttack = false;
