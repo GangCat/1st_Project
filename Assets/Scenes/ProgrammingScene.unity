@@ -1489,6 +1489,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   btnDemolishStructure: {fileID: 433211586}
+  btnUpgradeStructure: {fileID: 936201670}
 --- !u!1 &319057471
 GameObject:
   m_ObjectHideFlags: 0
@@ -3904,7 +3905,7 @@ GameObject:
   - component: {fileID: 936201671}
   - component: {fileID: 936201670}
   m_Layer: 5
-  m_Name: Button_UpgradeStructure_10
+  m_Name: Button_Upgrade_10
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8082,7 +8083,7 @@ GameObject:
   - component: {fileID: 1680809950}
   - component: {fileID: 1680809949}
   m_Layer: 5
-  m_Name: Text_UpgradeStructure
+  m_Name: Text_Upgrade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8127,9 +8128,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Upgrade
-
-    Structure'
+  m_text: Upgrade
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

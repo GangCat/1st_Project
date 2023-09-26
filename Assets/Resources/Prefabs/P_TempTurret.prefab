@@ -352,6 +352,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myGridX: 2
   myGridY: 2
+  upgradeDelay: 3
   turretHeadTr: {fileID: 3077076975496337010}
 --- !u!114 &5513323762786753887
 MonoBehaviour:

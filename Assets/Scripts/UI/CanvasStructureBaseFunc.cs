@@ -10,7 +10,13 @@ public class CanvasStructureBaseFunc : CanvasFuncBase
         btnDemolishStructure.onClick.AddListener(
             () =>
             {
-                ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.DEMOLISH);
+                ArrayStructureButtonCommand.Use(EStructureButtonCommand.DEMOLISH);
+            });
+
+        btnUpgradeStructure.onClick.AddListener(
+            () =>
+            {
+                ArrayStructureButtonCommand.Use(EStructureButtonCommand.UPGRADE);
             });
 
         gameObject.SetActive(false);
@@ -18,4 +24,6 @@ public class CanvasStructureBaseFunc : CanvasFuncBase
 
     [SerializeField]
     private Button btnDemolishStructure = null;
+    [SerializeField]
+    private Button btnUpgradeStructure = null;
 }

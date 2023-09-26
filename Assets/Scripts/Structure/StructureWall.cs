@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class StructureWall : Structure
 {
+    protected override void UpgradeComplete()
+    {
+        Debug.Log("UpgradeCompleteWall");
+    }
+
     public override void UpdateNodeWalkable(bool _walkable)
     {
         curNode = grid.GetNodeFromWorldPoint(transform.position);

@@ -19,29 +19,13 @@ public class StructureTurret : Structure
         GetComponent<FriendlyObject>().Hold();
     }
 
-    public override void Upgrade()
+    protected override void UpgradeComplete()
     {
-        if(upgradeLevel < StructureManager.UpgradeLimit)
-            StartCoroutine("UpgradeCoroutine");
-    }
-
-    private IEnumerator UpgradeCoroutine()
-    {
-        float buildFinishTime = Time.time + upgradeDelay;
-        while (buildFinishTime > Time.time)
-        {
-            // ui 표시
-            yield return new WaitForSeconds(0.5f);
-        }
-
-        ++upgradeLevel;
-        // 여기서 그 방문자 패턴? 하기
+        Debug.Log("UpgradeCompleteTurret");
     }
 
     [SerializeField]
     private Transform turretHeadTr = null;
-    [SerializeField]
-    private float upgradeDelay = 0f;
 
     private FriendlyObject selectObj = null;
 }

@@ -284,6 +284,13 @@ public class StructureManager : MonoBehaviour
         }
     }
 
+    public void UpgradeStructure(int _structureIdx)
+    {
+        Structure structure = null;
+        dicStructure.TryGetValue(_structureIdx, out structure);
+        structure.UpgradeStart();
+    }
+
 
     [Header("-StructurePrefab(TURRET, BUNKER, BARRACK, NUCLEAR, WALL)")]
     [SerializeField]
@@ -311,5 +318,5 @@ public class StructureManager : MonoBehaviour
     private bool isBlueprint = false;
     private int structureIdx = 0;
 
-    private static int upgradeLimit = 1;
+    private static int upgradeLimit = 2;
 }

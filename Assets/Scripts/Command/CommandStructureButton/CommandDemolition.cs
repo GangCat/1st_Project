@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CommandFriendlyDemolish : Command
+public class CommandDemolition : Command
 {
-    public CommandFriendlyDemolish(StructureManager _structureMng, SelectableObjectManager _selMng)
+    public CommandDemolition(StructureManager _structureMng, SelectableObjectManager _selMng)
     {
         structureMng = _structureMng;
         selMng = _selMng;

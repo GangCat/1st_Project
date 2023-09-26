@@ -53,10 +53,27 @@ public class Structure : MonoBehaviour
         transform.position = _targetPos;
     }
 
-    public virtual void Upgrade() 
+    public virtual void UpgradeStart() 
     {
-        
+        if (upgradeLevel < StructureManager.UpgradeLimit)
+            StartCoroutine("UpgradeCoroutine");
     }
+
+    protected virtual IEnumerator UpgradeCoroutine()
+    {
+        float buildFinishTime = Time.time + upgradeDelay;
+        while (buildFinishTime > Time.time)
+        {
+            // ui 표시
+            yield return new WaitForSeconds(0.5f);
+        }
+
+        ++upgradeLevel;
+        UpgradeComplete();
+        // 여기서 그 방문자 패턴? 하기
+    }
+
+    protected virtual void UpgradeComplete() { }
 
     public virtual void UpdateNodeWalkable(bool _walkable)
     {
@@ -156,6 +173,8 @@ public class Structure : MonoBehaviour
     protected int myGridX = 1;
     [SerializeField]
     protected int myGridY = 1;
+    [SerializeField]
+    private float upgradeDelay = 0f;
 
     protected PF_Grid grid = null;
     protected PF_Node curNode = null;

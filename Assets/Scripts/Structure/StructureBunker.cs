@@ -15,6 +15,11 @@ public class StructureBunker : Structure
         myIdx = _structureIdx;
     }
 
+    protected override void UpgradeComplete()
+    {
+        Debug.Log("UpgradeCompleteBunker");
+    }
+
     public void InUnit(FriendlyObject _curObj)
     {
         if (IsBunkerFull()) return;

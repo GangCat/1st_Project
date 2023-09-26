@@ -4,4 +4,8 @@ using UnityEngine;
 
 public class StructureMainBase : Structure
 {
+    protected override void UpgradeComplete()
+    {
+        Debug.Log("UpgradeCompleteMainBase");
+    }
 }
