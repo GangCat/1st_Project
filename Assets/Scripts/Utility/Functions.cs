@@ -62,7 +62,7 @@ public static class Functions
         return Mathf.Atan2(dirToTarget.z, dirToTarget.x) * Mathf.Rad2Deg;
     }
 
-    public static bool Picking(ref RaycastHit _hit)
+    public static bool Picking(out RaycastHit _hit)
     {
         Vector3 mousePos = Input.mousePosition;
         Ray ray = Camera.main.ScreenPointToRay(mousePos);
@@ -85,9 +85,6 @@ public static class Functions
         Vector3 mousePos = Input.mousePosition;
         Ray ray = Camera.main.ScreenPointToRay(mousePos);
         RaycastHit hit;
-#if UNITY_EDITOR
-        Debug.DrawRay(ray.origin, ray.direction * 1000f, Color.red, 1f);
-#endif
         if (Physics.Raycast(ray, out hit))
         {
             if (hit.transform.CompareTag(_tag))
@@ -96,9 +93,7 @@ public static class Functions
                 return true;
             }
         }
-#if UNITY_EDITOR
-        Debug.Log(hit);
-#endif
+
         return false;
     }
 
@@ -111,15 +106,11 @@ public static class Functions
     /// <param name="_layerMask"></param>
     /// <param name="_point"></param>
     /// <returns></returns>
-    public static bool Picking(string _tag, int _layerMask, ref Vector3 _point)
+    public static bool Picking(string _tag, LayerMask _layerMask, ref Vector3 _point)
     {
         Vector3 mousePos = Input.mousePosition;
         Ray ray = Camera.main.ScreenPointToRay(mousePos);
         RaycastHit hit;
-
-#if UNITY_EDITOR
-        Debug.DrawRay(ray.origin, ray.direction * 1000f, Color.red, 1f);
-#endif
 
         if (Physics.Raycast(ray, out hit, 1000f, _layerMask))
         {
@@ -129,9 +120,23 @@ public static class Functions
                 return true;
             }
         }
-#if UNITY_EDITOR
-        Debug.Log(hit);
-#endif
+        return false;
+    }
+
+    /// <summary>
+    /// 레이어마스크만 가지고 피킹하는 함수.
+    /// </summary>
+    /// <param name="_layerMask"></param>
+    /// <param name="_hit"></param>
+    /// <returns></returns>
+    public static bool Picking(LayerMask _layerMask, out RaycastHit _hit)
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        //Debug.DrawRay(ray.origin, ray.direction * 1000f, Color.red, 3f);
+        if (Physics.Raycast(ray, out _hit, 1000f, _layerMask))
+            return true;
+
         return false;
     }
 

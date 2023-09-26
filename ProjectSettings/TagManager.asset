@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 2
   tags:
   - StageFloor
+  - FriendlyStructure
+  - EnemyStructure
+  - EnemyUnit
+  - FriendlyUnit
   layers:
   - Default
   - TransparentFX
@@ -13,15 +17,15 @@ TagManager:
   - Water
   - UI
   - StageFloor
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - SelectableObject
+  - SelectableArea
+  - UnWalkable
+  - SelectableStructure
+  - UnitInBunker
+  - EnemyDead
+  - RuinStructure
+  - DamageableCollider
+  - MissileNuclear
   - 
   - 
   - 
