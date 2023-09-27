@@ -49,10 +49,15 @@ public class FriendlyObject : SelectableObject, ISubscriber
             StopAllCoroutines();
             SelectableObjectManager.ResetNodeWalkable(transform.position, nodeIdx);
 
-            if(objectType.Equals(EObjectType.UNIT))
+            if (objectType.Equals(EObjectType.UNIT))
+            {
                 ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.DEAD, gameObject, unitType, barrackIdx);
-            else if(objectType.Equals(EObjectType.HBEAM))
+                Broker.UnSubscribe(this, EPublisherType.SELECTABLE_MANAGER);
+            }
+            else if (objectType.Equals(EObjectType.HBEAM))
+            {
                 ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.DESTROY_HBEAM, gameObject, unitType, barrackIdx);
+            }
             else
                 ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.DESTROY, gameObject);
         }

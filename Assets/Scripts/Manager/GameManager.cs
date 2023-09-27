@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
         structureMng = FindAnyObjectByType<StructureManager>();
         pathMng = FindAnyObjectByType<PF_PathRequestManager>();
         enemyMng = FindAnyObjectByType<EnemyManager>();
+        mainBaseTr = FindAnyObjectByType<StructureMainBase>().transform;
     }
 
     private void Start()
@@ -51,7 +52,7 @@ public class GameManager : MonoBehaviour
 
     private void StartWave()
     {
-        enemyMng.SpawnWaveEnemy(Vector3.zero, 45);
+        enemyMng.SpawnWaveEnemy(mainBaseTr.position, 45);
     }
 
     private void SpawnMapEnemy(int _count)
@@ -198,6 +199,7 @@ public class GameManager : MonoBehaviour
     private StructureManager structureMng = null;
     private PF_PathRequestManager pathMng = null;
     private EnemyManager enemyMng = null;
+    private Transform mainBaseTr = null;
 
     private PF_Grid grid = null;
 }
