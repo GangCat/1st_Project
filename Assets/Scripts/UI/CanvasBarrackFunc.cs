@@ -3,23 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CanvasBarrackFunc : CanvasFuncBase
+public class CanvasBarrackFunc : CanvasFunc
 {
     public void Init()
     {
-        btnSpawnUnit1.onClick.AddListener(
+        btnSpawnMeleeUnit.onClick.AddListener(
             () =>
             {
                 ArrayBarrackCommand.Use(EBarrackCommand.SPAWN_UNIT, ESpawnUnitType.MELEE);
             });
 
-        btnSpawnUnit2.onClick.AddListener(
+        btnSpawnRangedUnit.onClick.AddListener(
             () =>
             {
                 ArrayBarrackCommand.Use(EBarrackCommand.SPAWN_UNIT, ESpawnUnitType.RANGED);
             });
 
-        btnSpawnUnit3.onClick.AddListener(
+        btnSpawnRocketUnit.onClick.AddListener(
             () =>
             {
                 ArrayBarrackCommand.Use(EBarrackCommand.SPAWN_UNIT, ESpawnUnitType.ROCKET);
@@ -58,13 +58,37 @@ public class CanvasBarrackFunc : CanvasFuncBase
         gameObject.SetActive(false);
     }
 
+    public void SetAllButtonUninteractable()
+    {
+        btnSpawnMeleeUnit.interactable = false;
+        btnSpawnRangedUnit.interactable = false;
+        btnSpawnRocketUnit.interactable = false;
+        btnRallyPoint.interactable = false;
+        btnUpgradeRangedUnitDmg.interactable = false;
+        btnUpgradeRangedUnitHp.interactable = false;
+        btnUpgradeMeleeUnitDmg.interactable = false;
+        btnUpgradeMeleeUnitHp.interactable = false;
+    }
+
+    public void SetAllButtonInteractable()
+    {
+        btnSpawnMeleeUnit.interactable = true;
+        btnSpawnRangedUnit.interactable = true;
+        btnSpawnRocketUnit.interactable = true;
+        btnRallyPoint.interactable = true;
+        btnUpgradeRangedUnitDmg.interactable = true;
+        btnUpgradeRangedUnitHp.interactable = true;
+        btnUpgradeMeleeUnitDmg.interactable = true;
+        btnUpgradeMeleeUnitHp.interactable = true;
+    }
+
 
     [SerializeField]
-    private Button btnSpawnUnit1 = null;
+    private Button btnSpawnMeleeUnit = null;
     [SerializeField]
-    private Button btnSpawnUnit2 = null;
+    private Button btnSpawnRangedUnit = null;
     [SerializeField]
-    private Button btnSpawnUnit3 = null;
+    private Button btnSpawnRocketUnit = null;
     [SerializeField]
     private Button btnRallyPoint = null;
     [SerializeField]

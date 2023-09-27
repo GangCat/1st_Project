@@ -67,6 +67,11 @@ public class FriendlyObject : SelectableObject, ISubscriber
             {
                 ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.DESTROY_HBEAM, gameObject, unitType, barrackIdx);
             }
+            else if (objectType.Equals(EObjectType.BUNKER))
+            {
+                GetComponent<StructureBunker>().OutAllUnit();
+                ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.DESTROY, gameObject);
+            }
             else
                 ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.DESTROY, gameObject);
         }

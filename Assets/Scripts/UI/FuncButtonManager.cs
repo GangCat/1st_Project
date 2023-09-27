@@ -27,6 +27,16 @@ public class FuncButtonManager : MonoBehaviour
         cancleFunc.Init();
     }
 
+    public void SetBarrackButtonUninteractable()
+    {
+        canvasBarrackFunc.SetAllButtonUninteractable();
+    }
+
+    public void SetBarrackButtonInteractable()
+    {
+        canvasBarrackFunc.SetAllButtonInteractable();
+    }
+
     public void ShowFuncButton(EObjectType _selectObjectType)
     {
         HideFuncButton();

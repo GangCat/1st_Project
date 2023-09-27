@@ -44,6 +44,7 @@ public class StructureBunker : Structure
 
         if (_curObj.GetObjectType().Equals(EObjectType.UNIT_HERO)) return;
 
+        prevParentTransform = _curObj.transform.parent;
         _curObj.Position = warpPos;
         _curObj.transform.parent = transform;
         _curObj.Hold();
@@ -62,7 +63,7 @@ public class StructureBunker : Structure
         // 부모 변경
         // 결과 노드에 내 자식 위치 이동
         FriendlyObject unitObj = queueUnitInBunker.Dequeue();
-        unitObj.transform.parent = null;
+        unitObj.transform.parent = prevParentTransform;
         unitObj.Position = SelectableObjectManager.ResetPosition(transform.position);
         // 레이어, 공격력, 공격범위 리셋
         unitObj.ResetAttackDmg();
@@ -107,6 +108,7 @@ public class StructureBunker : Structure
     private Vector3 warpPos = Vector3.zero;
     private CommandUpgradeHP upgradeHpCmd = null;
     private CommandUpgradeBuffRatio upgradeBuffRatioCmd = null;
+    private Transform prevParentTransform = null;
 
     private Queue<FriendlyObject> queueUnitInBunker = new Queue<FriendlyObject>();
 }

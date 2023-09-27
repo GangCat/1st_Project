@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CanvasCancleFunc : MonoBehaviour
+public class CanvasCancleFunc : CanvasFunc
 {
     public void Init()
     {
@@ -13,12 +13,8 @@ public class CanvasCancleFunc : MonoBehaviour
                 ArrayUnitButtonCommand.Use(EUnitButtonCommand.CANCLE);
                 gameObject.SetActive(false);
             });
-        gameObject.SetActive(false);
-    }
 
-    public void SetActive(bool _isActive)
-    {
-        gameObject.SetActive(_isActive);
+        gameObject.SetActive(false);
     }
 
     [SerializeField]
