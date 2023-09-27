@@ -22,10 +22,15 @@ public class FriendlyObject : SelectableObject, ISubscriber
                 for (int i = 0; i < arrCollider.Length; ++i)
                     arrCollider[i].Init(GetDmg, objectType);
             }
-            else
+            else if(unitType.Equals(ESpawnUnitType.RANGED))
             {
-                stateMachine.UpgradeAttDmg((SelectableObjectManager.LevelUnitDmgUpgrade - 1) * 2);
-                statusHp.UpgradeHp((SelectableObjectManager.LevelUnitHpUpgrade - 1) * 10);
+                stateMachine.UpgradeAttDmg((SelectableObjectManager.LevelRangedUnitDmgUpgrade - 1) * 2);
+                statusHp.UpgradeHp((SelectableObjectManager.LevelRangedUnitHpUpgrade - 1) * 10);
+            }
+            else if (unitType.Equals(ESpawnUnitType.MELEE))
+            {
+                stateMachine.UpgradeAttDmg((SelectableObjectManager.LevelMeleeUnitDmgUpgrade - 1) * 2);
+                statusHp.UpgradeHp((SelectableObjectManager.LevelMeleeUnitHpUpgrade - 1) * 10);
             }
             StateIdle();
         }
@@ -591,12 +596,32 @@ public class FriendlyObject : SelectableObject, ISubscriber
         switch (_message)
         {
             case EMessageType.UPGRADE_RANGED_HP:
-                statusHp.UpgradeHp((SelectableObjectManager.LevelUnitHpUpgrade - 1) * 10);
-                Debug.Log("UpgradeHp");
+                if (unitType.Equals(ESpawnUnitType.RANGED))
+                {
+                    statusHp.UpgradeHp((SelectableObjectManager.LevelRangedUnitHpUpgrade - 1) * 10);
+                    Debug.Log("RangedUpgradeHp");
+                }
                 break;
             case EMessageType.UPGRADE_RANGED_DMG:
-                stateMachine.UpgradeAttDmg((SelectableObjectManager.LevelUnitDmgUpgrade - 1) * 2);
-                Debug.Log("UpgradeDmg");
+                if (unitType.Equals(ESpawnUnitType.RANGED))
+                {
+                    stateMachine.UpgradeAttDmg((SelectableObjectManager.LevelRangedUnitDmgUpgrade - 1) * 2);
+                    Debug.Log("RangedUpgradeDmg");
+                }
+                break;
+            case EMessageType.UPGRADE_MELEE_HP:
+                if (unitType.Equals(ESpawnUnitType.MELEE))
+                {
+                    statusHp.UpgradeHp((SelectableObjectManager.LevelMeleeUnitHpUpgrade - 1) * 10);
+                    Debug.Log("MeleeUpgradeHp");
+                }
+                break;
+            case EMessageType.UPGRADE_MELEE_DMG:
+                if (unitType.Equals(ESpawnUnitType.MELEE))
+                {
+                    statusHp.UpgradeHp((SelectableObjectManager.LevelMeleeUnitDmgUpgrade - 1) * 2);
+                    Debug.Log("MeleeUpgradeDmg");
+                }
                 break;
             default:
                 break;

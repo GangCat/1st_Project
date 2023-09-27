@@ -89,13 +89,13 @@ public class StructureBarrack : Structure
 
     public void UpgradeUnitDmg()
     {
-        if (!isProcessingUpgrade && SelectableObjectManager.LevelUnitDmgUpgrade < upgradeLevel * 2)
+        if (!isProcessingUpgrade && SelectableObjectManager.LevelRangedUnitDmgUpgrade < upgradeLevel * 2)
             StartCoroutine("UpgradeUnitCoroutine", EUnitUpgradeType.RANGED_UPGRADE_DMG);
     }
 
     public void UpgradeUnitHp()
     {
-        if (!isProcessingUpgrade && SelectableObjectManager.LevelUnitHpUpgrade < upgradeLevel * 2)
+        if (!isProcessingUpgrade && SelectableObjectManager.LevelRangedUnitHpUpgrade < upgradeLevel * 2)
             StartCoroutine("UpgradeUnitCoroutine", EUnitUpgradeType.RANGED_UPGRADE_HP);
     }
 

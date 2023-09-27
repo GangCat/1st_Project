@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3650822248373926283}
   - component: {fileID: 2341253079211249543}
   m_Layer: 7
-  m_Name: P_FriendlyUnit 2
+  m_Name: P_FriendlyRangedUnit
   m_TagString: FriendlyUnit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -92,7 +92,7 @@ MonoBehaviour:
     targetPos: {x: 0, y: 0, z: 0}
     isWaitForNewPath: 0
     moveSpeed: 5
-    attRate: 1
+    attRate: 2
     attDmg: 2
 --- !u!114 &2341253079211249543
 MonoBehaviour:

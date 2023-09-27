@@ -11,7 +11,7 @@ public class CommandCompleteUpgradeRangedUnitDmg : Command
 
     public override void Execute(params object[] _objects)
     {
-        selMng.CompleteUpgradeUnitDmg();
+        selMng.CompleteUpgradeRangedUnitDmg();
     }
 
     private SelectableObjectManager selMng = null;

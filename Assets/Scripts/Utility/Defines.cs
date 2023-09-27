@@ -34,7 +34,7 @@ public struct SUnitState
 [System.Serializable]
 public enum EObjectType { NONE = -1, UNIT, UNIT_HERO, MAIN_BASE, TURRET, BUNKER, WALL, BARRACK, NUCLEAR, ENEMY_UNIT, ENEMY_STRUCTURE, HBEAM, LENGTH }
 public enum EState { NONE = -1, IDLE, MOVE, STOP, HOLD, ATTACK, LENGTH }
-public enum ESpawnUnitType { NONE = -1, MELEE, RANGE, ROCKET, LENGTH }
+public enum ESpawnUnitType { NONE = -1, MELEE, RANGED, ROCKET, LENGTH }
 public enum EUnitUpgradeType { NONE = -1, RANGED_UPGRADE_DMG, RANGED_UPGRADE_HP, MELEE_UPGRADE_DMG, MELEE_UPGRADE_HP, LENGTH }
 
 public enum EUnitButtonCommand { NONE = -1, CANCLE, MOVE, STOP, HOLD, PATROL, ATTACK, LAUNCH_NUCLEAR, LENGTH }

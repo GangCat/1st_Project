@@ -16,7 +16,7 @@ public class CanvasBarrackFunc : CanvasFuncBase
         btnSpawnUnit2.onClick.AddListener(
             () =>
             {
-                ArrayBarrackCommand.Use(EBarrackCommand.SPAWN_UNIT, ESpawnUnitType.RANGE);
+                ArrayBarrackCommand.Use(EBarrackCommand.SPAWN_UNIT, ESpawnUnitType.RANGED);
             });
 
         btnSpawnUnit3.onClick.AddListener(

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3650822248373926283}
   - component: {fileID: 2341253079211249543}
   m_Layer: 7
-  m_Name: P_FriendlyUnit 1
+  m_Name: P_FriendlyRocketUnit
   m_TagString: FriendlyUnit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -116,7 +116,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   isMovable: 1
-  unitType: 0
+  unitType: 2
 --- !u!1 &3256322658277572286
 GameObject:
   m_ObjectHideFlags: 0
@@ -366,7 +366,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: caab117eab60b3f469501c8836ac57b5, type: 2}
+      objectReference: {fileID: 2100000, guid: 8397b56df52306348a8171380cc0baa2, type: 2}
     - target: {fileID: 919132149155446097, guid: de2ca9206df77c642b0af8751ef85e21,
         type: 3}
       propertyPath: m_Name

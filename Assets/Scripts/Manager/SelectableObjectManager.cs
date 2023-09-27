@@ -8,8 +8,10 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
     public bool IsListEmpty => listSelectedFriendlyObject.Count < 1;
     public bool IsFriendlyUnit => isFriendlyUnitInList;
     public FriendlyObject GetFirstSelectedObjectInList => listSelectedFriendlyObject[0];
-    public static int LevelUnitDmgUpgrade => levelUnitDmgUpgrade;
-    public static int LevelUnitHpUpgrade => levelUnitHpUpgrade;
+    public static int LevelRangedUnitDmgUpgrade => levelRangedUnitDmgUpgrade;
+    public static int LevelRangedUnitHpUpgrade => levelRangedUnitHpUpgrade;
+    public static int LevelMeleeUnitHpUpgrade => levelMeleeUnitHpUpgrade;
+    public static int LevelMeleeUnitDmgUpgrade => levelMeleeUnitDmgUpgrade;
     public static float DelayUnitUpgrade => delayUnitUpgrade;
 
     public void Init(VoidSelectObjectTypeDelegate _selectObjectCallback, PF_Grid _grid, float _delayUnitUpgrade)
@@ -327,26 +329,38 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
         Broker.AlertMessageToSub(_message, EPublisherType.SELECTABLE_MANAGER);
     }
 
-    public void CompleteUpgradeUnitDmg()
+    public void CompleteUpgradeRangedUnitDmg()
     {
-        ++levelUnitDmgUpgrade;
+        ++levelRangedUnitDmgUpgrade;
         PushMessageToBroker(EMessageType.UPGRADE_RANGED_DMG);
     }
 
-    public void CompleteUpgradeUnitHp()
+    public void CompleteUpgradeRangedUnitHp()
     {
-        ++levelUnitHpUpgrade;
+        ++levelRangedUnitHpUpgrade;
         PushMessageToBroker(EMessageType.UPGRADE_RANGED_HP);
+    }
+
+    public void CompleteUpgradeMeleeUnitDmg()
+    {
+        ++levelRangedUnitDmgUpgrade;
+        PushMessageToBroker(EMessageType.UPGRADE_MELEE_DMG);
+    }
+
+    public void CompleteUpgradeMeleeUnitHp()
+    {
+        ++levelRangedUnitHpUpgrade;
+        PushMessageToBroker(EMessageType.UPGRADE_MELEE_HP);
     }
 
 
     [SerializeField]
     private float rangeGroupLimitDist = 5f;
-    [SerializeField]
-    private static int levelUnitDmgUpgrade = 1;
-    [SerializeField]
-    private static int levelUnitHpUpgrade = 1;
-    [SerializeField]
+
+    private static int levelRangedUnitDmgUpgrade = 1;
+    private static int levelRangedUnitHpUpgrade = 1;
+    private static int levelMeleeUnitDmgUpgrade = 1;
+    private static int levelMeleeUnitHpUpgrade = 1;
     private static float delayUnitUpgrade = 0f;
 
     private bool isFriendlyUnitInList = false;
