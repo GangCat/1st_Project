@@ -22,7 +22,17 @@ public class GameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Confined;
 
         InitCommandList();
+        InitManagers();
+        InitPlayer();
+        InitHUD();
 
+        SpawnMapEnemy(10);
+        //Invoke("StartWave", 30f);
+        StartCoroutine("SupplyEnergyCoroutine");
+    }
+
+    private void InitManagers()
+    {
         pathMng.Init();
         grid = pathMng.GetComponent<PF_Grid>();
         selectMng.Init(UnitSelect, grid, delayUnitUpgrade);
@@ -41,23 +51,13 @@ public class GameManager : MonoBehaviour
         cameraMng.Init();
         uiMng.Init();
         enemyMng.Init(grid);
-
-        InitPlayer();
-        
         structureMng.Init(grid, InitMainBase());
-
-        SpawnMapEnemy(10);
-        //Invoke("StartWave", 30f);
     }
 
-    private void StartWave()
+    private void InitHUD()
     {
-        enemyMng.SpawnWaveEnemy(mainBaseTr.position, 45);
-    }
-
-    private void SpawnMapEnemy(int _count)
-    {
-        enemyMng.SpawnMapEnemy(_count);
+        cmdUpdateEnergyDisplay.Execute(curEnergy);
+        cmdUpdateCoreDisplay.Execute(curCore);
     }
 
     private void InitCommandList()
@@ -104,11 +104,24 @@ public class GameManager : MonoBehaviour
 
         ArrayStructureButtonCommand.Add(EStructureButtonCommand.DEMOLISH, new CommandDemolition(structureMng, selectMng));
         ArrayStructureButtonCommand.Add(EStructureButtonCommand.UPGRADE, new CommandUpgrade(structureMng, selectMng));
+
+        cmdUpdateEnergyDisplay = new CommandUpdateEnergyDisplay(uiMng);
+        cmdUpdateCoreDisplay = new CommandUpdateCoreDisplay(uiMng);
     }
 
     private void InitPlayer()
     {
         FindAnyObjectByType<UnitHeroIndicator>().Init();
+    }
+
+    private void StartWave()
+    {
+        enemyMng.SpawnWaveEnemy(mainBaseTr.position, 45);
+    }
+
+    private void SpawnMapEnemy(int _count)
+    {
+        enemyMng.SpawnMapEnemy(_count);
     }
 
     private StructureMainBase InitMainBase()
@@ -117,12 +130,12 @@ public class GameManager : MonoBehaviour
         mainBase.Init(0);
         return mainBase;
     }
-
     private void UnitSelect(EObjectType _selectObjectType)
     {
         uiMng.ShowFuncButton(_selectObjectType);
     }
 
+    #region inputMngCallback
     private void MoveUnitByPicking(Vector3 _pickPos)
     {
         if (selectMng.IsFriendlyUnit)
@@ -182,6 +195,7 @@ public class GameManager : MonoBehaviour
     {
         selectMng.Patrol(_wayPointTo);
     }
+    #endregion
 
     public void OnClickMoveButton()
     {
@@ -193,9 +207,47 @@ public class GameManager : MonoBehaviour
         structureMng.ShowBluepirnt((EObjectType)_buildingType);
     }
 
+    private IEnumerator SupplyEnergyCoroutine()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(energySupplyRate);
+            curEnergy = Functions.ClampMaxWithUInt(curEnergy + energyIncreaseAmount, maxEnergy);
+            UpdateEnergy();
+        }
+    }
+
+    public void IncreaseCore(uint _increaseAmount)
+    {
+        curCore = Functions.ClampMaxWithUInt(curCore + _increaseAmount, maxCore);
+        UpdateCore();
+    }
+
+    private void UpdateEnergy()
+    {
+        cmdUpdateEnergyDisplay.Execute(curEnergy);
+    }
+
+    private void UpdateCore()
+    {
+        cmdUpdateCoreDisplay.Execute(curCore);
+    }
+
 
     [SerializeField]
     private float delayUnitUpgrade = 0f;
+    [SerializeField]
+    private uint energyIncreaseAmount = 0;
+    [SerializeField]
+    private uint curEnergy = 300;
+    [SerializeField]
+    private uint maxEnergy = 100000;
+    [SerializeField, Range(1f, 30f)]
+    private float energySupplyRate = 1f;
+    [SerializeField]
+    private uint curCore = 0;
+    [SerializeField]
+    private uint maxCore = 100000;
 
     private InputManager inputMng = null;
     private CameraManager cameraMng = null;
@@ -204,7 +256,9 @@ public class GameManager : MonoBehaviour
     private StructureManager structureMng = null;
     private PF_PathRequestManager pathMng = null;
     private EnemyManager enemyMng = null;
-    private Transform mainBaseTr = null;
 
     private PF_Grid grid = null;
+    private Transform mainBaseTr = null;
+    private CommandUpdateEnergyDisplay cmdUpdateEnergyDisplay = null;
+    private CommandUpdateCoreDisplay cmdUpdateCoreDisplay = null;
 }

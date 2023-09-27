@@ -6,14 +6,27 @@ public class UIManager : MonoBehaviour
 {
     public void Init()
     {
-        canvasFuncButton = GetComponentInChildren<FuncButtonManager>();
-        canvasFuncButton.Init();
+        funcBtnMng = GetComponentInChildren<FuncButtonManager>();
+        displayHUDMng = GetComponentInChildren<DisplayHUDManager>();
+        funcBtnMng.Init();
+        displayHUDMng.Init();
     }
 
     public void ShowFuncButton(EObjectType _selectObjectType)
     {
-        canvasFuncButton.ShowFuncButton(_selectObjectType);
+        funcBtnMng.ShowFuncButton(_selectObjectType);
     }
 
-    private FuncButtonManager canvasFuncButton = null;
+    public void UpdateEnergy(uint _curEnergy)
+    {
+        displayHUDMng.UpdateEnergy(_curEnergy);
+    }
+
+    public void UpdateCore(uint _curCore)
+    {
+        displayHUDMng.UpdateCore(_curCore);
+    }
+
+    private FuncButtonManager funcBtnMng = null;
+    private DisplayHUDManager displayHUDMng = null;
 }
