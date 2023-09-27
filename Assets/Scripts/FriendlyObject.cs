@@ -22,6 +22,11 @@ public class FriendlyObject : SelectableObject, ISubscriber
                 for (int i = 0; i < arrCollider.Length; ++i)
                     arrCollider[i].Init(GetDmg, objectType);
             }
+            else
+            {
+                stateMachine.UpgradeAttDmg((SelectableObjectManager.LevelUnitDmgUpgrade - 1) * 2);
+                statusHp.UpgradeHp((SelectableObjectManager.LevelUnitHpUpgrade - 1) * 10);
+            }
             StateIdle();
         }
         else
@@ -30,7 +35,6 @@ public class FriendlyObject : SelectableObject, ISubscriber
             for (int i = 0; i < arrCollider.Length; ++i)
                 arrCollider[i].Init(GetDmg, objectType);
         }   
-
         SelectableObjectManager.UpdateNodeWalkable(transform.position, nodeIdx);
     }
 
@@ -587,9 +591,11 @@ public class FriendlyObject : SelectableObject, ISubscriber
         switch (_message)
         {
             case EMessageType.UPGRADE_RANGED_HP:
+                statusHp.UpgradeHp((SelectableObjectManager.LevelUnitHpUpgrade - 1) * 10);
                 Debug.Log("UpgradeHp");
                 break;
             case EMessageType.UPGRADE_RANGED_DMG:
+                stateMachine.UpgradeAttDmg((SelectableObjectManager.LevelUnitDmgUpgrade - 1) * 2);
                 Debug.Log("UpgradeDmg");
                 break;
             default:
