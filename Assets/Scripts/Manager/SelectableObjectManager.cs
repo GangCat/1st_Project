@@ -2,19 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SelectableObjectManager : MonoBehaviour
+public class SelectableObjectManager : MonoBehaviour, IPublisher
 {
     public delegate void VoidSelectObjectTypeDelegate(EObjectType _objectType);
     public bool IsListEmpty => listSelectedFriendlyObject.Count < 1;
     public bool IsFriendlyUnit => isFriendlyUnitInList;
     public FriendlyObject GetFirstSelectedObjectInList => listSelectedFriendlyObject[0];
+    public static int LevelUnitDmgUpgrade => levelUnitDmgUpgrade;
+    public static int LevelUnitHpUpgrade => levelUnitHpUpgrade;
+    public static float DelayUnitUpgrade => delayUnitUpgrade;
 
-    public void Init(VoidSelectObjectTypeDelegate _selectObjectCallback, PF_Grid _grid)
+    public void Init(VoidSelectObjectTypeDelegate _selectObjectCallback, PF_Grid _grid, float _delayUnitUpgrade)
     {
         listSelectedFriendlyObject.Clear();
         tempListSelectableObject.Clear();
         selectObjectCallback = _selectObjectCallback;
         grid = _grid;
+        delayUnitUpgrade = _delayUnitUpgrade;
+        RegisterBroker();
     }
 
     public static int InitNode(Vector3 _pos)
@@ -312,8 +317,37 @@ public class SelectableObjectManager : MonoBehaviour
         }
     }
 
+    public void RegisterBroker()
+    {
+        Broker.Regist(this, EPublisherType.SELECTABLE_MANAGER);
+    }
+
+    public void PushMessageToBroker(EMessageType _message)
+    {
+        Broker.AlertMessageToSub(_message, EPublisherType.SELECTABLE_MANAGER);
+    }
+
+    public void CompleteUpgradeUnitDmg()
+    {
+        ++levelUnitDmgUpgrade;
+        PushMessageToBroker(EMessageType.UPGRADE_RANGED_DMG);
+    }
+
+    public void CompleteUpgradeUnitHp()
+    {
+        ++levelUnitHpUpgrade;
+        PushMessageToBroker(EMessageType.UPGRADE_RANGED_HP);
+    }
+
+
     [SerializeField]
     private float rangeGroupLimitDist = 5f;
+    [SerializeField]
+    private static int levelUnitDmgUpgrade = 1;
+    [SerializeField]
+    private static int levelUnitHpUpgrade = 1;
+    [SerializeField]
+    private static float delayUnitUpgrade = 0f;
 
     private bool isFriendlyUnitInList = false;
 
@@ -327,5 +361,5 @@ public class SelectableObjectManager : MonoBehaviour
 
     private static PF_Grid grid = null;
     private static Dictionary<int, PF_Node> dicNodeUnderUnit = new Dictionary<int, PF_Node>();
-    private static int unitUpgradeLimit = 1;
+
 }

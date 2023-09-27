@@ -59,11 +59,6 @@ public class Structure : MonoBehaviour
             StartCoroutine("UpgradeCoroutine");
     }
 
-    public virtual void StartUnitUpgrade()
-    {
-        if(unitUpgradeLevel < StructureManager.UpgradeLimit)
-    }
-
     protected virtual IEnumerator UpgradeCoroutine()
     {
         float buildFinishTime = Time.time + upgradeDelay;

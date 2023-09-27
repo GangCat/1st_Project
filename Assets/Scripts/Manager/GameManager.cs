@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
 
         pathMng.Init();
         grid = pathMng.GetComponent<PF_Grid>();
-        selectMng.Init(UnitSelect, grid);
+        selectMng.Init(UnitSelect, grid, delayUnitUpgrade);
         inputMng.Init(
             MoveUnitByPicking,
             MoveUnitByPickingObject,
@@ -46,7 +46,7 @@ public class GameManager : MonoBehaviour
         structureMng.Init(grid, InitMainBase());
 
         SpawnMapEnemy(10);
-        Invoke("StartWave", 30f);
+        //Invoke("StartWave", 30f);
     }
 
     private void StartWave()
@@ -77,6 +77,8 @@ public class GameManager : MonoBehaviour
         ArrayBarrackCommand.Add(EBarrackCommand.SPAWN_UNIT, new CommandSpawnUnit(selectMng));
         ArrayBarrackCommand.Add(EBarrackCommand.RALLYPOINT_CONFIRM_POS, new CommandConfirmRallyPointPos(selectMng));
         ArrayBarrackCommand.Add(EBarrackCommand.RALLYPOINT_CONFIRM_TR, new CommandConfirmRallyPointTr(selectMng));
+        ArrayBarrackCommand.Add(EBarrackCommand.UPGRADE_UNIT_DMG, new CommandUpgradeUnitDmg(selectMng));
+        ArrayBarrackCommand.Add(EBarrackCommand.UPGRADE_UNIT_HP, new CommandUpgradeUnitHp(selectMng));
 
         ArrayBunkerCommand.Add(EBunkerCommand.IN_UNIT, new CommandInUnit(selectMng));
         ArrayBunkerCommand.Add(EBunkerCommand.OUT_ONE_UNIT, new CommandOutOneUnit(selectMng));
@@ -88,6 +90,8 @@ public class GameManager : MonoBehaviour
 
         ArrayFriendlyObjectCommand.Add(EFriendlyObjectCommand.DEAD, new CommandFriendlyDead(structureMng, selectMng));
         ArrayFriendlyObjectCommand.Add(EFriendlyObjectCommand.DESTROY, new CommandFriendlyDestroy(structureMng));
+        ArrayFriendlyObjectCommand.Add(EFriendlyObjectCommand.COMPLETE_UPGRADE_RANGED_UNIT_DMG, new CommandCompleteUpgradeRangedUnitDmg(selectMng));
+        ArrayFriendlyObjectCommand.Add(EFriendlyObjectCommand.COMPLETE_UPGRADE_RANGED_UNIT_HP, new CommandCompleteUpgradeRangedUnitHp(selectMng));
 
         ArrayNuclearCommand.Add(ENuclearCommand.SPAWN_NUCLEAR, new CommandSpawnNuclear(structureMng, selectMng));
         ArrayNuclearCommand.Add(ENuclearCommand.LAUNCH_NUCLEAR, new CommandLaunchNuclear(structureMng));
@@ -184,6 +188,8 @@ public class GameManager : MonoBehaviour
     }
 
 
+    [SerializeField]
+    private float delayUnitUpgrade = 0f;
 
     private InputManager inputMng = null;
     private CameraManager cameraMng = null;

@@ -7,25 +7,37 @@ public class CanvasBarrackFunc : CanvasFuncBase
 {
     public void Init()
     {
-        buttonSpawnUnit1.onClick.AddListener(
+        btnSpawnUnit1.onClick.AddListener(
             () =>
             {
                 ArrayBarrackCommand.Use(EBarrackCommand.SPAWN_UNIT, ESpawnUnitType.MELEE);
             });
 
-        buttonSpawnUnit2.onClick.AddListener(
+        btnSpawnUnit2.onClick.AddListener(
             () =>
             {
                 ArrayBarrackCommand.Use(EBarrackCommand.SPAWN_UNIT, ESpawnUnitType.RANGE);
             });
 
-        buttonSpawnUnit3.onClick.AddListener(
+        btnSpawnUnit3.onClick.AddListener(
             () =>
             {
                 ArrayBarrackCommand.Use(EBarrackCommand.SPAWN_UNIT, ESpawnUnitType.ROCKET);
             });
 
-        buttonRallyPoint.onClick.AddListener(
+        btnUpgradeUnitDmg.onClick.AddListener(
+            () =>
+            {
+                ArrayBarrackCommand.Use(EBarrackCommand.UPGRADE_UNIT_DMG);
+            });
+
+        btnUpgradeUnitHp.onClick.AddListener(
+            () =>
+            {
+                ArrayBarrackCommand.Use(EBarrackCommand.UPGRADE_UNIT_HP);
+            });
+
+        btnRallyPoint.onClick.AddListener(
             () =>
             {
                 ArrayBarrackCommand.Use(EBarrackCommand.RALLYPOINT);
@@ -36,11 +48,15 @@ public class CanvasBarrackFunc : CanvasFuncBase
 
 
     [SerializeField]
-    private Button buttonSpawnUnit1 = null;
+    private Button btnSpawnUnit1 = null;
     [SerializeField]
-    private Button buttonSpawnUnit2 = null;
+    private Button btnSpawnUnit2 = null;
     [SerializeField]
-    private Button buttonSpawnUnit3 = null;
+    private Button btnSpawnUnit3 = null;
     [SerializeField]
-    private Button buttonRallyPoint = null;
+    private Button btnUpgradeUnitDmg = null;
+    [SerializeField]
+    private Button btnUpgradeUnitHp = null;
+    [SerializeField]
+    private Button btnRallyPoint = null;
 }

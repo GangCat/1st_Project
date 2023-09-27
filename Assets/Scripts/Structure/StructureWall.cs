@@ -12,7 +12,7 @@ public class StructureWall : Structure
     protected override void UpgradeComplete()
     {
         base.UpgradeComplete();
-        upgradeHpCmd.Execute(30f);
+        upgradeHpCmd.Execute(upgradeHpAmount);
         Debug.Log("UpgradeCompleteWall");
     }
 

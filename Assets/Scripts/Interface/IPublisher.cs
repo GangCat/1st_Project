@@ -4,6 +4,6 @@ using UnityEngine;
 
 public interface IPublisher
 {
-    private void RegisterBroker() { }
-    private void PushMessageToBroker() { }
+    void RegisterBroker();
+    void PushMessageToBroker(EMessageType _message);
 }

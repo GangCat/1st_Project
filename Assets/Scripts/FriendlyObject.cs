@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FriendlyObject : SelectableObject
+public class FriendlyObject : SelectableObject, ISubscriber
 {
     public override void Init()
     {
@@ -37,6 +37,7 @@ public class FriendlyObject : SelectableObject
     public void Init(int _barrackIdx)
     {
         barrackIdx = _barrackIdx;
+        Subscribe();
     }
 
     public Transform TargetBunker => targetBunker;
@@ -571,6 +572,25 @@ public class FriendlyObject : SelectableObject
         }
     }
 
+    public void Subscribe()
+    {
+        Broker.Subscribe(this, EPublisherType.SELECTABLE_MANAGER);
+    }
+
+    public void ReceiveMessage(EMessageType _message)
+    {
+        switch (_message)
+        {
+            case EMessageType.UPGRADE_RANGED_HP:
+                Debug.Log("UpgradeHp");
+                break;
+            case EMessageType.UPGRADE_RANGED_DMG:
+                Debug.Log("UpgradeDmg");
+                break;
+            default:
+                break;
+        }
+    }
 
     [Header("-Friendly Unit Attribute")]
     [SerializeField]

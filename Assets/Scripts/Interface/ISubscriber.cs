@@ -2,17 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ISubscriber : MonoBehaviour
+public interface ISubscriber
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    void Subscribe();
+    void ReceiveMessage(EMessageType _message);
 }

@@ -16,9 +16,12 @@ public class StructureBarrack : Structure
             arrMemoryPool[i] = new MemoryPool(arrUnitPrefab[i], 3, transform);
     }
 
+    public int UpgradeLevel => upgradeLevel;
+
     protected override void UpgradeComplete()
     {
         base.UpgradeComplete();
+        Debug.Log("BarrackUpgradeComplete");
         upgradeHpCmd.Execute(upgradeHpAmount);
     }
 
@@ -84,6 +87,46 @@ public class StructureBarrack : Structure
         RequestSpawnUnit();
     }
 
+    public void UpgradeUnitDmg()
+    {
+        if (!isProcessingUpgrade && SelectableObjectManager.LevelUnitDmgUpgrade < upgradeLevel * 2)
+            StartCoroutine("UpgradeUnitCoroutine", EUnitUpgradeType.RANGED_UPGRADE_DMG);
+    }
+
+    public void UpgradeUnitHp()
+    {
+        if (!isProcessingUpgrade && SelectableObjectManager.LevelUnitHpUpgrade < upgradeLevel * 2)
+            StartCoroutine("UpgradeUnitCoroutine", EUnitUpgradeType.RANGED_UPGRADE_HP);
+    }
+
+    private IEnumerator UpgradeUnitCoroutine(EUnitUpgradeType _upgradeType)
+    {
+        isProcessingUpgrade = true;
+
+        float buildFinishTime = Time.time + SelectableObjectManager.DelayUnitUpgrade;
+        while (buildFinishTime > Time.time)
+        {
+            // ui Ç¥½Ã
+            yield return new WaitForSeconds(0.5f);
+        }
+
+        switch (_upgradeType)
+        {
+            case EUnitUpgradeType.RANGED_UPGRADE_DMG:
+                ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.COMPLETE_UPGRADE_RANGED_UNIT_DMG);
+                break;
+            case EUnitUpgradeType.RANGED_UPGRADE_HP:
+                ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.COMPLETE_UPGRADE_RANGED_UNIT_HP);
+                break;
+            case EUnitUpgradeType.MELEE_UPGRADE_DMG:
+                break;
+            case EUnitUpgradeType.MELEE_UPGRADE_HP:
+                break;
+        }
+
+        isProcessingUpgrade = false;
+    }
+
     [Header("-Melee(temp), Range, Rocket(temp)")]
     [SerializeField]
     private float[] spawnUnitDelay = new float[(int)ESpawnUnitType.LENGTH];
@@ -95,6 +138,7 @@ public class StructureBarrack : Structure
     private float upgradeHpAmount = 0f;
 
     private bool isProcessingSpawnUnit = false;
+    private bool isProcessingUpgrade = false;
 
     private CommandUpgradeHP upgradeHpCmd = null;
 
