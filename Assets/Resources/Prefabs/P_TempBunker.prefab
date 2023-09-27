@@ -67,7 +67,7 @@ MonoBehaviour:
   myGridX: 1
   myGridY: 1
   upgradeDelay: 3
-  buffRatio: 0.5
+  buffRatio: 1
   height: 5
   capacity: 1
   increaseBuffRatioAmount: 0.1

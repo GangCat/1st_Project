@@ -109,7 +109,7 @@ public class FriendlyObject : SelectableObject, ISubscriber
 
     public void ResetLayer()
     {
-        gameObject.layer = 1 << LayerMask.GetMask("SelectableObject");
+        gameObject.layer = LayerMask.NameToLayer("SelectableObject");
     }
 
     public void SetMyTr(Transform _myTr)
