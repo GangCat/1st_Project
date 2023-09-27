@@ -2,16 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CommandUpgradeUnitDmg : Command
+public class CommandUpgradeMeleeUnitHp : Command
 {
-    public CommandUpgradeUnitDmg(SelectableObjectManager _selMng)
+    public CommandUpgradeMeleeUnitHp(SelectableObjectManager _selMng)
     {
         selMng = _selMng;
     }
 
     public override void Execute(params object[] _objects)
     {
-        selMng.GetFirstSelectedObjectInList.GetComponent<StructureBarrack>().UpgradeUnitDmg();
+        selMng.GetFirstSelectedObjectInList.GetComponent<StructureBarrack>().UpgradeMeleeUnitHp();
     }
 
     private SelectableObjectManager selMng = null;

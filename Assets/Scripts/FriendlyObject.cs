@@ -619,7 +619,7 @@ public class FriendlyObject : SelectableObject, ISubscriber
             case EMessageType.UPGRADE_MELEE_DMG:
                 if (unitType.Equals(ESpawnUnitType.MELEE))
                 {
-                    statusHp.UpgradeHp((SelectableObjectManager.LevelMeleeUnitDmgUpgrade - 1) * 2);
+                    stateMachine.UpgradeAttDmg((SelectableObjectManager.LevelMeleeUnitDmgUpgrade - 1) * 2);
                     Debug.Log("MeleeUpgradeDmg");
                 }
                 break;

@@ -87,16 +87,28 @@ public class StructureBarrack : Structure
         RequestSpawnUnit();
     }
 
-    public void UpgradeUnitDmg()
+    public void UpgradeRangedUnitDmg()
     {
         if (!isProcessingUpgrade && SelectableObjectManager.LevelRangedUnitDmgUpgrade < upgradeLevel * 2)
-            StartCoroutine("UpgradeUnitCoroutine", EUnitUpgradeType.RANGED_UPGRADE_DMG);
+            StartCoroutine("UpgradeUnitCoroutine", EUnitUpgradeType.RANGED_UNIT_DMG);
     }
 
-    public void UpgradeUnitHp()
+    public void UpgradeRangedUnitHp()
     {
         if (!isProcessingUpgrade && SelectableObjectManager.LevelRangedUnitHpUpgrade < upgradeLevel * 2)
-            StartCoroutine("UpgradeUnitCoroutine", EUnitUpgradeType.RANGED_UPGRADE_HP);
+            StartCoroutine("UpgradeUnitCoroutine", EUnitUpgradeType.RANGED_UNIT_HP);
+    }
+
+    public void UpgradeMeleeUnitDmg()
+    {
+        if (!isProcessingUpgrade && SelectableObjectManager.LevelMeleeUnitDmgUpgrade < upgradeLevel * 2)
+            StartCoroutine("UpgradeUnitCoroutine", EUnitUpgradeType.MELEE_UNIT_DMG);
+    }
+
+    public void UpgradeMeleeUnitHp()
+    {
+        if (!isProcessingUpgrade && SelectableObjectManager.LevelMeleeUnitHpUpgrade < upgradeLevel * 2)
+            StartCoroutine("UpgradeUnitCoroutine", EUnitUpgradeType.MELEE_UNIT_HP);
     }
 
     private IEnumerator UpgradeUnitCoroutine(EUnitUpgradeType _upgradeType)
@@ -112,15 +124,17 @@ public class StructureBarrack : Structure
 
         switch (_upgradeType)
         {
-            case EUnitUpgradeType.RANGED_UPGRADE_DMG:
+            case EUnitUpgradeType.RANGED_UNIT_DMG:
                 ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.COMPLETE_UPGRADE_RANGED_UNIT_DMG);
                 break;
-            case EUnitUpgradeType.RANGED_UPGRADE_HP:
+            case EUnitUpgradeType.RANGED_UNIT_HP:
                 ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.COMPLETE_UPGRADE_RANGED_UNIT_HP);
                 break;
-            case EUnitUpgradeType.MELEE_UPGRADE_DMG:
+            case EUnitUpgradeType.MELEE_UNIT_DMG:
+                ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.COMPLETE_UPGRADE_MELEE_UNIT_DMG);
                 break;
-            case EUnitUpgradeType.MELEE_UPGRADE_HP:
+            case EUnitUpgradeType.MELEE_UNIT_HP:
+                ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.COMPLETE_UPGRADE_MELEE_UNIT_HP);
                 break;
         }
 

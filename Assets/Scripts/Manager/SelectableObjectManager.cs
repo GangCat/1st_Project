@@ -343,13 +343,13 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
 
     public void CompleteUpgradeMeleeUnitDmg()
     {
-        ++levelRangedUnitDmgUpgrade;
+        ++levelMeleeUnitDmgUpgrade;
         PushMessageToBroker(EMessageType.UPGRADE_MELEE_DMG);
     }
 
     public void CompleteUpgradeMeleeUnitHp()
     {
-        ++levelRangedUnitHpUpgrade;
+        ++levelMeleeUnitHpUpgrade;
         PushMessageToBroker(EMessageType.UPGRADE_MELEE_HP);
     }
 

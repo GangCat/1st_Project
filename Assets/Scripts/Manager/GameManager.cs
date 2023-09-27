@@ -78,8 +78,10 @@ public class GameManager : MonoBehaviour
         ArrayBarrackCommand.Add(EBarrackCommand.SPAWN_UNIT, new CommandSpawnUnit(selectMng));
         ArrayBarrackCommand.Add(EBarrackCommand.RALLYPOINT_CONFIRM_POS, new CommandConfirmRallyPointPos(selectMng));
         ArrayBarrackCommand.Add(EBarrackCommand.RALLYPOINT_CONFIRM_TR, new CommandConfirmRallyPointTr(selectMng));
-        ArrayBarrackCommand.Add(EBarrackCommand.UPGRADE_UNIT_DMG, new CommandUpgradeUnitDmg(selectMng));
-        ArrayBarrackCommand.Add(EBarrackCommand.UPGRADE_UNIT_HP, new CommandUpgradeUnitHp(selectMng));
+        ArrayBarrackCommand.Add(EBarrackCommand.UPGRADE_RANGED_UNIT_DMG, new CommandUpgradeRangedUnitDmg(selectMng));
+        ArrayBarrackCommand.Add(EBarrackCommand.UPGRADE_RANGED_UNIT_HP, new CommandUpgradeRangedUnitHp(selectMng));
+        ArrayBarrackCommand.Add(EBarrackCommand.UPGRADE_MELEE_UNIT_DMG, new CommandUpgradeMeleeUnitDmg(selectMng));
+        ArrayBarrackCommand.Add(EBarrackCommand.UPGRAGE_MELEE_UNIT_HP, new CommandUpgradeMeleeUnitHp(selectMng));
 
         ArrayBunkerCommand.Add(EBunkerCommand.IN_UNIT, new CommandInUnit(selectMng));
         ArrayBunkerCommand.Add(EBunkerCommand.OUT_ONE_UNIT, new CommandOutOneUnit(selectMng));
@@ -93,6 +95,8 @@ public class GameManager : MonoBehaviour
         ArrayFriendlyObjectCommand.Add(EFriendlyObjectCommand.DESTROY, new CommandFriendlyDestroy(structureMng));
         ArrayFriendlyObjectCommand.Add(EFriendlyObjectCommand.COMPLETE_UPGRADE_RANGED_UNIT_DMG, new CommandCompleteUpgradeRangedUnitDmg(selectMng));
         ArrayFriendlyObjectCommand.Add(EFriendlyObjectCommand.COMPLETE_UPGRADE_RANGED_UNIT_HP, new CommandCompleteUpgradeRangedUnitHp(selectMng));
+        ArrayFriendlyObjectCommand.Add(EFriendlyObjectCommand.COMPLETE_UPGRADE_MELEE_UNIT_DMG, new CommandCompleteUpgradeMeleeUnitDmg(selectMng));
+        ArrayFriendlyObjectCommand.Add(EFriendlyObjectCommand.COMPLETE_UPGRADE_MELEE_UNIT_HP, new CommandCompleteUpgradeMeleeUnitHp(selectMng));
 
         ArrayNuclearCommand.Add(ENuclearCommand.SPAWN_NUCLEAR, new CommandSpawnNuclear(structureMng, selectMng));
         ArrayNuclearCommand.Add(ENuclearCommand.LAUNCH_NUCLEAR, new CommandLaunchNuclear(structureMng));
