@@ -14,7 +14,7 @@ public class FuncButtonManager : MonoBehaviour
         canvasBunkerFunc = GetComponentInChildren<CanvasBunkerFunc>();
         canvasSpawnNuclearFunc = GetComponentInChildren<CanvasSpawnNuclearFunc>();
         canvasHeroFunc = GetComponentInChildren<CanvasHeroFunc>();
-        cancleFunc = GetComponentInChildren<CanvasCancleFunc>();
+        canvasCancleFunc = GetComponentInChildren<CanvasCancleFunc>();
 
         canvasUnitBaseFunc.Init();
         canvasStructureBaseFunc.Init();
@@ -24,7 +24,7 @@ public class FuncButtonManager : MonoBehaviour
         canvasBunkerFunc.Init();
         canvasSpawnNuclearFunc.Init();
         canvasHeroFunc.Init();
-        cancleFunc.Init();
+        canvasCancleFunc.Init();
     }
 
     public void SetBarrackButtonUninteractable()
@@ -76,6 +76,9 @@ public class FuncButtonManager : MonoBehaviour
             case EObjectType.HBEAM:
                 canvasStructureBaseFunc.SetActive(true);
                 break;
+            case EObjectType.PROCESSING_UPGRADE_STRUCTURE:
+                canvasCancleFunc.SetActive(true);
+                break;
             default:
                 break;
         }
@@ -83,18 +86,10 @@ public class FuncButtonManager : MonoBehaviour
         curActiveBtnFunc = _selectObjectType;
     }
 
-    private void ActiveCancleBtn()
-    {
-        cancleFunc.SetActive(true);
-    }
-
-    private void DeActiveCancleBtn()
-    {
-        cancleFunc.SetActive(false);
-    }
-
     private void HideFuncButton()
     {
+        canvasCancleFunc.SetActive(false);
+
         switch (curActiveBtnFunc)
         {
             case EObjectType.UNIT:
@@ -123,6 +118,9 @@ public class FuncButtonManager : MonoBehaviour
                 canvasStructureBaseFunc.SetActive(false);
                 canvasBarrackFunc.SetActive(false);
                 break;
+            case EObjectType.HBEAM:
+                canvasStructureBaseFunc.SetActive(false);
+                break;
             case EObjectType.NUCLEAR:
                 canvasStructureBaseFunc.SetActive(false);
                 canvasSpawnNuclearFunc.SetActive(false);
@@ -140,7 +138,7 @@ public class FuncButtonManager : MonoBehaviour
     private CanvasBunkerFunc canvasBunkerFunc = null;
     private CanvasSpawnNuclearFunc canvasSpawnNuclearFunc = null;
     private CanvasHeroFunc canvasHeroFunc = null;
-    private CanvasCancleFunc cancleFunc = null;
+    private CanvasCancleFunc canvasCancleFunc = null;
 
     private EObjectType curActiveBtnFunc = EObjectType.NONE;
 }

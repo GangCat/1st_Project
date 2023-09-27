@@ -71,9 +71,11 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
             if (obj.Equals(_removeObj))
             {
                 listSelectedFriendlyObject.Remove(obj);
-                return;
+                break;
             }
         }
+
+        UpdateFuncButton();
     }
 
     public void InUnit(FriendlyObject _friObj)
@@ -130,8 +132,8 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
 
         SelectableObject tempObj = null;
         isFriendlyUnitInList = false;
-        bool isFriendlyStructure = false;
-        bool isEnemyObject = false;
+        isFriendlyStructureInList = false;
+        isEnemyObjectInList = false;
         // 오브젝트를 하나하나 검사.
         foreach (SelectableObject obj in tempListSelectableObject)
         {
@@ -147,8 +149,8 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
                     {
                         listSelectedFriendlyObject.Add(obj.GetComponent<FriendlyObject>());
                         isFriendlyUnitInList = true;
-                        isFriendlyStructure = false;
-                        isEnemyObject = false;
+                        isFriendlyStructureInList = false;
+                        isEnemyObjectInList = false;
                     }
                     else
                         listSelectedFriendlyObject.Add(obj.GetComponent<FriendlyObject>());
@@ -160,15 +162,15 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
                 case EObjectType.BARRACK:
                 case EObjectType.NUCLEAR:
                     if (isFriendlyUnitInList) break;
-                    isFriendlyStructure = true;
-                    isEnemyObject = false;
+                    isFriendlyStructureInList = true;
+                    isEnemyObjectInList = false;
                     if (!tempObj) tempObj = obj;
                     break;
                 case EObjectType.ENEMY_UNIT:
                 case EObjectType.ENEMY_STRUCTURE:
                     if (isFriendlyUnitInList) break;
-                    if (isFriendlyStructure) break;
-                    isEnemyObject = true;
+                    if (isFriendlyStructureInList) break;
+                    isEnemyObjectInList = true;
                     if (!tempObj) tempObj = obj;
                     break;
                 default:
@@ -176,16 +178,18 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
             }
         }
 
-        if (isEnemyObject)
+        if (isEnemyObjectInList)
         {
             selectedEnemyObject = tempObj.GetComponent<EnemyObject>();
             selectObjectCallback?.Invoke(selectedEnemyObject.GetObjectType());
         }
-        else if (isFriendlyStructure)
+        else if (isFriendlyStructureInList)
         {
             listSelectedFriendlyObject.Add(tempObj.GetComponent<FriendlyObject>());
             if (tempObj.GetComponent<Structure>().IsUnderConstruction)
                 selectObjectCallback?.Invoke(EObjectType.HBEAM);
+            else if (tempObj.GetComponent<Structure>().IsProcessingUpgrade)
+                selectObjectCallback?.Invoke(EObjectType.PROCESSING_UPGRADE_STRUCTURE);
             else
                 selectObjectCallback?.Invoke(listSelectedFriendlyObject[0].GetObjectType());
         }
@@ -194,6 +198,26 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
 
         tempListSelectableObject.Clear();
         return;
+    }
+
+    public void UpdateFuncButton()
+    {
+        if (isFriendlyUnitInList)
+        {
+            if(listSelectedFriendlyObject.Count > 0)
+                selectObjectCallback?.Invoke(listSelectedFriendlyObject[0].GetObjectType());
+            else
+                selectObjectCallback?.Invoke(EObjectType.NONE);
+        }
+        else if (isFriendlyStructureInList)
+        {
+            if (listSelectedFriendlyObject[0].GetComponent<Structure>().IsProcessingUpgrade)
+                selectObjectCallback?.Invoke(EObjectType.PROCESSING_UPGRADE_STRUCTURE);
+            else
+                selectObjectCallback?.Invoke(listSelectedFriendlyObject[0].GetObjectType());
+        }
+        else
+            selectObjectCallback?.Invoke(EObjectType.NONE);
     }
 
     public void ResetTargetBunker()
@@ -364,6 +388,8 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
     private static float delayUnitUpgrade = 0f;
 
     private bool isFriendlyUnitInList = false;
+    private bool isFriendlyStructureInList = false;
+    private bool isEnemyObjectInList = false;
 
     private List<SelectableObject> tempListSelectableObject = new List<SelectableObject>();
     private List<FriendlyObject> listSelectedFriendlyObject = new List<FriendlyObject>();

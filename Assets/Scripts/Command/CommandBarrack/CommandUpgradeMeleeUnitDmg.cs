@@ -11,7 +11,8 @@ public class CommandUpgradeMeleeUnitDmg : Command
 
     public override void Execute(params object[] _objects)
     {
-        selMng.GetFirstSelectedObjectInList.GetComponent<StructureBarrack>().UpgradeMeleeUnitDmg();
+        if(selMng.GetFirstSelectedObjectInList.GetComponent<StructureBarrack>().UpgradeMeleeUnitDmg())
+            selMng.UpdateFuncButton();
     }
 
     private SelectableObjectManager selMng = null;

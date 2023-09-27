@@ -11,7 +11,8 @@ public class CommandUpgradeRangedUnitDmg : Command
 
     public override void Execute(params object[] _objects)
     {
-        selMng.GetFirstSelectedObjectInList.GetComponent<StructureBarrack>().UpgradeRangedUnitDmg();
+        if(selMng.GetFirstSelectedObjectInList.GetComponent<StructureBarrack>().UpgradeRangedUnitDmg())
+            selMng.UpdateFuncButton();
     }
 
     private SelectableObjectManager selMng = null;

@@ -82,6 +82,22 @@ public class CanvasBarrackFunc : CanvasFunc
         btnUpgradeMeleeUnitHp.interactable = true;
     }
 
+    public void SetUpgradeButtonUninteractable()
+    {
+        btnUpgradeRangedUnitDmg.interactable = false;
+        btnUpgradeRangedUnitHp.interactable = false;
+        btnUpgradeMeleeUnitDmg.interactable = false;
+        btnUpgradeMeleeUnitHp.interactable = false;
+    }
+
+    public void SetUpgradeButtonInteractable()
+    {
+        btnUpgradeRangedUnitDmg.interactable = true;
+        btnUpgradeRangedUnitHp.interactable = true;
+        btnUpgradeMeleeUnitDmg.interactable = true;
+        btnUpgradeMeleeUnitHp.interactable = true;
+    }
+
 
     [SerializeField]
     private Button btnSpawnMeleeUnit = null;

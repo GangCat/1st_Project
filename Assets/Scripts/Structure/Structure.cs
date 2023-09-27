@@ -35,6 +35,7 @@ public class Structure : MonoBehaviour
     public int FactorX => factorGridX;
     public int FactorY => factorGridY;
     public bool IsUnderConstruction { get; private set; }
+    public bool IsProcessingUpgrade => isProcessingUpgrade;
 
     public void SetGrid(int _gridX, int _gridY)
     {
@@ -189,5 +190,6 @@ public class Structure : MonoBehaviour
     protected int myIdx = -1;
     protected int upgradeLevel = 0;
 
-    protected bool isBuildable = true;
+    protected bool isBuildable = false;
+    protected bool isProcessingUpgrade = false;
 }

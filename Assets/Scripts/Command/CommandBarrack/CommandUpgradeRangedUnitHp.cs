@@ -11,7 +11,8 @@ public class CommandUpgradeRangedUnitHp : Command
 
     public override void Execute(params object[] _objects)
     {
-        selMng.GetFirstSelectedObjectInList.GetComponent<StructureBarrack>().UpgradeRangedUnitHp();
+        if(selMng.GetFirstSelectedObjectInList.GetComponent<StructureBarrack>().UpgradeRangedUnitHp())
+            selMng.UpdateFuncButton();
     }
 
     private SelectableObjectManager selMng = null;

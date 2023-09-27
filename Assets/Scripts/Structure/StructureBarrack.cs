@@ -16,8 +16,6 @@ public class StructureBarrack : Structure
             arrMemoryPool[i] = new MemoryPool(arrUnitPrefab[i], 3, transform);
     }
 
-    public int UpgradeLevel => upgradeLevel;
-
     protected override void UpgradeComplete()
     {
         base.UpgradeComplete();
@@ -87,28 +85,44 @@ public class StructureBarrack : Structure
         RequestSpawnUnit();
     }
 
-    public void UpgradeRangedUnitDmg()
+    public bool UpgradeRangedUnitDmg()
     {
-        if (!isProcessingUpgrade && SelectableObjectManager.LevelRangedUnitDmgUpgrade < upgradeLevel * 2)
+        if (!isProcessingUpgrade && SelectableObjectManager.LevelRangedUnitDmgUpgrade < upgradeLevel << 1)
+        {
             StartCoroutine("UpgradeUnitCoroutine", EUnitUpgradeType.RANGED_UNIT_DMG);
+            return true;
+        }
+        return false;
     }
 
-    public void UpgradeRangedUnitHp()
+    public bool UpgradeRangedUnitHp()
     {
-        if (!isProcessingUpgrade && SelectableObjectManager.LevelRangedUnitHpUpgrade < upgradeLevel * 2)
+        if (!isProcessingUpgrade && SelectableObjectManager.LevelRangedUnitHpUpgrade < upgradeLevel << 1)
+        {
             StartCoroutine("UpgradeUnitCoroutine", EUnitUpgradeType.RANGED_UNIT_HP);
+            return true;
+        }
+        return false;
     }
 
-    public void UpgradeMeleeUnitDmg()
+    public bool UpgradeMeleeUnitDmg()
     {
-        if (!isProcessingUpgrade && SelectableObjectManager.LevelMeleeUnitDmgUpgrade < upgradeLevel * 2)
+        if (!isProcessingUpgrade && SelectableObjectManager.LevelMeleeUnitDmgUpgrade < upgradeLevel << 1)
+        {
             StartCoroutine("UpgradeUnitCoroutine", EUnitUpgradeType.MELEE_UNIT_DMG);
+            return true;
+        }
+        return false;
     }
 
-    public void UpgradeMeleeUnitHp()
+    public bool UpgradeMeleeUnitHp()
     {
-        if (!isProcessingUpgrade && SelectableObjectManager.LevelMeleeUnitHpUpgrade < upgradeLevel * 2)
+        if (!isProcessingUpgrade && SelectableObjectManager.LevelMeleeUnitHpUpgrade < upgradeLevel << 1)
+        {
             StartCoroutine("UpgradeUnitCoroutine", EUnitUpgradeType.MELEE_UNIT_HP);
+            return true;
+        }
+        return false;
     }
 
     private IEnumerator UpgradeUnitCoroutine(EUnitUpgradeType _upgradeType)
@@ -121,6 +135,7 @@ public class StructureBarrack : Structure
             // ui Ç¥½Ã
             yield return new WaitForSeconds(0.5f);
         }
+        isProcessingUpgrade = false;
 
         switch (_upgradeType)
         {
@@ -138,7 +153,6 @@ public class StructureBarrack : Structure
                 break;
         }
 
-        isProcessingUpgrade = false;
     }
 
     [Header("-Melee(temp), Range, Rocket(temp)")]
@@ -152,7 +166,6 @@ public class StructureBarrack : Structure
     private float upgradeHpAmount = 0f;
 
     private bool isProcessingSpawnUnit = false;
-    private bool isProcessingUpgrade = false;
 
     private CommandUpgradeHP upgradeHpCmd = null;
 

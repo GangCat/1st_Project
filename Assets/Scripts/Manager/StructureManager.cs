@@ -239,6 +239,8 @@ public class StructureManager : MonoBehaviour
             newStructure.BuildComplete();
             newStructure.transform.parent = transform;
         }
+
+        ArrayBuildCommand.Use(EMainBaseCommnad.BUILD_COMPLETE);
     }
 
     #region Ruin

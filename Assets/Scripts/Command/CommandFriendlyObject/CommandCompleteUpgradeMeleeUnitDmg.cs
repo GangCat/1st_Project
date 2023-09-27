@@ -12,6 +12,7 @@ public class CommandCompleteUpgradeMeleeUnitDmg : Command
     public override void Execute(params object[] _objects)
     {
         selMng.CompleteUpgradeMeleeUnitDmg();
+        selMng.UpdateFuncButton();
     }
 
     private SelectableObjectManager selMng = null;
