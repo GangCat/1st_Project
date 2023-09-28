@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
         structureMng = FindAnyObjectByType<StructureManager>();
         pathMng = FindAnyObjectByType<PF_PathRequestManager>();
         enemyMng = FindAnyObjectByType<EnemyManager>();
+        currencyMng = FindAnyObjectByType<CurrencyManager>();
+
         mainBaseTr = FindAnyObjectByType<StructureMainBase>().transform;
     }
 
@@ -24,11 +26,9 @@ public class GameManager : MonoBehaviour
         InitCommandList();
         InitManagers();
         InitPlayer();
-        InitHUD();
 
         SpawnMapEnemy(10);
         //Invoke("StartWave", 30f);
-        StartCoroutine("SupplyEnergyCoroutine");
     }
 
     private void InitManagers()
@@ -52,12 +52,7 @@ public class GameManager : MonoBehaviour
         uiMng.Init();
         enemyMng.Init(grid);
         structureMng.Init(grid, InitMainBase());
-    }
-
-    private void InitHUD()
-    {
-        cmdUpdateEnergyDisplay.Execute(curEnergy);
-        cmdUpdateCoreDisplay.Execute(curCore);
+        currencyMng.Init();
     }
 
     private void InitCommandList()
@@ -105,13 +100,13 @@ public class GameManager : MonoBehaviour
         ArrayStructureButtonCommand.Add(EStructureButtonCommand.DEMOLISH, new CommandDemolition(structureMng, selectMng));
         ArrayStructureButtonCommand.Add(EStructureButtonCommand.UPGRADE, new CommandUpgrade(structureMng, selectMng));
 
-        cmdUpdateEnergyDisplay = new CommandUpdateEnergyDisplay(uiMng);
-        cmdUpdateCoreDisplay = new CommandUpdateCoreDisplay(uiMng);
+        ArrayCurrencyCommand.Add(ECurrencyCommand.UPDATE_CORE_HUD, new CommandUpdateCoreDisplay(uiMng));
+        ArrayCurrencyCommand.Add(ECurrencyCommand.UPDATE_ENERGY_HUD, new CommandUpdateEnergyDisplay(uiMng));
     }
 
     private void InitPlayer()
     {
-        FindAnyObjectByType<UnitHeroIndicator>().Init();
+        FindAnyObjectByType<UnitHero>().Init();
     }
 
     private void StartWave()
@@ -207,47 +202,9 @@ public class GameManager : MonoBehaviour
         structureMng.ShowBluepirnt((EObjectType)_buildingType);
     }
 
-    private IEnumerator SupplyEnergyCoroutine()
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(energySupplyRate);
-            curEnergy = Functions.ClampMaxWithUInt(curEnergy + energyIncreaseAmount, maxEnergy);
-            UpdateEnergy();
-        }
-    }
-
-    public void IncreaseCore(uint _increaseAmount)
-    {
-        curCore = Functions.ClampMaxWithUInt(curCore + _increaseAmount, maxCore);
-        UpdateCore();
-    }
-
-    private void UpdateEnergy()
-    {
-        cmdUpdateEnergyDisplay.Execute(curEnergy);
-    }
-
-    private void UpdateCore()
-    {
-        cmdUpdateCoreDisplay.Execute(curCore);
-    }
-
 
     [SerializeField]
     private float delayUnitUpgrade = 0f;
-    [SerializeField]
-    private uint energyIncreaseAmount = 0;
-    [SerializeField]
-    private uint curEnergy = 300;
-    [SerializeField]
-    private uint maxEnergy = 100000;
-    [SerializeField, Range(1f, 30f)]
-    private float energySupplyRate = 1f;
-    [SerializeField]
-    private uint curCore = 0;
-    [SerializeField]
-    private uint maxCore = 100000;
 
     private InputManager inputMng = null;
     private CameraManager cameraMng = null;
@@ -256,9 +213,8 @@ public class GameManager : MonoBehaviour
     private StructureManager structureMng = null;
     private PF_PathRequestManager pathMng = null;
     private EnemyManager enemyMng = null;
+    private CurrencyManager currencyMng = null;
 
     private PF_Grid grid = null;
     private Transform mainBaseTr = null;
-    private CommandUpdateEnergyDisplay cmdUpdateEnergyDisplay = null;
-    private CommandUpdateCoreDisplay cmdUpdateCoreDisplay = null;
 }

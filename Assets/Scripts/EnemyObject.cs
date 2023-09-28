@@ -21,8 +21,14 @@ public class EnemyObject : SelectableObject
             StopAllCoroutines();
             SelectableObjectManager.ResetNodeWalkable(transform.position, myIdx);
             ArrayEnemyObjectCommand.Use((EEnemyObjectCommand)spawnType, gameObject, myIdx);
+
+            if (Random.Range(0.0f, 100.0f) < 30f)
+                Instantiate(powerCorePrefab, transform.position, Quaternion.identity);
         }
     }
+
+    [SerializeField]
+    private GameObject powerCorePrefab = null;
 
     private EEnemySpawnType spawnType = EEnemySpawnType.NONE;
     private int myIdx = 0;

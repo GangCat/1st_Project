@@ -47,6 +47,7 @@ public enum EFriendlyObjectCommand { NONE = -1, DEAD, DESTROY, DESTROY_HBEAM, CO
 public enum ENuclearCommand { NONE = -1, SPAWN_NUCLEAR, LAUNCH_NUCLEAR, LENGTH }
 public enum EStructureButtonCommand { NONE = -1, DEMOLISH, UPGRADE, LENGTH }
 public enum EUpgradeCommand { NONE = -1, HP, ATTACK_DAMAGE, ATTACK_RANGE, BUFF_RATIO, ENERGY_INCOME, LENGTH }
+public enum ECurrencyCommand { NONE = -1, UPDATE_CORE_HUD, UPDATE_ENERGY_HUD, COLLECT_CORE, LENGTH }
 
 
 public enum EPublisherType { NONE = -1, SELECTABLE_MANAGER, LENGTH }

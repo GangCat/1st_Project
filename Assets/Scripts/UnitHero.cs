@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UnitHeroIndicator : MonoBehaviour
+public class UnitHero : MonoBehaviour
 {
     public void Init()
     {

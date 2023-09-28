@@ -5014,12 +5014,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   delayUnitUpgrade: 5
-  energyIncreaseAmount: 300
-  curEnergy: 300
-  maxEnergy: 100000
-  energySupplyRate: 1
-  curCore: 0
-  maxCore: 100000
 --- !u!1 &936201668
 GameObject:
   m_ObjectHideFlags: 0
@@ -11422,6 +11416,56 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1852157807}
   m_CullTransparentMesh: 1
+--- !u!1 &1858891525
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1858891527}
+  - component: {fileID: 1858891526}
+  m_Layer: 0
+  m_Name: CurrencyManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1858891526
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1858891525}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf1e6cedf8382d7478941fe8b83b5658, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  energyIncreaseAmount: 20
+  curEnergy: 300
+  maxEnergy: 100000
+  energySupplyRate: 10
+  curCore: 0
+  maxCore: 100000
+--- !u!4 &1858891527
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1858891525}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1905785743
 GameObject:
   m_ObjectHideFlags: 0
@@ -12840,6 +12884,7 @@ SceneRoots:
   - {fileID: 989486306}
   - {fileID: 1164142512}
   - {fileID: 214568547}
+  - {fileID: 1858891527}
   - {fileID: 197657294}
   - {fileID: 1966285866}
   - {fileID: 1510320194}
