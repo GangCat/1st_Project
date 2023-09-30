@@ -13,10 +13,14 @@ public class StructureMainBase : Structure
         upgradeLevel = 1;
     }
 
-    public override void StartUpgrade()
+    public override bool StartUpgrade()
     {
-        if(upgradeLevel < 3)
+        if(!isProcessingUpgrade && upgradeLevel < 3)
+        {
             StartCoroutine("UpgradeCoroutine");
+            return true;
+        }
+        return false;
     }
 
     protected override void UpgradeComplete()

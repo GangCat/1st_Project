@@ -300,11 +300,11 @@ public class StructureManager : MonoBehaviour
         }
     }
 
-    public void UpgradeStructure(int _structureIdx)
+    public bool UpgradeStructure(int _structureIdx)
     {
         Structure structure = null;
         dicStructure.TryGetValue(_structureIdx, out structure);
-        structure.StartUpgrade();
+        return structure.StartUpgrade();
     }
 
 

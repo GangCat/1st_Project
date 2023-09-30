@@ -28,6 +28,7 @@ public class Structure : MonoBehaviour
 
     public virtual void Init() { }
 
+    public int UpgradeLevel => upgradeLevel;
     public bool IsBuildable => isBuildable;
     public int StructureIdx => myIdx;
     public int GridX => myGridX;
@@ -54,23 +55,27 @@ public class Structure : MonoBehaviour
         transform.position = _targetPos;
     }
 
-    public virtual void StartUpgrade() 
+    public virtual bool StartUpgrade() 
     {
-        if (upgradeLevel < StructureManager.UpgradeLimit)
+        if (!isProcessingUpgrade && upgradeLevel < StructureManager.UpgradeLimit)
+        {
             StartCoroutine("UpgradeCoroutine");
+            return true;
+        }
+        return false;
     }
 
-    protected virtual IEnumerator UpgradeCoroutine()
+    protected IEnumerator UpgradeCoroutine()
     {
+        isProcessingUpgrade = true;
         float buildFinishTime = Time.time + upgradeDelay;
         while (buildFinishTime > Time.time)
         {
             // ui 표시
             yield return new WaitForSeconds(0.5f);
         }
-
+        isProcessingUpgrade = false;
         UpgradeComplete();
-        // 여기서 그 방문자 패턴? 하기
     }
 
     protected virtual void UpgradeComplete() 
