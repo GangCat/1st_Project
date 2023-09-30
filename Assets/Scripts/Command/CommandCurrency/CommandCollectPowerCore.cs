@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class CommandCollectPowerCore : Command
 {
-    public CommandCollectPowerCore(GameManager _gm)
+    public CommandCollectPowerCore(CurrencyManager _curMng)
     {
-        gm = _gm;
+        curMng = _curMng;
     }
 
     public override void Execute(params object[] _objects)
     {
-        
+        curMng.IncreaseCore((uint)_objects[0]);
     }
 
-    private GameManager gm = null;
+    private CurrencyManager curMng = null;
 }

@@ -8,8 +8,8 @@ public class CollectCoreCollider : MonoBehaviour
     {
         if (_other.CompareTag("PowerCore"))
         {
+            ArrayCurrencyCommand.Use(ECurrencyCommand.COLLECT_CORE, (uint)20);
             Destroy(_other.gameObject);
-            Debug.Log("Core");
         }
     }
 }
