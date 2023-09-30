@@ -14,13 +14,12 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
     public static int LevelMeleeUnitDmgUpgrade => levelMeleeUnitDmgUpgrade;
     public static float DelayUnitUpgrade => delayUnitUpgrade;
 
-    public void Init(VoidSelectObjectTypeDelegate _selectObjectCallback, PF_Grid _grid, float _delayUnitUpgrade)
+    public void Init(VoidSelectObjectTypeDelegate _selectObjectCallback, PF_Grid _grid)
     {
         listSelectedFriendlyObject.Clear();
         tempListSelectableObject.Clear();
         selectObjectCallback = _selectObjectCallback;
         grid = _grid;
-        delayUnitUpgrade = _delayUnitUpgrade;
         RegisterBroker();
     }
 
@@ -385,7 +384,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
     private static int levelRangedUnitHpUpgrade = 1;
     private static int levelMeleeUnitDmgUpgrade = 1;
     private static int levelMeleeUnitHpUpgrade = 1;
-    private static float delayUnitUpgrade = 0f;
+    private static float delayUnitUpgrade = 5f;
 
     private bool isFriendlyUnitInList = false;
     private bool isFriendlyStructureInList = false;

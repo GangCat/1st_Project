@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
     {
         pathMng.Init();
         grid = pathMng.GetComponent<PF_Grid>();
-        selectMng.Init(UnitSelect, grid, delayUnitUpgrade);
+        selectMng.Init(UnitSelect, grid);
         inputMng.Init(
             MoveUnitByPicking,
             MoveUnitByPickingObject,
@@ -71,13 +71,14 @@ public class GameManager : MonoBehaviour
         ArrayBuildCommand.Add(EMainBaseCommnad.BUILD_COMPLETE, new CommandBuildComplete(selectMng));
 
         ArrayBarrackCommand.Add(EBarrackCommand.RALLYPOINT, new CommandRallypoint(inputMng));
-        ArrayBarrackCommand.Add(EBarrackCommand.SPAWN_UNIT, new CommandSpawnUnit(selectMng));
+        ArrayBarrackCommand.Add(EBarrackCommand.SPAWN_UNIT, new CommandSpawnUnit(selectMng, currencyMng));
         ArrayBarrackCommand.Add(EBarrackCommand.RALLYPOINT_CONFIRM_POS, new CommandConfirmRallyPointPos(selectMng));
         ArrayBarrackCommand.Add(EBarrackCommand.RALLYPOINT_CONFIRM_TR, new CommandConfirmRallyPointTr(selectMng));
-        ArrayBarrackCommand.Add(EBarrackCommand.UPGRADE_RANGED_UNIT_DMG, new CommandUpgradeRangedUnitDmg(selectMng));
-        ArrayBarrackCommand.Add(EBarrackCommand.UPGRADE_RANGED_UNIT_HP, new CommandUpgradeRangedUnitHp(selectMng));
-        ArrayBarrackCommand.Add(EBarrackCommand.UPGRADE_MELEE_UNIT_DMG, new CommandUpgradeMeleeUnitDmg(selectMng));
-        ArrayBarrackCommand.Add(EBarrackCommand.UPGRAGE_MELEE_UNIT_HP, new CommandUpgradeMeleeUnitHp(selectMng));
+        ArrayBarrackCommand.Add(EBarrackCommand.UPGRADE_UNIT, new CommandUpgradeUnit(selectMng, currencyMng));
+        //ArrayBarrackCommand.Add(EBarrackCommand.UPGRADE_RANGED_UNIT_DMG, new CommandUpgradeRangedUnitDmg(selectMng));
+        //ArrayBarrackCommand.Add(EBarrackCommand.UPGRADE_RANGED_UNIT_HP, new CommandUpgradeRangedUnitHp(selectMng));
+        //ArrayBarrackCommand.Add(EBarrackCommand.UPGRADE_MELEE_UNIT_DMG, new CommandUpgradeMeleeUnitDmg(selectMng));
+        //ArrayBarrackCommand.Add(EBarrackCommand.UPGRAGE_MELEE_UNIT_HP, new CommandUpgradeMeleeUnitHp(selectMng));
 
         ArrayBunkerCommand.Add(EBunkerCommand.IN_UNIT, new CommandInUnit(selectMng));
         ArrayBunkerCommand.Add(EBunkerCommand.OUT_ONE_UNIT, new CommandOutOneUnit(selectMng));
@@ -192,19 +193,8 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
-    public void OnClickMoveButton()
-    {
-        inputMng.OnClickMoveButton();
-    }
-
-    private void BuildButtonOnClick(int _buildingType)
-    {
-        structureMng.ShowBluepirnt((EObjectType)_buildingType);
-    }
 
 
-    [SerializeField]
-    private float delayUnitUpgrade = 0f;
 
     private InputManager inputMng = null;
     private CameraManager cameraMng = null;

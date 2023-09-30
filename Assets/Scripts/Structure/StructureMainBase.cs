@@ -6,7 +6,7 @@ public class StructureMainBase : Structure
 {
     public override void Init(int _structureIdx)
     {
-        upgradeHpCmd = new CommandUpgradeHP(GetComponent<StatusHp>());
+        upgradeHpCmd = new CommandUpgradeStructureHP(GetComponent<StatusHp>());
 
         GetComponent<SelectableObject>().Init();
         myIdx = _structureIdx;
@@ -32,5 +32,5 @@ public class StructureMainBase : Structure
     [SerializeField]
     private float upgradeHpAmount = 0f;
 
-    private CommandUpgradeHP upgradeHpCmd = null;
+    private CommandUpgradeStructureHP upgradeHpCmd = null;
 }

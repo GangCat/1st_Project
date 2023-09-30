@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CommandUpgradeHP : Command
+public class CommandUpgradeStructureHP : Command
 {
-    public CommandUpgradeHP(StatusHp _statusHp)
+    public CommandUpgradeStructureHP(StatusHp _statusHp)
     {
         statusHp = _statusHp;
     }

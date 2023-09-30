@@ -603,20 +603,21 @@ public class FriendlyObject : SelectableObject, ISubscriber
             case EMessageType.UPGRADE_RANGED_HP:
                 if (unitType.Equals(ESpawnUnitType.RANGED))
                 {
-                    statusHp.UpgradeHp((SelectableObjectManager.LevelRangedUnitHpUpgrade - 1) * 10);
+                    UpgradeHp(SelectableObjectManager.LevelRangedUnitHpUpgrade);
                     Debug.Log("RangedUpgradeHp");
                 }
                 break;
             case EMessageType.UPGRADE_RANGED_DMG:
                 if (unitType.Equals(ESpawnUnitType.RANGED))
                 {
-                    stateMachine.UpgradeAttDmg((SelectableObjectManager.LevelRangedUnitDmgUpgrade - 1) * 2);
+                    UpgradeDmg(SelectableObjectManager.LevelRangedUnitDmgUpgrade);
                     Debug.Log("RangedUpgradeDmg");
                 }
                 break;
             case EMessageType.UPGRADE_MELEE_HP:
                 if (unitType.Equals(ESpawnUnitType.MELEE))
                 {
+                    UpgradeHp(SelectableObjectManager.LevelMeleeUnitHpUpgrade);
                     statusHp.UpgradeHp((SelectableObjectManager.LevelMeleeUnitHpUpgrade - 1) * 10);
                     Debug.Log("MeleeUpgradeHp");
                 }
@@ -624,13 +625,23 @@ public class FriendlyObject : SelectableObject, ISubscriber
             case EMessageType.UPGRADE_MELEE_DMG:
                 if (unitType.Equals(ESpawnUnitType.MELEE))
                 {
-                    stateMachine.UpgradeAttDmg((SelectableObjectManager.LevelMeleeUnitDmgUpgrade - 1) * 2);
+                    UpgradeDmg(SelectableObjectManager.LevelMeleeUnitDmgUpgrade);
                     Debug.Log("MeleeUpgradeDmg");
                 }
                 break;
             default:
                 break;
         }
+    }
+
+    private void UpgradeHp(int _level)
+    {
+        statusHp.UpgradeHp((_level - 1) * 10);
+    }
+
+    private void UpgradeDmg(int _level)
+    {
+        stateMachine.UpgradeAttDmg((_level - 1) * 2);
     }
 
     [Header("-Friendly Unit Attribute")]
@@ -640,10 +651,10 @@ public class FriendlyObject : SelectableObject, ISubscriber
     private ESpawnUnitType unitType = ESpawnUnitType.NONE;
 
     private Vector3 wayPointStart = Vector3.zero;
+    private Transform targetBunker = null;
 
     private int barrackIdx = -1;
     private float oriAttRange = 0f;
     private bool isAttack = false;
 
-    private Transform targetBunker = null;
 }

@@ -13,8 +13,8 @@ public class StructureBunker : Structure
         warpPos.y += height;
         trigger.Init(transform);
         myIdx = _structureIdx;
-        upgradeHpCmd = new CommandUpgradeHP(GetComponent<StatusHp>());
-        upgradeBuffRatioCmd = new CommandUpgradeBuffRatio(this);
+        upgradeHpCmd = new CommandUpgradeStructureHP(GetComponent<StatusHp>());
+        upgradeBuffRatioCmd = new CommandUpgradeStructureBuffRatio(this);
     }
 
     protected override void UpgradeComplete()
@@ -106,8 +106,8 @@ public class StructureBunker : Structure
 
     private BunkerInTrigger trigger = null;
     private Vector3 warpPos = Vector3.zero;
-    private CommandUpgradeHP upgradeHpCmd = null;
-    private CommandUpgradeBuffRatio upgradeBuffRatioCmd = null;
+    private CommandUpgradeStructureHP upgradeHpCmd = null;
+    private CommandUpgradeStructureBuffRatio upgradeBuffRatioCmd = null;
     private Transform prevParentTransform = null;
 
     private Queue<FriendlyObject> queueUnitInBunker = new Queue<FriendlyObject>();

@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CommandUpgradeBuffRatio : Command
+public class CommandUpgradeStructureBuffRatio : Command
 { 
-    public CommandUpgradeBuffRatio(StructureBunker _bunker)
+    public CommandUpgradeStructureBuffRatio(StructureBunker _bunker)
     {
         bunker = _bunker;
     }

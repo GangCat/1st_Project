@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CommandSpawnUnit : Command
+public class CommandUpgradeUnit : Command
 {
-    public CommandSpawnUnit(SelectableObjectManager _selMng, CurrencyManager _curMng)
+    public CommandUpgradeUnit(SelectableObjectManager _selMng, CurrencyManager _curMng)
     {
         selMng = _selMng;
         curMng = _curMng;
@@ -12,8 +12,8 @@ public class CommandSpawnUnit : Command
 
     public override void Execute(params object[] _objects)
     {
-        if(curMng.SpawnUnit((ESpawnUnitType)_objects[0]))
-            selMng.SpawnUnit((ESpawnUnitType)_objects[0]);
+        if (selMng.GetFirstSelectedObjectInList.GetComponent<StructureBarrack>().UpgradeUnit((EUnitUpgradeType)_objects[0]))
+            selMng.UpdateFuncButton();
     }
 
     private SelectableObjectManager selMng = null;

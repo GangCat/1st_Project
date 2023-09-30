@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CanvasMainBaseFunc : CanvasFunc
+public class CanvasMainBaseFunc : CanvasFunc, ISubscriber
 {
     public void Init()
     {
@@ -34,6 +34,15 @@ public class CanvasMainBaseFunc : CanvasFunc
         gameObject.SetActive(false);
     }
 
+    public void Subscribe()
+    {
+        Broker.Subscribe(this, EPublisherType.ENERGY_UPDATE);
+    }
+
+    public void ReceiveMessage(EMessageType _message)
+    {
+
+    }
 
     [SerializeField]
     private Button btnBuildTurret = null;

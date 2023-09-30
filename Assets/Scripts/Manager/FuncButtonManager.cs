@@ -10,6 +10,7 @@ public class FuncButtonManager : MonoBehaviour
         canvasStructureBaseFunc = GetComponentInChildren<CanvasStructureBaseFunc>();
         canvasMainBaseFunc = GetComponentInChildren<CanvasMainBaseFunc>();
         canvasBarrackFunc = GetComponentInChildren<CanvasBarrackFunc>();
+        canvasBarrackUpgradeFunc = GetComponentInChildren<CanvasBarrackUpgradeFunc>();
         canvasTurretFunc = GetComponentInChildren<CanvasTurretFunc>();
         canvasBunkerFunc = GetComponentInChildren<CanvasBunkerFunc>();
         canvasSpawnNuclearFunc = GetComponentInChildren<CanvasSpawnNuclearFunc>();
@@ -20,6 +21,7 @@ public class FuncButtonManager : MonoBehaviour
         canvasStructureBaseFunc.Init();
         canvasMainBaseFunc.Init();
         canvasBarrackFunc.Init();
+        canvasBarrackUpgradeFunc.Init();
         canvasTurretFunc.Init();
         canvasBunkerFunc.Init();
         canvasSpawnNuclearFunc.Init();
@@ -68,6 +70,7 @@ public class FuncButtonManager : MonoBehaviour
             case EObjectType.BARRACK:
                 canvasStructureBaseFunc.SetActive(true);
                 canvasBarrackFunc.SetActive(true);
+                canvasBarrackUpgradeFunc.SetActive(true);
                 break;
             case EObjectType.NUCLEAR:
                 canvasStructureBaseFunc.SetActive(true);
@@ -117,6 +120,7 @@ public class FuncButtonManager : MonoBehaviour
             case EObjectType.BARRACK:
                 canvasStructureBaseFunc.SetActive(false);
                 canvasBarrackFunc.SetActive(false);
+                canvasBarrackUpgradeFunc.SetActive(false);
                 break;
             case EObjectType.HBEAM:
                 canvasStructureBaseFunc.SetActive(false);
@@ -134,6 +138,7 @@ public class FuncButtonManager : MonoBehaviour
     private CanvasStructureBaseFunc canvasStructureBaseFunc = null;
     private CanvasMainBaseFunc canvasMainBaseFunc = null;
     private CanvasBarrackFunc canvasBarrackFunc = null;
+    private CanvasBarrackUpgradeFunc canvasBarrackUpgradeFunc = null;
     private CanvasTurretFunc canvasTurretFunc = null;
     private CanvasBunkerFunc canvasBunkerFunc = null;
     private CanvasSpawnNuclearFunc canvasSpawnNuclearFunc = null;

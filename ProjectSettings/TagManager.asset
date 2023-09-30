@@ -9,6 +9,7 @@ TagManager:
   - EnemyStructure
   - EnemyUnit
   - FriendlyUnit
+  - PowerCore
   layers:
   - Default
   - TransparentFX

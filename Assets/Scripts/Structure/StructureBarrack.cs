@@ -10,7 +10,7 @@ public class StructureBarrack : Structure
         spawnPoint = transform.position;
         rallyPoint = spawnPoint;
         arrMemoryPool = new MemoryPool[arrUnitPrefab.Length];
-        upgradeHpCmd = new CommandUpgradeHP(GetComponent<StatusHp>());
+        upgradeHpCmd = new CommandUpgradeStructureHP(GetComponent<StatusHp>());
 
         for (int i = 0; i < arrUnitPrefab.Length; ++i)
             arrMemoryPool[i] = new MemoryPool(arrUnitPrefab[i], 3, transform);
@@ -83,6 +83,44 @@ public class StructureBarrack : Structure
 
         listUnit.RemoveAt(0);
         RequestSpawnUnit();
+    }
+
+
+    public bool UpgradeUnit(EUnitUpgradeType _upgradeType)
+    {
+        switch (_upgradeType)
+        {
+            case EUnitUpgradeType.RANGED_UNIT_DMG:
+                if (!isProcessingUpgrade && SelectableObjectManager.LevelRangedUnitDmgUpgrade < upgradeLevel << 1)
+                {
+                    StartCoroutine("UpgradeUnitCoroutine", _upgradeType);
+                    return true;
+                }
+                return false;
+            case EUnitUpgradeType.RANGED_UNIT_HP:
+                if (!isProcessingUpgrade && SelectableObjectManager.LevelRangedUnitHpUpgrade < upgradeLevel << 1)
+                {
+                    StartCoroutine("UpgradeUnitCoroutine", _upgradeType);
+                    return true;
+                }
+                return false;
+            case EUnitUpgradeType.MELEE_UNIT_DMG:
+                if (!isProcessingUpgrade && SelectableObjectManager.LevelMeleeUnitDmgUpgrade < upgradeLevel << 1)
+                {
+                    StartCoroutine("UpgradeUnitCoroutine", _upgradeType);
+                    return true;
+                }
+                return false;
+            case EUnitUpgradeType.MELEE_UNIT_HP:
+                if (!isProcessingUpgrade && SelectableObjectManager.LevelMeleeUnitHpUpgrade < upgradeLevel << 1)
+                {
+                    StartCoroutine("UpgradeUnitCoroutine", _upgradeType);
+                    return true;
+                }
+                return false;
+            default:
+                return false;
+        }
     }
 
     public bool UpgradeRangedUnitDmg()
@@ -167,7 +205,7 @@ public class StructureBarrack : Structure
 
     private bool isProcessingSpawnUnit = false;
 
-    private CommandUpgradeHP upgradeHpCmd = null;
+    private CommandUpgradeStructureHP upgradeHpCmd = null;
 
     private Vector3 spawnPoint = Vector3.zero;
     private Vector3 rallyPoint = Vector3.zero;

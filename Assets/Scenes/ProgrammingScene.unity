@@ -11445,7 +11445,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf1e6cedf8382d7478941fe8b83b5658, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  energyIncreaseAmount: 20
+  energyIncreaseAmount: 50
   curEnergy: 300
   maxEnergy: 100000
   energySupplyRate: 10

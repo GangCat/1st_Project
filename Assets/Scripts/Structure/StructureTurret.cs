@@ -11,9 +11,9 @@ public class StructureTurret : Structure
         selectObj.Init();
         selectObj.SetMyTr(turretHeadTr);
         myIdx = _structureIdx;
-        upgradeHpCmd = new CommandUpgradeHP(GetComponent<StatusHp>());
-        upgradeDmgCmd = new CommandUpgradeAttDmg(selectObj);
-        upgradeRangeCmd = new CommandUpgradeAttRange(selectObj);
+        upgradeHpCmd = new CommandUpgradeStructureHP(GetComponent<StatusHp>());
+        upgradeDmgCmd = new CommandUpgradeStructureAttDmg(selectObj);
+        upgradeRangeCmd = new CommandUpgradeStructureAttRange(selectObj);
     }
 
     public override void BuildComplete()
@@ -44,7 +44,7 @@ public class StructureTurret : Structure
 
 
     private FriendlyObject selectObj = null;
-    private CommandUpgradeHP upgradeHpCmd = null;
-    private CommandUpgradeAttDmg upgradeDmgCmd = null;
-    private CommandUpgradeAttRange upgradeRangeCmd = null;
+    private CommandUpgradeStructureHP upgradeHpCmd = null;
+    private CommandUpgradeStructureAttDmg upgradeDmgCmd = null;
+    private CommandUpgradeStructureAttRange upgradeRangeCmd = null;
 }
