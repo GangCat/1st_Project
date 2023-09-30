@@ -21,30 +21,36 @@ public class CurrencyManager : MonoBehaviour, IPublisher
         }
     }
 
-
     public void IncreaseCore(uint _increaseCore)
     {
         curCore = Functions.ClampMaxWithUInt(curCore + _increaseCore, maxCore);
         UpdateCore();
     }
 
-    public bool DecreaseEnergy(uint _decreaseEnergy)
+    private void DecreaseEnergy(uint _decreaseEnergy)
     {
-        if (curEnergy < _decreaseEnergy) return false;
-
         curEnergy -= _decreaseEnergy;
         UpdateEnergy();
-        return true;
     }
 
-    public bool DecreaseCore(uint _decreaseCore)
+    private void DecreaseCore(uint _decreaseCore)
     {
-        if (curCore < _decreaseCore) return false;
-
         curCore -= _decreaseCore;
         UpdateCore();
+    }
+
+    private bool IsCoreEnough(uint _decreaseCore)
+    {
+        if (curCore < _decreaseCore) return false;
         return true;
     }
+
+    private bool IsEnergyEnough(uint _decreaseEnergy)
+    {
+        if (curEnergy < _decreaseEnergy) return false;
+        return true;
+    }
+
 
     private void UpdateEnergy()
     {
@@ -66,73 +72,159 @@ public class CurrencyManager : MonoBehaviour, IPublisher
         Broker.AlertMessageToSub(_message, EPublisherType.ENERGY_UPDATE);
     }
 
-    public bool BuildStructure(EObjectType _objType)
+    public bool CanBuildStructure(EObjectType _objType)
     {
         switch (_objType)
         {
             case EObjectType.TURRET:
-                return DecreaseEnergy(buildTurret);
+                return IsEnergyEnough(buildTurret);
             case EObjectType.BUNKER:
-                return DecreaseEnergy(buildBunker);
+                return IsEnergyEnough(buildBunker);
             case EObjectType.WALL:
-                return DecreaseEnergy(buildWall);
+                return IsEnergyEnough(buildWall);
             case EObjectType.BARRACK:
-                return DecreaseEnergy(buildBarrack);
+                return IsEnergyEnough(buildBarrack);
             case EObjectType.NUCLEAR:
-                return DecreaseEnergy(buildNuclear);
+                return IsEnergyEnough(buildNuclear);
             default:
                 return false;
         }
     }
 
-    public bool UpgradeStructure(EObjectType _objType, int _level)
+    public void BuildStructure(EObjectType _objType)
+    {
+        switch (_objType)
+        {
+            case EObjectType.TURRET:
+                DecreaseEnergy(buildTurret);
+                break;
+            case EObjectType.BUNKER:
+                DecreaseEnergy(buildBunker);
+                break;
+            case EObjectType.WALL:
+                DecreaseEnergy(buildWall);
+                break;
+            case EObjectType.BARRACK:
+                DecreaseEnergy(buildBarrack);
+                break;
+            case EObjectType.NUCLEAR:
+                DecreaseEnergy(buildNuclear);
+                break;
+            default:
+                break;
+        }
+    }
+
+    public bool CanUpgradeSturcture(EObjectType _objType, int _level)
     {
         switch (_objType)
         {
             case EObjectType.MAIN_BASE:
-                return DecreaseCore(upgradeMainBase * (uint)_level);
+                return IsCoreEnough(upgradeMainBase * (uint)_level);
             case EObjectType.TURRET:
-                return DecreaseCore(upgradeTurret * (uint)_level);
+                return IsCoreEnough(upgradeTurret * (uint)_level);
             case EObjectType.BUNKER:
-                return DecreaseCore(upgradeBunker * (uint)_level);
+                return IsCoreEnough(upgradeBunker * (uint)_level);
             case EObjectType.WALL:
-                return DecreaseCore(upgradeWall * (uint)_level);
+                return IsCoreEnough(upgradeWall * (uint)_level);
             case EObjectType.BARRACK:
-                return DecreaseCore(upgradeBarrack * (uint)_level);
+                return IsCoreEnough(upgradeBarrack * (uint)_level);
             default:
                 return false;
         }
     }
 
-    public bool UpgradeUnit(EUnitUpgradeType _upgradeType)
+    public void UpgradeStructure(EObjectType _objType, int _level)
+    {
+        switch (_objType)
+        {
+            case EObjectType.MAIN_BASE:
+                DecreaseCore(upgradeMainBase * (uint)_level);
+                break;
+            case EObjectType.TURRET:
+                DecreaseCore(upgradeTurret * (uint)_level);
+                break;
+            case EObjectType.BUNKER:
+                DecreaseCore(upgradeBunker * (uint)_level);
+                break;
+            case EObjectType.WALL:
+                DecreaseCore(upgradeWall * (uint)_level);
+                break;
+            case EObjectType.BARRACK:
+                DecreaseCore(upgradeBarrack * (uint)_level);
+                break;
+            default:
+                break;
+        }
+    }
+
+    public bool CanUpgradeUnit(EUnitUpgradeType _upgradeType)
     {
         switch (_upgradeType)
         {
             case EUnitUpgradeType.RANGED_UNIT_DMG:
-                return DecreaseCore(upgradeUnitDmg * (uint)SelectableObjectManager.LevelRangedUnitDmgUpgrade);
+                return IsCoreEnough(upgradeUnitDmg * (uint)SelectableObjectManager.LevelRangedUnitDmgUpgrade);
             case EUnitUpgradeType.RANGED_UNIT_HP:
-                return DecreaseCore(upgradeUnitHp * (uint)SelectableObjectManager.LevelRangedUnitHpUpgrade);
+                return IsCoreEnough(upgradeUnitHp * (uint)SelectableObjectManager.LevelRangedUnitHpUpgrade);
             case EUnitUpgradeType.MELEE_UNIT_DMG:
-                return DecreaseCore(upgradeUnitDmg * (uint)SelectableObjectManager.LevelMeleeUnitDmgUpgrade);
+                return IsCoreEnough(upgradeUnitDmg * (uint)SelectableObjectManager.LevelMeleeUnitDmgUpgrade);
             case EUnitUpgradeType.MELEE_UNIT_HP:
-                return DecreaseCore(upgradeUnitHp * (uint)SelectableObjectManager.LevelMeleeUnitHpUpgrade);
+                return IsCoreEnough(upgradeUnitHp * (uint)SelectableObjectManager.LevelMeleeUnitHpUpgrade);
             default:
                 return false;
         }
     }
 
-    public bool SpawnUnit(ESpawnUnitType _unitType)
+    public void UpgradeUnit(EUnitUpgradeType _upgradeType)
+    {
+        switch (_upgradeType)
+        {
+            case EUnitUpgradeType.RANGED_UNIT_DMG:
+                DecreaseCore(upgradeUnitDmg * (uint)SelectableObjectManager.LevelRangedUnitDmgUpgrade);
+                break;
+            case EUnitUpgradeType.RANGED_UNIT_HP:
+                DecreaseCore(upgradeUnitDmg * (uint)SelectableObjectManager.LevelRangedUnitHpUpgrade);
+                break;
+            case EUnitUpgradeType.MELEE_UNIT_DMG:
+                DecreaseCore(upgradeUnitDmg * (uint)SelectableObjectManager.LevelMeleeUnitDmgUpgrade);
+                break;
+            case EUnitUpgradeType.MELEE_UNIT_HP:
+                DecreaseCore(upgradeUnitDmg * (uint)SelectableObjectManager.LevelMeleeUnitHpUpgrade);
+                break;
+            default:
+                break;
+        }
+    }
+
+    public bool CanSpawnUnit(ESpawnUnitType _unitType)
     {
         switch (_unitType)
         {
             case ESpawnUnitType.MELEE:
-                return DecreaseEnergy(spawnMeleeUnit);
+                return IsEnergyEnough(spawnMeleeUnit);
             case ESpawnUnitType.RANGED:
-                return DecreaseEnergy(spawnRangedUnit);
+                return IsEnergyEnough(spawnRangedUnit);
             case ESpawnUnitType.ROCKET:
                 return false;
             default:
                 return false;
+        }
+    }
+
+    public void SpawnUnit(ESpawnUnitType _unitType)
+    {
+        switch (_unitType)
+        {
+            case ESpawnUnitType.MELEE:
+                DecreaseEnergy(spawnMeleeUnit);
+                break;
+            case ESpawnUnitType.RANGED:
+                DecreaseEnergy(spawnRangedUnit);
+                break;
+            case ESpawnUnitType.ROCKET:
+                break;
+            default:
+                break;
         }
     }
 

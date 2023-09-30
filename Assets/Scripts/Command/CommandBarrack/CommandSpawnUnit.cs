@@ -12,8 +12,12 @@ public class CommandSpawnUnit : Command
 
     public override void Execute(params object[] _objects)
     {
-        if(curMng.SpawnUnit((ESpawnUnitType)_objects[0]))
-            selMng.SpawnUnit((ESpawnUnitType)_objects[0]);
+        ESpawnUnitType tempType = (ESpawnUnitType)_objects[0];
+        if (curMng.CanSpawnUnit(tempType))
+        {
+            selMng.SpawnUnit(tempType);
+            curMng.SpawnUnit(tempType);
+        }
     }
 
     private SelectableObjectManager selMng = null;

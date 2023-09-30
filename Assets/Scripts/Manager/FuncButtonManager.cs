@@ -77,8 +77,6 @@ public class FuncButtonManager : MonoBehaviour
                 canvasSpawnNuclearFunc.SetActive(true);
                 break;
             case EObjectType.HBEAM:
-                canvasStructureBaseFunc.SetActive(true);
-                break;
             case EObjectType.PROCESSING_UPGRADE_STRUCTURE:
                 canvasCancleFunc.SetActive(true);
                 break;
@@ -123,7 +121,8 @@ public class FuncButtonManager : MonoBehaviour
                 canvasBarrackUpgradeFunc.SetActive(false);
                 break;
             case EObjectType.HBEAM:
-                canvasStructureBaseFunc.SetActive(false);
+            case EObjectType.PROCESSING_UPGRADE_STRUCTURE:
+                canvasCancleFunc.SetActive(false);
                 break;
             case EObjectType.NUCLEAR:
                 canvasStructureBaseFunc.SetActive(false);

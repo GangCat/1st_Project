@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class StructureManager : MonoBehaviour
 {
-    private enum EStructureType { NONE = -1, TURRET, BUNKER, BARRACK, NUCLEAR, WALL, LENGTH }
+    public enum EStructureType { NONE = -1, TURRET, BUNKER, BARRACK, NUCLEAR, WALL, LENGTH }
     public void Init(PF_Grid _grid, StructureMainBase _mainBase)
     {
         grid = _grid;
@@ -26,6 +26,11 @@ public class StructureManager : MonoBehaviour
         }
     }
 
+    public EObjectType CurStructureType()
+    {
+        return curStructureObjType;
+    }
+
     public void ShowBluepirnt(EObjectType _buildingType)
     {
         if (isBlueprint)
@@ -39,24 +44,28 @@ public class StructureManager : MonoBehaviour
             case EObjectType.TURRET:
                 {
                     curStructureType = EStructureType.TURRET;
+                    curStructureObjType = EObjectType.TURRET;
                     curStructure = Instantiate(arrBlueprintPrefab[(int)EStructureType.TURRET], transform).GetComponent<Structure>();
                 }
                 break;
             case EObjectType.BUNKER:
                 {
                     curStructureType = EStructureType.BUNKER;
+                    curStructureObjType = EObjectType.BUNKER;
                     curStructure = Instantiate(arrBlueprintPrefab[(int)EStructureType.BUNKER], transform).GetComponent<Structure>();
                 }
                 break;
             case EObjectType.NUCLEAR:
                 {
                     curStructureType = EStructureType.NUCLEAR;
+                    curStructureObjType = EObjectType.NUCLEAR;
                     curStructure = Instantiate(arrBlueprintPrefab[(int)EStructureType.NUCLEAR], transform).GetComponent<Structure>();
                 }
                 break;
             case EObjectType.BARRACK:
                 {
                     curStructureType = EStructureType.BARRACK;
+                    curStructureObjType = EObjectType.BARRACK;
                     curStructure = Instantiate(arrBlueprintPrefab[(int)EStructureType.BARRACK], transform).GetComponent<Structure>();
                 }
                 break;
@@ -69,6 +78,7 @@ public class StructureManager : MonoBehaviour
     public void ShowBluepirnt(Transform _bunkerTr)
     {
         curStructureType = EStructureType.WALL;
+        curStructureObjType = EObjectType.WALL;
         curStructure = Instantiate(arrBlueprintPrefab[(int)EStructureType.WALL], transform).GetComponent<Structure>();
         StartCoroutine("ShowWallBlueprint", _bunkerTr);
     }
@@ -198,9 +208,9 @@ public class StructureManager : MonoBehaviour
 
             StartCoroutine("BuildStructureCoroutine");
 
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 
     private void StopBuildCoroutine()
@@ -317,8 +327,9 @@ public class StructureManager : MonoBehaviour
 
     private Dictionary<int, Structure> dicStructure = null;
     private List<StructureNuclear> listNuclearStructure = null;
-    private EStructureType curStructureType = EStructureType.NONE;
     private Structure curStructure = null;
+    private EObjectType curStructureObjType = EObjectType.NONE;
+    private EStructureType curStructureType = EStructureType.NONE;
     private PF_Grid grid = null;
     private PF_Node curNode = null;
 

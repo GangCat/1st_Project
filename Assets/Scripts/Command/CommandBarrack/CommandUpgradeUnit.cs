@@ -17,8 +17,9 @@ public class CommandUpgradeUnit : Command
 
         if (tempBarrack.CheckUpgradePossible(upgradeType))
         {
-            if (curMng.UpgradeUnit(upgradeType))
+            if (curMng.CanUpgradeUnit(upgradeType))
             {
+                curMng.UpgradeUnit(upgradeType);
                 tempBarrack.UpgradeUnit(upgradeType);
                 selMng.UpdateFuncButton();
             }
