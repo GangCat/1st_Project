@@ -201,22 +201,25 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
 
     public void UpdateFuncButton()
     {
-        if (isFriendlyUnitInList)
+        if (listSelectedFriendlyObject[0] != null)
         {
-            if(listSelectedFriendlyObject.Count > 0)
-                selectObjectCallback?.Invoke(listSelectedFriendlyObject[0].GetObjectType());
+            if (isFriendlyUnitInList)
+            {
+                if (listSelectedFriendlyObject.Count > 0)
+                    selectObjectCallback?.Invoke(listSelectedFriendlyObject[0].GetObjectType());
+                else
+                    selectObjectCallback?.Invoke(EObjectType.NONE);
+            }
+            else if (isFriendlyStructureInList)
+            {
+                if (listSelectedFriendlyObject[0].GetComponent<Structure>().IsProcessingUpgrade)
+                    selectObjectCallback?.Invoke(EObjectType.PROCESSING_UPGRADE_STRUCTURE);
+                else
+                    selectObjectCallback?.Invoke(listSelectedFriendlyObject[0].GetObjectType());
+            }
             else
                 selectObjectCallback?.Invoke(EObjectType.NONE);
         }
-        else if (isFriendlyStructureInList)
-        {
-            if (listSelectedFriendlyObject[0].GetComponent<Structure>().IsProcessingUpgrade)
-                selectObjectCallback?.Invoke(EObjectType.PROCESSING_UPGRADE_STRUCTURE);
-            else
-                selectObjectCallback?.Invoke(listSelectedFriendlyObject[0].GetObjectType());
-        }
-        else
-            selectObjectCallback?.Invoke(EObjectType.NONE);
     }
 
     public void ResetTargetBunker()

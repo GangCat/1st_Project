@@ -104,16 +104,18 @@ public class CurrencyManager : MonoBehaviour, IPublisher
         }
     }
 
-    public bool UpgradeUnit(EUnitUpgradeType _upgradeType, int _level)
+    public bool UpgradeUnit(EUnitUpgradeType _upgradeType)
     {
         switch (_upgradeType)
         {
             case EUnitUpgradeType.RANGED_UNIT_DMG:
-            case EUnitUpgradeType.MELEE_UNIT_DMG:
-                return DecreaseCore(upgradeUnitDmg * (uint)_level);
+                return DecreaseCore(upgradeUnitDmg * (uint)SelectableObjectManager.LevelRangedUnitDmgUpgrade);
             case EUnitUpgradeType.RANGED_UNIT_HP:
+                return DecreaseCore(upgradeUnitHp * (uint)SelectableObjectManager.LevelRangedUnitHpUpgrade);
+            case EUnitUpgradeType.MELEE_UNIT_DMG:
+                return DecreaseCore(upgradeUnitDmg * (uint)SelectableObjectManager.LevelMeleeUnitDmgUpgrade);
             case EUnitUpgradeType.MELEE_UNIT_HP:
-                return DecreaseCore(upgradeUnitHp * (uint)_level);
+                return DecreaseCore(upgradeUnitHp * (uint)SelectableObjectManager.LevelMeleeUnitHpUpgrade);
             default:
                 return false;
         }

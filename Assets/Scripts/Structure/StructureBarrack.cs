@@ -85,42 +85,34 @@ public class StructureBarrack : Structure
         RequestSpawnUnit();
     }
 
-
-    public bool UpgradeUnit(EUnitUpgradeType _upgradeType)
+    public bool CheckUpgradePossible(EUnitUpgradeType _upgradeType)
     {
         switch (_upgradeType)
         {
             case EUnitUpgradeType.RANGED_UNIT_DMG:
                 if (!isProcessingUpgrade && SelectableObjectManager.LevelRangedUnitDmgUpgrade < upgradeLevel << 1)
-                {
-                    StartCoroutine("UpgradeUnitCoroutine", _upgradeType);
                     return true;
-                }
                 return false;
             case EUnitUpgradeType.RANGED_UNIT_HP:
                 if (!isProcessingUpgrade && SelectableObjectManager.LevelRangedUnitHpUpgrade < upgradeLevel << 1)
-                {
-                    StartCoroutine("UpgradeUnitCoroutine", _upgradeType);
                     return true;
-                }
                 return false;
             case EUnitUpgradeType.MELEE_UNIT_DMG:
                 if (!isProcessingUpgrade && SelectableObjectManager.LevelMeleeUnitDmgUpgrade < upgradeLevel << 1)
-                {
-                    StartCoroutine("UpgradeUnitCoroutine", _upgradeType);
                     return true;
-                }
                 return false;
             case EUnitUpgradeType.MELEE_UNIT_HP:
                 if (!isProcessingUpgrade && SelectableObjectManager.LevelMeleeUnitHpUpgrade < upgradeLevel << 1)
-                {
-                    StartCoroutine("UpgradeUnitCoroutine", _upgradeType);
                     return true;
-                }
                 return false;
             default:
                 return false;
         }
+    }
+
+    public void UpgradeUnit(EUnitUpgradeType _upgradeType)
+    {
+        StartCoroutine("UpgradeUnitCoroutine", _upgradeType);
     }
 
     public bool UpgradeRangedUnitDmg()

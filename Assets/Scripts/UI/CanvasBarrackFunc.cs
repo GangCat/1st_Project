@@ -31,30 +31,6 @@ public class CanvasBarrackFunc : CanvasFunc
                 ArrayBarrackCommand.Use(EBarrackCommand.RALLYPOINT);
             });
 
-        //btnUpgradeRangedUnitDmg.onClick.AddListener(
-        //    () =>
-        //    {
-        //        ArrayBarrackCommand.Use(EBarrackCommand.UPGRADE_RANGED_UNIT_DMG);
-        //    });
-
-        //btnUpgradeRangedUnitHp.onClick.AddListener(
-        //    () =>
-        //    {
-        //        ArrayBarrackCommand.Use(EBarrackCommand.UPGRADE_RANGED_UNIT_HP);
-        //    });
-
-        //btnUpgradeMeleeUnitDmg.onClick.AddListener(
-        //    () =>
-        //    {
-        //        ArrayBarrackCommand.Use(EBarrackCommand.UPGRADE_MELEE_UNIT_DMG);
-        //    });
-
-        //btnUpgradeMeleeUnitHp.onClick.AddListener(
-        //    () =>
-        //    {
-        //        ArrayBarrackCommand.Use(EBarrackCommand.UPGRAGE_MELEE_UNIT_HP);
-        //    });
-
         gameObject.SetActive(false);
     }
 
@@ -64,10 +40,6 @@ public class CanvasBarrackFunc : CanvasFunc
         btnSpawnRangedUnit.interactable = false;
         btnSpawnRocketUnit.interactable = false;
         btnRallyPoint.interactable = false;
-        //btnUpgradeRangedUnitDmg.interactable = false;
-        //btnUpgradeRangedUnitHp.interactable = false;
-        //btnUpgradeMeleeUnitDmg.interactable = false;
-        //btnUpgradeMeleeUnitHp.interactable = false;
     }
 
     public void SetAllButtonInteractable()
@@ -76,27 +48,7 @@ public class CanvasBarrackFunc : CanvasFunc
         btnSpawnRangedUnit.interactable = true;
         btnSpawnRocketUnit.interactable = true;
         btnRallyPoint.interactable = true;
-        //btnUpgradeRangedUnitDmg.interactable = true;
-        //btnUpgradeRangedUnitHp.interactable = true;
-        //btnUpgradeMeleeUnitDmg.interactable = true;
-        //btnUpgradeMeleeUnitHp.interactable = true;
     }
-
-    //public void SetUpgradeButtonUninteractable()
-    //{
-    //    btnUpgradeRangedUnitDmg.interactable = false;
-    //    btnUpgradeRangedUnitHp.interactable = false;
-    //    btnUpgradeMeleeUnitDmg.interactable = false;
-    //    btnUpgradeMeleeUnitHp.interactable = false;
-    //}
-
-    //public void SetUpgradeButtonInteractable()
-    //{
-    //    btnUpgradeRangedUnitDmg.interactable = true;
-    //    btnUpgradeRangedUnitHp.interactable = true;
-    //    btnUpgradeMeleeUnitDmg.interactable = true;
-    //    btnUpgradeMeleeUnitHp.interactable = true;
-    //}
 
 
     [SerializeField]
@@ -107,12 +59,4 @@ public class CanvasBarrackFunc : CanvasFunc
     private Button btnSpawnRocketUnit = null;
     [SerializeField]
     private Button btnRallyPoint = null;
-    //[SerializeField]
-    //private Button btnUpgradeRangedUnitDmg = null;
-    //[SerializeField]
-    //private Button btnUpgradeRangedUnitHp = null;
-    //[SerializeField]
-    //private Button btnUpgradeMeleeUnitDmg = null;
-    //[SerializeField]
-    //private Button btnUpgradeMeleeUnitHp = null;
 }

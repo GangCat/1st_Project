@@ -12,8 +12,17 @@ public class CommandUpgradeUnit : Command
 
     public override void Execute(params object[] _objects)
     {
-        if (selMng.GetFirstSelectedObjectInList.GetComponent<StructureBarrack>().UpgradeUnit((EUnitUpgradeType)_objects[0]))
-            selMng.UpdateFuncButton();
+        StructureBarrack tempBarrack = selMng.GetFirstSelectedObjectInList.GetComponent<StructureBarrack>();
+        EUnitUpgradeType upgradeType = (EUnitUpgradeType)_objects[0];
+
+        if (tempBarrack.CheckUpgradePossible(upgradeType))
+        {
+            if (curMng.UpgradeUnit(upgradeType))
+            {
+                tempBarrack.UpgradeUnit(upgradeType);
+                selMng.UpdateFuncButton();
+            }
+        }
     }
 
     private SelectableObjectManager selMng = null;

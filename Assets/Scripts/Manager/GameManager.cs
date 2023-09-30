@@ -75,10 +75,6 @@ public class GameManager : MonoBehaviour
         ArrayBarrackCommand.Add(EBarrackCommand.RALLYPOINT_CONFIRM_POS, new CommandConfirmRallyPointPos(selectMng));
         ArrayBarrackCommand.Add(EBarrackCommand.RALLYPOINT_CONFIRM_TR, new CommandConfirmRallyPointTr(selectMng));
         ArrayBarrackCommand.Add(EBarrackCommand.UPGRADE_UNIT, new CommandUpgradeUnit(selectMng, currencyMng));
-        //ArrayBarrackCommand.Add(EBarrackCommand.UPGRADE_RANGED_UNIT_DMG, new CommandUpgradeRangedUnitDmg(selectMng));
-        //ArrayBarrackCommand.Add(EBarrackCommand.UPGRADE_RANGED_UNIT_HP, new CommandUpgradeRangedUnitHp(selectMng));
-        //ArrayBarrackCommand.Add(EBarrackCommand.UPGRADE_MELEE_UNIT_DMG, new CommandUpgradeMeleeUnitDmg(selectMng));
-        //ArrayBarrackCommand.Add(EBarrackCommand.UPGRAGE_MELEE_UNIT_HP, new CommandUpgradeMeleeUnitHp(selectMng));
 
         ArrayBunkerCommand.Add(EBunkerCommand.IN_UNIT, new CommandInUnit(selectMng));
         ArrayBunkerCommand.Add(EBunkerCommand.OUT_ONE_UNIT, new CommandOutOneUnit(selectMng));
