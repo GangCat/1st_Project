@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CommandIncreaseMaxPopulation : Command
+public class CommandUpgradePopulationComplete : Command
 {
-    public CommandIncreaseMaxPopulation(PopulationManager _popMng)
+    public CommandUpgradePopulationComplete(PopulationManager _popMng)
     {
         popMng = _popMng;
     }

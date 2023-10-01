@@ -15,14 +15,11 @@ public class CommandUpgradeUnit : Command
         StructureBarrack tempBarrack = selMng.GetFirstSelectedObjectInList.GetComponent<StructureBarrack>();
         EUnitUpgradeType upgradeType = (EUnitUpgradeType)_objects[0];
 
-        if (tempBarrack.CheckUpgradePossible(upgradeType))
+        if (tempBarrack.CanUpgradeUnit(upgradeType) && curMng.CanUpgradeUnit(upgradeType))
         {
-            if (curMng.CanUpgradeUnit(upgradeType))
-            {
-                curMng.UpgradeUnit(upgradeType);
-                tempBarrack.UpgradeUnit(upgradeType);
-                selMng.UpdateFuncButton();
-            }
+            curMng.UpgradeUnit(upgradeType);
+            tempBarrack.UpgradeUnit(upgradeType);
+            selMng.UpdateFuncButton();
         }
     }
 

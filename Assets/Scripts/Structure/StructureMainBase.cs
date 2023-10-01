@@ -32,9 +32,32 @@ public class StructureMainBase : Structure
         Debug.Log("UpgradeCompleteMainBase");
     }
 
+    public void UpgradeMaxPopulation()
+    {
+        if(!isProcessingUpgrade)
+            StartCoroutine("UpgradePopulationCoroutine");
+    }
+
+    private IEnumerator UpgradePopulationCoroutine()
+    {
+        isProcessingUpgrade = true;
+        float upgradeFinishTime = Time.time + upgradePopulationDelay;
+        while(upgradeFinishTime > Time.time)
+        {
+            // ui ¤ÐÇ¥½Ã
+            yield return new WaitForSeconds(0.5f);
+        }
+        isProcessingUpgrade = false;
+        ArrayPopulationCommand.Use(EPopulationCommand.UPGRADE_POPULATION_COMPLETE);
+    }
+
     [Header("-Upgrade Attribute")]
     [SerializeField]
     private float upgradeHpAmount = 0f;
+    [SerializeField]
+    private float upgradePopulationDelay = 10f;
+    [SerializeField]
+    private float upgradeEnergySupplyDelay = 10f;
 
     private CommandUpgradeStructureHP upgradeHpCmd = null;
 }

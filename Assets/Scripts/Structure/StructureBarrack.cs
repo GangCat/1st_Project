@@ -89,7 +89,7 @@ public class StructureBarrack : Structure
         RequestSpawnUnit();
     }
 
-    public bool CheckUpgradePossible(EUnitUpgradeType _upgradeType)
+    public bool CanUpgradeUnit(EUnitUpgradeType _upgradeType)
     {
         switch (_upgradeType)
         {

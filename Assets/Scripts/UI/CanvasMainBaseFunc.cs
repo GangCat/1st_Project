@@ -31,6 +31,18 @@ public class CanvasMainBaseFunc : CanvasFunc, ISubscriber
                 ArrayBuildCommand.Use(EMainBaseCommnad.BUILD_STRUCTURE, EObjectType.NUCLEAR);
             });
 
+        btnUpgradeEnergySup.onClick.AddListener(
+            () =>
+            {
+                ArrayCurrencyCommand.Use(ECurrencyCommand.UPGRADE_ENERGY_SUPPLY);
+            });
+
+        btnUpgradeMaxPop.onClick.AddListener(
+            () =>
+            {
+                ArrayPopulationCommand.Use(EPopulationCommand.UPGRADE_MAX_POPULATION);
+            });
+
         gameObject.SetActive(false);
     }
 
@@ -52,4 +64,8 @@ public class CanvasMainBaseFunc : CanvasFunc, ISubscriber
     private Button btnBuildBarrack = null;
     [SerializeField]
     private Button btnBuildNuclear = null;
+    [SerializeField]
+    private Button btnUpgradeEnergySup = null;
+    [SerializeField]
+    private Button btnUpgradeMaxPop = null;
 }
