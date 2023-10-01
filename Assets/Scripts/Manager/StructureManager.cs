@@ -231,12 +231,12 @@ public class StructureManager : MonoBehaviour
         newStructure.Init(structureIdx);
         dicStructure.Add(structureIdx, newStructure);
         ++structureIdx;
-        newStructure.BuildStart();
         if (curStructureType.Equals(EStructureType.WALL))
         {
             newStructure.SetGrid(curStructure.GridX, curStructure.GridY);
             newStructure.SetFactor(curStructure.FactorX, curStructure.FactorY);
         }
+        newStructure.BuildStart();
         isBlueprint = false;
 
         float buildFinishTime = Time.time + buildDelay[(int)curStructureType];

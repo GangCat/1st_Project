@@ -67,6 +67,7 @@ MonoBehaviour:
   myGridX: 2
   myGridY: 2
   upgradeDelay: 3
+  HBeamPrefab: {fileID: 0}
   buffRatio: 1
   height: 5
   capacity: 1
@@ -115,7 +116,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 0.9, y: 5, z: 0.9}
-  m_Center: {x: 0, y: 2.5, z: 0}
+  m_Center: {x: 0.25, y: 2.5, z: 0.25}
 --- !u!1 &3279103662162741560
 GameObject:
   m_ObjectHideFlags: 0
