@@ -28,7 +28,7 @@ public class StructureWall : Structure
             while (idx < myGridX * myGridY)
             {
                 grid.UpdateNodeWalkable(
-                    grid.GetNodeWithGrid( (idx % myGridX) * factorGridX + gridX, gridY), _walkable);
+                    grid.GetNodeWithGrid((idx % myGridX) * factorGridX + gridX, (idx / myGridX) * factorGridY + gridY), _walkable);
 
                 ++idx;
             }
@@ -38,7 +38,7 @@ public class StructureWall : Structure
             while (idx < myGridX * myGridY)
             {
                 grid.UpdateNodeWalkable(
-                    grid.GetNodeWithGrid(gridX, (idx % myGridY) * factorGridY + gridY), _walkable);
+                    grid.GetNodeWithGrid((idx / myGridY) * factorGridX + gridX, (idx % myGridY) * factorGridY + gridY), _walkable);
 
                 ++idx;
             }
@@ -49,18 +49,17 @@ public class StructureWall : Structure
     {
         while (true)
         {
-            isBuildable = true;
-
             curNode = grid.GetNodeFromWorldPoint(transform.position);
             int gridX = curNode.gridX;
             int gridY = curNode.gridY;
             int idx = 0;
+            isBuildable = true;
 
             if (myGridX > myGridY)
             {
                 while (idx < myGridX * myGridY)
                 {
-                    if (!grid.GetNodeWithGrid((idx % myGridX) * factorGridX + gridX, gridY).walkable)
+                    if (!grid.GetNodeWithGrid((idx % myGridX) * factorGridX + gridX, (idx / myGridX) * factorGridY + gridY).walkable)
                     {
                         isBuildable = false;
                         break;
@@ -76,7 +75,7 @@ public class StructureWall : Structure
             {
                 while (idx < myGridX * myGridY)
                 {
-                    if (!grid.GetNodeWithGrid(gridX, (idx % myGridY) * factorGridY + gridY).walkable)
+                    if (!grid.GetNodeWithGrid((idx / myGridY) * factorGridX + gridX, (idx % myGridY) * factorGridY + gridY).walkable)
                     {
                         isBuildable = false;
                         break;

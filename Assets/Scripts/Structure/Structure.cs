@@ -109,8 +109,17 @@ public class Structure : MonoBehaviour
 
     public void BuildStart()
     {
-        StopCoroutine("CheckBuildableCoroutine");
+        isBuildable = true;
+        SetColor();
         IsUnderConstruction = true;
+        StopCoroutine("CheckBuildableCoroutine");
+        BuildHBeam();
+        UpdateNodeWalkable(false);
+    }
+
+    private void BuildHBeam()
+    {
+
     }
 
     public virtual void BuildComplete()
@@ -139,7 +148,7 @@ public class Structure : MonoBehaviour
             int idx = 0;
             while (idx < myGridX * myGridY)
             {
-                if (!grid.GetNodeWithGrid((idx % myGridX) * factorGridX + gridX, (idx / myGridY) * factorGridY + gridY).walkable)
+                if (!grid.GetNodeWithGrid((idx % myGridX) + gridX, (idx / myGridY) + gridY).walkable)
                 {
                     isBuildable = false;
                     break;
@@ -183,6 +192,8 @@ public class Structure : MonoBehaviour
     protected int myGridY = 1;
     [SerializeField]
     private float upgradeDelay = 0f;
+    [SerializeField]
+    private GameObject HBeamPrefab = null;
 
     protected PF_Grid grid = null;
     protected PF_Node curNode = null;

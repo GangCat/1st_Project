@@ -352,8 +352,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f384162f4a928e409805397ebf1902a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myGridX: 2
-  myGridY: 2
+  myGridX: 4
+  myGridY: 4
   upgradeDelay: 3
   turretHeadTr: {fileID: 3077076975496337010}
   upgradeDmgAmount: 5

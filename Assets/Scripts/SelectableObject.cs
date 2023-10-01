@@ -398,10 +398,6 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType
         curPos = transform.position;
         if (Physics.Linecast(curPos, curWayNode.worldPos, 1 << LayerMask.NameToLayer("SelectableObject"))) 
             return true;
-        if (Physics.Linecast(curPos + transform.right * 0.5f, curWayNode.worldPos + transform.right * 0.5f, 1 << LayerMask.NameToLayer("SelectableObject")))
-            return true;
-        if (Physics.Linecast(curPos - transform.right * 0.5f, curWayNode.worldPos - transform.right * 0.5f, 1 << LayerMask.NameToLayer("SelectableObject")))
-            return true;
 
         return false;
     }

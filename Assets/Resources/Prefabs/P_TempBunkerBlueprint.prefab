@@ -61,11 +61,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 787dcdd873fbd99458d5bc49abb5aa3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myGridX: 1
-  myGridY: 1
+  myGridX: 2
+  myGridY: 2
+  upgradeDelay: 0
   buffRatio: 0.5
   height: 5
   capacity: 1
+  increaseBuffRatioAmount: 0
+  increaseHpAmount: 0
 --- !u!114 &4335736936896054379
 MonoBehaviour:
   m_ObjectHideFlags: 0

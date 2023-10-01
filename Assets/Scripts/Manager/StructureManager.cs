@@ -141,6 +141,8 @@ public class StructureManager : MonoBehaviour
         Vector3 bunkerPos = _bunkerTr.position;
         Vector3 wallPos = Vector3.zero;
         float angle = 0f;
+        int xLength = curStructure.GridX;
+        int yLength = curStructure.GridY;
 
         RaycastHit hit;
         while (true)
@@ -153,37 +155,39 @@ public class StructureManager : MonoBehaviour
             // left -135 ~ 135
             if (angle > 135 || angle < -135)
             {
-                curStructure.SetGrid(4, 1);
-                curStructure.SetFactor(-1, 1);
-                curStructure.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
-                wallPos.x = bunkerPos.x - 1;
+                curStructure.SetGrid(xLength, yLength);
+                curStructure.SetFactor(-1, -1);
+                curStructure.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+                wallPos.x = bunkerPos.x - 0.5f;
+                wallPos.z = bunkerPos.z + 0.5f;
                 curStructure.SetPos(wallPos);
             }
             // up 135 ~ 45
             else if (angle > 45)
             {
-                curStructure.SetGrid(1, 4);
-                curStructure.SetFactor(1, 1);
-                curStructure.transform.rotation = Quaternion.Euler(0f, 90f, 0f);
+                curStructure.SetGrid(yLength, xLength);
+                curStructure.SetFactor(-1, 1);
+                curStructure.transform.rotation = Quaternion.Euler(0f, -90f, 0f);
+                wallPos.x = bunkerPos.x + 0.5f;
                 wallPos.z = bunkerPos.z + 1;
                 curStructure.SetPos(wallPos);
             }
             // right 45 ~ -45
             else if (angle > -45)
             {
-                curStructure.SetGrid(4, 1);
+                curStructure.SetGrid(xLength, yLength);
                 curStructure.SetFactor(1, 1);
-                curStructure.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+                curStructure.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
                 wallPos.x = bunkerPos.x + 1;
                 curStructure.SetPos(wallPos);
             }
             // down -45 ~ -135
             else
             {
-                curStructure.SetGrid(1, 4);
+                curStructure.SetGrid(yLength, xLength);
                 curStructure.SetFactor(1, -1);
-                curStructure.transform.rotation = Quaternion.Euler(0f, 270f, 0f);
-                wallPos.z = bunkerPos.z - 1;
+                curStructure.transform.rotation = Quaternion.Euler(0f, 90f, 0f);
+                wallPos.z = bunkerPos.z - 0.5f;
                 curStructure.SetPos(wallPos);
             }
 
@@ -222,19 +226,17 @@ public class StructureManager : MonoBehaviour
     private IEnumerator BuildStructureCoroutine()
     {
         Structure newStructure = Instantiate(arrStructurePrefab[(int)curStructureType], curStructure.transform.position, curStructure.transform.rotation).GetComponent<Structure>();
-        if (curStructureType.Equals(EStructureType.WALL))
-        {
-            newStructure.SetGrid(curStructure.GridX, curStructure.GridY);
-            newStructure.SetFactor(curStructure.FactorX, curStructure.FactorY);
-        }
-
         Destroy(curStructure.gameObject);
         newStructure.Init(grid);
         newStructure.Init(structureIdx);
         dicStructure.Add(structureIdx, newStructure);
         ++structureIdx;
         newStructure.BuildStart();
-        newStructure.UpdateNodeWalkable(false);
+        if (curStructureType.Equals(EStructureType.WALL))
+        {
+            newStructure.SetGrid(curStructure.GridX, curStructure.GridY);
+            newStructure.SetFactor(curStructure.FactorX, curStructure.FactorY);
+        }
         isBlueprint = false;
 
         float buildFinishTime = Time.time + buildDelay[(int)curStructureType];
@@ -320,6 +322,8 @@ public class StructureManager : MonoBehaviour
     [Header("-OtherPrefab")]
     [SerializeField]
     private GameObject ruinPrefab = null;
+    [SerializeField]
+    private GameObject HBeamPrefab = null;
 
     [Header("-Build Delay(TURRET, BUNKER, BARRACK, NUCLEAR, WALL)")]
     [SerializeField]

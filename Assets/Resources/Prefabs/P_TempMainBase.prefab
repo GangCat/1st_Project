@@ -285,8 +285,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b887bef8d6081404780b3c013b5a798a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myGridX: 4
-  myGridY: 4
+  myGridX: 8
+  myGridY: 8
   upgradeDelay: 3
   upgradeHpAmount: 100
 --- !u!1001 &1959242873054519360

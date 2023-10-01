@@ -3008,6 +3008,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 64273669}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &484815135
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 484815136}
+  m_Layer: 0
+  m_Name: ' PopulationManager'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &484815136
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 484815135}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &492267355
 GameObject:
   m_ObjectHideFlags: 0
@@ -6782,6 +6813,7 @@ MonoBehaviour:
   - {fileID: 8162044424758329862, guid: b5c44286a6193a54aaf8a64e9b5c6a37, type: 3}
   ruinPrefab: {fileID: 553641470947927007, guid: a9f2468b6f6365b4ea7db8918c523bf2,
     type: 3}
+  HBeamPrefab: {fileID: 0}
   buildDelay:
   - 3
   - 3
@@ -9060,7 +9092,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1536
   gridWorldSize: {x: 200, y: 200}
-  nodeRadius: 0.5
+  nodeRadius: 0.25
 --- !u!4 &1446206864
 Transform:
   m_ObjectHideFlags: 0
@@ -13019,3 +13051,4 @@ SceneRoots:
   - {fileID: 1510320194}
   - {fileID: 1103840266}
   - {fileID: 518477694}
+  - {fileID: 484815136}

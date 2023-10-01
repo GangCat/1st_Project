@@ -189,6 +189,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d582af245e59ea41b1b3b8307472112, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myGridX: 1
-  myGridY: 1
-  missileProduceDelay: 0
+  myGridX: 2
+  myGridY: 2
+  upgradeDelay: 0
+  NuclearProduceDelay: 0
