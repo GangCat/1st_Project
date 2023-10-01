@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
         pathMng = FindAnyObjectByType<PF_PathRequestManager>();
         enemyMng = FindAnyObjectByType<EnemyManager>();
         currencyMng = FindAnyObjectByType<CurrencyManager>();
+        populationMng = FindAnyObjectByType<PopulationManager>();
 
         mainBaseTr = FindAnyObjectByType<StructureMainBase>().transform;
     }
@@ -53,6 +54,7 @@ public class GameManager : MonoBehaviour
         enemyMng.Init(grid);
         structureMng.Init(grid, InitMainBase());
         currencyMng.Init();
+        populationMng.Init();
     }
 
     private void InitCommandList()
@@ -71,7 +73,7 @@ public class GameManager : MonoBehaviour
         ArrayBuildCommand.Add(EMainBaseCommnad.BUILD_COMPLETE, new CommandBuildComplete(selectMng));
 
         ArrayBarrackCommand.Add(EBarrackCommand.RALLYPOINT, new CommandRallypoint(inputMng));
-        ArrayBarrackCommand.Add(EBarrackCommand.SPAWN_UNIT, new CommandSpawnUnit(selectMng, currencyMng));
+        ArrayBarrackCommand.Add(EBarrackCommand.SPAWN_UNIT, new CommandSpawnUnit(selectMng, currencyMng, populationMng));
         ArrayBarrackCommand.Add(EBarrackCommand.RALLYPOINT_CONFIRM_POS, new CommandConfirmRallyPointPos(selectMng));
         ArrayBarrackCommand.Add(EBarrackCommand.RALLYPOINT_CONFIRM_TR, new CommandConfirmRallyPointTr(selectMng));
         ArrayBarrackCommand.Add(EBarrackCommand.UPGRADE_UNIT, new CommandUpgradeUnit(selectMng, currencyMng));
@@ -84,7 +86,7 @@ public class GameManager : MonoBehaviour
         ArrayEnemyObjectCommand.Add(EEnemyObjectCommand.WAVE_ENEMY_DEAD, new CommandWaveEnemyDead(enemyMng));
         ArrayEnemyObjectCommand.Add(EEnemyObjectCommand.MAP_ENEMY_DEAD, new CommandMapEnemyDead(enemyMng));
 
-        ArrayFriendlyObjectCommand.Add(EFriendlyObjectCommand.DEAD, new CommandFriendlyDead(structureMng, selectMng));
+        ArrayFriendlyObjectCommand.Add(EFriendlyObjectCommand.DEAD, new CommandFriendlyDead(structureMng, selectMng, populationMng));
         ArrayFriendlyObjectCommand.Add(EFriendlyObjectCommand.DESTROY, new CommandFriendlyDestroy(structureMng));
         ArrayFriendlyObjectCommand.Add(EFriendlyObjectCommand.COMPLETE_UPGRADE_RANGED_UNIT_DMG, new CommandCompleteUpgradeRangedUnitDmg(selectMng));
         ArrayFriendlyObjectCommand.Add(EFriendlyObjectCommand.COMPLETE_UPGRADE_RANGED_UNIT_HP, new CommandCompleteUpgradeRangedUnitHp(selectMng));
@@ -98,8 +100,13 @@ public class GameManager : MonoBehaviour
         ArrayStructureButtonCommand.Add(EStructureButtonCommand.UPGRADE, new CommandUpgrade(structureMng, selectMng, currencyMng));
 
         ArrayCurrencyCommand.Add(ECurrencyCommand.COLLECT_CORE, new CommandCollectPowerCore(currencyMng));
-        ArrayCurrencyCommand.Add(ECurrencyCommand.UPDATE_CORE_HUD, new CommandUpdateCoreDisplay(uiMng));
+        ArrayCurrencyCommand.Add(ECurrencyCommand.UPDATE_CORE_HUD, new CommandUpdateCoreHUD(uiMng));
         ArrayCurrencyCommand.Add(ECurrencyCommand.UPDATE_ENERGY_HUD, new CommandUpdateEnergyDisplay(uiMng));
+
+        ArrayPopulationCommand.Add(EPopulationCommand.UPDATE_CURRENT_MAX_POPULATION_HUD, new CommandUpdateCurMaxPopulationHUD(uiMng));
+        ArrayPopulationCommand.Add(EPopulationCommand.UPDATE_CURRENT_POPULATION_HUD, new CommandUpdateCurPopulationHUD(uiMng));
+        ArrayPopulationCommand.Add(EPopulationCommand.INCREASE_CUR_POPULATION, new CommandIncreaseCurPopulation(populationMng));
+        //ArrayPopulationCommand.Add(EPopulationCommand.INCREASE_MAX_POPULATION, new )
     }
 
     private void InitPlayer()
@@ -201,6 +208,7 @@ public class GameManager : MonoBehaviour
     private PF_PathRequestManager pathMng = null;
     private EnemyManager enemyMng = null;
     private CurrencyManager currencyMng = null;
+    private PopulationManager populationMng = null;
 
     private PF_Grid grid = null;
     private Transform mainBaseTr = null;

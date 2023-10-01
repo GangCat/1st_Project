@@ -35,10 +35,13 @@ public class StructureBarrack : Structure
         rallyTr = _rallyTr;
     }
 
+    public bool CanSpawnUnit()
+    {
+        return listUnit.Count < 5;
+    }
+
     public void SpawnUnit(ESpawnUnitType _unitType)
     {
-        if (listUnit.Count >= 5) return;
-
         listUnit.Add(_unitType);
         RequestSpawnUnit();
         // ui에 나타내는 내용
@@ -82,6 +85,7 @@ public class StructureBarrack : Structure
             tempObj.FollowTarget(rallyTr);
 
         listUnit.RemoveAt(0);
+        ArrayPopulationCommand.Use(EPopulationCommand.INCREASE_CUR_POPULATION, _unitType);
         RequestSpawnUnit();
     }
 

@@ -8,6 +8,7 @@ public class DisplayHUDManager : MonoBehaviour
     {
         canvasEnergy = GetComponentInChildren<CanvasDisplayEnergy>();
         canvasCore = GetComponentInChildren<CanvasDisplayCore>();
+        canvasPopulation = GetComponentInChildren<CanvasDisplayPopulation>();
     }
 
     public void UpdateEnergy(uint _curEnergy)
@@ -20,6 +21,17 @@ public class DisplayHUDManager : MonoBehaviour
         canvasCore.UpdateCore(_curCore);
     }
 
+    public void UpdateCurPopulation(uint _curPopulation)
+    {
+        canvasPopulation.UpdateCurPopulation(_curPopulation);
+    }
+
+    public void UpdateCurMaxPopulation(uint _curMaxPopulation)
+    {
+        canvasPopulation.UpdateCurMaxPopulation(_curMaxPopulation);
+    }
+
     private CanvasDisplayEnergy canvasEnergy = null;
     private CanvasDisplayCore canvasCore = null;
+    private CanvasDisplayPopulation canvasPopulation = null;
 }

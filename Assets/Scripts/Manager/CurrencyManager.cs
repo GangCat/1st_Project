@@ -16,7 +16,7 @@ public class CurrencyManager : MonoBehaviour, IPublisher
         while (true)
         {
             yield return new WaitForSeconds(energySupplyRate);
-            curEnergy = Functions.ClampMaxWithUInt(curEnergy + energyIncreaseAmount, maxEnergy);
+            curEnergy = Functions.ClampMaxWithUInt(curEnergy + energySupplyAmount, maxEnergy);
             UpdateEnergy();
         }
     }
@@ -51,6 +51,10 @@ public class CurrencyManager : MonoBehaviour, IPublisher
         return true;
     }
 
+    public void IncreaseEnergySupply()
+    {
+        energySupplyAmount += 10;
+    }
 
     private void UpdateEnergy()
     {
@@ -228,8 +232,36 @@ public class CurrencyManager : MonoBehaviour, IPublisher
         }
     }
 
+    public bool CanUpgradeETC(EUpgradeETCType _upgradeType)
+    {
+        switch (_upgradeType)
+        {
+            case EUpgradeETCType.CURRENT_MAX_POPULATION:
+                return IsCoreEnough(upgradeMaxPopulation);
+            case EUpgradeETCType.ENERGY_SUPPLY:
+                return IsCoreEnough(upgradeEnergySupply);
+            default:
+                return false;
+        }
+    }
+
+    public void UpgradeETC(EUpgradeETCType _upgradeType)
+    {
+        switch (_upgradeType)
+        {
+            case EUpgradeETCType.CURRENT_MAX_POPULATION:
+                DecreaseCore(upgradeMaxPopulation);
+                break;
+            case EUpgradeETCType.ENERGY_SUPPLY:
+                DecreaseCore(upgradeEnergySupply);
+                break;
+            default:
+                break;
+        }
+    }
+
     [SerializeField]
-    private uint energyIncreaseAmount = 0;
+    private uint energySupplyAmount = 0;
     [SerializeField]
     private uint curEnergy = 300;
     [SerializeField]
@@ -269,7 +301,7 @@ public class CurrencyManager : MonoBehaviour, IPublisher
     [SerializeField]
     private uint upgradeUnitDmg = 50;
 
-    [Header("-UpgradeStructureCose")]
+    [Header("-Upgrade Structure Cost")]
     [SerializeField]
     private uint upgradeMainBase = 200;
     [SerializeField]
@@ -281,4 +313,9 @@ public class CurrencyManager : MonoBehaviour, IPublisher
     [SerializeField]
     private uint upgradeTurret = 100;
 
+    [Header("-Upgrade ETC Cost")]
+    [SerializeField]
+    private uint upgradeEnergySupply = 100;
+    [SerializeField]
+    private uint upgradeMaxPopulation = 100;
 }

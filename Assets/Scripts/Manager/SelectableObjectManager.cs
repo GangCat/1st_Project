@@ -94,6 +94,14 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
             listSelectedFriendlyObject[0].GetComponent<StructureBunker>().OutAllUnit();
     }
 
+    public bool CanSpawnunit()
+    {
+        if (listSelectedFriendlyObject[0].GetObjectType().Equals(EObjectType.BARRACK))
+            return listSelectedFriendlyObject[0].GetComponent<StructureBarrack>().CanSpawnUnit();
+        else 
+            return false;
+    }
+
     public void SpawnUnit(ESpawnUnitType _unitType)
     {
         if (listSelectedFriendlyObject[0].GetObjectType().Equals(EObjectType.BARRACK))

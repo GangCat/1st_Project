@@ -27,6 +27,16 @@ public class UIManager : MonoBehaviour
         displayHUDMng.UpdateCore(_curCore);
     }
 
+    public void UpdateCurPopulation(uint _curPoulation)
+    {
+        displayHUDMng.UpdateCurPopulation(_curPoulation);
+    }
+
+    public void UpdateCurMaxPopulation(uint _curMaxPopulation)
+    {
+        displayHUDMng.UpdateCurMaxPopulation(_curMaxPopulation);
+    }
+
     private FuncButtonManager funcBtnMng = null;
     private DisplayHUDManager displayHUDMng = null;
 }
