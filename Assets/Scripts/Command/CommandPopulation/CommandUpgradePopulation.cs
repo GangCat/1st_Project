@@ -13,10 +13,12 @@ public class CommandUpgradePopulation : Command
 
     public override void Execute(params object[] _objects)
     {
-        if (curMng.CanUpgradeETC(EUpgradeETCType.CURRENT_MAX_POPULATION) && popMng.CanUpgradePopulation())
+        StructureMainBase main = selMng.GetFirstSelectedObjectInList.GetComponent<StructureMainBase>();
+
+        if (curMng.CanUpgradeETC(EUpgradeETCType.CURRENT_MAX_POPULATION) && popMng.CanUpgradePopulation() && !main.IsProcessingUpgrade)
         {
             curMng.UpgradeETC(EUpgradeETCType.CURRENT_MAX_POPULATION);
-            selMng.GetFirstSelectedObjectInList.GetComponent<StructureMainBase>().UpgradeMaxPopulation();
+            main.UpgradeMaxPopulation();
         }
     }
 

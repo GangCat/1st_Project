@@ -51,7 +51,7 @@ public class CurrencyManager : MonoBehaviour, IPublisher
         return true;
     }
 
-    public void IncreaseEnergySupply()
+    public void UpgradeEnergySupply()
     {
         energySupplyAmount += 10;
     }

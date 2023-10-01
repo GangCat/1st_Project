@@ -34,8 +34,7 @@ public class StructureMainBase : Structure
 
     public void UpgradeMaxPopulation()
     {
-        if(!isProcessingUpgrade)
-            StartCoroutine("UpgradePopulationCoroutine");
+        StartCoroutine("UpgradePopulationCoroutine");
     }
 
     private IEnumerator UpgradePopulationCoroutine()
@@ -49,6 +48,24 @@ public class StructureMainBase : Structure
         }
         isProcessingUpgrade = false;
         ArrayPopulationCommand.Use(EPopulationCommand.UPGRADE_POPULATION_COMPLETE);
+    }
+
+    public void UpgradeEnergySupply()
+    {
+         StartCoroutine("UpgradeEnergySupplyCoroutine");
+    }
+
+    private IEnumerator UpgradeEnergySupplyCoroutine()
+    {
+        isProcessingUpgrade = true;
+        float upgradeFinishTime = Time.time + upgradeEnergySupplyDelay;
+        while (upgradeFinishTime > Time.time)
+        {
+            // ui ¤ÐÇ¥½Ã
+            yield return new WaitForSeconds(0.5f);
+        }
+        isProcessingUpgrade = false;
+        ArrayCurrencyCommand.Use(ECurrencyCommand.UPGRADE_ENERGY_SUPPLY_COMPLETE);
     }
 
     [Header("-Upgrade Attribute")]
