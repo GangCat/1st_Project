@@ -46,17 +46,32 @@ public class MissileTurret : MonoBehaviour
             // 포물선 운동이 목표 지점에 도달하면 루프를 종료
             if (transform.position.y <= 0f)
             {
+                MissileAttack();
                 break;
             }
             yield return null;
         }
-
-        // 포물선 운동이 끝나면 물체를 파괴
         Destroy(gameObject);
+    }
+
+    private void MissileAttack()
+    {
+        Collider[] arrCol = Physics.OverlapSphere(transform.position, attackRange, 1<<LayerMask.NameToLayer("SelectableObject"));
+        
+        for(int i = 0; i < arrCol.Length; ++i)
+        {
+            EnemyObject enemyObj = arrCol[i].GetComponent<EnemyObject>();
+            if (enemyObj != null)
+                enemyObj.GetDmg(attackDmg);
+        }
     }
 
     [SerializeField]
     private float initialSpeed = 10f;
     [SerializeField]
     private float gravity = 9.81f;
+    [SerializeField]
+    private float attackRange = 5f;
+    [SerializeField]
+    private float attackDmg = 10f;
 }

@@ -47,6 +47,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initialSpeed: 20
   gravity: 50
+  attackRange: 3
+  attackDmg: 10
 --- !u!1001 &6158137773934830535
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -68,7 +70,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 834405a6443abfa46827df2b0846db38,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 3.2806544e-10
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 834405a6443abfa46827df2b0846db38,
         type: 3}
