@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,14 +17,19 @@ public class ImageMinimap : MonoBehaviour
         texRect = new Rect(0, 0, texW, texH);
         pivotVec = new Vector2(0.5f, 0.5f);
 
-        UpdateNode();
+        listStructureNode = new List<PF_Node>();
+
         StartCoroutine("UpdateMinimap");
     }
 
-    public void UpdateNode()
+    public void AddStructureNodeToMinimap(PF_Node _node)
     {
-        UpdateTexture(ref tex2d);
-        imageMinimap.sprite = Sprite.Create(tex2d, texRect, pivotVec);
+        listStructureNode.Add(_node);
+    }
+
+    public void RemoveStructureNodeFromMinimap(PF_Node _node)
+    {
+        listStructureNode.Remove(_node);
     }
 
     private IEnumerator UpdateMinimap()
@@ -64,6 +70,12 @@ public class ImageMinimap : MonoBehaviour
                 tex2d.SetPixel(tempNode.gridX, tempNode.gridY, Color.red);
         }
 
+        for(int i = 0; i < listStructureNode.Count; ++i)
+        {
+            tempNode = listStructureNode[i];
+            tex2d.SetPixel(tempNode.gridX, tempNode.gridY, Color.green);
+        }
+
         tex2d.Apply();
     }
 
@@ -71,6 +83,7 @@ public class ImageMinimap : MonoBehaviour
     private Texture2D tex2d = null;
     private Rect texRect;
     private Vector2 pivotVec;
+    private List<PF_Node> listStructureNode = null;
 
     private int texH = 0;
     private int texW = 0;

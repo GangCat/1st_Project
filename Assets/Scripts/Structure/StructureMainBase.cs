@@ -4,13 +4,19 @@ using UnityEngine;
 
 public class StructureMainBase : Structure
 {
+    public override void Init(PF_Grid _grid)
+    {
+        grid = _grid;
+    }
+
     public override void Init(int _structureIdx)
     {
         upgradeHpCmd = new CommandUpgradeStructureHP(GetComponent<StatusHp>());
 
-        GetComponent<SelectableObject>().Init();
+        GetComponent<FriendlyObject>().Init();
         myIdx = _structureIdx;
         upgradeLevel = 1;
+        UpdateNodeWalkable(false);
     }
 
     public override bool StartUpgrade()

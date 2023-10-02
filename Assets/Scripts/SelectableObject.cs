@@ -17,9 +17,9 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType
             stateMachine.Init(GetCurState);
             ResetStateStack();
             StateIdle();
+            UpdateCurNode();
         }
 
-        UpdateCurNode();
     }
 
     public EObjectType GetObjectType()

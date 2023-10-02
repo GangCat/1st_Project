@@ -12,9 +12,14 @@ public class UIManager : MonoBehaviour
         displayHUDMng.Init();
     }
 
-    public void UpdateMinimap(EObjectType _type, PF_Node _prevNode, PF_Node _curNode)
+    public void AddStructureNodeToMinimap(PF_Node _node)
     {
-        displayHUDMng.UpdateMinimap(_type, _prevNode, _curNode);
+        displayHUDMng.AddStructureNodeToMinimap(_node);
+    }
+
+    public void RemoveStructureNodeFromMinimap(PF_Node _node)
+    {
+        displayHUDMng.RemoveStructureNodeFromMinimap(_node);
     }
 
     public void ShowFuncButton(EObjectType _selectObjectType)

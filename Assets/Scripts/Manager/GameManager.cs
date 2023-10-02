@@ -108,8 +108,8 @@ public class GameManager : MonoBehaviour
         ArrayPopulationCommand.Add(EPopulationCommand.UPGRADE_MAX_POPULATION, new CommandUpgradePopulation(populationMng, currencyMng, selectMng));
         ArrayPopulationCommand.Add(EPopulationCommand.UPGRADE_POPULATION_COMPLETE, new CommandUpgradePopulationComplete(populationMng));
 
-        ArrayHUDCommand.Add(EHUDCommand.UPDATE_MINIMAP, new CommandUpdateMinimap(uiMng));
-
+        ArrayHUDCommand.Add(EHUDCommand.ADD_STRUCTURE_NODE_TO_MINIMAP, new CommandAddStructureNodeToMinimap(uiMng));
+        ArrayHUDCommand.Add(EHUDCommand.REMOVE_STRUCTURE_NODE_FROM_MINIMAP, new CommandRemoveStructureNodeFromMinimap(uiMng));
     }
 
     private void InitPlayer()
@@ -120,6 +120,7 @@ public class GameManager : MonoBehaviour
     private StructureMainBase InitMainBase()
     {
         StructureMainBase mainBase = FindAnyObjectByType<StructureMainBase>();
+        mainBase.Init(grid);
         mainBase.Init(0);
         return mainBase;
     }

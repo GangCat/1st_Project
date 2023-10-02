@@ -55,7 +55,7 @@ public class Structure : MonoBehaviour
         transform.position = _targetPos;
     }
 
-    public virtual bool StartUpgrade() 
+    public virtual bool StartUpgrade()
     {
         if (!isProcessingUpgrade && upgradeLevel < StructureManager.UpgradeLimit)
         {
@@ -78,7 +78,7 @@ public class Structure : MonoBehaviour
         UpgradeComplete();
     }
 
-    protected virtual void UpgradeComplete() 
+    protected virtual void UpgradeComplete()
     {
         ++upgradeLevel;
     }
@@ -89,15 +89,20 @@ public class Structure : MonoBehaviour
         int gridX = curNode.gridX;
         int gridY = curNode.gridY;
         int idx = 0;
+        List<PF_Node> listNode = new List<PF_Node>();
 
         while (idx < myGridX * myGridY)
         {
-            grid.UpdateNodeWalkable(
-                grid.GetNodeWithGrid((idx % myGridX) * factorGridX + gridX, (idx / myGridY) * factorGridY + gridY),
-                _walkable);
+            listNode.Add(grid.GetNodeWithGrid((idx % myGridX) * factorGridX + gridX, (idx / myGridY) * factorGridY + gridY));
+            grid.UpdateNodeWalkable(listNode[idx], _walkable);
 
             ++idx;
         }
+
+        if (!_walkable)
+            ArrayHUDCommand.Use(EHUDCommand.ADD_STRUCTURE_NODE_TO_MINIMAP, listNode.ToArray());
+        else
+            ArrayHUDCommand.Use(EHUDCommand.REMOVE_STRUCTURE_NODE_FROM_MINIMAP, listNode.ToArray());
     }
 
     public virtual void DeactivateUnit(GameObject _removeGo, ESpawnUnitType _type) { }

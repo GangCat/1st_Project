@@ -14,9 +14,14 @@ public class DisplayHUDManager : MonoBehaviour
         canvasMinimap.Init();
     }
 
-    public void UpdateMinimap(EObjectType _type, PF_Node _prevNode, PF_Node _curNode)
+    public void AddStructureNodeToMinimap(PF_Node _node)
     {
-        canvasMinimap.UpdateMinimap(_type, _prevNode, _curNode);
+        canvasMinimap.AddStructureNodeToMinimap(_node);
+    }
+
+    public void RemoveStructureNodeFromMinimap(PF_Node _node)
+    {
+        canvasMinimap.RemoveStructureNodeFromMinimap(_node);
     }
 
     public void UpdateEnergy(uint _curEnergy)

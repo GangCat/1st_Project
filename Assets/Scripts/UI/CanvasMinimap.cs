@@ -10,10 +10,14 @@ public class CanvasMinimap : MonoBehaviour
         imageMinimap.Init();
     }
 
-    public void UpdateMinimap(EObjectType _type, PF_Node _prevNode, PF_Node _curNode)
+    public void AddStructureNodeToMinimap(PF_Node _node)
     {
-        imageMinimap.UpdateNode();
-        Debug.Log(_type);
+        imageMinimap.AddStructureNodeToMinimap(_node);
+    }
+
+    public void RemoveStructureNodeFromMinimap(PF_Node _node)
+    {
+        imageMinimap.RemoveStructureNodeFromMinimap(_node);
     }
 
 

@@ -22,13 +22,14 @@ public class StructureWall : Structure
         int gridX = curNode.gridX;
         int gridY = curNode.gridY;
         int idx = 0;
+        List<PF_Node> listNode = new List<PF_Node>();
 
         if (myGridX > myGridY)
         {
             while (idx < myGridX * myGridY)
             {
-                grid.UpdateNodeWalkable(
-                    grid.GetNodeWithGrid((idx % myGridX) * factorGridX + gridX, (idx / myGridX) * factorGridY + gridY), _walkable);
+                listNode.Add(grid.GetNodeWithGrid((idx % myGridX) * factorGridX + gridX, (idx / myGridX) * factorGridY + gridY));
+                grid.UpdateNodeWalkable(listNode[idx], _walkable);
 
                 ++idx;
             }
@@ -37,12 +38,17 @@ public class StructureWall : Structure
         {
             while (idx < myGridX * myGridY)
             {
-                grid.UpdateNodeWalkable(
-                    grid.GetNodeWithGrid((idx / myGridY) * factorGridX + gridX, (idx % myGridY) * factorGridY + gridY), _walkable);
+                listNode.Add(grid.GetNodeWithGrid((idx % myGridX) * factorGridX + gridX, (idx / myGridX) * factorGridY + gridY));
+                grid.UpdateNodeWalkable(listNode[idx], _walkable);
 
                 ++idx;
             }
         }
+
+        if (!_walkable)
+            ArrayHUDCommand.Use(EHUDCommand.ADD_STRUCTURE_NODE_TO_MINIMAP, listNode.ToArray());
+        else
+            ArrayHUDCommand.Use(EHUDCommand.REMOVE_STRUCTURE_NODE_FROM_MINIMAP, listNode.ToArray());
     }
 
     protected override IEnumerator CheckBuildableCoroutine()
