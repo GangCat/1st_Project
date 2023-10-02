@@ -94,6 +94,8 @@ MonoBehaviour:
     moveSpeed: 5
     attRate: 2
     attDmg: 2
+    TurretMissile: {fileID: 0}
+    missileSpawnTr: {fileID: 0}
 --- !u!114 &2341253079211249543
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -110,7 +112,7 @@ MonoBehaviour:
   chaseStartRange: 6
   chaseFinishRange: 7
   attackRange: 5
-  stopDelay: 2
+  stopDelay: 1
   followOffset: 3
   overlapLayerMask:
     serializedVersion: 2

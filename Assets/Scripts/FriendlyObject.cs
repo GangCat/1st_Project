@@ -353,7 +353,7 @@ public class FriendlyObject : SelectableObject, ISubscriber
                 {
                     curWayNode = null;
 
-                    if (Vector3.SqrMagnitude(targetPos - transform.position) > Mathf.Pow(2f, 2f))
+                    if (Vector3.SqrMagnitude(targetPos - transform.position) > Mathf.Pow(3f, 2f))
                     {
                         PF_PathRequestManager.RequestPath(transform.position, targetPos, OnPathFound);
                         stateMachine.SetWaitForNewPath(true);
@@ -462,7 +462,7 @@ public class FriendlyObject : SelectableObject, ISubscriber
             if (targetTr == null)
             {
                 stateMachine.TargetTr = null;
-                PushState();
+                //PushState();
                 FinishState();
                 yield break;
             }
@@ -470,7 +470,7 @@ public class FriendlyObject : SelectableObject, ISubscriber
             {
                 targetTr = null;
                 stateMachine.TargetTr = null;
-                PushState();
+                //PushState();
                 FinishState();
                 yield break;
             }

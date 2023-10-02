@@ -27,14 +27,14 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
 
     public static int InitNodeFriendly(Vector3 _pos)
     {
-        dicNodeUnderFriendlyUnit.Add(dicNodeUnderFriendlyUnit.Count, grid.GetNodeFromWorldPoint(_pos));
-        return dicNodeUnderFriendlyUnit.Count - 1;
+        dicNodeUnderFriendlyUnit.Add(dicFriendlyIdx, grid.GetNodeFromWorldPoint(_pos));
+        return dicFriendlyIdx++;
     }
 
     public static int InitNodeEnemy(Vector3 _pos)
     {
-        dicNodeUnderEnemyUnit.Add(dicNodeUnderEnemyUnit.Count, grid.GetNodeFromWorldPoint(_pos));
-        return dicNodeUnderEnemyUnit.Count - 1;
+        dicNodeUnderEnemyUnit.Add(dicEnemyIdx, grid.GetNodeFromWorldPoint(_pos));
+        return dicEnemyIdx++;
     }
 
     public static void UpdateFriendlyNodeWalkable(Vector3 _pos, int _idx)
@@ -439,5 +439,6 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
     private static PF_Grid grid = null;
     private static Dictionary<int, PF_Node> dicNodeUnderFriendlyUnit = new Dictionary<int, PF_Node>();
     private static Dictionary<int, PF_Node> dicNodeUnderEnemyUnit = new Dictionary<int, PF_Node>();
-
+    private static int dicFriendlyIdx = 0;
+    private static int dicEnemyIdx = 0;
 }
