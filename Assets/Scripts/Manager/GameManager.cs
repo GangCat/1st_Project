@@ -27,9 +27,6 @@ public class GameManager : MonoBehaviour
         InitCommandList();
         InitManagers();
         InitPlayer();
-
-        SpawnMapEnemy(10);
-        //Invoke("StartWave", 30f);
     }
 
     private void InitManagers()
@@ -118,16 +115,6 @@ public class GameManager : MonoBehaviour
     private void InitPlayer()
     {
         FindAnyObjectByType<UnitHero>().Init();
-    }
-
-    private void StartWave()
-    {
-        enemyMng.SpawnWaveEnemy(mainBaseTr.position, 45);
-    }
-
-    private void SpawnMapEnemy(int _count)
-    {
-        enemyMng.SpawnMapEnemy(_count);
     }
 
     private StructureMainBase InitMainBase()

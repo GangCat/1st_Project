@@ -13,6 +13,8 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
     public static int LevelMeleeUnitHpUpgrade => levelMeleeUnitHpUpgrade;
     public static int LevelMeleeUnitDmgUpgrade => levelMeleeUnitDmgUpgrade;
     public static float DelayUnitUpgrade => delayUnitUpgrade;
+    public static Dictionary<int, PF_Node> DicNodeUnderFriendlyUnit => dicNodeUnderFriendlyUnit;
+    public static Dictionary<int, PF_Node> DicNodeUnderEnemyUnit => dicNodeUnderEnemyUnit;
 
     public void Init(VoidSelectObjectTypeDelegate _selectObjectCallback, PF_Grid _grid)
     {
@@ -23,29 +25,52 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
         RegisterBroker();
     }
 
-    public static int InitNode(Vector3 _pos)
+    public static int InitNodeFriendly(Vector3 _pos)
     {
-        dicNodeUnderUnit.Add(dicNodeUnderUnit.Count, grid.GetNodeFromWorldPoint(_pos));
-        return dicNodeUnderUnit.Count - 1;
+        dicNodeUnderFriendlyUnit.Add(dicNodeUnderFriendlyUnit.Count, grid.GetNodeFromWorldPoint(_pos));
+        return dicNodeUnderFriendlyUnit.Count - 1;
     }
 
-    public static void UpdateNodeWalkable(Vector3 _pos, int _idx, EObjectType _type)
+    public static int InitNodeEnemy(Vector3 _pos)
+    {
+        dicNodeUnderEnemyUnit.Add(dicNodeUnderEnemyUnit.Count, grid.GetNodeFromWorldPoint(_pos));
+        return dicNodeUnderEnemyUnit.Count - 1;
+    }
+
+    public static void UpdateFriendlyNodeWalkable(Vector3 _pos, int _idx)
     {
         PF_Node prevNode = null;
-        if (dicNodeUnderUnit.TryGetValue(_idx, out prevNode))
+        if (dicNodeUnderFriendlyUnit.TryGetValue(_idx, out prevNode))
             prevNode.walkable = true;
 
         PF_Node curNode = grid.GetNodeFromWorldPoint(_pos);
         curNode.walkable = false;
-        dicNodeUnderUnit[_idx] = curNode;
-
-        ArrayHUDCommand.Use(EHUDCommand.UPDATE_MINIMAP, _type, prevNode, curNode);
+        dicNodeUnderFriendlyUnit[_idx] = curNode;
     }
 
-    public static void ResetNodeWalkable(Vector3 _pos, int _idx)
+    public static void UpdateEnemyNodeWalkable(Vector3 _pos, int _idx)
     {
-        dicNodeUnderUnit[_idx].walkable = true;
+        PF_Node prevNode = null;
+        if (dicNodeUnderEnemyUnit.TryGetValue(_idx, out prevNode))
+            prevNode.walkable = true;
+
+        PF_Node curNode = grid.GetNodeFromWorldPoint(_pos);
+        curNode.walkable = false;
+        dicNodeUnderEnemyUnit[_idx] = curNode;
+    }
+
+    public static void ResetFriendlyNodeWalkable(Vector3 _pos, int _idx)
+    {
+        dicNodeUnderFriendlyUnit[_idx].walkable = true;
         grid.GetNodeFromWorldPoint(_pos).walkable = true;
+        dicNodeUnderFriendlyUnit.Remove(_idx);
+    }
+
+    public static void ResetEnemyNodeWalkable(Vector3 _pos, int _idx)
+    {
+        dicNodeUnderEnemyUnit[_idx].walkable = true;
+        grid.GetNodeFromWorldPoint(_pos).walkable = true;
+        dicNodeUnderEnemyUnit.Remove(_idx);
     }
 
     public static bool isCurNodwWalkable(Vector3 _pos)
@@ -412,6 +437,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
     private StructureBunker curBunker = null;
 
     private static PF_Grid grid = null;
-    private static Dictionary<int, PF_Node> dicNodeUnderUnit = new Dictionary<int, PF_Node>();
+    private static Dictionary<int, PF_Node> dicNodeUnderFriendlyUnit = new Dictionary<int, PF_Node>();
+    private static Dictionary<int, PF_Node> dicNodeUnderEnemyUnit = new Dictionary<int, PF_Node>();
 
 }

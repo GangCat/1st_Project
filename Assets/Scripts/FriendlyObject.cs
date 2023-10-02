@@ -6,7 +6,7 @@ public class FriendlyObject : SelectableObject, ISubscriber
 {
     public override void Init()
     {
-        nodeIdx = SelectableObjectManager.InitNode(transform.position);
+        nodeIdx = SelectableObjectManager.InitNodeFriendly(transform.position);
         stateMachine = GetComponent<StateMachine>();
         statusHp = GetComponent<StatusHp>();
         statusHp.Init();
@@ -33,6 +33,7 @@ public class FriendlyObject : SelectableObject, ISubscriber
                 statusHp.UpgradeHp((SelectableObjectManager.LevelMeleeUnitHpUpgrade - 1) * 10);
             }
             StateIdle();
+            UpdateCurNode();
         }
         else
         {
@@ -40,13 +41,17 @@ public class FriendlyObject : SelectableObject, ISubscriber
             for (int i = 0; i < arrCollider.Length; ++i)
                 arrCollider[i].Init(GetDmg, objectType);
         }
-        UpdateCurNode();
     }
 
     public void Init(int _barrackIdx)
     {
         barrackIdx = _barrackIdx;
         Subscribe();
+    }
+
+    public override void UpdateCurNode()
+    {
+        SelectableObjectManager.UpdateFriendlyNodeWalkable(transform.position, nodeIdx);
     }
 
     public Transform TargetBunker => targetBunker;
@@ -56,7 +61,7 @@ public class FriendlyObject : SelectableObject, ISubscriber
         if (statusHp.DecreaseHpAndCheckIsDead(_dmg))
         {
             StopAllCoroutines();
-            SelectableObjectManager.ResetNodeWalkable(transform.position, nodeIdx);
+            SelectableObjectManager.ResetFriendlyNodeWalkable(transform.position, nodeIdx);
 
             if (objectType.Equals(EObjectType.UNIT))
             {

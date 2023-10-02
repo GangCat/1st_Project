@@ -10,6 +10,8 @@ public class DisplayHUDManager : MonoBehaviour
         canvasCore = GetComponentInChildren<CanvasDisplayCore>();
         canvasPopulation = GetComponentInChildren<CanvasDisplayPopulation>();
         canvasMinimap = GetComponentInChildren<CanvasMinimap>();
+
+        canvasMinimap.Init();
     }
 
     public void UpdateMinimap(EObjectType _type, PF_Node _prevNode, PF_Node _curNode)

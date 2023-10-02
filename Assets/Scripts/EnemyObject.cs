@@ -14,12 +14,17 @@ public class EnemyObject : SelectableObject
         gameObject.layer = LayerMask.NameToLayer("SelectableObject");
     }
 
+    public override void UpdateCurNode()
+    {
+        SelectableObjectManager.UpdateEnemyNodeWalkable(transform.position, nodeIdx);
+    }
+
     public override void GetDmg(float _dmg)
     {
         if (statusHp.DecreaseHpAndCheckIsDead(_dmg))
         {
             StopAllCoroutines();
-            SelectableObjectManager.ResetNodeWalkable(transform.position, myIdx);
+            SelectableObjectManager.ResetEnemyNodeWalkable(transform.position, myIdx);
             ArrayEnemyObjectCommand.Use((EEnemyObjectCommand)spawnType, gameObject, myIdx);
 
             if (Random.Range(0.0f, 100.0f) < 30f)

@@ -7,7 +7,7 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType
     protected enum EMoveState { NONE = -1, NORMAL, ATTACK, PATROL, CHASE, FOLLOW, FOLLOW_ENEMY }
     public virtual void Init()
     {
-        nodeIdx = SelectableObjectManager.InitNode(transform.position);
+        nodeIdx = SelectableObjectManager.InitNodeEnemy(transform.position);
         stateMachine = GetComponent<StateMachine>();
         statusHp = GetComponent<StatusHp>();
         statusHp.Init();
@@ -37,9 +37,9 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType
     {
         Functions.RotateYaw(transform, _angle);
     }
-    public void UpdateCurNode()
+    public virtual void UpdateCurNode()
     {
-        SelectableObjectManager.UpdateNodeWalkable(transform.position, nodeIdx, objectType);
+        
     }
 
     public virtual void GetDmg(float _dmg)

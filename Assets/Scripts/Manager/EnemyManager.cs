@@ -15,6 +15,7 @@ public class EnemyManager : MonoBehaviour
         memoryPoolWave = new MemoryPool(enemyPrefab, 5, waveEnemyHolder);
         memoryPoolMap = new MemoryPool(enemyPrefab, 5, mapEnemyHolder);
 
+        SpawnMapEnemy();
         StartCoroutine("WaveControll");
     }
 
@@ -54,9 +55,9 @@ public class EnemyManager : MonoBehaviour
         StartCoroutine(SpawnWaveEnemyCoroutine(_targetPos, _count));
     }
 
-    public void SpawnMapEnemy(int _count)
+    private void SpawnMapEnemy()
     {
-        StartCoroutine("SpawnMapEnemyCoroutine", _count);
+        StartCoroutine("SpawnMapEnemyCoroutine");
     }
 
     public void DeactivateWaveEnemy(GameObject _removeGo, int _waveEnemyIdx)
@@ -95,12 +96,12 @@ public class EnemyManager : MonoBehaviour
         }
     }
 
-    private IEnumerator SpawnMapEnemyCoroutine(int _count)
+    private IEnumerator SpawnMapEnemyCoroutine()
     {
         for (int i = 0; i < arrMapSpawnPoint.Length; ++i)
         {
             int unitCnt = 0;
-            while (unitCnt < _count)
+            while (unitCnt < mapSpawnCnt)
             {
                 Vector3 spawnPos = arrMapSpawnPoint[i].GetPos + Functions.GetRandomPosition(outerCircleRad, innerCircleRad);
                 PF_Node spawnNode = grid.GetNodeFromWorldPoint(spawnPos);
@@ -130,6 +131,8 @@ public class EnemyManager : MonoBehaviour
     private float outerCircleRad = 0f;
     [SerializeField]
     private float innerCircleRad = 0f;
+    [SerializeField]
+    private int mapSpawnCnt = 0;
 
     [Header("-Wave Attribute")]
     [SerializeField]
