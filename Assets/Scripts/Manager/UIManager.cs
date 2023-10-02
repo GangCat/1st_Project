@@ -12,6 +12,11 @@ public class UIManager : MonoBehaviour
         displayHUDMng.Init();
     }
 
+    public void UpdateMinimap(EObjectType _type, PF_Node _prevNode, PF_Node _curNode)
+    {
+        displayHUDMng.UpdateMinimap(_type, _prevNode, _curNode);
+    }
+
     public void ShowFuncButton(EObjectType _selectObjectType)
     {
         funcBtnMng.ShowFuncButton(_selectObjectType);

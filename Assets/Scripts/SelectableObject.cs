@@ -19,7 +19,7 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType
             StateIdle();
         }
 
-        SelectableObjectManager.UpdateNodeWalkable(transform.position, nodeIdx);
+        UpdateCurNode();
     }
 
     public EObjectType GetObjectType()
@@ -39,7 +39,7 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType
     }
     public void UpdateCurNode()
     {
-        SelectableObjectManager.UpdateNodeWalkable(transform.position, nodeIdx);
+        SelectableObjectManager.UpdateNodeWalkable(transform.position, nodeIdx, objectType);
     }
 
     public virtual void GetDmg(float _dmg)
@@ -67,7 +67,7 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType
     {
         stateMachine.TargetTr = null;
         targetTr = null;
-        SelectableObjectManager.UpdateNodeWalkable(transform.position, nodeIdx);
+        UpdateCurNode();
         ChangeState(EState.IDLE);
         StartCoroutine("CheckIsEnemyInChaseStartRangeCoroutine");
     }
@@ -164,7 +164,7 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType
         StopAllCoroutines();
         curWayNode = null;
         stateMachine.SetWaitForNewPath(true);
-        SelectableObjectManager.UpdateNodeWalkable(transform.position, nodeIdx);
+        UpdateCurNode();
         ChangeState(EState.MOVE);
 
         switch (curMoveCondition)
@@ -235,7 +235,7 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType
             if (isTargetInRangeFromMyPos(stateMachine.TargetPos, 0.1f))
             {
                 ++targetIdx;
-                SelectableObjectManager.UpdateNodeWalkable(transform.position, nodeIdx);
+                UpdateCurNode();
                 // 목적지에 도착시 
                 CheckIsTargetInAttackRange();
 
@@ -333,7 +333,7 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType
                     if (isTargetInRangeFromMyPos(curWayNode.worldPos, 0.1f))
                     {
                         ++targetIdx;
-                        SelectableObjectManager.UpdateNodeWalkable(transform.position, nodeIdx);
+                        UpdateCurNode();
                         CheckIsTargetInAttackRange();
 
                         if (targetIdx >= arrPath.Length)
@@ -408,7 +408,7 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType
     {
         StopAllCoroutines();
         ChangeState(EState.STOP);
-        SelectableObjectManager.UpdateNodeWalkable(transform.position, nodeIdx);
+        UpdateCurNode();
         StartCoroutine("CheckStopCoroutine");
     }
 
@@ -429,7 +429,7 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType
             ChangeState(EState.TURRET_ATTACK);
         else
             ChangeState(EState.ATTACK);
-        SelectableObjectManager.UpdateNodeWalkable(transform.position, nodeIdx);
+        UpdateCurNode();
         StartCoroutine("AttackCoroutine");
     }
 

@@ -28,6 +28,7 @@ public class PF_Grid : MonoBehaviour
         int maxNodeCount = gridSizeX * gridSizeY;
         int idxX = 0;
         int idxY = 0;
+
         while (idx < maxNodeCount)
         {
             idxX = idx % gridSizeX;

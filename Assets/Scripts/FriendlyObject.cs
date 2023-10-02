@@ -39,8 +39,8 @@ public class FriendlyObject : SelectableObject, ISubscriber
             StructureCollider[] arrCollider = GetComponentsInChildren<StructureCollider>();
             for (int i = 0; i < arrCollider.Length; ++i)
                 arrCollider[i].Init(GetDmg, objectType);
-        }   
-        SelectableObjectManager.UpdateNodeWalkable(transform.position, nodeIdx);
+        }
+        UpdateCurNode();
     }
 
     public void Init(int _barrackIdx)
@@ -253,7 +253,7 @@ public class FriendlyObject : SelectableObject, ISubscriber
         StopAllCoroutines();
         curWayNode = null;
         stateMachine.SetWaitForNewPath(true);
-        SelectableObjectManager.UpdateNodeWalkable(transform.position, nodeIdx);
+        UpdateCurNode();
         ChangeState(EState.MOVE);
 
         switch (curMoveCondition)
@@ -339,7 +339,7 @@ public class FriendlyObject : SelectableObject, ISubscriber
             if (isTargetInRangeFromMyPos(stateMachine.TargetPos, 0.1f))
             {
                 ++targetIdx;
-                SelectableObjectManager.UpdateNodeWalkable(transform.position, nodeIdx);
+                UpdateCurNode();
                 // 목적지에 도착시 
                 if (isAttack)
                     CheckIsTargetInAttackRange();
@@ -406,7 +406,7 @@ public class FriendlyObject : SelectableObject, ISubscriber
             if (isTargetInRangeFromMyPos(curWayNode.worldPos, 0.1f))
             {
                 ++targetIdx;
-                SelectableObjectManager.UpdateNodeWalkable(transform.position, nodeIdx);
+                UpdateCurNode();
                 CheckIsTargetInAttackRange();
 
                 if (targetIdx >= arrPath.Length)
@@ -511,7 +511,7 @@ public class FriendlyObject : SelectableObject, ISubscriber
                     if (isTargetInRangeFromMyPos(curWayNode.worldPos, 0.1f))
                     {
                         ++targetIdx;
-                        SelectableObjectManager.UpdateNodeWalkable(transform.position, nodeIdx);
+                        UpdateCurNode();
                         if (isAttack)
                             CheckIsTargetInAttackRange();
 
@@ -537,7 +537,7 @@ public class FriendlyObject : SelectableObject, ISubscriber
     {
         StopAllCoroutines();
         ChangeState(EState.HOLD);
-        SelectableObjectManager.UpdateNodeWalkable(transform.position, nodeIdx);
+        UpdateCurNode();
         StartCoroutine("CheckHoldCoroutine");
     }
 

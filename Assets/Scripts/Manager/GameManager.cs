@@ -110,6 +110,9 @@ public class GameManager : MonoBehaviour
         ArrayPopulationCommand.Add(EPopulationCommand.INCREASE_CUR_POPULATION, new CommandIncreaseCurPopulation(populationMng));
         ArrayPopulationCommand.Add(EPopulationCommand.UPGRADE_MAX_POPULATION, new CommandUpgradePopulation(populationMng, currencyMng, selectMng));
         ArrayPopulationCommand.Add(EPopulationCommand.UPGRADE_POPULATION_COMPLETE, new CommandUpgradePopulationComplete(populationMng));
+
+        ArrayHUDCommand.Add(EHUDCommand.UPDATE_MINIMAP, new CommandUpdateMinimap(uiMng));
+
     }
 
     private void InitPlayer()

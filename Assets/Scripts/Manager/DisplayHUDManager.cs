@@ -9,6 +9,12 @@ public class DisplayHUDManager : MonoBehaviour
         canvasEnergy = GetComponentInChildren<CanvasDisplayEnergy>();
         canvasCore = GetComponentInChildren<CanvasDisplayCore>();
         canvasPopulation = GetComponentInChildren<CanvasDisplayPopulation>();
+        canvasMinimap = GetComponentInChildren<CanvasMinimap>();
+    }
+
+    public void UpdateMinimap(EObjectType _type, PF_Node _prevNode, PF_Node _curNode)
+    {
+        canvasMinimap.UpdateMinimap(_type, _prevNode, _curNode);
     }
 
     public void UpdateEnergy(uint _curEnergy)
@@ -34,4 +40,5 @@ public class DisplayHUDManager : MonoBehaviour
     private CanvasDisplayEnergy canvasEnergy = null;
     private CanvasDisplayCore canvasCore = null;
     private CanvasDisplayPopulation canvasPopulation = null;
+    private CanvasMinimap canvasMinimap = null;
 }

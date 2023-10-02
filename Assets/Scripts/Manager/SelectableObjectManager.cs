@@ -29,15 +29,17 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
         return dicNodeUnderUnit.Count - 1;
     }
 
-    public static void UpdateNodeWalkable(Vector3 _pos, int _idx)
+    public static void UpdateNodeWalkable(Vector3 _pos, int _idx, EObjectType _type)
     {
-        PF_Node tempNode = null;
-        if (dicNodeUnderUnit.TryGetValue(_idx, out tempNode))
-            tempNode.walkable = true;
+        PF_Node prevNode = null;
+        if (dicNodeUnderUnit.TryGetValue(_idx, out prevNode))
+            prevNode.walkable = true;
 
-        tempNode = grid.GetNodeFromWorldPoint(_pos);
-        tempNode.walkable = false;
-        dicNodeUnderUnit[_idx] = tempNode;
+        PF_Node curNode = grid.GetNodeFromWorldPoint(_pos);
+        curNode.walkable = false;
+        dicNodeUnderUnit[_idx] = curNode;
+
+        ArrayHUDCommand.Use(EHUDCommand.UPDATE_MINIMAP, _type, prevNode, curNode);
     }
 
     public static void ResetNodeWalkable(Vector3 _pos, int _idx)
