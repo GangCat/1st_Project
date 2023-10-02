@@ -425,7 +425,10 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType
     {
         StopAllCoroutines();
         PushState();
-        ChangeState(EState.ATTACK);
+        if (objectType.Equals(EObjectType.TURRET))
+            ChangeState(EState.TURRET_ATTACK);
+        else
+            ChangeState(EState.ATTACK);
         SelectableObjectManager.UpdateNodeWalkable(transform.position, nodeIdx);
         StartCoroutine("AttackCoroutine");
     }

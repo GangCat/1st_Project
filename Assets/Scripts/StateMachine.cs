@@ -16,6 +16,7 @@ public class StateMachine : MonoBehaviour
         IState stateStop = new StateStop();
         IState stateHold = new StateHold();
         IState stateAttack = new StateAttack();
+        IState stateTurretAttack = new StateTurretAttack();
 
         arrState = new IState[(int)EState.LENGTH];
 
@@ -24,6 +25,8 @@ public class StateMachine : MonoBehaviour
         arrState[(int)EState.STOP] = stateStop;
         arrState[(int)EState.HOLD] = stateHold;
         arrState[(int)EState.ATTACK] = stateAttack;
+        arrState[(int)EState.TURRET_ATTACK] = stateTurretAttack;
+        
 
         unitState.myTr = transform;
         oriDmg = unitState.attDmg;

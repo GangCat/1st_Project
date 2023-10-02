@@ -7372,7 +7372,6 @@ MonoBehaviour:
   - {fileID: 8162044424758329862, guid: b5c44286a6193a54aaf8a64e9b5c6a37, type: 3}
   ruinPrefab: {fileID: 553641470947927007, guid: a9f2468b6f6365b4ea7db8918c523bf2,
     type: 3}
-  HBeamPrefab: {fileID: 0}
   buildDelay:
   - 3
   - 3

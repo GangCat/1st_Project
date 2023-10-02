@@ -4,17 +4,16 @@ using UnityEngine;
 
 public class CommandSpawnUnit : Command
 {
-    public CommandSpawnUnit(SelectableObjectManager _selMng, CurrencyManager _curMng, PopulationManager _popMng)
+    public CommandSpawnUnit(SelectableObjectManager _selMng, CurrencyManager _curMng)
     {
         selMng = _selMng;
         curMng = _curMng;
-        popMng = _popMng;
     }
 
     public override void Execute(params object[] _objects)
     {
         ESpawnUnitType tempType = (ESpawnUnitType)_objects[0];
-        if (curMng.CanSpawnUnit(tempType) && /*popMng.CanSpawnUnit(tempType) &&*/ selMng.CanSpawnunit())
+        if (curMng.CanSpawnUnit(tempType) && selMng.CanSpawnunit())
         {
             selMng.SpawnUnit(tempType);
             curMng.SpawnUnit(tempType);
@@ -25,5 +24,4 @@ public class CommandSpawnUnit : Command
 
     private SelectableObjectManager selMng = null;
     private CurrencyManager curMng = null;
-    private PopulationManager popMng = null;
 }

@@ -28,12 +28,14 @@ public struct SUnitState
     public float moveSpeed;
     public float attRate;
     public float attDmg;
-    
+
+    public GameObject TurretMissile;
+    public Transform missileSpawnTr;
 }
 
 [System.Serializable]
 public enum EObjectType { NONE = -1, UNIT, UNIT_HERO, MAIN_BASE, TURRET, BUNKER, WALL, BARRACK, NUCLEAR, ENEMY_UNIT, ENEMY_STRUCTURE, HBEAM, PROCESSING_UPGRADE_STRUCTURE, LENGTH }
-public enum EState { NONE = -1, IDLE, MOVE, STOP, HOLD, ATTACK, LENGTH }
+public enum EState { NONE = -1, IDLE, MOVE, STOP, HOLD, ATTACK, TURRET_ATTACK, LENGTH }
 public enum ESpawnUnitType { NONE = -1, MELEE, RANGED, ROCKET, LENGTH }
 public enum EUnitUpgradeType { NONE = -1, RANGED_UNIT_DMG, RANGED_UNIT_HP, MELEE_UNIT_DMG, MELEE_UNIT_HP, LENGTH }
 
