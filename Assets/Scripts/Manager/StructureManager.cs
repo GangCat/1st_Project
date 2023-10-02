@@ -322,8 +322,6 @@ public class StructureManager : MonoBehaviour
     [Header("-OtherPrefab")]
     [SerializeField]
     private GameObject ruinPrefab = null;
-    [SerializeField]
-    private GameObject HBeamPrefab = null;
 
     [Header("-Build Delay(TURRET, BUNKER, BARRACK, NUCLEAR, WALL)")]
     [SerializeField]

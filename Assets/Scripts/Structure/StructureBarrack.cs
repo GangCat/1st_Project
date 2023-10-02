@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StructureBarrack : Structure
+public class StructureBarrack : Structure, ISubscriber
 {
     public override void Init(int _structureIdx)
     {
@@ -14,6 +14,8 @@ public class StructureBarrack : Structure
 
         for (int i = 0; i < arrUnitPrefab.Length; ++i)
             arrMemoryPool[i] = new MemoryPool(arrUnitPrefab[i], 3, transform);
+
+        Subscribe();
     }
 
     protected override void UpgradeComplete()
@@ -72,6 +74,9 @@ public class StructureBarrack : Structure
             yield return new WaitForSeconds(0.5f);
             elapsedTime += 0.5f;
         }
+
+        while (!canProcessSpawnUnit)
+            yield return new WaitForSeconds(1f);
 
         isProcessingSpawnUnit = false;
         FriendlyObject tempObj = arrMemoryPool[(int)_unitType].ActivatePoolItem(spawnPoint, 3, transform).GetComponent<FriendlyObject>();
@@ -189,6 +194,26 @@ public class StructureBarrack : Structure
 
     }
 
+    public void Subscribe()
+    {
+        Broker.Subscribe(this, EPublisherType.POPULATION_MANAGER);
+    }
+
+    public void ReceiveMessage(EMessageType _message)
+    {
+        switch (_message)
+        {
+            case EMessageType.START_SPAWN:
+                canProcessSpawnUnit = true;
+                break;
+            case EMessageType.STOP_SPAWN:
+                canProcessSpawnUnit = false;
+                break;
+            default:
+                break;
+        }
+    }
+
     [Header("-Melee(temp), Range, Rocket(temp)")]
     [SerializeField]
     private float[] spawnUnitDelay = new float[(int)ESpawnUnitType.LENGTH];
@@ -200,6 +225,7 @@ public class StructureBarrack : Structure
     private float upgradeHpAmount = 0f;
 
     private bool isProcessingSpawnUnit = false;
+    private bool canProcessSpawnUnit = true;
 
     private CommandUpgradeStructureHP upgradeHpCmd = null;
 

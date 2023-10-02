@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PopulationManager : MonoBehaviour
+public class PopulationManager : MonoBehaviour, IPublisher
 {
     public void Init()
     {
         ArrayPopulationCommand.Use(EPopulationCommand.UPDATE_CURRENT_POPULATION_HUD, curPopulation);
         ArrayPopulationCommand.Use(EPopulationCommand.UPDATE_CURRENT_MAX_POPULATION_HUD, curMaxPopulation);
+        RegisterBroker();
     }
 
     public uint CurPopulation => curPopulation;
@@ -15,6 +16,11 @@ public class PopulationManager : MonoBehaviour
     public bool CanSpawnUnit(ESpawnUnitType _unitType)
     {
         return curPopulation + unitPopulation[(int)_unitType] < curMaxPopulation;
+    }
+
+    private bool CanSpawnUnit()
+    {
+        return curPopulation < curMaxPopulation;
     }
 
     public bool CanUpgradePopulation()
@@ -36,22 +42,35 @@ public class PopulationManager : MonoBehaviour
     {
         curPopulation += _increaseAmount;
         ArrayPopulationCommand.Use(EPopulationCommand.UPDATE_CURRENT_POPULATION_HUD, curPopulation);
+        if (!CanSpawnUnit())
+            PushMessageToBroker(EMessageType.STOP_SPAWN);
     }
 
     public void DecreasePopulation(uint _decreaseAmount)
     {
         curPopulation -= _decreaseAmount;
         ArrayPopulationCommand.Use(EPopulationCommand.UPDATE_CURRENT_POPULATION_HUD, curPopulation);
+        if (CanSpawnUnit())
+            PushMessageToBroker(EMessageType.START_SPAWN);
     }
     
     public void UpgradeMaxPopulation()
     {
         curMaxPopulation += 20;
         ArrayPopulationCommand.Use(EPopulationCommand.UPDATE_CURRENT_MAX_POPULATION_HUD, curMaxPopulation);
+        if (CanSpawnUnit())
+            PushMessageToBroker(EMessageType.START_SPAWN);
     }
 
+    public void RegisterBroker()
+    {
+        Broker.Regist(this, EPublisherType.POPULATION_MANAGER);
+    }
 
-
+    public void PushMessageToBroker(EMessageType _message)
+    {
+        Broker.AlertMessageToSub(_message, EPublisherType.POPULATION_MANAGER);
+    }
 
     [SerializeField]
     private uint maxPopulation = 0;
@@ -61,4 +80,6 @@ public class PopulationManager : MonoBehaviour
     private uint curPopulation = 0;
     [SerializeField]
     private uint[] unitPopulation = null;
+
+    private bool canSpawnUnit = true;
 }

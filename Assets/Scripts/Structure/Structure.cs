@@ -192,8 +192,6 @@ public class Structure : MonoBehaviour
     protected int myGridY = 1;
     [SerializeField]
     private float upgradeDelay = 0f;
-    [SerializeField]
-    private GameObject HBeamPrefab = null;
 
     protected PF_Grid grid = null;
     protected PF_Node curNode = null;
