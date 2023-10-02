@@ -51,7 +51,7 @@ public class GameManager : MonoBehaviour
             PatrolMove);
         cameraMng.Init();
         uiMng.Init();
-        enemyMng.Init(grid);
+        enemyMng.Init(grid, mainBaseTr.position);
         structureMng.Init(grid, InitMainBase());
         currencyMng.Init();
         populationMng.Init();

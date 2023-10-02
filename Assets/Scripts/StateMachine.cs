@@ -99,8 +99,8 @@ public class StateMachine : MonoBehaviour
 
         //curStateEnum = stackStateEnum.Pop();
         //curState = arrState[(int)curStateEnum];
-        if (stackStateEnum.Count < 1)
-            curStateEnumCallback?.Invoke(EState.IDLE);
+        //if (stackStateEnum.Count < 1)
+        //    curStateEnumCallback?.Invoke(EState.IDLE);
         curStateEnumCallback?.Invoke(stackStateEnum.Pop());
 
         //curState.Start(ref unitState);
