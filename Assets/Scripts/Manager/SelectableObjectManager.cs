@@ -236,7 +236,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
 
     public void UpdateFuncButton()
     {
-        if (listSelectedFriendlyObject[0] != null)
+        if (listSelectedFriendlyObject.Count > 0)
         {
             if (isFriendlyUnitInList)
             {

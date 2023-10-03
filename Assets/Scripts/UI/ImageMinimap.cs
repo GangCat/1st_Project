@@ -54,23 +54,31 @@ public class ImageMinimap : MonoBehaviour
 
         PF_Node tempNode = null;
 
-        for (int i = 0; i < SelectableObjectManager.DicNodeUnderFriendlyUnit.Count; ++i)
-        {
-            tempNode = null;
-            SelectableObjectManager.DicNodeUnderFriendlyUnit.TryGetValue(i, out tempNode);
-            if(tempNode != null)
-                tex2d.SetPixel(tempNode.gridX, tempNode.gridY, Color.green);
-        }
 
-        for (int i = 0; i < SelectableObjectManager.DicNodeUnderEnemyUnit.Count; ++i)
-        {
-            tempNode = null;
-            SelectableObjectManager.DicNodeUnderEnemyUnit.TryGetValue(i, out tempNode);
-            if (tempNode != null)
-                tex2d.SetPixel(tempNode.gridX, tempNode.gridY, Color.red);
-        }
+        foreach (PF_Node node in SelectableObjectManager.DicNodeUnderFriendlyUnit.Values)
+            tex2d.SetPixel(node.gridX, node.gridY, Color.green);
 
-        for(int i = 0; i < listStructureNode.Count; ++i)
+        foreach (PF_Node node in SelectableObjectManager.DicNodeUnderEnemyUnit.Values)
+            tex2d.SetPixel(node.gridX, node.gridY, Color.red);
+
+        //for (int i = 0; i < SelectableObjectManager.DicNodeUnderFriendlyUnit.Count; ++i)
+        //{
+        //    tempNode = null;
+
+        //    tempNode = SelectableObjectManager.DicNodeUnderFriendlyUnit[i];
+        //    if (tempNode != null)
+        //        tex2d.SetPixel(tempNode.gridX, tempNode.gridY, Color.green);
+        //}
+
+        //for (int i = 0; i < SelectableObjectManager.DicNodeUnderEnemyUnit.Count; ++i)
+        //{
+        //    tempNode = null;
+        //    tempNode = SelectableObjectManager.DicNodeUnderEnemyUnit[i];
+        //    if (tempNode != null)
+        //        tex2d.SetPixel(tempNode.gridX, tempNode.gridY, Color.red);
+        //}
+
+        for (int i = 0; i < listStructureNode.Count; ++i)
         {
             tempNode = listStructureNode[i];
             tex2d.SetPixel(tempNode.gridX, tempNode.gridY, Color.green);

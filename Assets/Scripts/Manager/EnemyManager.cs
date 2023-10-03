@@ -14,7 +14,7 @@ public class EnemyManager : MonoBehaviour
 
         memoryPoolWave = new MemoryPool(enemyPrefab, 5, waveEnemyHolder);
         memoryPoolMap = new MemoryPool(enemyPrefab, 5, mapEnemyHolder);
-
+        ArrayHUDCommand.Use(EHUDCommand.INIT_WAVE_TIME, bigWaveDelay_sec);
         SpawnMapEnemy();
         StartCoroutine("WaveControll");
     }
@@ -22,17 +22,19 @@ public class EnemyManager : MonoBehaviour
     private IEnumerator WaveControll()
     {
         int bigWaveCnt = 0;
-        float bigWaveTime = Time.time + (bigWaveDelay_min * 60f);
-        float smallWaveTime = Time.time + (smallWaveDelay_min * 60f);
+        float bigWaveTime = Time.time + bigWaveDelay_sec;
+        float smallWaveTime = Time.time + smallWaveDelay_sec;
 
         while (totalBigWaveCnt > bigWaveCnt)
         {
             while (bigWaveTime > Time.time)
             {
+                ArrayHUDCommand.Use(EHUDCommand.UPDATE_WAVE_TIME, bigWaveTime - Time.time);
                 if (smallWaveCnt < 2 && smallWaveTime < Time.time)
                 {
                     SpawnWaveEnemy(arrWaveStartPoint[bigWaveCnt].GetPos, 20 + bigWaveCnt * 10);
-                    smallWaveTime = Time.time + (smallWaveDelay_min * 60f);
+                    smallWaveTime = Time.time + smallWaveDelay_sec;
+                        
                     ++smallWaveCnt;
                 }
 
@@ -43,8 +45,8 @@ public class EnemyManager : MonoBehaviour
             for (int i = 0; i < bigWaveCnt; ++i)
             {
                 SpawnWaveEnemy(arrWaveStartPoint[i].GetPos, bigWaveCnt * 100);
-                bigWaveTime = Time.time + (bigWaveDelay_min * 60f);
-                smallWaveTime = Time.time + (smallWaveDelay_min * 60f);
+                bigWaveTime = Time.time + bigWaveDelay_sec;
+                smallWaveTime = Time.time + smallWaveDelay_sec;
                 smallWaveCnt = 0;
             }
         }
@@ -65,7 +67,7 @@ public class EnemyManager : MonoBehaviour
         GameObject enemyGo = memoryPoolWave.DeactivatePoolItemWithIdx(_removeGo, _waveEnemyIdx);
         if (enemyGo == null) return;
         // 레이어 변경
-        enemyGo.layer = LayerMask.GetMask("EnemyDead");
+        enemyGo.layer = LayerMask.NameToLayer("EnemyDead");
     }
 
     public void DeactivateMapEnemy(GameObject _removeGo, int _mapEnemyIdx)
@@ -136,9 +138,9 @@ public class EnemyManager : MonoBehaviour
 
     [Header("-Wave Attribute")]
     [SerializeField]
-    private float smallWaveDelay_min = 3f;
+    private float smallWaveDelay_sec = 3;
     [SerializeField]
-    private float bigWaveDelay_min = 10f;
+    private float bigWaveDelay_sec = 10;
     [SerializeField]
     private int totalBigWaveCnt = 3;
     [SerializeField]

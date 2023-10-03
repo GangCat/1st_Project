@@ -24,7 +24,7 @@ public class EnemyObject : SelectableObject
         if (statusHp.DecreaseHpAndCheckIsDead(_dmg))
         {
             StopAllCoroutines();
-            SelectableObjectManager.ResetEnemyNodeWalkable(transform.position, myIdx);
+            SelectableObjectManager.ResetEnemyNodeWalkable(transform.position, nodeIdx);
             ArrayEnemyObjectCommand.Use((EEnemyObjectCommand)spawnType, gameObject, myIdx);
 
             if (Random.Range(0.0f, 100.0f) < 30f)

@@ -10,18 +10,14 @@ public class DisplayHUDManager : MonoBehaviour
         canvasCore = GetComponentInChildren<CanvasDisplayCore>();
         canvasPopulation = GetComponentInChildren<CanvasDisplayPopulation>();
         canvasMinimap = GetComponentInChildren<CanvasMinimap>();
+        canvasWaveInfo = GetComponentInChildren<CanvasWaveInfo>();
 
         canvasMinimap.Init();
-    }
+        canvasWaveInfo.Init();
 
-    public void AddStructureNodeToMinimap(PF_Node _node)
-    {
-        canvasMinimap.AddStructureNodeToMinimap(_node);
-    }
+        ArrayHUDCommand.Add(EHUDCommand.UPDATE_WAVE_TIME, new CommandUpdateWaveTime(canvasWaveInfo));
+        ArrayHUDCommand.Add(EHUDCommand.INIT_WAVE_TIME, new CommandInitWaveTime(canvasWaveInfo));
 
-    public void RemoveStructureNodeFromMinimap(PF_Node _node)
-    {
-        canvasMinimap.RemoveStructureNodeFromMinimap(_node);
     }
 
     public void UpdateEnergy(uint _curEnergy)
@@ -48,4 +44,5 @@ public class DisplayHUDManager : MonoBehaviour
     private CanvasDisplayCore canvasCore = null;
     private CanvasDisplayPopulation canvasPopulation = null;
     private CanvasMinimap canvasMinimap = null;
+    private CanvasWaveInfo canvasWaveInfo = null;
 }
