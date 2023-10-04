@@ -12,7 +12,7 @@ public class CommandSpawnUnit : Command
 
     public override void Execute(params object[] _objects)
     {
-        ESpawnUnitType tempType = (ESpawnUnitType)_objects[0];
+        EUnitType tempType = (EUnitType)_objects[0];
         if (curMng.CanSpawnUnit(tempType) && selMng.CanSpawnunit())
         {
             selMng.SpawnUnit(tempType);

@@ -42,14 +42,14 @@ public class StructureBarrack : Structure, ISubscriber
         return listUnit.Count < 5;
     }
 
-    public void SpawnUnit(ESpawnUnitType _unitType)
+    public void SpawnUnit(EUnitType _unitType)
     {
         listUnit.Add(_unitType);
         RequestSpawnUnit();
         // ui에 나타내는 내용
     }
 
-    public override void DeactivateUnit(GameObject _removeGo, ESpawnUnitType _type)
+    public override void DeactivateUnit(GameObject _removeGo, EUnitType _type)
     {
         arrMemoryPool[(int)_type].DeactivatePoolItem(_removeGo);
     }
@@ -59,12 +59,12 @@ public class StructureBarrack : Structure, ISubscriber
         if (!isProcessingSpawnUnit && listUnit.Count > 0)
         {
             isProcessingSpawnUnit = true;
-            ESpawnUnitType unitType = listUnit[0];
+            EUnitType unitType = listUnit[0];
             StartCoroutine("SpawnUnitCoroutine", unitType);
         }
     }
 
-    private IEnumerator SpawnUnitCoroutine(ESpawnUnitType _unitType)
+    private IEnumerator SpawnUnitCoroutine(EUnitType _unitType)
     {
         float elapsedTime = 0f;
 
@@ -216,9 +216,9 @@ public class StructureBarrack : Structure, ISubscriber
 
     [Header("-Melee(temp), Range, Rocket(temp)")]
     [SerializeField]
-    private float[] spawnUnitDelay = new float[(int)ESpawnUnitType.LENGTH];
+    private float[] spawnUnitDelay = new float[(int)EUnitType.LENGTH];
     [SerializeField]
-    private GameObject[] arrUnitPrefab = new GameObject[(int)ESpawnUnitType.LENGTH];
+    private GameObject[] arrUnitPrefab = new GameObject[(int)EUnitType.LENGTH];
 
     [Header("-Upgrade Attribute")]
     [SerializeField]
@@ -232,7 +232,7 @@ public class StructureBarrack : Structure, ISubscriber
     private Vector3 spawnPoint = Vector3.zero;
     private Vector3 rallyPoint = Vector3.zero;
     private Transform rallyTr = null;
-    private List<ESpawnUnitType> listUnit = new List<ESpawnUnitType>();
+    private List<EUnitType> listUnit = new List<EUnitType>();
 
     private MemoryPool[] arrMemoryPool = null;
 }

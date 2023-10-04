@@ -105,7 +105,7 @@ public class Structure : MonoBehaviour
             ArrayHUDCommand.Use(EHUDCommand.REMOVE_STRUCTURE_NODE_FROM_MINIMAP, listNode.ToArray());
     }
 
-    public virtual void DeactivateUnit(GameObject _removeGo, ESpawnUnitType _type) { }
+    public virtual void DeactivateUnit(GameObject _removeGo, EUnitType _type) { }
 
     public void BuildCancle()
     {

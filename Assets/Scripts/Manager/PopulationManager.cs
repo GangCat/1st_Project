@@ -13,7 +13,7 @@ public class PopulationManager : MonoBehaviour, IPublisher
 
     public uint CurPopulation => curPopulation;
 
-    public bool CanSpawnUnit(ESpawnUnitType _unitType)
+    public bool CanSpawnUnit(EUnitType _unitType)
     {
         return curPopulation + unitPopulation[(int)_unitType] < curMaxPopulation;
     }
@@ -28,12 +28,12 @@ public class PopulationManager : MonoBehaviour, IPublisher
         return curMaxPopulation < maxPopulation;
     }
 
-    public void SpawnUnit(ESpawnUnitType _unitType)
+    public void SpawnUnit(EUnitType _unitType)
     {
         IncreaseCurPopulation(unitPopulation[(int)_unitType]);
     }
 
-    public void UnitDead(ESpawnUnitType _unitType)
+    public void UnitDead(EUnitType _unitType)
     {
         DecreasePopulation(unitPopulation[(int)_unitType]);
     }

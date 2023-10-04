@@ -200,32 +200,32 @@ public class CurrencyManager : MonoBehaviour, IPublisher
         }
     }
 
-    public bool CanSpawnUnit(ESpawnUnitType _unitType)
+    public bool CanSpawnUnit(EUnitType _unitType)
     {
         switch (_unitType)
         {
-            case ESpawnUnitType.MELEE:
+            case EUnitType.MELEE:
                 return IsEnergyEnough(spawnMeleeUnit);
-            case ESpawnUnitType.RANGED:
+            case EUnitType.RANGED:
                 return IsEnergyEnough(spawnRangedUnit);
-            case ESpawnUnitType.ROCKET:
+            case EUnitType.ROCKET:
                 return false;
             default:
                 return false;
         }
     }
 
-    public void SpawnUnit(ESpawnUnitType _unitType)
+    public void SpawnUnit(EUnitType _unitType)
     {
         switch (_unitType)
         {
-            case ESpawnUnitType.MELEE:
+            case EUnitType.MELEE:
                 DecreaseEnergy(spawnMeleeUnit);
                 break;
-            case ESpawnUnitType.RANGED:
+            case EUnitType.RANGED:
                 DecreaseEnergy(spawnRangedUnit);
                 break;
-            case ESpawnUnitType.ROCKET:
+            case EUnitType.ROCKET:
                 break;
             default:
                 break;

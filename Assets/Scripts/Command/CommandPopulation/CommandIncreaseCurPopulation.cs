@@ -11,7 +11,7 @@ public class CommandIncreaseCurPopulation : Command
 
     public override void Execute(params object[] _objects)
     {
-        popMng.SpawnUnit((ESpawnUnitType)_objects[0]);
+        popMng.SpawnUnit((EUnitType)_objects[0]);
     }
 
     private PopulationManager popMng = null;

@@ -36,6 +36,9 @@ public class StateMachine : MonoBehaviour
         stackStateEnum.Push(curStateEnum);
     }
 
+    public float AttRate => unitState.attRate;
+    public float AttDmg => unitState.attDmg;
+
     public void SetMyTr(Transform _myTr)
     {
         unitState.myTr = _myTr;

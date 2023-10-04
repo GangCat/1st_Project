@@ -33,7 +33,6 @@ public class GameManager : MonoBehaviour
     {
         pathMng.Init();
         grid = pathMng.GetComponent<PF_Grid>();
-        selectMng.Init(UnitSelect, grid);
         inputMng.Init(
             MoveUnitByPicking,
             MoveUnitByPickingObject,
@@ -47,11 +46,15 @@ public class GameManager : MonoBehaviour
             AttackMove,
             PatrolMove);
         cameraMng.Init();
+        structureMng.Init(grid, FindAnyObjectByType<StructureMainBase>());
+
         uiMng.Init();
+        selectMng.Init(UnitSelect, grid);
         enemyMng.Init(grid, mainBaseTr.position);
-        structureMng.Init(grid, InitMainBase());
         currencyMng.Init();
         populationMng.Init();
+
+        InitMainBase();
     }
 
     private void InitCommandList()
@@ -131,13 +134,13 @@ public class GameManager : MonoBehaviour
     #region inputMngCallback
     private void MoveUnitByPicking(Vector3 _pickPos)
     {
-        if (selectMng.IsFriendlyUnit)
+        if (!selectMng.IsListEmpty && selectMng.IsFriendlyUnit)
             selectMng.MoveUnitByPicking(_pickPos);
     }
 
     private void MoveUnitByPickingObject(Transform _targetTr)
     {
-        if (selectMng.IsFriendlyUnit)
+        if (!selectMng.IsListEmpty && selectMng.IsFriendlyUnit)
             selectMng.MoveUnitByPicking(_targetTr);
     }
 

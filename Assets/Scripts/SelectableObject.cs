@@ -22,6 +22,11 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType
 
     }
 
+    public int MaxHp => statusHp.MaxHp;
+    public float AttRange => attackRange;
+    public float AttDmg => stateMachine.AttDmg;
+    public float AttRate => stateMachine.AttRate;
+
     public EObjectType GetObjectType()
     {
         return objectType;

@@ -269,7 +269,7 @@ public class StructureManager : MonoBehaviour
     }
     #endregion
 
-    public void DeactivateUnit(GameObject _removeGo, ESpawnUnitType _unitType, int _barrackIdx)
+    public void DeactivateUnit(GameObject _removeGo, EUnitType _unitType, int _barrackIdx)
     {
         Structure barrack = null;
         dicStructure.TryGetValue(_barrackIdx, out barrack);

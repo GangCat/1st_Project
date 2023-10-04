@@ -11,13 +11,19 @@ public class DisplayHUDManager : MonoBehaviour
         canvasPopulation = GetComponentInChildren<CanvasDisplayPopulation>();
         canvasMinimap = GetComponentInChildren<CanvasMinimap>();
         canvasWaveInfo = GetComponentInChildren<CanvasWaveInfo>();
+        canvasUnitInfo = GetComponentInChildren<CanvasUnitInfo>();
 
         canvasMinimap.Init();
         canvasWaveInfo.Init();
+        canvasUnitInfo.Init();
 
-        ArrayHUDCommand.Add(EHUDCommand.UPDATE_WAVE_TIME, new CommandUpdateWaveTime(canvasWaveInfo));
         ArrayHUDCommand.Add(EHUDCommand.INIT_WAVE_TIME, new CommandInitWaveTime(canvasWaveInfo));
+        ArrayHUDCommand.Add(EHUDCommand.UPDATE_WAVE_TIME, new CommandUpdateWaveTime(canvasWaveInfo));
 
+        ArrayHUDCommand.Add(EHUDCommand.INIT_DISPLAY_GROUP_INFO, new CommandInitDisplayGroupUnitInfo(canvasUnitInfo));
+        ArrayHUDCommand.Add(EHUDCommand.DISPLAY_GROUP_INFO, new CommandDisplayGroupUnitInfo(canvasUnitInfo));
+        ArrayHUDCommand.Add(EHUDCommand.DISPLAY_SINGLE_INFO, new CommandDisplaySingleUnitInfo(canvasUnitInfo));
+        ArrayHUDCommand.Add(EHUDCommand.HIDE_UNIT_INFO, new CommandHideUnitInfo(canvasUnitInfo));
     }
 
     public void UpdateEnergy(uint _curEnergy)
@@ -45,4 +51,5 @@ public class DisplayHUDManager : MonoBehaviour
     private CanvasDisplayPopulation canvasPopulation = null;
     private CanvasMinimap canvasMinimap = null;
     private CanvasWaveInfo canvasWaveInfo = null;
+    private CanvasUnitInfo canvasUnitInfo = null;
 }

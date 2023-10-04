@@ -22,12 +22,12 @@ public class FriendlyObject : SelectableObject, ISubscriber
                 for (int i = 0; i < arrCollider.Length; ++i)
                     arrCollider[i].Init(GetDmg, objectType);
             }
-            else if(unitType.Equals(ESpawnUnitType.RANGED))
+            else if(unitType.Equals(EUnitType.RANGED))
             {
                 stateMachine.UpgradeAttDmg((SelectableObjectManager.LevelRangedUnitDmgUpgrade - 1) * 2);
                 statusHp.UpgradeHp((SelectableObjectManager.LevelRangedUnitHpUpgrade - 1) * 10);
             }
-            else if (unitType.Equals(ESpawnUnitType.MELEE))
+            else if (unitType.Equals(EUnitType.MELEE))
             {
                 stateMachine.UpgradeAttDmg((SelectableObjectManager.LevelMeleeUnitDmgUpgrade - 1) * 2);
                 statusHp.UpgradeHp((SelectableObjectManager.LevelMeleeUnitHpUpgrade - 1) * 10);
@@ -41,6 +41,20 @@ public class FriendlyObject : SelectableObject, ISubscriber
             for (int i = 0; i < arrCollider.Length; ++i)
                 arrCollider[i].Init(GetDmg, objectType);
         }
+    }
+
+    public EUnitType GetUnitType => unitType;
+    public float GetCurHpPercent => statusHp.GetCurHpPercent;
+    public void Select(int _listIdx)
+    {
+        isSelect = true;
+        listIdx = _listIdx;
+    }
+
+    public void unSelect()
+    {
+        isSelect = false;
+        listIdx = -1;
     }
 
     public void Init(int _barrackIdx)
@@ -79,6 +93,10 @@ public class FriendlyObject : SelectableObject, ISubscriber
             }
             else
                 ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.DESTROY, gameObject);
+        }
+        else if (isSelect)
+        {
+            SelectableObjectManager.UpdateHp(listIdx);
         }
     }
 
@@ -606,21 +624,21 @@ public class FriendlyObject : SelectableObject, ISubscriber
         switch (_message)
         {
             case EMessageType.UPGRADE_RANGED_HP:
-                if (unitType.Equals(ESpawnUnitType.RANGED))
+                if (unitType.Equals(EUnitType.RANGED))
                 {
                     UpgradeHp(SelectableObjectManager.LevelRangedUnitHpUpgrade);
                     Debug.Log("RangedUpgradeHp");
                 }
                 break;
             case EMessageType.UPGRADE_RANGED_DMG:
-                if (unitType.Equals(ESpawnUnitType.RANGED))
+                if (unitType.Equals(EUnitType.RANGED))
                 {
                     UpgradeDmg(SelectableObjectManager.LevelRangedUnitDmgUpgrade);
                     Debug.Log("RangedUpgradeDmg");
                 }
                 break;
             case EMessageType.UPGRADE_MELEE_HP:
-                if (unitType.Equals(ESpawnUnitType.MELEE))
+                if (unitType.Equals(EUnitType.MELEE))
                 {
                     UpgradeHp(SelectableObjectManager.LevelMeleeUnitHpUpgrade);
                     statusHp.UpgradeHp((SelectableObjectManager.LevelMeleeUnitHpUpgrade - 1) * 10);
@@ -628,7 +646,7 @@ public class FriendlyObject : SelectableObject, ISubscriber
                 }
                 break;
             case EMessageType.UPGRADE_MELEE_DMG:
-                if (unitType.Equals(ESpawnUnitType.MELEE))
+                if (unitType.Equals(EUnitType.MELEE))
                 {
                     UpgradeDmg(SelectableObjectManager.LevelMeleeUnitDmgUpgrade);
                     Debug.Log("MeleeUpgradeDmg");
@@ -653,13 +671,14 @@ public class FriendlyObject : SelectableObject, ISubscriber
     [SerializeField]
     private bool isMovable = false;
     [SerializeField]
-    private ESpawnUnitType unitType = ESpawnUnitType.NONE;
+    private EUnitType unitType = EUnitType.NONE;
 
     private Vector3 wayPointStart = Vector3.zero;
     private Transform targetBunker = null;
 
     private int barrackIdx = -1;
+    private int listIdx = -1;
     private float oriAttRange = 0f;
     private bool isAttack = false;
-
+    private bool isSelect = false;
 }

@@ -1,5 +1,7 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class SelectableObjectManager : MonoBehaviour, IPublisher
@@ -23,6 +25,13 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
         selectObjectCallback = _selectObjectCallback;
         grid = _grid;
         RegisterBroker();
+
+        listFriendlyUnitInfo = new List<SFriendlyUnitInfo>(12);
+
+        for(int i = 0; i < listFriendlyUnitInfo.Capacity; ++i)
+            listFriendlyUnitInfo.Add(new SFriendlyUnitInfo());
+
+        ArrayHUDCommand.Use(EHUDCommand.INIT_DISPLAY_GROUP_INFO, listFriendlyUnitInfo);
     }
 
     public static int InitNodeFriendly(Vector3 _pos)
@@ -96,6 +105,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
         {
             if (obj.Equals(_removeObj))
             {
+                obj.unSelect();
                 listSelectedFriendlyObject.Remove(obj);
                 break;
             }
@@ -129,7 +139,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
             return false;
     }
 
-    public void SpawnUnit(ESpawnUnitType _unitType)
+    public void SpawnUnit(EUnitType _unitType)
     {
         if (listSelectedFriendlyObject[0].GetObjectType().Equals(EObjectType.BARRACK))
             listSelectedFriendlyObject[0].GetComponent<StructureBarrack>().SpawnUnit(_unitType);
@@ -161,6 +171,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
         if (tempListSelectableObject.Count < 1)
         {
             selectObjectCallback?.Invoke(EObjectType.NONE);
+            ArrayHUDCommand.Use(EHUDCommand.HIDE_UNIT_INFO);
             return;
         }
 
@@ -214,11 +225,13 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
 
         if (isEnemyObjectInList)
         {
-            selectedEnemyObject = tempObj.GetComponent<EnemyObject>();
-            selectObjectCallback?.Invoke(selectedEnemyObject.GetObjectType());
+            selectObjectCallback?.Invoke(tempObj.GetObjectType());
+            InputEnemyUnitInfo(tempObj);
+            ArrayHUDCommand.Use(EHUDCommand.DISPLAY_SINGLE_INFO, sUnitInfo);
         }
         else if (isFriendlyStructureInList)
         {
+            InputStructureInfo(tempObj);
             listSelectedFriendlyObject.Add(tempObj.GetComponent<FriendlyObject>());
             if (tempObj.GetComponent<Structure>().IsUnderConstruction)
                 selectObjectCallback?.Invoke(EObjectType.HBEAM);
@@ -226,12 +239,63 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
                 selectObjectCallback?.Invoke(EObjectType.PROCESSING_UPGRADE_STRUCTURE);
             else
                 selectObjectCallback?.Invoke(listSelectedFriendlyObject[0].GetObjectType());
+            ArrayHUDCommand.Use(EHUDCommand.DISPLAY_SINGLE_INFO, sUnitInfo);
         }
         else if (isFriendlyUnitInList)
+        {
             selectObjectCallback?.Invoke(listSelectedFriendlyObject[0].GetObjectType());
+
+            if (listSelectedFriendlyObject.Count < 2)
+            {
+                InputEnemyUnitInfo(listSelectedFriendlyObject[0]);
+                ArrayHUDCommand.Use(EHUDCommand.DISPLAY_SINGLE_INFO, sUnitInfo);
+            }
+            else
+            {
+                InputFriendlyUnitInfo();
+                ArrayHUDCommand.Use(EHUDCommand.DISPLAY_GROUP_INFO, listSelectedFriendlyObject.Count);
+            }
+        }
 
         tempListSelectableObject.Clear();
         return;
+    }
+
+    public static void UpdateHp(int _listIdx)
+    {
+        SFriendlyUnitInfo tempInfo = listFriendlyUnitInfo[_listIdx];
+        tempInfo.curHpPercent = listSelectedFriendlyObject[_listIdx].GetCurHpPercent;
+        listFriendlyUnitInfo[_listIdx] = tempInfo;
+    }
+
+    private void InputFriendlyUnitInfo()
+    {
+        for (int i = 0; i < listSelectedFriendlyObject.Count; ++i)
+        {
+            SFriendlyUnitInfo tempInfo = listFriendlyUnitInfo[i];
+            tempInfo.unitType = listSelectedFriendlyObject[i].GetUnitType;
+            tempInfo.curHpPercent = listSelectedFriendlyObject[i].GetCurHpPercent;
+            listFriendlyUnitInfo[i] = tempInfo;
+            listSelectedFriendlyObject[i].Select(i);
+        }
+    }
+
+    private void InputEnemyUnitInfo(SelectableObject _obj)
+    {
+        sUnitInfo.objectType = _obj.GetObjectType();
+        sUnitInfo.maxHp = _obj.MaxHp;
+        sUnitInfo.attDmg = _obj.AttDmg;
+        sUnitInfo.attRange = _obj.AttRange;
+        sUnitInfo.attRate = _obj.AttRate;
+    }
+
+    private void InputStructureInfo(SelectableObject _obj)
+    {
+        sUnitInfo.objectType = _obj.GetObjectType();
+        sUnitInfo.maxHp = _obj.MaxHp;
+        sUnitInfo.attDmg = 0;
+        sUnitInfo.attRange = 0;
+        sUnitInfo.attRate = 0;
     }
 
     public void UpdateFuncButton()
@@ -429,8 +493,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
     private bool isEnemyObjectInList = false;
 
     private List<SelectableObject> tempListSelectableObject = new List<SelectableObject>();
-    private List<FriendlyObject> listSelectedFriendlyObject = new List<FriendlyObject>();
-    private EnemyObject selectedEnemyObject = null;
+    private static List<FriendlyObject> listSelectedFriendlyObject = new List<FriendlyObject>();
 
     private VoidSelectObjectTypeDelegate selectObjectCallback = null;
 
@@ -441,4 +504,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
     private static Dictionary<int, PF_Node> dicNodeUnderEnemyUnit = new Dictionary<int, PF_Node>();
     private static int dicFriendlyIdx = 0;
     private static int dicEnemyIdx = 0;
+
+    private SUnitInfo sUnitInfo;
+    private static List<SFriendlyUnitInfo> listFriendlyUnitInfo = null;
 }
