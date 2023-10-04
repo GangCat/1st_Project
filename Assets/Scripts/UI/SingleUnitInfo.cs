@@ -9,8 +9,11 @@ public class SingleUnitInfo : MonoBehaviour
     {
         statInfo = GetComponentInChildren<StatusInfo>();
         textInfoUnitName = GetComponentInChildren<TextInfoBase>();
+        imageProgressbar = GetComponentInChildren<ImageProgressbarAutoController>();
 
         textInfoUnitName.Init();
+        imageProgressbar.Init();
+        
         SetActive(false);
     }
 
@@ -18,6 +21,7 @@ public class SingleUnitInfo : MonoBehaviour
     {
         container = _container;
         statInfo.Init(container);
+        imageProgressbar.Init(container);
     }
 
     public void SetActive(bool _isActive)
@@ -27,12 +31,20 @@ public class SingleUnitInfo : MonoBehaviour
 
     public void DisplaySingleInfo()
     {
+        SetActive(true);
         textInfoUnitName.UpdateText(Enum.GetName(typeof(EObjectType), container.objectType));
         statInfo.DisplayInfo();
-        SetActive(true);
+        imageProgressbar.UpdateHp();
+    }
+
+    public void HideDisplay()
+    {
+        imageProgressbar.StopUpdateHp();
+        SetActive(false);
     }
 
     private StatusInfo statInfo = null;
     private TextInfoBase textInfoUnitName = null;
     private UnitInfoContainer container = null;
+    private ImageProgressbarAutoController imageProgressbar = null;
 }

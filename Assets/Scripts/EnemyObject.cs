@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemyObject : SelectableObject
@@ -30,6 +31,10 @@ public class EnemyObject : SelectableObject
             if (Random.Range(0.0f, 100.0f) < 30f)
                 Instantiate(powerCorePrefab, transform.position, Quaternion.identity);
         }
+        //else if (isSelect)
+        //{
+        //    SelectableObjectManager.UpdateHp(listIdx);
+        //}
     }
 
     [SerializeField]

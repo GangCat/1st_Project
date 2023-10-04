@@ -44,7 +44,6 @@ public class FriendlyObject : SelectableObject, ISubscriber
     }
 
     public EUnitType GetUnitType => unitType;
-    public float GetCurHpPercent => statusHp.GetCurHpPercent;
     public void Select(int _listIdx)
     {
         isSelect = true;
@@ -55,6 +54,11 @@ public class FriendlyObject : SelectableObject, ISubscriber
     {
         isSelect = false;
         listIdx = -1;
+    }
+
+    public void UpdatelistIdx(int _listidx)
+    {
+        listIdx = _listidx;
     }
 
     public void Init(int _barrackIdx)

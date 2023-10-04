@@ -18,9 +18,9 @@ public class ImageProgressbar : MonoBehaviour
     }
 
     [SerializeField]
-    private Image imageBack = null;
+    protected Image imageBack = null;
 
-    private float maxLength = 0f;
-    private float myHeight = 0f; 
-    private RectTransform myRt;
+    protected float maxLength = 0f;
+    protected float myHeight = 0f;
+    protected RectTransform myRt;
 }

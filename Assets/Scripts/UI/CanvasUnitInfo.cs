@@ -25,20 +25,20 @@ public class CanvasUnitInfo : MonoBehaviour
 
     public void DisplaySingleUnitInfo()
     {
-        groupInfo.SetActive(false);
+        groupInfo.HideDisplay();
         singleInfo.DisplaySingleInfo();
     }
 
     public void DisplayGroupUnitInfo(int _unitCnt)
     {
-        singleInfo.SetActive(false);
+        singleInfo.HideDisplay();
         groupInfo.DisplayGroupInfo(_unitCnt);
     }
 
     public void HideDisplay()
     {
-        singleInfo.SetActive(false);
-        groupInfo.SetActive(false);
+        singleInfo.HideDisplay();
+        groupInfo.HideDisplay();
     }
 
 

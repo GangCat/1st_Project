@@ -13,18 +13,6 @@ public class ImageFriendlyUnit : MonoBehaviour
         oriColor = Color.white;
     }
 
-    private IEnumerator UpdateHpDisplayCoroutine()
-    {
-        Color color = Color.white;
-        while (true)
-        {
-            color.g = unitInfo;
-            color.b = unitInfo;
-            myImage.color = color;
-            yield return new WaitForSeconds(0.1f);
-        }
-    }
-
     public void updateHpDisplay(float _hpPercent)
     {
         oriColor.g = _hpPercent;
@@ -34,17 +22,7 @@ public class ImageFriendlyUnit : MonoBehaviour
 
     public void SetActive(bool _isActive)
     {
-        if (_isActive)
-        {
-            gameObject.SetActive(true);
-            //StartCoroutine("UpdateHpDisplayCoroutine");
-        }
-        else
-        {
-            //StopAllCoroutines();
-            gameObject.SetActive(false);
-        }
-
+        gameObject.SetActive(_isActive);
     }
 
     public void ChangeSprite(Sprite _sprite)

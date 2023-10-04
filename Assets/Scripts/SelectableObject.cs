@@ -24,8 +24,27 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType
 
     public int MaxHp => statusHp.MaxHp;
     public float AttRange => attackRange;
-    public float AttDmg => stateMachine.AttDmg;
-    public float AttRate => stateMachine.AttRate;
+    public float AttDmg
+    {
+        get
+        {
+            if (stateMachine != null)
+                return stateMachine.AttDmg;
+            else
+                return 0;
+        }
+    }
+    public float AttRate
+    {
+        get
+        {
+            if (stateMachine != null)
+                return stateMachine.AttRate;
+            else
+                return 0;
+        }
+    }
+    public float GetCurHpPercent => statusHp.GetCurHpPercent;
 
     public EObjectType GetObjectType()
     {

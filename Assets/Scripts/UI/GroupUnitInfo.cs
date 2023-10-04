@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.PackageManager;
 using UnityEngine;
 
 public class GroupUnitInfo : MonoBehaviour
@@ -23,35 +22,17 @@ public class GroupUnitInfo : MonoBehaviour
 
     public void SetActive(bool _isActive)
     {
-        if (_isActive)
-        {
-            gameObject.SetActive(true);
-            StartCoroutine("UpdateHpDisplayCoroutine");
-        }
-        else
-        {
-            StopAllCoroutines();
-            gameObject.SetActive(false);
-        }
-    }
-
-    private IEnumerator UpdateHpDisplayCoroutine()
-    {
-        while (true)
-        {
-            for(int i = 0; i < unitCnt; ++i)
-                arrImageUnit[i].updateHpDisplay(listFriendlyUnitInfo[i].curHpPercent);
-
-            yield return new WaitForSeconds(0.1f);
-        }
+        gameObject.SetActive(_isActive);
     }
 
     public void DisplayGroupInfo(int _unitCnt)
     {
-        unitCnt = _unitCnt;
-        SetActive(true);
         foreach (ImageFriendlyUnit image in arrImageUnit)
             image.SetActive(false);
+
+        unitCnt = _unitCnt;
+        SetActive(true);
+        StartCoroutine("UpdateHpDisplayCoroutine");
 
         for(int i = 0; i < _unitCnt; ++i)
         {
@@ -72,6 +53,23 @@ public class GroupUnitInfo : MonoBehaviour
             }
             Debug.Log(listFriendlyUnitInfo[i].curHpPercent);
         }
+    }
+
+    private IEnumerator UpdateHpDisplayCoroutine()
+    {
+        while (true)
+        {
+            for (int i = 0; i < unitCnt; ++i)
+                arrImageUnit[i].updateHpDisplay(listFriendlyUnitInfo[i].curHpPercent);
+
+            yield return new WaitForSeconds(0.1f);
+        }
+    }
+
+    public void HideDisplay()
+    {
+        StopAllCoroutines();
+        gameObject.SetActive(false);
     }
 
     private ImageFriendlyUnit[] arrImageUnit = null;
