@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public abstract class TextInfoBase : MonoBehaviour
+public abstract class TextBase : MonoBehaviour
 {
     public void Init()
     {

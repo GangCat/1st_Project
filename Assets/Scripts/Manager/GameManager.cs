@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
         enemyMng = FindAnyObjectByType<EnemyManager>();
         currencyMng = FindAnyObjectByType<CurrencyManager>();
         populationMng = FindAnyObjectByType<PopulationManager>();
+        heroMng = FindAnyObjectByType<HeroUnitManager>();
 
         mainBaseTr = FindAnyObjectByType<StructureMainBase>().transform;
     }
@@ -43,7 +44,6 @@ public class GameManager : MonoBehaviour
 
         InitCommandList();
         InitManagers();
-        InitPlayer();
     }
 
     private void InitManagers()
@@ -71,6 +71,7 @@ public class GameManager : MonoBehaviour
         currencyMng.Init();
         populationMng.Init();
 
+        heroMng.Init(FindAnyObjectByType<UnitHero>());
         InitMainBase();
     }
 
@@ -109,6 +110,7 @@ public class GameManager : MonoBehaviour
         ArrayFriendlyObjectCommand.Add(EFriendlyObjectCommand.COMPLETE_UPGRADE_RANGED_UNIT_HP, new CommandCompleteUpgradeRangedUnitHp(selectMng));
         ArrayFriendlyObjectCommand.Add(EFriendlyObjectCommand.COMPLETE_UPGRADE_MELEE_UNIT_DMG, new CommandCompleteUpgradeMeleeUnitDmg(selectMng));
         ArrayFriendlyObjectCommand.Add(EFriendlyObjectCommand.COMPLETE_UPGRADE_MELEE_UNIT_HP, new CommandCompleteUpgradeMeleeUnitHp(selectMng));
+        ArrayFriendlyObjectCommand.Add(EFriendlyObjectCommand.DEAD_HERO, new CommandFriendlyDeadHero(heroMng, uiMng, selectMng));
 
         ArrayNuclearCommand.Add(ENuclearCommand.SPAWN_NUCLEAR, new CommandSpawnNuclear(structureMng, selectMng));
         ArrayNuclearCommand.Add(ENuclearCommand.LAUNCH_NUCLEAR, new CommandLaunchNuclear(structureMng));
@@ -129,11 +131,6 @@ public class GameManager : MonoBehaviour
         ArrayPopulationCommand.Add(EPopulationCommand.UPGRADE_POPULATION_COMPLETE, new CommandUpgradePopulationComplete(populationMng));
 
 
-    }
-
-    private void InitPlayer()
-    {
-        FindAnyObjectByType<UnitHero>().Init();
     }
 
     private StructureMainBase InitMainBase()
@@ -222,6 +219,7 @@ public class GameManager : MonoBehaviour
     private EnemyManager enemyMng = null;
     private CurrencyManager currencyMng = null;
     private PopulationManager populationMng = null;
+    private HeroUnitManager heroMng = null;
 
     private PF_Grid grid = null;
     private Transform mainBaseTr = null;

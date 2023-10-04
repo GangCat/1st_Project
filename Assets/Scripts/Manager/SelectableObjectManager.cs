@@ -70,6 +70,12 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
         dicNodeUnderEnemyUnit[_idx] = curNode;
     }
 
+    public static void ResetHeroUnitNode(Vector3 _pos)
+    {
+        dicNodeUnderFriendlyUnit[0].walkable = true;
+        grid.GetNodeFromWorldPoint(_pos).walkable = true;
+    }
+
     public static void ResetFriendlyNodeWalkable(Vector3 _pos, int _idx)
     {
         dicNodeUnderFriendlyUnit[_idx].walkable = true;
@@ -365,12 +371,9 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
                 InputOtherUnitInfo(listSelectedFriendlyObject[0]);
                 ArrayHUDCommand.Use(EHUDCommand.DISPLAY_SINGLE_INFO);
             }
-            else
-            {
-                ArrayHUDCommand.Use(EHUDCommand.HIDE_UNIT_INFO);
-                selectObjectCallback?.Invoke(EObjectType.NONE);
-            }
         }
+        ArrayHUDCommand.Use(EHUDCommand.HIDE_UNIT_INFO);
+        selectObjectCallback?.Invoke(EObjectType.NONE);
     }
 
     public void ResetTargetBunker()

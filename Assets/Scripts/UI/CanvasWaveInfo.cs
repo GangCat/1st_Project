@@ -18,10 +18,7 @@ public class CanvasWaveInfo : MonoBehaviour
 
     public void UpdateWaveTime(float _bigWaveTime_sec)
     {
-        int min = (int)_bigWaveTime_sec / 60;
-        int sec = (int)_bigWaveTime_sec % 60;
-        textBigWaveTime.text = string.Format("{0}:{1}", min, sec);
-
+        textBigWaveTime.text = string.Format("{0:D2}:{1:D2}", (int)_bigWaveTime_sec / 60, (int)_bigWaveTime_sec % 60);
         
         imageWaveProgressbar.UpdateLength((ttlBigWaveTime - _bigWaveTime_sec) / ttlBigWaveTime);
     }

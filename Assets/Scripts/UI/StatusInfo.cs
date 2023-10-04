@@ -7,9 +7,9 @@ public class StatusInfo : MonoBehaviour
     public void Init(UnitInfoContainer _container)
     {
         container = _container;
-        arrTextInfo = GetComponentsInChildren<TextInfoBase>();
+        arrTextInfo = GetComponentsInChildren<TextBase>();
 
-        foreach (TextInfoBase t in arrTextInfo)
+        foreach (TextBase t in arrTextInfo)
             t.Init();
     }
 
@@ -22,5 +22,5 @@ public class StatusInfo : MonoBehaviour
     }
 
     private UnitInfoContainer container = null;
-    private TextInfoBase[] arrTextInfo = null;
+    private TextBase[] arrTextInfo = null;
 }

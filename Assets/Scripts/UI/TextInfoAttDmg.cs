@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class TextInfoAttDmg : TextInfoBase
+public class TextInfoAttDmg : TextBase
 {
     public override void UpdateText(params object[] _objects)
     {

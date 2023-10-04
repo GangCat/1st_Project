@@ -8,7 +8,7 @@ public class SingleUnitInfo : MonoBehaviour
     public void Init()
     {
         statInfo = GetComponentInChildren<StatusInfo>();
-        textInfoUnitName = GetComponentInChildren<TextInfoBase>();
+        textInfoUnitName = GetComponentInChildren<TextBase>();
         imageProgressbar = GetComponentInChildren<ImageProgressbarAutoController>();
 
         textInfoUnitName.Init();
@@ -44,7 +44,7 @@ public class SingleUnitInfo : MonoBehaviour
     }
 
     private StatusInfo statInfo = null;
-    private TextInfoBase textInfoUnitName = null;
+    private TextBase textInfoUnitName = null;
     private UnitInfoContainer container = null;
     private ImageProgressbarAutoController imageProgressbar = null;
 }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TextInfoUnitName : TextInfoBase
+public class TextInfoUnitName : TextBase
 {
     public override void UpdateText(params object[] _objects)
     {

@@ -12,6 +12,11 @@ public class UIManager : MonoBehaviour
         displayHUDMng.Init();
     }
 
+    public void HeroDead()
+    {
+        displayHUDMng.HeroDead();
+    }
+
     public void ShowFuncButton(EObjectType _selectObjectType)
     {
         funcBtnMng.ShowFuncButton(_selectObjectType);

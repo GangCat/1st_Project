@@ -44,6 +44,7 @@ public class FriendlyObject : SelectableObject, ISubscriber
     }
 
     public EUnitType GetUnitType => unitType;
+    public int NodeIdx => nodeIdx;
     public void Select(int _listIdx = 0)
     {
         isSelect = true;
@@ -79,11 +80,10 @@ public class FriendlyObject : SelectableObject, ISubscriber
         if (statusHp.DecreaseHpAndCheckIsDead(_dmg))
         {
             StopAllCoroutines();
-            SelectableObjectManager.ResetFriendlyNodeWalkable(transform.position, nodeIdx);
 
             if (objectType.Equals(EObjectType.UNIT))
             {
-                ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.DEAD, gameObject, unitType, barrackIdx);
+                ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.DEAD, gameObject, unitType, barrackIdx, this);
                 Broker.UnSubscribe(this, EPublisherType.SELECTABLE_MANAGER);
             }
             else if (objectType.Equals(EObjectType.HBEAM))
@@ -97,10 +97,14 @@ public class FriendlyObject : SelectableObject, ISubscriber
             }
             else if (objectType.Equals(EObjectType.UNIT_HERO))
             {
-                ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.DEAD_HERO);
+                SelectableObjectManager.ResetHeroUnitNode(transform.position);
+                ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.DEAD_HERO, this);
+                return;
             }
             else 
                 ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.DESTROY, gameObject);
+
+            SelectableObjectManager.ResetFriendlyNodeWalkable(transform.position, nodeIdx);
         }
         else if (isSelect)
         {
@@ -157,6 +161,11 @@ public class FriendlyObject : SelectableObject, ISubscriber
     {
         oriAttRange += _increaseRange;
         attackRange += _increaseRange;
+    }
+
+    public void SetIdleState()
+    {
+        StateIdle();
     }
 
     public void MoveByPos(Vector3 _Pos)
