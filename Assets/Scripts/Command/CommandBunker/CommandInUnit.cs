@@ -13,8 +13,8 @@ public class CommandInUnit : Command
     {
         FriendlyObject tempObj = (FriendlyObject)_value[0];
         selMng.InUnit(tempObj);
-        selMng.RemoveUnitAtList(tempObj);
         selMng.ResetTargetBunker();
+        selMng.RemoveUnitAtList(tempObj);
     }
 
     SelectableObjectManager selMng = null;

@@ -67,8 +67,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dfeeb2de900ee643af7438a6cfb8142, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myGridX: 1
-  myGridY: 1
+  myGridX: 2
+  myGridY: 2
+  upgradeDelay: 0
 --- !u!1 &7315214676662184248
 GameObject:
   m_ObjectHideFlags: 0

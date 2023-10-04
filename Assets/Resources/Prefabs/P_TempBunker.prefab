@@ -51,7 +51,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   curHp: 0
-  maxHp: 100
+  maxHp: 20
 --- !u!114 &-3197271653552490133
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -64,10 +64,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 787dcdd873fbd99458d5bc49abb5aa3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myGridX: 1
-  myGridY: 1
+  myGridX: 2
+  myGridY: 2
   upgradeDelay: 3
-  buffRatio: 0.5
+  HBeamPrefab: {fileID: 0}
+  buffRatio: 1
   height: 5
   capacity: 1
   increaseBuffRatioAmount: 0.1
@@ -115,7 +116,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 0.9, y: 5, z: 0.9}
-  m_Center: {x: 0, y: 2.5, z: 0}
+  m_Center: {x: 0.25, y: 2.5, z: 0.25}
 --- !u!1 &3279103662162741560
 GameObject:
   m_ObjectHideFlags: 0
@@ -144,7 +145,7 @@ Transform:
   m_GameObject: {fileID: 3279103662162741560}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 0.25, y: 1, z: 0.25}
   m_LocalScale: {x: 1.5, y: 2, z: 1.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -221,7 +222,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 4e2df4024bef01c48900bcc214c37324,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4e2df4024bef01c48900bcc214c37324,
         type: 3}
@@ -231,7 +232,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 4e2df4024bef01c48900bcc214c37324,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4e2df4024bef01c48900bcc214c37324,
         type: 3}
@@ -305,7 +306,7 @@ PrefabInstance:
     - target: {fileID: 5333182755729341428, guid: c96893ccdda651d4bb6b1128b784bd0b,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 5333182755729341428, guid: c96893ccdda651d4bb6b1128b784bd0b,
         type: 3}
@@ -315,7 +316,7 @@ PrefabInstance:
     - target: {fileID: 5333182755729341428, guid: c96893ccdda651d4bb6b1128b784bd0b,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 5333182755729341428, guid: c96893ccdda651d4bb6b1128b784bd0b,
         type: 3}

@@ -7,12 +7,12 @@ public class StructureWall : Structure
     public override void Init(int _structureIdx)
     {
         base.Init(_structureIdx);
-        upgradeHpCmd = new CommandUpgradeHP(GetComponent<StatusHp>());
+        upgradeHpCmd = new CommandUpgradeStructureHP(GetComponent<StatusHp>());
     }
     protected override void UpgradeComplete()
     {
         base.UpgradeComplete();
-        upgradeHpCmd.Execute(30f);
+        upgradeHpCmd.Execute(upgradeHpAmount);
         Debug.Log("UpgradeCompleteWall");
     }
 
@@ -22,13 +22,14 @@ public class StructureWall : Structure
         int gridX = curNode.gridX;
         int gridY = curNode.gridY;
         int idx = 0;
+        List<PF_Node> listNode = new List<PF_Node>();
 
         if (myGridX > myGridY)
         {
             while (idx < myGridX * myGridY)
             {
-                grid.UpdateNodeWalkable(
-                    grid.GetNodeWithGrid( (idx % myGridX) * factorGridX + gridX, gridY), _walkable);
+                listNode.Add(grid.GetNodeWithGrid((idx % myGridX) * factorGridX + gridX, (idx / myGridX) * factorGridY + gridY));
+                grid.UpdateNodeWalkable(listNode[idx], _walkable);
 
                 ++idx;
             }
@@ -37,30 +38,34 @@ public class StructureWall : Structure
         {
             while (idx < myGridX * myGridY)
             {
-                grid.UpdateNodeWalkable(
-                    grid.GetNodeWithGrid(gridX, (idx % myGridY) * factorGridY + gridY), _walkable);
+                listNode.Add(grid.GetNodeWithGrid((idx % myGridX) * factorGridX + gridX, (idx / myGridX) * factorGridY + gridY));
+                grid.UpdateNodeWalkable(listNode[idx], _walkable);
 
                 ++idx;
             }
         }
+
+        if (!_walkable)
+            ArrayHUDCommand.Use(EHUDCommand.ADD_STRUCTURE_NODE_TO_MINIMAP, listNode.ToArray());
+        else
+            ArrayHUDCommand.Use(EHUDCommand.REMOVE_STRUCTURE_NODE_FROM_MINIMAP, listNode.ToArray());
     }
 
     protected override IEnumerator CheckBuildableCoroutine()
     {
         while (true)
         {
-            isBuildable = true;
-
             curNode = grid.GetNodeFromWorldPoint(transform.position);
             int gridX = curNode.gridX;
             int gridY = curNode.gridY;
             int idx = 0;
+            isBuildable = true;
 
             if (myGridX > myGridY)
             {
                 while (idx < myGridX * myGridY)
                 {
-                    if (!grid.GetNodeWithGrid((idx % myGridX) * factorGridX + gridX, gridY).walkable)
+                    if (!grid.GetNodeWithGrid((idx % myGridX) * factorGridX + gridX, (idx / myGridX) * factorGridY + gridY).walkable)
                     {
                         isBuildable = false;
                         break;
@@ -76,7 +81,7 @@ public class StructureWall : Structure
             {
                 while (idx < myGridX * myGridY)
                 {
-                    if (!grid.GetNodeWithGrid(gridX, (idx % myGridY) * factorGridY + gridY).walkable)
+                    if (!grid.GetNodeWithGrid((idx / myGridY) * factorGridX + gridX, (idx % myGridY) * factorGridY + gridY).walkable)
                     {
                         isBuildable = false;
                         break;
@@ -94,5 +99,5 @@ public class StructureWall : Structure
     [SerializeField]
     private float upgradeHpAmount = 0f;
 
-    private CommandUpgradeHP upgradeHpCmd = null;
+    private CommandUpgradeStructureHP upgradeHpCmd = null;
 }

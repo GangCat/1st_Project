@@ -9,6 +9,9 @@ public class StatusHp : MonoBehaviour
         curHp = maxHp;
     }
 
+    public int MaxHp => (int)maxHp;
+    public float GetCurHpPercent => curHp / maxHp;
+
     /// <summary>
     /// 체력이 0 이하로 떨어지면 true 반환
     /// </summary>

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CanvasMainBaseFunc : CanvasFuncBase
+public class CanvasMainBaseFunc : CanvasFunc, ISubscriber
 {
     public void Init()
     {
@@ -31,9 +31,30 @@ public class CanvasMainBaseFunc : CanvasFuncBase
                 ArrayBuildCommand.Use(EMainBaseCommnad.BUILD_STRUCTURE, EObjectType.NUCLEAR);
             });
 
+        btnUpgradeEnergySup.onClick.AddListener(
+            () =>
+            {
+                ArrayCurrencyCommand.Use(ECurrencyCommand.UPGRADE_ENERGY_SUPPLY);
+            });
+
+        btnUpgradeMaxPop.onClick.AddListener(
+            () =>
+            {
+                ArrayPopulationCommand.Use(EPopulationCommand.UPGRADE_MAX_POPULATION);
+            });
+
         gameObject.SetActive(false);
     }
 
+    public void Subscribe()
+    {
+        Broker.Subscribe(this, EPublisherType.ENERGY_UPDATE);
+    }
+
+    public void ReceiveMessage(EMessageType _message)
+    {
+
+    }
 
     [SerializeField]
     private Button btnBuildTurret = null;
@@ -43,4 +64,8 @@ public class CanvasMainBaseFunc : CanvasFuncBase
     private Button btnBuildBarrack = null;
     [SerializeField]
     private Button btnBuildNuclear = null;
+    [SerializeField]
+    private Button btnUpgradeEnergySup = null;
+    [SerializeField]
+    private Button btnUpgradeMaxPop = null;
 }

@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.Rendering.InspectorCurveEditor;
 
 public class StateMachine : MonoBehaviour
 {
@@ -16,6 +15,7 @@ public class StateMachine : MonoBehaviour
         IState stateStop = new StateStop();
         IState stateHold = new StateHold();
         IState stateAttack = new StateAttack();
+        IState stateTurretAttack = new StateTurretAttack();
 
         arrState = new IState[(int)EState.LENGTH];
 
@@ -24,6 +24,8 @@ public class StateMachine : MonoBehaviour
         arrState[(int)EState.STOP] = stateStop;
         arrState[(int)EState.HOLD] = stateHold;
         arrState[(int)EState.ATTACK] = stateAttack;
+        arrState[(int)EState.TURRET_ATTACK] = stateTurretAttack;
+        
 
         unitState.myTr = transform;
         oriDmg = unitState.attDmg;
@@ -32,6 +34,9 @@ public class StateMachine : MonoBehaviour
         curStateEnum = EState.IDLE;
         stackStateEnum.Push(curStateEnum);
     }
+
+    public float AttRate => unitState.attRate;
+    public float AttDmg => unitState.attDmg;
 
     public void SetMyTr(Transform _myTr)
     {
@@ -96,6 +101,8 @@ public class StateMachine : MonoBehaviour
 
         //curStateEnum = stackStateEnum.Pop();
         //curState = arrState[(int)curStateEnum];
+        //if (stackStateEnum.Count < 1)
+        //    curStateEnumCallback?.Invoke(EState.IDLE);
         curStateEnumCallback?.Invoke(stackStateEnum.Pop());
 
         //curState.Start(ref unitState);

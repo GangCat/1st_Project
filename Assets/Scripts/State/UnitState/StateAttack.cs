@@ -32,7 +32,6 @@ public class StateAttack : IState
 
     public void End(ref SUnitState _structState)
     {
-
     }
 
     private float attDmg = 0;

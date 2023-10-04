@@ -28,6 +28,7 @@ public class PF_Grid : MonoBehaviour
         int maxNodeCount = gridSizeX * gridSizeY;
         int idxX = 0;
         int idxY = 0;
+
         while (idx < maxNodeCount)
         {
             idxX = idx % gridSizeX;
@@ -184,7 +185,7 @@ public class PF_Grid : MonoBehaviour
                 if (!node.walkable)
                 {
                     Gizmos.color = Color.red;
-                    Gizmos.DrawCube(node.worldPos, new Vector3(0.8f, 0.1f, 0.8f));
+                    Gizmos.DrawCube(node.worldPos, new Vector3(nodeRadius * 2, 0.1f, nodeRadius * 2));
                 }
             }
         }

@@ -9,6 +9,8 @@ TagManager:
   - EnemyStructure
   - EnemyUnit
   - FriendlyUnit
+  - PowerCore
+  - MainBase
   layers:
   - Default
   - TransparentFX
@@ -26,8 +28,8 @@ TagManager:
   - RuinStructure
   - DamageableCollider
   - MissileNuclear
-  - 
-  - 
+  - CollectCoreCollider
+  - PowerCore
   - 
   - 
   - 

@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FriendlyObject : SelectableObject
+public class FriendlyObject : SelectableObject, ISubscriber
 {
     public override void Init()
     {
-        nodeIdx = SelectableObjectManager.InitNode(transform.position);
+        nodeIdx = SelectableObjectManager.InitNodeFriendly(transform.position);
         stateMachine = GetComponent<StateMachine>();
         statusHp = GetComponent<StatusHp>();
         statusHp.Init();
@@ -22,21 +22,55 @@ public class FriendlyObject : SelectableObject
                 for (int i = 0; i < arrCollider.Length; ++i)
                     arrCollider[i].Init(GetDmg, objectType);
             }
+            else if(unitType.Equals(EUnitType.RANGED))
+            {
+                stateMachine.UpgradeAttDmg((SelectableObjectManager.LevelRangedUnitDmgUpgrade - 1) * 2);
+                statusHp.UpgradeHp((SelectableObjectManager.LevelRangedUnitHpUpgrade - 1) * 10);
+            }
+            else if (unitType.Equals(EUnitType.MELEE))
+            {
+                stateMachine.UpgradeAttDmg((SelectableObjectManager.LevelMeleeUnitDmgUpgrade - 1) * 2);
+                statusHp.UpgradeHp((SelectableObjectManager.LevelMeleeUnitHpUpgrade - 1) * 10);
+            }
             StateIdle();
+            UpdateCurNode();
         }
         else
         {
             StructureCollider[] arrCollider = GetComponentsInChildren<StructureCollider>();
             for (int i = 0; i < arrCollider.Length; ++i)
                 arrCollider[i].Init(GetDmg, objectType);
-        }   
+        }
+    }
 
-        SelectableObjectManager.UpdateNodeWalkable(transform.position, nodeIdx);
+    public EUnitType GetUnitType => unitType;
+    public int NodeIdx => nodeIdx;
+    public void Select(int _listIdx = 0)
+    {
+        isSelect = true;
+        listIdx = _listIdx;
+    }
+
+    public void unSelect()
+    {
+        isSelect = false;
+        listIdx = -1;
+    }
+
+    public void UpdatelistIdx(int _listidx)
+    {
+        listIdx = _listidx;
     }
 
     public void Init(int _barrackIdx)
     {
         barrackIdx = _barrackIdx;
+        Subscribe();
+    }
+
+    public override void UpdateCurNode()
+    {
+        SelectableObjectManager.UpdateFriendlyNodeWalkable(transform.position, nodeIdx);
     }
 
     public Transform TargetBunker => targetBunker;
@@ -46,14 +80,35 @@ public class FriendlyObject : SelectableObject
         if (statusHp.DecreaseHpAndCheckIsDead(_dmg))
         {
             StopAllCoroutines();
-            SelectableObjectManager.ResetNodeWalkable(transform.position, nodeIdx);
 
-            if(objectType.Equals(EObjectType.UNIT))
-                ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.DEAD, gameObject, unitType, barrackIdx);
-            else if(objectType.Equals(EObjectType.HBEAM))
+            if (objectType.Equals(EObjectType.UNIT))
+            {
+                ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.DEAD, gameObject, unitType, barrackIdx, this);
+                Broker.UnSubscribe(this, EPublisherType.SELECTABLE_MANAGER);
+            }
+            else if (objectType.Equals(EObjectType.HBEAM))
+            {
                 ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.DESTROY_HBEAM, gameObject, unitType, barrackIdx);
-            else
+            }
+            else if (objectType.Equals(EObjectType.BUNKER))
+            {
+                GetComponent<StructureBunker>().OutAllUnit();
                 ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.DESTROY, gameObject);
+            }
+            else if (objectType.Equals(EObjectType.UNIT_HERO))
+            {
+                SelectableObjectManager.ResetHeroUnitNode(transform.position);
+                ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.DEAD_HERO, this);
+                return;
+            }
+            else 
+                ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.DESTROY, gameObject);
+
+            SelectableObjectManager.ResetFriendlyNodeWalkable(transform.position, nodeIdx);
+        }
+        else if (isSelect)
+        {
+            SelectableObjectManager.UpdateHp(listIdx);
         }
     }
 
@@ -89,7 +144,7 @@ public class FriendlyObject : SelectableObject
 
     public void ResetLayer()
     {
-        gameObject.layer = 1 << LayerMask.GetMask("SelectableObject");
+        gameObject.layer = LayerMask.NameToLayer("SelectableObject");
     }
 
     public void SetMyTr(Transform _myTr)
@@ -106,6 +161,11 @@ public class FriendlyObject : SelectableObject
     {
         oriAttRange += _increaseRange;
         attackRange += _increaseRange;
+    }
+
+    public void SetIdleState()
+    {
+        StateIdle();
     }
 
     public void MoveByPos(Vector3 _Pos)
@@ -233,7 +293,7 @@ public class FriendlyObject : SelectableObject
         StopAllCoroutines();
         curWayNode = null;
         stateMachine.SetWaitForNewPath(true);
-        SelectableObjectManager.UpdateNodeWalkable(transform.position, nodeIdx);
+        UpdateCurNode();
         ChangeState(EState.MOVE);
 
         switch (curMoveCondition)
@@ -319,7 +379,7 @@ public class FriendlyObject : SelectableObject
             if (isTargetInRangeFromMyPos(stateMachine.TargetPos, 0.1f))
             {
                 ++targetIdx;
-                SelectableObjectManager.UpdateNodeWalkable(transform.position, nodeIdx);
+                UpdateCurNode();
                 // 목적지에 도착시 
                 if (isAttack)
                     CheckIsTargetInAttackRange();
@@ -328,7 +388,7 @@ public class FriendlyObject : SelectableObject
                 {
                     curWayNode = null;
 
-                    if (Vector3.SqrMagnitude(targetPos - transform.position) > Mathf.Pow(2f, 2f))
+                    if (Vector3.SqrMagnitude(targetPos - transform.position) > Mathf.Pow(3f, 2f))
                     {
                         PF_PathRequestManager.RequestPath(transform.position, targetPos, OnPathFound);
                         stateMachine.SetWaitForNewPath(true);
@@ -386,7 +446,7 @@ public class FriendlyObject : SelectableObject
             if (isTargetInRangeFromMyPos(curWayNode.worldPos, 0.1f))
             {
                 ++targetIdx;
-                SelectableObjectManager.UpdateNodeWalkable(transform.position, nodeIdx);
+                UpdateCurNode();
                 CheckIsTargetInAttackRange();
 
                 if (targetIdx >= arrPath.Length)
@@ -437,7 +497,7 @@ public class FriendlyObject : SelectableObject
             if (targetTr == null)
             {
                 stateMachine.TargetTr = null;
-                PushState();
+                //PushState();
                 FinishState();
                 yield break;
             }
@@ -445,7 +505,7 @@ public class FriendlyObject : SelectableObject
             {
                 targetTr = null;
                 stateMachine.TargetTr = null;
-                PushState();
+                //PushState();
                 FinishState();
                 yield break;
             }
@@ -491,7 +551,7 @@ public class FriendlyObject : SelectableObject
                     if (isTargetInRangeFromMyPos(curWayNode.worldPos, 0.1f))
                     {
                         ++targetIdx;
-                        SelectableObjectManager.UpdateNodeWalkable(transform.position, nodeIdx);
+                        UpdateCurNode();
                         if (isAttack)
                             CheckIsTargetInAttackRange();
 
@@ -517,7 +577,7 @@ public class FriendlyObject : SelectableObject
     {
         StopAllCoroutines();
         ChangeState(EState.HOLD);
-        SelectableObjectManager.UpdateNodeWalkable(transform.position, nodeIdx);
+        UpdateCurNode();
         StartCoroutine("CheckHoldCoroutine");
     }
 
@@ -571,18 +631,71 @@ public class FriendlyObject : SelectableObject
         }
     }
 
+    public void Subscribe()
+    {
+        Broker.Subscribe(this, EPublisherType.SELECTABLE_MANAGER);
+    }
+
+    public void ReceiveMessage(EMessageType _message)
+    {
+        switch (_message)
+        {
+            case EMessageType.UPGRADE_RANGED_HP:
+                if (unitType.Equals(EUnitType.RANGED))
+                {
+                    UpgradeHp(SelectableObjectManager.LevelRangedUnitHpUpgrade);
+                    Debug.Log("RangedUpgradeHp");
+                }
+                break;
+            case EMessageType.UPGRADE_RANGED_DMG:
+                if (unitType.Equals(EUnitType.RANGED))
+                {
+                    UpgradeDmg(SelectableObjectManager.LevelRangedUnitDmgUpgrade);
+                    Debug.Log("RangedUpgradeDmg");
+                }
+                break;
+            case EMessageType.UPGRADE_MELEE_HP:
+                if (unitType.Equals(EUnitType.MELEE))
+                {
+                    UpgradeHp(SelectableObjectManager.LevelMeleeUnitHpUpgrade);
+                    statusHp.UpgradeHp((SelectableObjectManager.LevelMeleeUnitHpUpgrade - 1) * 10);
+                    Debug.Log("MeleeUpgradeHp");
+                }
+                break;
+            case EMessageType.UPGRADE_MELEE_DMG:
+                if (unitType.Equals(EUnitType.MELEE))
+                {
+                    UpgradeDmg(SelectableObjectManager.LevelMeleeUnitDmgUpgrade);
+                    Debug.Log("MeleeUpgradeDmg");
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void UpgradeHp(int _level)
+    {
+        statusHp.UpgradeHp((_level - 1) * 10);
+    }
+
+    private void UpgradeDmg(int _level)
+    {
+        stateMachine.UpgradeAttDmg((_level - 1) * 2);
+    }
 
     [Header("-Friendly Unit Attribute")]
     [SerializeField]
     private bool isMovable = false;
     [SerializeField]
-    private ESpawnUnitType unitType = ESpawnUnitType.NONE;
+    private EUnitType unitType = EUnitType.NONE;
 
     private Vector3 wayPointStart = Vector3.zero;
+    private Transform targetBunker = null;
 
     private int barrackIdx = -1;
+    private int listIdx = -1;
     private float oriAttRange = 0f;
     private bool isAttack = false;
-
-    private Transform targetBunker = null;
+    private bool isSelect = false;
 }

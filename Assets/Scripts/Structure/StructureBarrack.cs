@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StructureBarrack : Structure
+public class StructureBarrack : Structure, ISubscriber
 {
     public override void Init(int _structureIdx)
     {
@@ -10,15 +10,18 @@ public class StructureBarrack : Structure
         spawnPoint = transform.position;
         rallyPoint = spawnPoint;
         arrMemoryPool = new MemoryPool[arrUnitPrefab.Length];
-        upgradeHpCmd = new CommandUpgradeHP(GetComponent<StatusHp>());
+        upgradeHpCmd = new CommandUpgradeStructureHP(GetComponent<StatusHp>());
 
         for (int i = 0; i < arrUnitPrefab.Length; ++i)
             arrMemoryPool[i] = new MemoryPool(arrUnitPrefab[i], 3, transform);
+
+        Subscribe();
     }
 
     protected override void UpgradeComplete()
     {
         base.UpgradeComplete();
+        Debug.Log("BarrackUpgradeComplete");
         upgradeHpCmd.Execute(upgradeHpAmount);
     }
 
@@ -34,16 +37,19 @@ public class StructureBarrack : Structure
         rallyTr = _rallyTr;
     }
 
-    public void SpawnUnit(ESpawnUnitType _unitType)
+    public bool CanSpawnUnit()
     {
-        if (listUnit.Count >= 5) return;
+        return listUnit.Count < 5;
+    }
 
+    public void SpawnUnit(EUnitType _unitType)
+    {
         listUnit.Add(_unitType);
         RequestSpawnUnit();
         // ui에 나타내는 내용
     }
 
-    public override void DeactivateUnit(GameObject _removeGo, ESpawnUnitType _type)
+    public override void DeactivateUnit(GameObject _removeGo, EUnitType _type)
     {
         arrMemoryPool[(int)_type].DeactivatePoolItem(_removeGo);
     }
@@ -53,12 +59,12 @@ public class StructureBarrack : Structure
         if (!isProcessingSpawnUnit && listUnit.Count > 0)
         {
             isProcessingSpawnUnit = true;
-            ESpawnUnitType unitType = listUnit[0];
+            EUnitType unitType = listUnit[0];
             StartCoroutine("SpawnUnitCoroutine", unitType);
         }
     }
 
-    private IEnumerator SpawnUnitCoroutine(ESpawnUnitType _unitType)
+    private IEnumerator SpawnUnitCoroutine(EUnitType _unitType)
     {
         float elapsedTime = 0f;
 
@@ -68,6 +74,9 @@ public class StructureBarrack : Structure
             yield return new WaitForSeconds(0.5f);
             elapsedTime += 0.5f;
         }
+
+        while (!canProcessSpawnUnit)
+            yield return new WaitForSeconds(1f);
 
         isProcessingSpawnUnit = false;
         FriendlyObject tempObj = arrMemoryPool[(int)_unitType].ActivatePoolItem(spawnPoint, 3, transform).GetComponent<FriendlyObject>();
@@ -81,27 +90,149 @@ public class StructureBarrack : Structure
             tempObj.FollowTarget(rallyTr);
 
         listUnit.RemoveAt(0);
+        ArrayPopulationCommand.Use(EPopulationCommand.INCREASE_CUR_POPULATION, _unitType);
         RequestSpawnUnit();
+    }
+
+    public bool CanUpgradeUnit(EUnitUpgradeType _upgradeType)
+    {
+        switch (_upgradeType)
+        {
+            case EUnitUpgradeType.RANGED_UNIT_DMG:
+                if (!isProcessingUpgrade && SelectableObjectManager.LevelRangedUnitDmgUpgrade < upgradeLevel << 1)
+                    return true;
+                return false;
+            case EUnitUpgradeType.RANGED_UNIT_HP:
+                if (!isProcessingUpgrade && SelectableObjectManager.LevelRangedUnitHpUpgrade < upgradeLevel << 1)
+                    return true;
+                return false;
+            case EUnitUpgradeType.MELEE_UNIT_DMG:
+                if (!isProcessingUpgrade && SelectableObjectManager.LevelMeleeUnitDmgUpgrade < upgradeLevel << 1)
+                    return true;
+                return false;
+            case EUnitUpgradeType.MELEE_UNIT_HP:
+                if (!isProcessingUpgrade && SelectableObjectManager.LevelMeleeUnitHpUpgrade < upgradeLevel << 1)
+                    return true;
+                return false;
+            default:
+                return false;
+        }
+    }
+
+    public void UpgradeUnit(EUnitUpgradeType _upgradeType)
+    {
+        StartCoroutine("UpgradeUnitCoroutine", _upgradeType);
+    }
+
+    public bool UpgradeRangedUnitDmg()
+    {
+        if (!isProcessingUpgrade && SelectableObjectManager.LevelRangedUnitDmgUpgrade < upgradeLevel << 1)
+        {
+            StartCoroutine("UpgradeUnitCoroutine", EUnitUpgradeType.RANGED_UNIT_DMG);
+            return true;
+        }
+        return false;
+    }
+
+    public bool UpgradeRangedUnitHp()
+    {
+        if (!isProcessingUpgrade && SelectableObjectManager.LevelRangedUnitHpUpgrade < upgradeLevel << 1)
+        {
+            StartCoroutine("UpgradeUnitCoroutine", EUnitUpgradeType.RANGED_UNIT_HP);
+            return true;
+        }
+        return false;
+    }
+
+    public bool UpgradeMeleeUnitDmg()
+    {
+        if (!isProcessingUpgrade && SelectableObjectManager.LevelMeleeUnitDmgUpgrade < upgradeLevel << 1)
+        {
+            StartCoroutine("UpgradeUnitCoroutine", EUnitUpgradeType.MELEE_UNIT_DMG);
+            return true;
+        }
+        return false;
+    }
+
+    public bool UpgradeMeleeUnitHp()
+    {
+        if (!isProcessingUpgrade && SelectableObjectManager.LevelMeleeUnitHpUpgrade < upgradeLevel << 1)
+        {
+            StartCoroutine("UpgradeUnitCoroutine", EUnitUpgradeType.MELEE_UNIT_HP);
+            return true;
+        }
+        return false;
+    }
+
+    private IEnumerator UpgradeUnitCoroutine(EUnitUpgradeType _upgradeType)
+    {
+        isProcessingUpgrade = true;
+
+        float buildFinishTime = Time.time + SelectableObjectManager.DelayUnitUpgrade;
+        while (buildFinishTime > Time.time)
+        {
+            // ui 표시
+            yield return new WaitForSeconds(0.5f);
+        }
+        isProcessingUpgrade = false;
+
+        switch (_upgradeType)
+        {
+            case EUnitUpgradeType.RANGED_UNIT_DMG:
+                ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.COMPLETE_UPGRADE_RANGED_UNIT_DMG);
+                break;
+            case EUnitUpgradeType.RANGED_UNIT_HP:
+                ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.COMPLETE_UPGRADE_RANGED_UNIT_HP);
+                break;
+            case EUnitUpgradeType.MELEE_UNIT_DMG:
+                ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.COMPLETE_UPGRADE_MELEE_UNIT_DMG);
+                break;
+            case EUnitUpgradeType.MELEE_UNIT_HP:
+                ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.COMPLETE_UPGRADE_MELEE_UNIT_HP);
+                break;
+        }
+
+    }
+
+    public void Subscribe()
+    {
+        Broker.Subscribe(this, EPublisherType.POPULATION_MANAGER);
+    }
+
+    public void ReceiveMessage(EMessageType _message)
+    {
+        switch (_message)
+        {
+            case EMessageType.START_SPAWN:
+                canProcessSpawnUnit = true;
+                break;
+            case EMessageType.STOP_SPAWN:
+                canProcessSpawnUnit = false;
+                break;
+            default:
+                break;
+        }
     }
 
     [Header("-Melee(temp), Range, Rocket(temp)")]
     [SerializeField]
-    private float[] spawnUnitDelay = new float[(int)ESpawnUnitType.LENGTH];
+    private float[] spawnUnitDelay = new float[(int)EUnitType.LENGTH];
     [SerializeField]
-    private GameObject[] arrUnitPrefab = new GameObject[(int)ESpawnUnitType.LENGTH];
+    private GameObject[] arrUnitPrefab = new GameObject[(int)EUnitType.LENGTH];
 
     [Header("-Upgrade Attribute")]
     [SerializeField]
     private float upgradeHpAmount = 0f;
 
     private bool isProcessingSpawnUnit = false;
+    private bool canProcessSpawnUnit = true;
 
-    private CommandUpgradeHP upgradeHpCmd = null;
+    private CommandUpgradeStructureHP upgradeHpCmd = null;
 
     private Vector3 spawnPoint = Vector3.zero;
     private Vector3 rallyPoint = Vector3.zero;
     private Transform rallyTr = null;
-    private List<ESpawnUnitType> listUnit = new List<ESpawnUnitType>();
+    private List<EUnitType> listUnit = new List<EUnitType>();
 
     private MemoryPool[] arrMemoryPool = null;
 }

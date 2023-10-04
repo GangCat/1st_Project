@@ -7,7 +7,7 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType
     protected enum EMoveState { NONE = -1, NORMAL, ATTACK, PATROL, CHASE, FOLLOW, FOLLOW_ENEMY }
     public virtual void Init()
     {
-        nodeIdx = SelectableObjectManager.InitNode(transform.position);
+        nodeIdx = SelectableObjectManager.InitNodeEnemy(transform.position);
         stateMachine = GetComponent<StateMachine>();
         statusHp = GetComponent<StatusHp>();
         statusHp.Init();
@@ -17,10 +17,34 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType
             stateMachine.Init(GetCurState);
             ResetStateStack();
             StateIdle();
+            UpdateCurNode();
         }
 
-        SelectableObjectManager.UpdateNodeWalkable(transform.position, nodeIdx);
     }
+
+    public int MaxHp => statusHp.MaxHp;
+    public float AttRange => attackRange;
+    public float AttDmg
+    {
+        get
+        {
+            if (stateMachine != null)
+                return stateMachine.AttDmg;
+            else
+                return 0;
+        }
+    }
+    public float AttRate
+    {
+        get
+        {
+            if (stateMachine != null)
+                return stateMachine.AttRate;
+            else
+                return 0;
+        }
+    }
+    public float GetCurHpPercent => statusHp.GetCurHpPercent;
 
     public EObjectType GetObjectType()
     {
@@ -37,9 +61,9 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType
     {
         Functions.RotateYaw(transform, _angle);
     }
-    public void UpdateCurNode()
+    public virtual void UpdateCurNode()
     {
-        SelectableObjectManager.UpdateNodeWalkable(transform.position, nodeIdx);
+        
     }
 
     public virtual void GetDmg(float _dmg)
@@ -67,7 +91,7 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType
     {
         stateMachine.TargetTr = null;
         targetTr = null;
-        SelectableObjectManager.UpdateNodeWalkable(transform.position, nodeIdx);
+        UpdateCurNode();
         ChangeState(EState.IDLE);
         StartCoroutine("CheckIsEnemyInChaseStartRangeCoroutine");
     }
@@ -164,7 +188,7 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType
         StopAllCoroutines();
         curWayNode = null;
         stateMachine.SetWaitForNewPath(true);
-        SelectableObjectManager.UpdateNodeWalkable(transform.position, nodeIdx);
+        UpdateCurNode();
         ChangeState(EState.MOVE);
 
         switch (curMoveCondition)
@@ -235,7 +259,7 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType
             if (isTargetInRangeFromMyPos(stateMachine.TargetPos, 0.1f))
             {
                 ++targetIdx;
-                SelectableObjectManager.UpdateNodeWalkable(transform.position, nodeIdx);
+                UpdateCurNode();
                 // 목적지에 도착시 
                 CheckIsTargetInAttackRange();
 
@@ -333,7 +357,7 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType
                     if (isTargetInRangeFromMyPos(curWayNode.worldPos, 0.1f))
                     {
                         ++targetIdx;
-                        SelectableObjectManager.UpdateNodeWalkable(transform.position, nodeIdx);
+                        UpdateCurNode();
                         CheckIsTargetInAttackRange();
 
                         if (targetIdx >= arrPath.Length)
@@ -398,10 +422,6 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType
         curPos = transform.position;
         if (Physics.Linecast(curPos, curWayNode.worldPos, 1 << LayerMask.NameToLayer("SelectableObject"))) 
             return true;
-        if (Physics.Linecast(curPos + transform.right * 0.5f, curWayNode.worldPos + transform.right * 0.5f, 1 << LayerMask.NameToLayer("SelectableObject")))
-            return true;
-        if (Physics.Linecast(curPos - transform.right * 0.5f, curWayNode.worldPos - transform.right * 0.5f, 1 << LayerMask.NameToLayer("SelectableObject")))
-            return true;
 
         return false;
     }
@@ -412,7 +432,7 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType
     {
         StopAllCoroutines();
         ChangeState(EState.STOP);
-        SelectableObjectManager.UpdateNodeWalkable(transform.position, nodeIdx);
+        UpdateCurNode();
         StartCoroutine("CheckStopCoroutine");
     }
 
@@ -429,8 +449,11 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType
     {
         StopAllCoroutines();
         PushState();
-        ChangeState(EState.ATTACK);
-        SelectableObjectManager.UpdateNodeWalkable(transform.position, nodeIdx);
+        if (objectType.Equals(EObjectType.TURRET))
+            ChangeState(EState.TURRET_ATTACK);
+        else
+            ChangeState(EState.ATTACK);
+        UpdateCurNode();
         StartCoroutine("AttackCoroutine");
     }
 

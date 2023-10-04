@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class StructureManager : MonoBehaviour
 {
-    private enum EStructureType { NONE = -1, TURRET, BUNKER, BARRACK, NUCLEAR, WALL, LENGTH }
+    public enum EStructureType { NONE = -1, TURRET, BUNKER, BARRACK, NUCLEAR, WALL, LENGTH }
     public void Init(PF_Grid _grid, StructureMainBase _mainBase)
     {
         grid = _grid;
@@ -26,6 +26,11 @@ public class StructureManager : MonoBehaviour
         }
     }
 
+    public EObjectType CurStructureType()
+    {
+        return curStructureObjType;
+    }
+
     public void ShowBluepirnt(EObjectType _buildingType)
     {
         if (isBlueprint)
@@ -39,24 +44,28 @@ public class StructureManager : MonoBehaviour
             case EObjectType.TURRET:
                 {
                     curStructureType = EStructureType.TURRET;
+                    curStructureObjType = EObjectType.TURRET;
                     curStructure = Instantiate(arrBlueprintPrefab[(int)EStructureType.TURRET], transform).GetComponent<Structure>();
                 }
                 break;
             case EObjectType.BUNKER:
                 {
                     curStructureType = EStructureType.BUNKER;
+                    curStructureObjType = EObjectType.BUNKER;
                     curStructure = Instantiate(arrBlueprintPrefab[(int)EStructureType.BUNKER], transform).GetComponent<Structure>();
                 }
                 break;
             case EObjectType.NUCLEAR:
                 {
                     curStructureType = EStructureType.NUCLEAR;
+                    curStructureObjType = EObjectType.NUCLEAR;
                     curStructure = Instantiate(arrBlueprintPrefab[(int)EStructureType.NUCLEAR], transform).GetComponent<Structure>();
                 }
                 break;
             case EObjectType.BARRACK:
                 {
                     curStructureType = EStructureType.BARRACK;
+                    curStructureObjType = EObjectType.BARRACK;
                     curStructure = Instantiate(arrBlueprintPrefab[(int)EStructureType.BARRACK], transform).GetComponent<Structure>();
                 }
                 break;
@@ -69,6 +78,7 @@ public class StructureManager : MonoBehaviour
     public void ShowBluepirnt(Transform _bunkerTr)
     {
         curStructureType = EStructureType.WALL;
+        curStructureObjType = EObjectType.WALL;
         curStructure = Instantiate(arrBlueprintPrefab[(int)EStructureType.WALL], transform).GetComponent<Structure>();
         StartCoroutine("ShowWallBlueprint", _bunkerTr);
     }
@@ -131,6 +141,8 @@ public class StructureManager : MonoBehaviour
         Vector3 bunkerPos = _bunkerTr.position;
         Vector3 wallPos = Vector3.zero;
         float angle = 0f;
+        int xLength = curStructure.GridX;
+        int yLength = curStructure.GridY;
 
         RaycastHit hit;
         while (true)
@@ -143,37 +155,39 @@ public class StructureManager : MonoBehaviour
             // left -135 ~ 135
             if (angle > 135 || angle < -135)
             {
-                curStructure.SetGrid(4, 1);
-                curStructure.SetFactor(-1, 1);
-                curStructure.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
-                wallPos.x = bunkerPos.x - 1;
+                curStructure.SetGrid(xLength, yLength);
+                curStructure.SetFactor(-1, -1);
+                curStructure.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+                wallPos.x = bunkerPos.x - 0.5f;
+                wallPos.z = bunkerPos.z + 0.5f;
                 curStructure.SetPos(wallPos);
             }
             // up 135 ~ 45
             else if (angle > 45)
             {
-                curStructure.SetGrid(1, 4);
-                curStructure.SetFactor(1, 1);
-                curStructure.transform.rotation = Quaternion.Euler(0f, 90f, 0f);
+                curStructure.SetGrid(yLength, xLength);
+                curStructure.SetFactor(-1, 1);
+                curStructure.transform.rotation = Quaternion.Euler(0f, -90f, 0f);
+                wallPos.x = bunkerPos.x + 0.5f;
                 wallPos.z = bunkerPos.z + 1;
                 curStructure.SetPos(wallPos);
             }
             // right 45 ~ -45
             else if (angle > -45)
             {
-                curStructure.SetGrid(4, 1);
+                curStructure.SetGrid(xLength, yLength);
                 curStructure.SetFactor(1, 1);
-                curStructure.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+                curStructure.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
                 wallPos.x = bunkerPos.x + 1;
                 curStructure.SetPos(wallPos);
             }
             // down -45 ~ -135
             else
             {
-                curStructure.SetGrid(1, 4);
+                curStructure.SetGrid(yLength, xLength);
                 curStructure.SetFactor(1, -1);
-                curStructure.transform.rotation = Quaternion.Euler(0f, 270f, 0f);
-                wallPos.z = bunkerPos.z - 1;
+                curStructure.transform.rotation = Quaternion.Euler(0f, 90f, 0f);
+                wallPos.z = bunkerPos.z - 0.5f;
                 curStructure.SetPos(wallPos);
             }
 
@@ -198,9 +212,9 @@ public class StructureManager : MonoBehaviour
 
             StartCoroutine("BuildStructureCoroutine");
 
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 
     private void StopBuildCoroutine()
@@ -212,19 +226,17 @@ public class StructureManager : MonoBehaviour
     private IEnumerator BuildStructureCoroutine()
     {
         Structure newStructure = Instantiate(arrStructurePrefab[(int)curStructureType], curStructure.transform.position, curStructure.transform.rotation).GetComponent<Structure>();
-        if (curStructureType.Equals(EStructureType.WALL))
-        {
-            newStructure.SetGrid(curStructure.GridX, curStructure.GridY);
-            newStructure.SetFactor(curStructure.FactorX, curStructure.FactorY);
-        }
-
         Destroy(curStructure.gameObject);
         newStructure.Init(grid);
         newStructure.Init(structureIdx);
         dicStructure.Add(structureIdx, newStructure);
         ++structureIdx;
+        if (curStructureType.Equals(EStructureType.WALL))
+        {
+            newStructure.SetGrid(curStructure.GridX, curStructure.GridY);
+            newStructure.SetFactor(curStructure.FactorX, curStructure.FactorY);
+        }
         newStructure.BuildStart();
-        newStructure.UpdateNodeWalkable(false);
         isBlueprint = false;
 
         float buildFinishTime = Time.time + buildDelay[(int)curStructureType];
@@ -239,6 +251,8 @@ public class StructureManager : MonoBehaviour
             newStructure.BuildComplete();
             newStructure.transform.parent = transform;
         }
+
+        ArrayBuildCommand.Use(EMainBaseCommnad.BUILD_COMPLETE);
     }
 
     #region Ruin
@@ -255,7 +269,7 @@ public class StructureManager : MonoBehaviour
     }
     #endregion
 
-    public void DeactivateUnit(GameObject _removeGo, ESpawnUnitType _unitType, int _barrackIdx)
+    public void DeactivateUnit(GameObject _removeGo, EUnitType _unitType, int _barrackIdx)
     {
         Structure barrack = null;
         dicStructure.TryGetValue(_barrackIdx, out barrack);
@@ -288,19 +302,14 @@ public class StructureManager : MonoBehaviour
         }
     }
 
-    public void UpgradeStructure(int _structureIdx)
+    public bool UpgradeStructure(int _structureIdx)
     {
         Structure structure = null;
         dicStructure.TryGetValue(_structureIdx, out structure);
-        structure.StartUpgrade();
+        return structure.StartUpgrade();
     }
 
-    public void UpgradeUnit(int _structureIdx)
-    {
-        Structure structure = null;
-        dicStructure.TryGetValue(_structureIdx, out structure);
-        structure.StartUnitUpgrade();
-    }
+
 
     [Header("-StructurePrefab(TURRET, BUNKER, BARRACK, NUCLEAR, WALL)")]
     [SerializeField]
@@ -320,8 +329,9 @@ public class StructureManager : MonoBehaviour
 
     private Dictionary<int, Structure> dicStructure = null;
     private List<StructureNuclear> listNuclearStructure = null;
-    private EStructureType curStructureType = EStructureType.NONE;
     private Structure curStructure = null;
+    private EObjectType curStructureObjType = EObjectType.NONE;
+    private EStructureType curStructureType = EStructureType.NONE;
     private PF_Grid grid = null;
     private PF_Node curNode = null;
 

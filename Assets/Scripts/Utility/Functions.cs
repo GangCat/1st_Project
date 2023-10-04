@@ -220,5 +220,10 @@ public static class Functions
         }
         return false;
     }
+
+    public static uint ClampMaxWithUInt(uint _value, uint _maxValue)
+    {
+        return _value < _maxValue ? _value : _maxValue;
+    }
 }
 

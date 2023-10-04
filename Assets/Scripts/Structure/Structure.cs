@@ -28,6 +28,7 @@ public class Structure : MonoBehaviour
 
     public virtual void Init() { }
 
+    public int UpgradeLevel => upgradeLevel;
     public bool IsBuildable => isBuildable;
     public int StructureIdx => myIdx;
     public int GridX => myGridX;
@@ -35,6 +36,7 @@ public class Structure : MonoBehaviour
     public int FactorX => factorGridX;
     public int FactorY => factorGridY;
     public bool IsUnderConstruction { get; private set; }
+    public bool IsProcessingUpgrade => isProcessingUpgrade;
 
     public void SetGrid(int _gridX, int _gridY)
     {
@@ -53,31 +55,30 @@ public class Structure : MonoBehaviour
         transform.position = _targetPos;
     }
 
-    public virtual void StartUpgrade() 
+    public virtual bool StartUpgrade()
     {
-        if (upgradeLevel < StructureManager.UpgradeLimit)
+        if (!isProcessingUpgrade && upgradeLevel < StructureManager.UpgradeLimit)
+        {
             StartCoroutine("UpgradeCoroutine");
+            return true;
+        }
+        return false;
     }
 
-    public virtual void StartUnitUpgrade()
+    protected IEnumerator UpgradeCoroutine()
     {
-        if(unitUpgradeLevel < StructureManager.UpgradeLimit)
-    }
-
-    protected virtual IEnumerator UpgradeCoroutine()
-    {
+        isProcessingUpgrade = true;
         float buildFinishTime = Time.time + upgradeDelay;
         while (buildFinishTime > Time.time)
         {
             // ui 표시
             yield return new WaitForSeconds(0.5f);
         }
-
+        isProcessingUpgrade = false;
         UpgradeComplete();
-        // 여기서 그 방문자 패턴? 하기
     }
 
-    protected virtual void UpgradeComplete() 
+    protected virtual void UpgradeComplete()
     {
         ++upgradeLevel;
     }
@@ -88,18 +89,23 @@ public class Structure : MonoBehaviour
         int gridX = curNode.gridX;
         int gridY = curNode.gridY;
         int idx = 0;
+        List<PF_Node> listNode = new List<PF_Node>();
 
         while (idx < myGridX * myGridY)
         {
-            grid.UpdateNodeWalkable(
-                grid.GetNodeWithGrid((idx % myGridX) * factorGridX + gridX, (idx / myGridY) * factorGridY + gridY),
-                _walkable);
+            listNode.Add(grid.GetNodeWithGrid((idx % myGridX) * factorGridX + gridX, (idx / myGridY) * factorGridY + gridY));
+            grid.UpdateNodeWalkable(listNode[idx], _walkable);
 
             ++idx;
         }
+
+        if (!_walkable)
+            ArrayHUDCommand.Use(EHUDCommand.ADD_STRUCTURE_NODE_TO_MINIMAP, listNode.ToArray());
+        else
+            ArrayHUDCommand.Use(EHUDCommand.REMOVE_STRUCTURE_NODE_FROM_MINIMAP, listNode.ToArray());
     }
 
-    public virtual void DeactivateUnit(GameObject _removeGo, ESpawnUnitType _type) { }
+    public virtual void DeactivateUnit(GameObject _removeGo, EUnitType _type) { }
 
     public void BuildCancle()
     {
@@ -108,8 +114,17 @@ public class Structure : MonoBehaviour
 
     public void BuildStart()
     {
-        StopCoroutine("CheckBuildableCoroutine");
+        isBuildable = true;
+        SetColor();
         IsUnderConstruction = true;
+        StopCoroutine("CheckBuildableCoroutine");
+        BuildHBeam();
+        UpdateNodeWalkable(false);
+    }
+
+    private void BuildHBeam()
+    {
+
     }
 
     public virtual void BuildComplete()
@@ -138,7 +153,7 @@ public class Structure : MonoBehaviour
             int idx = 0;
             while (idx < myGridX * myGridY)
             {
-                if (!grid.GetNodeWithGrid((idx % myGridX) * factorGridX + gridX, (idx / myGridY) * factorGridY + gridY).walkable)
+                if (!grid.GetNodeWithGrid((idx % myGridX) + gridX, (idx / myGridY) + gridY).walkable)
                 {
                     isBuildable = false;
                     break;
@@ -194,5 +209,6 @@ public class Structure : MonoBehaviour
     protected int myIdx = -1;
     protected int upgradeLevel = 0;
 
-    protected bool isBuildable = true;
+    protected bool isBuildable = false;
+    protected bool isProcessingUpgrade = false;
 }

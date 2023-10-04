@@ -93,6 +93,8 @@ MonoBehaviour:
     moveSpeed: 3
     attRate: 3
     attDmg: 1
+    TurretMissile: {fileID: 0}
+    missileSpawnTr: {fileID: 0}
 --- !u!114 &4548737042386696750
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -109,11 +111,13 @@ MonoBehaviour:
   chaseStartRange: 5
   chaseFinishRange: 6
   attackRange: 4
-  stopDelay: 2
+  stopDelay: 1
   followOffset: 1
   overlapLayerMask:
     serializedVersion: 2
     m_Bits: 16512
+  powerCorePrefab: {fileID: 5884904722928855986, guid: 1a643c881652e6d4098d4f2d254e4038,
+    type: 3}
 --- !u!1 &3256322658277572286
 GameObject:
   m_ObjectHideFlags: 0
