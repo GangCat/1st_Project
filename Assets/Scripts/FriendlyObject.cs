@@ -44,7 +44,7 @@ public class FriendlyObject : SelectableObject, ISubscriber
     }
 
     public EUnitType GetUnitType => unitType;
-    public void Select(int _listIdx)
+    public void Select(int _listIdx = 0)
     {
         isSelect = true;
         listIdx = _listIdx;
