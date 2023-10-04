@@ -26,12 +26,14 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
         grid = _grid;
         RegisterBroker();
 
+        unitInfoContainer = new UnitInfoContainer();
         listFriendlyUnitInfo = new List<SFriendlyUnitInfo>(12);
 
         for(int i = 0; i < listFriendlyUnitInfo.Capacity; ++i)
             listFriendlyUnitInfo.Add(new SFriendlyUnitInfo());
 
         ArrayHUDCommand.Use(EHUDCommand.INIT_DISPLAY_GROUP_INFO, listFriendlyUnitInfo);
+        ArrayHUDCommand.Use(EHUDCommand.INIT_DISPLAY_SINGLE_INFO, unitInfoContainer);
     }
 
     public static int InitNodeFriendly(Vector3 _pos)
@@ -227,7 +229,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
         {
             selectObjectCallback?.Invoke(tempObj.GetObjectType());
             InputEnemyUnitInfo(tempObj);
-            ArrayHUDCommand.Use(EHUDCommand.DISPLAY_SINGLE_INFO, sUnitInfo);
+            ArrayHUDCommand.Use(EHUDCommand.DISPLAY_SINGLE_INFO, unitInfoContainer);
         }
         else if (isFriendlyStructureInList)
         {
@@ -239,7 +241,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
                 selectObjectCallback?.Invoke(EObjectType.PROCESSING_UPGRADE_STRUCTURE);
             else
                 selectObjectCallback?.Invoke(listSelectedFriendlyObject[0].GetObjectType());
-            ArrayHUDCommand.Use(EHUDCommand.DISPLAY_SINGLE_INFO, sUnitInfo);
+            ArrayHUDCommand.Use(EHUDCommand.DISPLAY_SINGLE_INFO, unitInfoContainer);
         }
         else if (isFriendlyUnitInList)
         {
@@ -248,7 +250,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
             if (listSelectedFriendlyObject.Count < 2)
             {
                 InputEnemyUnitInfo(listSelectedFriendlyObject[0]);
-                ArrayHUDCommand.Use(EHUDCommand.DISPLAY_SINGLE_INFO, sUnitInfo);
+                ArrayHUDCommand.Use(EHUDCommand.DISPLAY_SINGLE_INFO, unitInfoContainer);
             }
             else
             {
@@ -282,20 +284,20 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
 
     private void InputEnemyUnitInfo(SelectableObject _obj)
     {
-        sUnitInfo.objectType = _obj.GetObjectType();
-        sUnitInfo.maxHp = _obj.MaxHp;
-        sUnitInfo.attDmg = _obj.AttDmg;
-        sUnitInfo.attRange = _obj.AttRange;
-        sUnitInfo.attRate = _obj.AttRate;
+        unitInfoContainer.objectType = _obj.GetObjectType();
+        unitInfoContainer.maxHp = _obj.MaxHp;
+        unitInfoContainer.attDmg = _obj.AttDmg;
+        unitInfoContainer.attRange = _obj.AttRange;
+        unitInfoContainer.attRate = _obj.AttRate;
     }
 
     private void InputStructureInfo(SelectableObject _obj)
     {
-        sUnitInfo.objectType = _obj.GetObjectType();
-        sUnitInfo.maxHp = _obj.MaxHp;
-        sUnitInfo.attDmg = 0;
-        sUnitInfo.attRange = 0;
-        sUnitInfo.attRate = 0;
+        unitInfoContainer.objectType = _obj.GetObjectType();
+        unitInfoContainer.maxHp = _obj.MaxHp;
+        unitInfoContainer.attDmg = 0;
+        unitInfoContainer.attRange = 0;
+        unitInfoContainer.attRate = 0;
     }
 
     public void UpdateFuncButton()
@@ -309,7 +311,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
                     if (listSelectedFriendlyObject.Count == 1)
                     {
                         InputEnemyUnitInfo(listSelectedFriendlyObject[0]);
-                        ArrayHUDCommand.Use(EHUDCommand.DISPLAY_SINGLE_INFO, sUnitInfo);
+                        ArrayHUDCommand.Use(EHUDCommand.DISPLAY_SINGLE_INFO, unitInfoContainer);
                     }
                     else
                     {
@@ -332,7 +334,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
                 else
                     selectObjectCallback?.Invoke(listSelectedFriendlyObject[0].GetObjectType());
                 InputStructureInfo(listSelectedFriendlyObject[0]);
-                ArrayHUDCommand.Use(EHUDCommand.DISPLAY_SINGLE_INFO, sUnitInfo);
+                ArrayHUDCommand.Use(EHUDCommand.DISPLAY_SINGLE_INFO, unitInfoContainer);
             }
             else
             {
@@ -526,6 +528,6 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
     private static int dicFriendlyIdx = 0;
     private static int dicEnemyIdx = 0;
 
-    private SUnitInfo sUnitInfo;
+    private UnitInfoContainer unitInfoContainer = null;
     private static List<SFriendlyUnitInfo> listFriendlyUnitInfo = null;
 }

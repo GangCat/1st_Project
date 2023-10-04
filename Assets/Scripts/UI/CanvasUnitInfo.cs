@@ -18,10 +18,15 @@ public class CanvasUnitInfo : MonoBehaviour
         groupInfo.InitList(_list);
     }
 
-    public void DisplaySIngleUnitInfo(SUnitInfo _listUnitInfo)
+    public void InitSingleUnitInfo(UnitInfoContainer _container)
+    {
+        singleInfo.InitContainer(_container);
+    }
+
+    public void DisplaySingleUnitInfo()
     {
         groupInfo.SetActive(false);
-        singleInfo.SetActive(true);
+        singleInfo.DisplaySingleInfo();
     }
 
     public void DisplayGroupUnitInfo(int _unitCnt)

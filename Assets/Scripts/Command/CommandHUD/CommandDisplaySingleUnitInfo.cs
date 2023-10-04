@@ -10,7 +10,7 @@ public class CommandDisplaySingleUnitInfo : Command
     }
     public override void Execute(params object[] _objects)
     {
-        canvasInfo.DisplaySIngleUnitInfo((SUnitInfo)_objects[0]);
+        canvasInfo.DisplaySingleUnitInfo();
     }
 
     private CanvasUnitInfo canvasInfo = null;
