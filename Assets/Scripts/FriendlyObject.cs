@@ -95,7 +95,11 @@ public class FriendlyObject : SelectableObject, ISubscriber
                 GetComponent<StructureBunker>().OutAllUnit();
                 ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.DESTROY, gameObject);
             }
-            else
+            else if (objectType.Equals(EObjectType.UNIT_HERO))
+            {
+                ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.DEAD_HERO);
+            }
+            else 
                 ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.DESTROY, gameObject);
         }
         else if (isSelect)

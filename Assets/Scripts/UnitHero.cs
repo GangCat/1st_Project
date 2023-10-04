@@ -6,6 +6,8 @@ public class UnitHero : MonoBehaviour
 {
     public void Init()
     {
-        GetComponent<SelectableObject>().Init();
+        GetComponent<FriendlyObject>().Init();
     }
+
+
 }

@@ -23,6 +23,23 @@ public class GameManager : MonoBehaviour
     {
         // 마우스 가두기
         Cursor.lockState = CursorLockMode.Confined;
+        // 유니티 에디터에서 실행할 때 창 모드로 실행
+        //#if UNITY_EDITOR
+        //        Screen.SetResolution(Screen.width, Screen.height, false);
+        //#endif
+
+        // 빌드된 게임에서 실행할 때 창 모드로 실행
+        //#if !UNITY_EDITOR
+        //        Screen.SetResolution(1920, 1080, false);
+        //#endif
+
+        //빌드된 게임에서 실행할 때 전체 화면 모드로 실행
+#if !UNITY_EDITOR
+                Screen.SetResolution(1920, 1080, true);
+
+                // 검은 여백 채우기
+                Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
+#endif
 
         InitCommandList();
         InitManagers();
