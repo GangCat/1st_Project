@@ -304,10 +304,26 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
         {
             if (isFriendlyUnitInList)
             {
-                if (listSelectedFriendlyObject.Count > 0)
+                if (listSelectedFriendlyObject.Count > 1)
+                {
+                    if (listSelectedFriendlyObject.Count == 1)
+                    {
+                        InputEnemyUnitInfo(listSelectedFriendlyObject[0]);
+                        ArrayHUDCommand.Use(EHUDCommand.DISPLAY_SINGLE_INFO, sUnitInfo);
+                    }
+                    else
+                    {
+                        InputFriendlyUnitInfo();
+                        ArrayHUDCommand.Use(EHUDCommand.DISPLAY_GROUP_INFO, listSelectedFriendlyObject.Count);
+                    }
                     selectObjectCallback?.Invoke(listSelectedFriendlyObject[0].GetObjectType());
+                }
                 else
+                {
+                    isFriendlyStructureInList = false;
+                    ArrayHUDCommand.Use(EHUDCommand.HIDE_UNIT_INFO);
                     selectObjectCallback?.Invoke(EObjectType.NONE);
+                }
             }
             else if (isFriendlyStructureInList)
             {
@@ -315,9 +331,14 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
                     selectObjectCallback?.Invoke(EObjectType.PROCESSING_UPGRADE_STRUCTURE);
                 else
                     selectObjectCallback?.Invoke(listSelectedFriendlyObject[0].GetObjectType());
+                InputStructureInfo(listSelectedFriendlyObject[0]);
+                ArrayHUDCommand.Use(EHUDCommand.DISPLAY_SINGLE_INFO, sUnitInfo);
             }
             else
+            {
+                ArrayHUDCommand.Use(EHUDCommand.HIDE_UNIT_INFO);
                 selectObjectCallback?.Invoke(EObjectType.NONE);
+            }
         }
     }
 
