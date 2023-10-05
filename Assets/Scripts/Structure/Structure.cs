@@ -19,8 +19,7 @@ public class Structure : MonoBehaviour
 
     public virtual void Init(int _structureIdx)
     {
-        myObj = GetComponent<FriendlyObject>();
-        myObj.Init();
+        GetComponent<SelectableObject>().Init();
         myIdx = _structureIdx;
         upgradeLevel = 1;
         ShowHBeam();
@@ -29,27 +28,15 @@ public class Structure : MonoBehaviour
 
     public virtual void Init() { }
 
-    public EUpgradeType CurUpgradeType => curUpgradeType;
     public int UpgradeLevel => upgradeLevel;
     public bool IsBuildable => isBuildable;
-    public bool IsProcessingUpgrade => isProcessingUpgrade;
     public int StructureIdx => myIdx;
     public int GridX => myGridX;
     public int GridY => myGridY;
     public int FactorX => factorGridX;
     public int FactorY => factorGridY;
     public bool IsUnderConstruction { get; private set; }
-
-    public void UpdateConstructInfo()
-    {
-        ArrayHUDConstructCommand.Use(EHUDConstructCommand.UPDATE_CONSTRUCT_STRUCTURE, myObj.GetObjectType());
-        ArrayHUDConstructCommand.Use(EHUDConstructCommand.UPDATE_CONSTRUCT_TIME, UpgradeAndConstructProgressPercent);
-    }
-
-    public void UpdateUpgradeInfo()
-    {
-        ArrayHUDUpgradeCommand.Use(EHUDUpgradeCommand.UPDATE_UPGRADE_TIME, UpgradeAndConstructProgressPercent);
-    }
+    public bool IsProcessingUpgrade => isProcessingUpgrade;
 
     public void SetGrid(int _gridX, int _gridY)
     {
@@ -81,20 +68,11 @@ public class Structure : MonoBehaviour
     protected IEnumerator UpgradeCoroutine()
     {
         isProcessingUpgrade = true;
-        curUpgradeType = EUpgradeType.STRUCTURE;
-        if (myObj.IsSelect)
-            ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
-
-        float elapsedTime = 0f;
-        UpgradeAndConstructProgressPercent = elapsedTime / upgradeDelay;
-        while (UpgradeAndConstructProgressPercent < 1)
+        float buildFinishTime = Time.time + upgradeDelay;
+        while (buildFinishTime > Time.time)
         {
             // ui Ç¥½Ã
-            if (myObj.IsSelect)
-                ArrayHUDUpgradeCommand.Use(EHUDUpgradeCommand.UPDATE_UPGRADE_TIME, elapsedTime / upgradeDelay);
             yield return new WaitForSeconds(0.5f);
-            elapsedTime += 0.5f;
-            UpgradeAndConstructProgressPercent = elapsedTime / upgradeDelay;
         }
         isProcessingUpgrade = false;
         UpgradeComplete();
@@ -102,9 +80,6 @@ public class Structure : MonoBehaviour
 
     protected virtual void UpgradeComplete()
     {
-        curUpgradeType = EUpgradeType.NONE;
-        if(myObj.IsSelect)
-            ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
         ++upgradeLevel;
     }
 
@@ -137,44 +112,26 @@ public class Structure : MonoBehaviour
         StopCoroutine("CheckBuildableCoroutine");
     }
 
-    public void BuildStart(float _buildDelay)
+    public void BuildStart()
     {
         isBuildable = true;
         SetColor();
         IsUnderConstruction = true;
-        if (myObj.IsSelect)
-        {
-            ArrayHUDConstructCommand.Use(EHUDConstructCommand.UPDATE_CONSTRUCT_STRUCTURE, myObj.GetObjectType());
-            ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
-        }
-        UpdateNodeWalkable(false);
         StopCoroutine("CheckBuildableCoroutine");
-        StartCoroutine("BuildStructureCoroutine", _buildDelay);
+        BuildHBeam();
+        UpdateNodeWalkable(false);
     }
 
-    protected IEnumerator BuildStructureCoroutine(float _buildDelay)
+    private void BuildHBeam()
     {
-        float elapsedTime = 0f;
-        UpgradeAndConstructProgressPercent = elapsedTime / _buildDelay;
-        while (UpgradeAndConstructProgressPercent < 1)
-        {
-            if (myObj.IsSelect)
-                ArrayHUDConstructCommand.Use(EHUDConstructCommand.UPDATE_CONSTRUCT_TIME, UpgradeAndConstructProgressPercent);
-            yield return new WaitForSeconds(0.5f);
-            elapsedTime += 0.5f;
-            UpgradeAndConstructProgressPercent = elapsedTime / _buildDelay;
-        }
 
-        BuildComplete();
     }
 
-    protected virtual void BuildComplete()
+    public virtual void BuildComplete()
     {
         IsUnderConstruction = false;
         HideHBeam();
         ShowModel();
-        if (myObj.IsSelect)
-            ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
     }
 
     public void DestroyStructure()
@@ -239,7 +196,7 @@ public class Structure : MonoBehaviour
     [SerializeField]
     protected int myGridY = 1;
     [SerializeField]
-    protected float upgradeDelay = 0f;
+    private float upgradeDelay = 0f;
 
     protected PF_Grid grid = null;
     protected PF_Node curNode = null;
@@ -252,10 +209,6 @@ public class Structure : MonoBehaviour
     protected int myIdx = -1;
     protected int upgradeLevel = 0;
 
-    protected float UpgradeAndConstructProgressPercent = 0f;
-
     protected bool isBuildable = false;
     protected bool isProcessingUpgrade = false;
-    protected EUpgradeType curUpgradeType = EUpgradeType.NONE;
-    protected FriendlyObject myObj = null;
 }

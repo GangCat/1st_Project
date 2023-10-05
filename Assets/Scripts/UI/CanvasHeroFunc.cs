@@ -10,7 +10,7 @@ public class CanvasHeroFunc : CanvasFunc
         btnLaunchNuclear.onClick.AddListener(
             () =>
             {
-                ArrayFuncButtonCommand.Use(EFuncButtonCommand.LAUNCH_NUCLEAR);
+                ArrayUnitButtonCommand.Use(EUnitButtonCommand.LAUNCH_NUCLEAR);
             });
 
         gameObject.SetActive(false);

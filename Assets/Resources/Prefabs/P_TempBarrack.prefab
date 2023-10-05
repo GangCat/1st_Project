@@ -72,10 +72,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myGridX: 6
   myGridY: 6
-  upgradeDelay: 30
-  arrSpawnUnitDelay:
-  - 20
-  - 3
+  upgradeDelay: 5
+  HBeamPrefab: {fileID: 0}
+  spawnUnitDelay:
+  - 2
+  - 1
   - 3
   arrUnitPrefab:
   - {fileID: 186232715040071189, guid: 1a6427e02f043fb49b31dd80f757f371, type: 3}

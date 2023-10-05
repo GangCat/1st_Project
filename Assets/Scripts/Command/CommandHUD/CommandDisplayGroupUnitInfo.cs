@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CommandDisplayGroupUnitInfo : Command
 {
-    public CommandDisplayGroupUnitInfo(CanvasUnitInfo _canvasInfo, CanvasSpawnUnitInfo _canvasSpawn)
+    public CommandDisplayGroupUnitInfo(CanvasUnitInfo _canvasInfo)
     {
         canvasInfo = _canvasInfo;
     }

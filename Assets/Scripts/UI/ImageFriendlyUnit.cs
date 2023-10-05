@@ -3,18 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ImageFriendlyUnit : ImageModel
+public class ImageFriendlyUnit : MonoBehaviour
 {
-    public override void Init()
+    public void Init(ref float _hpPercent)
     {
         myImage = GetComponent<Image>();
         SetActive(false);
+        unitInfo = _hpPercent;
         oriColor = Color.white;
-    }
-
-    public void SetActive(bool _isActive)
-    {
-        gameObject.SetActive(_isActive);
     }
 
     public void updateHpDisplay(float _hpPercent)
@@ -24,5 +20,17 @@ public class ImageFriendlyUnit : ImageModel
         myImage.color = oriColor;
     }
 
+    public void SetActive(bool _isActive)
+    {
+        gameObject.SetActive(_isActive);
+    }
+
+    public void ChangeSprite(Sprite _sprite)
+    {
+        myImage.sprite = _sprite;
+    }
+
     private Color oriColor;
+    private Image myImage = null;
+    private float unitInfo;
 }

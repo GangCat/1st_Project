@@ -10,12 +10,10 @@ public class SingleUnitInfo : MonoBehaviour
         statInfo = GetComponentInChildren<StatusInfo>();
         textInfoUnitName = GetComponentInChildren<TextBase>();
         imageProgressbar = GetComponentInChildren<ImageProgressbarAutoController>();
-        imageModel = GetComponentInChildren<ImageModel>();
 
         textInfoUnitName.Init();
         imageProgressbar.Init();
-        imageModel.Init();
-
+        
         SetActive(false);
     }
 
@@ -37,11 +35,6 @@ public class SingleUnitInfo : MonoBehaviour
         textInfoUnitName.UpdateText(Enum.GetName(typeof(EObjectType), container.objectType));
         statInfo.DisplayInfo();
         imageProgressbar.UpdateHp();
-
-        if (container.unitType.Equals(EUnitType.NONE))
-            imageModel.ChangeSprite(arrOtherSprite[(int)container.objectType - 2]);
-        else
-            imageModel.ChangeSprite(arrFriendlyUnitSprite[(int)container.unitType]);
     }
 
     public void HideDisplay()
@@ -50,14 +43,8 @@ public class SingleUnitInfo : MonoBehaviour
         SetActive(false);
     }
 
-    [SerializeField]
-    private Sprite[] arrOtherSprite = null;
-    [SerializeField]
-    private Sprite[] arrFriendlyUnitSprite = null;
-
     private StatusInfo statInfo = null;
     private TextBase textInfoUnitName = null;
     private UnitInfoContainer container = null;
     private ImageProgressbarAutoController imageProgressbar = null;
-    private ImageModel imageModel = null;
 }

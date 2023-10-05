@@ -16,7 +16,7 @@ public class GroupUnitInfo : MonoBehaviour
         for(int i = 0; i < arrImageUnit.Length; ++i)
         {
             SFriendlyUnitInfo tempInfo = listFriendlyUnitInfo[i];
-            arrImageUnit[i].Init();
+            arrImageUnit[i].Init(ref tempInfo.curHpPercent);
         }
     }
 

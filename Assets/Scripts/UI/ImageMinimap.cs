@@ -38,7 +38,7 @@ public class ImageMinimap : MonoBehaviour
         {
             UpdateTexture(ref tex2d);
             imageMinimap.sprite = Sprite.Create(tex2d, texRect, pivotVec);
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(0.1f);
         }
     }
 

@@ -2,16 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CommandUpdateInfoUI : Command
+public class CommandBuildComplete : Command
 {
-    public CommandUpdateInfoUI(SelectableObjectManager _selMng)
+    public CommandBuildComplete(SelectableObjectManager _selMng)
     {
         selMng = _selMng;
     }
 
     public override void Execute(params object[] _objects)
     {
-        selMng.UpdateInfo();
+        selMng.UpdateFuncButton();
     }
 
     private SelectableObjectManager selMng = null;

@@ -24,12 +24,9 @@ public class ImageProgressbarAutoController : ImageProgressbar
         while (true)
         {
             UpdateLength(container.curHpPercent);
-            yield return new WaitForSeconds(updateRate);
+            yield return new WaitForSeconds(0.1f);
         }
     }
-
-    [SerializeField]
-    private float updateRate = 0.1f;
 
     private UnitInfoContainer container = null;
 }

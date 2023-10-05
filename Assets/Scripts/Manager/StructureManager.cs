@@ -31,7 +31,7 @@ public class StructureManager : MonoBehaviour
         return curStructureObjType;
     }
 
-    public void ShowBluepirnt(EObjectType _structureType)
+    public void ShowBluepirnt(EObjectType _buildingType)
     {
         if (isBlueprint)
         {
@@ -39,7 +39,7 @@ public class StructureManager : MonoBehaviour
             StopAllCoroutines();
         }
 
-        switch (_structureType)
+        switch (_buildingType)
         {
             case EObjectType.TURRET:
                 {
@@ -210,20 +210,7 @@ public class StructureManager : MonoBehaviour
         {
             StopBuildCoroutine();
 
-            Structure newStructure = Instantiate(arrStructurePrefab[(int)curStructureType], curStructure.transform.position, curStructure.transform.rotation).GetComponent<Structure>();
-            Destroy(curStructure.gameObject);
-            newStructure.Init(grid);
-            newStructure.Init(structureIdx);
-            dicStructure.Add(structureIdx, newStructure);
-            ++structureIdx;
-            if (curStructureType.Equals(EStructureType.WALL))
-            {
-                newStructure.SetGrid(curStructure.GridX, curStructure.GridY);
-                newStructure.SetFactor(curStructure.FactorX, curStructure.FactorY);
-            }
-            newStructure.transform.parent = transform;
-            newStructure.BuildStart(buildDelay[(int)curStructureType]);
-            isBlueprint = false;
+            StartCoroutine("BuildStructureCoroutine");
 
             return true;
         }
@@ -236,7 +223,37 @@ public class StructureManager : MonoBehaviour
         StopCoroutine("ShowBlueprint");
     }
 
+    private IEnumerator BuildStructureCoroutine()
+    {
+        Structure newStructure = Instantiate(arrStructurePrefab[(int)curStructureType], curStructure.transform.position, curStructure.transform.rotation).GetComponent<Structure>();
+        Destroy(curStructure.gameObject);
+        newStructure.Init(grid);
+        newStructure.Init(structureIdx);
+        dicStructure.Add(structureIdx, newStructure);
+        ++structureIdx;
+        if (curStructureType.Equals(EStructureType.WALL))
+        {
+            newStructure.SetGrid(curStructure.GridX, curStructure.GridY);
+            newStructure.SetFactor(curStructure.FactorX, curStructure.FactorY);
+        }
+        newStructure.BuildStart();
+        isBlueprint = false;
 
+        float buildFinishTime = Time.time + buildDelay[(int)curStructureType];
+        while (buildFinishTime > Time.time)
+        {
+            // ui Ç¥½Ã
+            yield return new WaitForSeconds(0.5f);
+        }
+
+        if (newStructure != null)
+        {
+            newStructure.BuildComplete();
+            newStructure.transform.parent = transform;
+        }
+
+        ArrayBuildCommand.Use(EMainBaseCommnad.BUILD_COMPLETE);
+    }
 
     #region Ruin
     private void InstantiateRuin(Structure _structure)

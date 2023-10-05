@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Net.NetworkInformation;
 using UnityEngine;
 
 public class DisplayHUDManager : MonoBehaviour
@@ -14,47 +13,22 @@ public class DisplayHUDManager : MonoBehaviour
         canvasWaveInfo = GetComponentInChildren<CanvasWaveInfo>();
         canvasUnitInfo = GetComponentInChildren<CanvasUnitInfo>();
         canvaHeroRessurection = GetComponentInChildren<CanvasHeroRessurection>();
-        canvasSpawnUnitInfo = GetComponentInChildren<CanvasSpawnUnitInfo>();
-        canvasUpgradeInfo = GetComponentInChildren<CanvasUpgradeInfo>();
-        canvasConstructInfo = GetComponentInChildren<CanvasConstructInfo>();
 
         canvasMinimap.Init();
         canvasWaveInfo.Init();
         canvasUnitInfo.Init();
         canvaHeroRessurection.Init();
-        canvasSpawnUnitInfo.Init();
-        canvasUpgradeInfo.Init();
-        canvasConstructInfo.Init();
 
         ArrayHUDCommand.Add(EHUDCommand.INIT_WAVE_TIME, new CommandInitWaveTime(canvasWaveInfo));
         ArrayHUDCommand.Add(EHUDCommand.UPDATE_WAVE_TIME, new CommandUpdateWaveTime(canvasWaveInfo));
 
         ArrayHUDCommand.Add(EHUDCommand.INIT_DISPLAY_GROUP_INFO, new CommandInitDisplayGroupUnitInfo(canvasUnitInfo));
         ArrayHUDCommand.Add(EHUDCommand.INIT_DISPLAY_SINGLE_INFO, new CommandInitDisplaySingleUnitInfo(canvasUnitInfo));
-        ArrayHUDCommand.Add(EHUDCommand.DISPLAY_GROUP_INFO, new CommandDisplayGroupUnitInfo(canvasUnitInfo, canvasSpawnUnitInfo));
-        ArrayHUDCommand.Add(EHUDCommand.DISPLAY_SINGLE_INFO, new CommandDisplaySingleUnitInfo(canvasUnitInfo, canvasSpawnUnitInfo));
+        ArrayHUDCommand.Add(EHUDCommand.DISPLAY_GROUP_INFO, new CommandDisplayGroupUnitInfo(canvasUnitInfo));
+        ArrayHUDCommand.Add(EHUDCommand.DISPLAY_SINGLE_INFO, new CommandDisplaySingleUnitInfo(canvasUnitInfo));
         ArrayHUDCommand.Add(EHUDCommand.HIDE_UNIT_INFO, new CommandHideUnitInfo(canvasUnitInfo));
         ArrayHUDCommand.Add(EHUDCommand.HERO_RESURRECTION_UPDATE, new CommandHeroRessurectionUpdate(canvaHeroRessurection));
         ArrayHUDCommand.Add(EHUDCommand.HERO_RESSURECTION_FINISH, new CommandHeroRessurectionFinish(canvaHeroRessurection));
-        ArrayHUDCommand.Add(EHUDCommand.HIDE_ALL_INFO, new CommandHideAllInfo(canvasUnitInfo, canvasSpawnUnitInfo, canvasUpgradeInfo, canvasConstructInfo));
-
-        ArrayHUDUpgradeCommand.Add(EHUDUpgradeCommand.DISPLAY_UPGRADE_INFO, new CommandDisplayUpgradeInfo(canvasUpgradeInfo));
-        ArrayHUDUpgradeCommand.Add(EHUDUpgradeCommand.UPDATE_UPGRADE_TIME, new CommandUpdateUpgradeTime(canvasUpgradeInfo));
-
-        ArrayHUDSpawnUnitCommand.Add(EHUDSpawnUnitCommand.UPDATE_SPAWN_UNIT_LIST, new CommandUpdateSpawnUnitList(canvasSpawnUnitInfo));
-        ArrayHUDSpawnUnitCommand.Add(EHUDSpawnUnitCommand.UPDATE_SPAWN_UNIT_TIME, new CommandUpdateSpawnUnitTime(canvasSpawnUnitInfo));
-        ArrayHUDSpawnUnitCommand.Add(EHUDSpawnUnitCommand.DISPLAY_SPAWN_UNIT_INFO, new CommandDisplaySpawnUnitInfo(canvasSpawnUnitInfo));
-
-        ArrayHUDConstructCommand.Add(EHUDConstructCommand.DISPLAY_CONSTRUCT_INFO, new CommandDisplayConstructInfo(canvasConstructInfo));
-        ArrayHUDConstructCommand.Add(EHUDConstructCommand.UPDATE_CONSTRUCT_TIME, new CommandUpdateConstructTime(canvasConstructInfo));
-        ArrayHUDConstructCommand.Add(EHUDConstructCommand.UPDATE_CONSTRUCT_STRUCTURE, new CommandUpdateConstructStructure(canvasConstructInfo));
-    }
-
-    public void HideAllInfo()
-    {
-        canvasUnitInfo.HideDisplay();
-        canvasSpawnUnitInfo.HideDisplay();
-        canvasUpgradeInfo.HideDisplay();
     }
 
     public void HeroDead()
@@ -89,7 +63,4 @@ public class DisplayHUDManager : MonoBehaviour
     private CanvasWaveInfo canvasWaveInfo = null;
     private CanvasUnitInfo canvasUnitInfo = null;
     private CanvasHeroRessurection canvaHeroRessurection = null;
-    private CanvasSpawnUnitInfo canvasSpawnUnitInfo = null;
-    private CanvasUpgradeInfo canvasUpgradeInfo = null;
-    private CanvasConstructInfo canvasConstructInfo = null;
 }

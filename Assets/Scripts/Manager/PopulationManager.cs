@@ -80,4 +80,6 @@ public class PopulationManager : MonoBehaviour, IPublisher
     private uint curPopulation = 0;
     [SerializeField]
     private uint[] unitPopulation = null;
+
+    private bool canSpawnUnit = true;
 }

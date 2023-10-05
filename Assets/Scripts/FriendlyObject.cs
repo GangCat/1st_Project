@@ -45,7 +45,6 @@ public class FriendlyObject : SelectableObject, ISubscriber
 
     public EUnitType GetUnitType => unitType;
     public int NodeIdx => nodeIdx;
-    public bool IsSelect => isSelect;
     public void Select(int _listIdx = 0)
     {
         isSelect = true;
@@ -87,7 +86,7 @@ public class FriendlyObject : SelectableObject, ISubscriber
                 ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.DEAD, gameObject, unitType, barrackIdx, this);
                 Broker.UnSubscribe(this, EPublisherType.SELECTABLE_MANAGER);
             }
-            else if (objectType.Equals(EObjectType.UNDER_CONSTRUCT))
+            else if (objectType.Equals(EObjectType.HBEAM))
             {
                 ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.DESTROY_HBEAM, gameObject, unitType, barrackIdx);
             }

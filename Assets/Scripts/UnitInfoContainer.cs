@@ -10,5 +10,4 @@ public class UnitInfoContainer
     public float attDmg = 0f;
     public float attRate = 0f;
     public float attRange = 0f;
-    public EUnitType unitType = EUnitType.NONE;
 }

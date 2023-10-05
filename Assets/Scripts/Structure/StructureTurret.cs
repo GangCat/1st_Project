@@ -16,10 +16,10 @@ public class StructureTurret : Structure
         upgradeRangeCmd = new CommandUpgradeStructureAttRange(selectObj);
     }
 
-    protected override void BuildComplete()
+    public override void BuildComplete()
     {
         base.BuildComplete();
-        selectObj.Hold();
+        GetComponent<FriendlyObject>().Hold();
     }
 
     protected override void UpgradeComplete()
