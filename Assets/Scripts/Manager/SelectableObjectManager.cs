@@ -331,8 +331,11 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
         unitInfoContainer.attRange = _obj.AttRange;
         unitInfoContainer.attRate = _obj.AttRate;
 
-        if(!_obj.GetObjectType().Equals(EObjectType.ENEMY_UNIT))
+        if (!_obj.GetObjectType().Equals(EObjectType.ENEMY_UNIT))
+        {
+            unitInfoContainer.unitType = _obj.GetComponent<FriendlyObject>().GetUnitType;
             _obj.GetComponent<FriendlyObject>().Select();
+        }
     }
 
     public void UpdateFuncButton()
