@@ -22,6 +22,12 @@ public class ImageMinimap : MonoBehaviour, IPointerClickHandler, IMinimapSubject
         StartCoroutine("UpdateMinimap");
     }
 
+    public void Init(float _worldSizeX, float _worldSizeY)
+    {
+        worldSizeX = _worldSizeX;
+        worldSizeY = _worldSizeY;
+    }
+
     public void AddStructureNodeToMinimap(PF_Node _node)
     {
         listStructureNode.Add(_node);
@@ -54,7 +60,6 @@ public class ImageMinimap : MonoBehaviour, IPointerClickHandler, IMinimapSubject
 
         PF_Node tempNode = null;
 
-
         foreach (PF_Node node in SelectableObjectManager.DicNodeUnderFriendlyUnit.Values)
             tex2d.SetPixel(node.gridX, node.gridY, Color.green);
 
@@ -76,7 +81,7 @@ public class ImageMinimap : MonoBehaviour, IPointerClickHandler, IMinimapSubject
 
         // 마우스 클릭 위치를 RectTransform의 로컬 좌표계로 변환합니다.
         Vector2 localMousePosition = Vector2.zero;
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(rectTransform, eventData.position, eventData.pressEventCamera, out localMousePosition);
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(rectTransform, eventData.position, null, out localMousePosition);
 
         // 미니맵의 크기의 반을 계산합니다.
         float halfWidth = rectTransform.rect.width * 0.5f;
@@ -91,12 +96,12 @@ public class ImageMinimap : MonoBehaviour, IPointerClickHandler, IMinimapSubject
         if (eventData.button.Equals(PointerEventData.InputButton.Left))
         {
             foreach (IMinimapObserver ob in listObserver)
-                ob.GetCameraTargetPos(new Vector3(relativeX * WorldWidth, 0f, relativeY * WorldHeight));
+                ob.GetCameraTargetPos(new Vector3(relativeX * worldSizeX, 0f, relativeY * worldSizeY));
         }
         else if (eventData.button.Equals(PointerEventData.InputButton.Right))
         {
             foreach (IMinimapObserver ob in listObserver)
-                ob.GetUnitTargetPos(new Vector3(relativeX * WorldWidth, 0f, relativeY * WorldHeight));
+                ob.GetUnitTargetPos(new Vector3(relativeX * worldSizeX, 0f, relativeY * worldSizeY));
         }
     }
 
@@ -120,8 +125,6 @@ public class ImageMinimap : MonoBehaviour, IPointerClickHandler, IMinimapSubject
     private int texW = 0;
     private List<IMinimapObserver> listObserver = new List<IMinimapObserver>();
 
-    [SerializeField]
-    private float WorldWidth = 100f; // 미니맵에 표시할 월드의 가로길이
-    [SerializeField]
-    private float WorldHeight = 100f; // 미니맵에 표시할 월드의 세로길이
+    private float worldSizeX = 0f; // 미니맵에 표시할 월드의 가로길이
+    private float worldSizeY = 0f; // 미니맵에 표시할 월드의 세로길이
 }

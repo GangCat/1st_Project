@@ -49,7 +49,7 @@ public class GameManager : MonoBehaviour
 
     private void InitManagers()
     {
-        pathMng.Init();
+        pathMng.Init(worldSizeX, worldSizeY);
         grid = pathMng.GetComponent<PF_Grid>();
         inputMng.Init(
             MoveUnitByPicking,
@@ -132,7 +132,9 @@ public class GameManager : MonoBehaviour
 
     private void RegistObserver()
     {
-        FindFirstObjectByType<ImageMinimap>().RegisterPauseObserver(inputMng.GetComponent<IMinimapObserver>());
+        ImageMinimap minimap = FindFirstObjectByType<ImageMinimap>();
+        minimap.Init(worldSizeX, worldSizeY);
+        minimap.RegisterPauseObserver(inputMng.GetComponent<IMinimapObserver>());
     }
 
     private StructureMainBase InitMainBase()
@@ -225,4 +227,9 @@ public class GameManager : MonoBehaviour
 
     private PF_Grid grid = null;
     private Transform mainBaseTr = null;
+
+    [SerializeField]
+    private float worldSizeX = 100f; // 미니맵에 표시할 월드의 가로길이
+    [SerializeField]
+    private float worldSizeY = 100f; // 미니맵에 표시할 월드의 세로길이
 }

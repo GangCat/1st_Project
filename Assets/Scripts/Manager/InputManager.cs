@@ -288,7 +288,6 @@ public class InputManager : MonoBehaviour, IMinimapObserver
     private void ZoomCamera()
     {
         ArrayCameraMoveCommand.Use(ECameraCommand.ZOOM, Input.GetAxisRaw("Mouse ScrollWheel"));
-        //cameraZoomCallback?.Invoke(Input.GetAxisRaw("Mouse ScrollWheel"));
     }
 
     private void MoveCamera()
@@ -298,7 +297,6 @@ public class InputManager : MonoBehaviour, IMinimapObserver
             moveCameraWithObjectCallback?.Invoke();
         }
         else if (Input.GetAxisRaw("Horizontal Arrow").Equals(0) && Input.GetAxisRaw("Vertical Arrow").Equals(0))
-            //moveCameraWithMouseCallback?.Invoke(Input.mousePosition);
             ArrayCameraMoveCommand.Use(ECameraCommand.MOVE_WITH_MOUSE, Input.mousePosition);
         else
             ArrayCameraMoveCommand.Use(

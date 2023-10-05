@@ -5,11 +5,11 @@ using System;
 
 public class PF_PathRequestManager : MonoBehaviour
 {
-    public void Init()
+    public void Init(float _gridWorldSizeX, float _gridWorldSizeY)
     {
         instance = this;
         pathFinding = GetComponent<PF_PathFinding>();
-        pathFinding.Init(FinishedProcessingPath);
+        pathFinding.Init(FinishedProcessingPath, _gridWorldSizeX, _gridWorldSizeY);
     }
 
     public static void RequestPath(Vector3 _pathStart, Vector3 _pathEnd, Action<PF_Node[], bool> _callback)

@@ -8360,6 +8360,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d10b5ebc404c592488993edce2d018af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  worldSizeX: 128
+  worldSizeY: 128
 --- !u!1 &936201668
 GameObject:
   m_ObjectHideFlags: 0
@@ -14399,7 +14401,6 @@ MonoBehaviour:
   unWalkableMask:
     serializedVersion: 2
     m_Bits: 1536
-  gridWorldSize: {x: 128, y: 128}
   nodeRadius: 0.25
 --- !u!4 &1446206864
 Transform:
@@ -20306,8 +20307,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f222c14814e6b2847b2052011b1d2019, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WorldWidth: 128
-  WorldHeight: 128
 --- !u!1 &2139919824
 GameObject:
   m_ObjectHideFlags: 0
