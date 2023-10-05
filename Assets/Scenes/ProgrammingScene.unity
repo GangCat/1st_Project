@@ -214,7 +214,7 @@ MeshRenderer:
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1d75466fd8dff134695cce2e521ab557, type: 2}
+  - {fileID: 239378781582670930, guid: 582063725d9bb2143ace30d8117f9c30, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -18823,7 +18823,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   arrUnitSprite:
-  - {fileID: 21300000, guid: 8a6560bf1afc4ef45be16ab7065f42fc, type: 3}
   - {fileID: 21300000, guid: 8d3630a01f16f3742a0e79087043a7bd, type: 3}
   - {fileID: 21300000, guid: 4e84e9ea7acb59640bd92102e0a3d3de, type: 3}
 --- !u!1 &2090531649

@@ -199,7 +199,6 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
         if (tempListSelectableObject.Count < 1)
         {
             selectObjectCallback?.Invoke(EObjectType.NONE);
-            ArrayHUDCommand.Use(EHUDCommand.HIDE_UNIT_INFO);
             return;
         }
 
@@ -261,10 +260,21 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
         {
             InputOtherUnitInfo(tempObj);
             listSelectedFriendlyObject.Add(tempObj.GetComponent<FriendlyObject>());
-            if (tempObj.GetComponent<Structure>().IsUnderConstruction)
+            Structure StructureInList = tempObj.GetComponent<Structure>();
+            if (StructureInList.IsUnderConstruction)
                 selectObjectCallback?.Invoke(EObjectType.HBEAM);
-            else if (tempObj.GetComponent<Structure>().IsProcessingUpgrade)
+            else if (StructureInList.IsProcessingUpgrade)
                 selectObjectCallback?.Invoke(EObjectType.PROCESSING_UPGRADE_STRUCTURE);
+            else if (tempObj.GetObjectType().Equals(EObjectType.BARRACK))
+            {
+                selectObjectCallback?.Invoke(EObjectType.BARRACK);
+                if (tempObj.GetComponent<StructureBarrack>().IsProcessingSpawnUnit)
+                {
+                    ArrayHUDCommand.Use(EHUDCommand.DISPLAY_SPAWN_UNIT_INFO);
+                    tempListSelectableObject.Clear();
+                    return;
+                }
+            }
             else
                 selectObjectCallback?.Invoke(listSelectedFriendlyObject[0].GetObjectType());
             ArrayHUDCommand.Use(EHUDCommand.DISPLAY_SINGLE_INFO);

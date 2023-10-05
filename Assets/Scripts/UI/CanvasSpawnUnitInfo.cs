@@ -32,16 +32,15 @@ public class CanvasSpawnUnitInfo : MonoBehaviour
         for (; i < curQueueCnt; ++i)
             arrImageModel[i].ChangeSprite(arrImageModel[i + 1].GetCurSprite());
         for (; i < arrImageModel.Length; ++i)
-            //arrImageModel[i].ChangeSprite(arrUnitSprite[0]);
             arrImageModel[i].Clear();
     }
 
-    private void SetActive(bool _isActive)
+    public void SetActive(bool _isActive)
     {
         gameObject.SetActive(_isActive);
     }
 
-    [Header("-None/Melee/Ranged/Rocket")]
+    [Header("-Melee/Ranged/Rocket")]
     [SerializeField]
     private Sprite[] arrUnitSprite = null;
 

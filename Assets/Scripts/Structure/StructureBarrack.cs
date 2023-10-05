@@ -18,6 +18,8 @@ public class StructureBarrack : Structure, ISubscriber
         Subscribe();
     }
 
+    public bool IsProcessingSpawnUnit => isProcessingSpawnUnit;
+
     protected override void UpgradeComplete()
     {
         base.UpgradeComplete();
