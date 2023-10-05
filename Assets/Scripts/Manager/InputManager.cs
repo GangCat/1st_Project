@@ -1,17 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Burst.CompilerServices;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class InputManager : MonoBehaviour
+public class InputManager : MonoBehaviour, IMinimapObserver
 {
     public void Init(
         VoidVec3Delegate _pickingCallback,
         VoidTransformDelegate _PickingObjectCallback,
-        VoidFloatDelegate _cameraZoomCallback,
-        VoidVec2Delegate _moveCameraWithMouseCallback,
-        VoidVec2Delegate _moveCameraWithKeyCallback,
         VoidTemplateDelegate<SelectableObject> _selectObjectCallback,
         VoidTemplateDelegate<SelectableObject> _unSelectObjectCallback,
         VoidVoidDelegate _selectFinishCallback,
@@ -21,9 +17,6 @@ public class InputManager : MonoBehaviour
     {
         pickingCallback = _pickingCallback;
         PickingObjectCallback = _PickingObjectCallback;
-        cameraZoomCallback = _cameraZoomCallback;
-        moveCameraWithMouseCallback = _moveCameraWithMouseCallback;
-        moveCameraWithKeyCallback = _moveCameraWithKeyCallback;
         selectFinishCallback = _selectFinishCallback;
         moveCameraWithObjectCallback = _moveCameraWithObjectCallback;
         selectObjectCallback = _selectObjectCallback;
@@ -32,18 +25,17 @@ public class InputManager : MonoBehaviour
 
         selectArea = GetComponentInChildren<SelectArea>();
         selectArea.Init(_selectObjectCallback, _unSelectObjectCallback);
-
     }
-    public bool IsBuildOperation 
+    public bool IsBuildOperation
     {
         get => isBuildOperation;
         set
         {
             ClearCurFunc();
             isBuildOperation = value;
-        } 
+        }
     }
-    
+
     public Vector3 GetMousePos()
     {
         Vector3 mousePos = Input.mousePosition;
@@ -261,10 +253,10 @@ public class InputManager : MonoBehaviour
     private void DragOperateWithMouseClick()
     {
         RaycastHit hit;
-        
+
         if (Functions.Picking(selectableLayer, out hit))
         {
-            if(hit.transform.GetComponent<SelectableObject>())
+            if (hit.transform.GetComponent<SelectableObject>())
                 selectObjectCallback?.Invoke(hit.transform.GetComponent<SelectableObject>());
         }
 
@@ -285,7 +277,7 @@ public class InputManager : MonoBehaviour
 
             Functions.Picking("StageFloor", floorLayer, ref dragEndPos);
             selectArea.SetLocalScale(Quaternion.Euler(0f, -45f, 0f) * (dragEndPos - dragStartPos));
-            
+
             yield return null;
         }
 
@@ -295,7 +287,8 @@ public class InputManager : MonoBehaviour
 
     private void ZoomCamera()
     {
-        cameraZoomCallback?.Invoke(Input.GetAxisRaw("Mouse ScrollWheel"));
+        ArrayCameraMoveCommand.Use(ECameraCommand.ZOOM, Input.GetAxisRaw("Mouse ScrollWheel"));
+        //cameraZoomCallback?.Invoke(Input.GetAxisRaw("Mouse ScrollWheel"));
     }
 
     private void MoveCamera()
@@ -305,18 +298,24 @@ public class InputManager : MonoBehaviour
             moveCameraWithObjectCallback?.Invoke();
         }
         else if (Input.GetAxisRaw("Horizontal Arrow").Equals(0) && Input.GetAxisRaw("Vertical Arrow").Equals(0))
-            moveCameraWithMouseCallback?.Invoke(Input.mousePosition);
+            //moveCameraWithMouseCallback?.Invoke(Input.mousePosition);
+            ArrayCameraMoveCommand.Use(ECameraCommand.MOVE_WITH_MOUSE, Input.mousePosition);
         else
-            moveCameraWithKeyCallback?.Invoke
-                (
-                new Vector2
-                    (
-                    Input.GetAxisRaw("Horizontal Arrow"),
-                    Input.GetAxisRaw("Vertical Arrow")
-                    )
+            ArrayCameraMoveCommand.Use(
+                ECameraCommand.MOVE_WITH_KEY,
+                new Vector2(Input.GetAxisRaw("Horizontal Arrow"), Input.GetAxisRaw("Vertical Arrow"))
                 );
     }
 
+    public void GetUnitTargetPos(Vector3 _pos)
+    {
+
+    }
+
+    public void GetCameraTargetPos(Vector3 _pos)
+    {
+        ArrayCameraMoveCommand.Use(ECameraCommand.WARP_WITH_POS, _pos);
+    }
 
     [SerializeField]
     private GameObject pickPosPrefab = null;
@@ -347,9 +346,6 @@ public class InputManager : MonoBehaviour
 
     private VoidVec3Delegate pickingCallback = null;
     private VoidTransformDelegate PickingObjectCallback = null;
-    private VoidFloatDelegate cameraZoomCallback = null;
-    private VoidVec2Delegate moveCameraWithMouseCallback = null;
-    private VoidVec2Delegate moveCameraWithKeyCallback = null;
     private VoidVoidDelegate selectFinishCallback = null;
     private VoidVoidDelegate moveCameraWithObjectCallback = null;
     private VoidTemplateDelegate<SelectableObject> selectObjectCallback = null;

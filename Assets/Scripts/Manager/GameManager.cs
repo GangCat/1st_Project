@@ -6,18 +6,18 @@ public class GameManager : MonoBehaviour
 {
     private void Awake()
     {
-        inputMng = FindAnyObjectByType<InputManager>();
-        cameraMng = FindAnyObjectByType<CameraManager>();
-        selectMng = FindAnyObjectByType<SelectableObjectManager>();
-        uiMng = FindAnyObjectByType<UIManager>();
-        structureMng = FindAnyObjectByType<StructureManager>();
-        pathMng = FindAnyObjectByType<PF_PathRequestManager>();
-        enemyMng = FindAnyObjectByType<EnemyManager>();
-        currencyMng = FindAnyObjectByType<CurrencyManager>();
-        populationMng = FindAnyObjectByType<PopulationManager>();
-        heroMng = FindAnyObjectByType<HeroUnitManager>();
+        inputMng = FindFirstObjectByType<InputManager>();
+        cameraMng = FindFirstObjectByType<CameraManager>();
+        selectMng = FindFirstObjectByType<SelectableObjectManager>();
+        uiMng = FindFirstObjectByType<UIManager>();
+        structureMng = FindFirstObjectByType<StructureManager>();
+        pathMng = FindFirstObjectByType<PF_PathRequestManager>();
+        enemyMng = FindFirstObjectByType<EnemyManager>();
+        currencyMng = FindFirstObjectByType<CurrencyManager>();
+        populationMng = FindFirstObjectByType<PopulationManager>();
+        heroMng = FindFirstObjectByType<HeroUnitManager>();
 
-        mainBaseTr = FindAnyObjectByType<StructureMainBase>().transform;
+        mainBaseTr = FindFirstObjectByType<StructureMainBase>().transform;
     }
 
     private void Start()
@@ -44,6 +44,7 @@ public class GameManager : MonoBehaviour
 
         InitCommandList();
         InitManagers();
+        RegistObserver();
     }
 
     private void InitManagers()
@@ -53,9 +54,6 @@ public class GameManager : MonoBehaviour
         inputMng.Init(
             MoveUnitByPicking,
             MoveUnitByPickingObject,
-            ZoomCamera,
-            MoveCameraWithMouse,
-            MoveCameraWithKey,
             AddSelectedObject,
             RemoveSelectedObject,
             SelectFinish,
@@ -63,7 +61,7 @@ public class GameManager : MonoBehaviour
             AttackMove,
             PatrolMove);
         cameraMng.Init();
-        structureMng.Init(grid, FindAnyObjectByType<StructureMainBase>());
+        structureMng.Init(grid, FindFirstObjectByType<StructureMainBase>());
 
         uiMng.Init();
         selectMng.Init(UnitSelect, grid);
@@ -71,7 +69,7 @@ public class GameManager : MonoBehaviour
         currencyMng.Init();
         populationMng.Init();
 
-        heroMng.Init(FindAnyObjectByType<UnitHero>());
+        heroMng.Init(FindFirstObjectByType<UnitHero>());
         InitMainBase();
     }
 
@@ -130,6 +128,11 @@ public class GameManager : MonoBehaviour
         ArrayPopulationCommand.Add(EPopulationCommand.INCREASE_CUR_POPULATION, new CommandIncreaseCurPopulation(populationMng));
         ArrayPopulationCommand.Add(EPopulationCommand.UPGRADE_MAX_POPULATION, new CommandUpgradePopulation(populationMng, currencyMng, selectMng));
         ArrayPopulationCommand.Add(EPopulationCommand.UPGRADE_POPULATION_COMPLETE, new CommandUpgradePopulationComplete(populationMng));
+    }
+
+    private void RegistObserver()
+    {
+        FindFirstObjectByType<ImageMinimap>().RegisterPauseObserver(inputMng.GetComponent<IMinimapObserver>());
     }
 
     private StructureMainBase InitMainBase()
