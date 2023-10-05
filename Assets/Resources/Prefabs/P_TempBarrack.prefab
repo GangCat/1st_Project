@@ -73,8 +73,7 @@ MonoBehaviour:
   myGridX: 6
   myGridY: 6
   upgradeDelay: 5
-  HBeamPrefab: {fileID: 0}
-  spawnUnitDelay:
+  arrSpawnUnitDelay:
   - 2
   - 1
   - 3

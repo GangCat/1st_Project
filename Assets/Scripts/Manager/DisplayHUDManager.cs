@@ -33,6 +33,7 @@ public class DisplayHUDManager : MonoBehaviour
         ArrayHUDCommand.Add(EHUDCommand.HERO_RESSURECTION_FINISH, new CommandHeroRessurectionFinish(canvaHeroRessurection));
         ArrayHUDCommand.Add(EHUDCommand.FINISH_SPAWN_UNIT, new CommandFinishSpawnUnit(canvasSpawnUnitInfo));
         ArrayHUDCommand.Add(EHUDCommand.DISPLAY_SPAWN_UNIT_INFO, new CommandDisplaySpawnUnitInfo(canvasSpawnUnitInfo));
+        ArrayHUDCommand.Add(EHUDCommand.UPDATE_SPAWN_UNIT_PROGRESS, new CommandUpdateSpawnUnitProgress(canvasSpawnUnitInfo));
     }
 
     public void SpawnUnit(EUnitType _type)

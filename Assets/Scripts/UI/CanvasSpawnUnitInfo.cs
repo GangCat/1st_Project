@@ -9,6 +9,7 @@ public class CanvasSpawnUnitInfo : MonoBehaviour
         arrImageModel = GetComponentsInChildren<ImageModelSpawnQueue>();
         foreach (ImageModelSpawnQueue image in arrImageModel)
             image.Init();
+        imageSpawnProgressbar.Init();
         SetActive(false);
     }
 
@@ -35,6 +36,11 @@ public class CanvasSpawnUnitInfo : MonoBehaviour
             arrImageModel[i].Clear();
     }
 
+    public void Updateprogress(float _progressPercent)
+    {
+        imageSpawnProgressbar.UpdateLength(_progressPercent);
+    }
+
     public void SetActive(bool _isActive)
     {
         gameObject.SetActive(_isActive);
@@ -43,6 +49,8 @@ public class CanvasSpawnUnitInfo : MonoBehaviour
     [Header("-Melee/Ranged/Rocket")]
     [SerializeField]
     private Sprite[] arrUnitSprite = null;
+    [SerializeField]
+    private ImageProgressbar imageSpawnProgressbar = null;
 
     private ImageModelSpawnQueue[] arrImageModel = null;
     private int curQueueCnt = 0;

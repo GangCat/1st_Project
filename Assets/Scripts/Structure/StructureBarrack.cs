@@ -9,7 +9,9 @@ public class StructureBarrack : Structure, ISubscriber
         base.Init(_structureIdx);
         spawnPoint = transform.position;
         rallyPoint = spawnPoint;
+        listUnit = new List<EUnitType>();
         arrMemoryPool = new MemoryPool[arrUnitPrefab.Length];
+
         upgradeHpCmd = new CommandUpgradeStructureHP(GetComponent<StatusHp>());
 
         for (int i = 0; i < arrUnitPrefab.Length; ++i)
@@ -73,10 +75,11 @@ public class StructureBarrack : Structure, ISubscriber
     private IEnumerator SpawnUnitCoroutine(EUnitType _unitType)
     {
         float elapsedTime = 0f;
+        float spawnUnitDelay = arrSpawnUnitDelay[(int)_unitType];
 
-        while (elapsedTime < spawnUnitDelay[(int)_unitType])
+        while (elapsedTime < spawnUnitDelay)
         {
-            // elapsedTime으로 그 게이지 바 표시하기
+            ArrayHUDCommand.Use(EHUDCommand.UPDATE_SPAWN_UNIT_PROGRESS, elapsedTime / spawnUnitDelay);
             yield return new WaitForSeconds(0.5f);
             elapsedTime += 0.5f;
         }
@@ -221,11 +224,11 @@ public class StructureBarrack : Structure, ISubscriber
         }
     }
 
-    [Header("-Melee(temp), Range, Rocket(temp)")]
+    [Header("-Melee, Range, Rocket(temp)")]
     [SerializeField]
-    private float[] spawnUnitDelay = new float[(int)EUnitType.LENGTH];
+    private float[] arrSpawnUnitDelay = null;
     [SerializeField]
-    private GameObject[] arrUnitPrefab = new GameObject[(int)EUnitType.LENGTH];
+    private GameObject[] arrUnitPrefab = null;
 
     [Header("-Upgrade Attribute")]
     [SerializeField]
@@ -239,7 +242,7 @@ public class StructureBarrack : Structure, ISubscriber
     private Vector3 spawnPoint = Vector3.zero;
     private Vector3 rallyPoint = Vector3.zero;
     private Transform rallyTr = null;
-    private List<EUnitType> listUnit = new List<EUnitType>();
+    private List<EUnitType> listUnit = null;
 
     private MemoryPool[] arrMemoryPool = null;
 }
