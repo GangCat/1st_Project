@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
         currencyMng = FindAnyObjectByType<CurrencyManager>();
         populationMng = FindAnyObjectByType<PopulationManager>();
         heroMng = FindAnyObjectByType<HeroUnitManager>();
+        spawnMng = FindAnyObjectByType<SpawnManager>();
 
         mainBaseTr = FindAnyObjectByType<StructureMainBase>().transform;
     }
@@ -71,7 +72,11 @@ public class GameManager : MonoBehaviour
         currencyMng.Init();
         populationMng.Init();
 
-        heroMng.Init(FindAnyObjectByType<UnitHero>());
+        GameObject spawnPlayer = spawnMng.Init();
+        
+        // heroMng.Init(FindAnyObjectByType<UnitHero>());
+        heroMng.Init(spawnPlayer.GetComponent<UnitHero>());
+        
         InitMainBase();
     }
 
@@ -220,6 +225,7 @@ public class GameManager : MonoBehaviour
     private CurrencyManager currencyMng = null;
     private PopulationManager populationMng = null;
     private HeroUnitManager heroMng = null;
+    private SpawnManager spawnMng = null;
 
     private PF_Grid grid = null;
     private Transform mainBaseTr = null;
