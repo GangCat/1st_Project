@@ -62,6 +62,10 @@ public class StructureBarrack : Structure, ISubscriber
             EUnitType unitType = listUnit[0];
             StartCoroutine("SpawnUnitCoroutine", unitType);
         }
+        else if(listUnit.Count < 1)
+        {
+            ArrayHUDCommand.Use(EHUDCommand.DISPLAY_SINGLE_INFO);
+        }
     }
 
     private IEnumerator SpawnUnitCoroutine(EUnitType _unitType)
@@ -91,6 +95,7 @@ public class StructureBarrack : Structure, ISubscriber
 
         listUnit.RemoveAt(0);
         ArrayPopulationCommand.Use(EPopulationCommand.INCREASE_CUR_POPULATION, _unitType);
+        ArrayHUDCommand.Use(EHUDCommand.FINISH_SPAWN_UNIT);
         RequestSpawnUnit();
     }
 

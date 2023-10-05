@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class CommandSpawnUnit : Command
 {
-    public CommandSpawnUnit(SelectableObjectManager _selMng, CurrencyManager _curMng)
+    public CommandSpawnUnit(SelectableObjectManager _selMng, CurrencyManager _curMng, UIManager _uiMng)
     {
         selMng = _selMng;
         curMng = _curMng;
+        uiMng = _uiMng;
     }
 
     public override void Execute(params object[] _objects)
@@ -17,6 +18,8 @@ public class CommandSpawnUnit : Command
         {
             selMng.SpawnUnit(tempType);
             curMng.SpawnUnit(tempType);
+            ArrayHUDCommand.Use(EHUDCommand.HIDE_UNIT_INFO);
+            uiMng.SpawnUnit(tempType);
         }
         else
             Debug.Log("fail");
@@ -24,4 +27,5 @@ public class CommandSpawnUnit : Command
 
     private SelectableObjectManager selMng = null;
     private CurrencyManager curMng = null;
+    private UIManager uiMng = null;
 }

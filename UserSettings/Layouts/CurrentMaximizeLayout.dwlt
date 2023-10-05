@@ -26,7 +26,7 @@ MonoBehaviour:
   m_MinSize: {x: 400, y: 100}
   m_MaxSize: {x: 32384, y: 16192}
   vertical: 0
-  controlID: 4926
+  controlID: 18360
 --- !u!114 &2
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -150,7 +150,7 @@ MonoBehaviour:
   m_MinSize: {x: 100, y: 100}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
-  controlID: 4927
+  controlID: 18361
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -568,14 +568,14 @@ MonoBehaviour:
   m_OverrideSceneCullingMask: 6917529027641081856
   m_SceneIsLit: 1
   m_SceneLighting: 1
-  m_2DMode: 0
+  m_2DMode: 1
   m_isRotationLocked: 0
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 416.90793, y: 244.34058, z: 9.951802}
+    m_Target: {x: 975.6639, y: 141.42622, z: -84.98328}
     speed: 2
-    m_Value: {x: 416.90793, y: 244.34058, z: 9.951802}
+    m_Value: {x: 975.6639, y: 141.42622, z: -84.98328}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -621,17 +621,17 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: -0.3988342, y: -0.06402054, z: 0.027925195, w: -0.91436}
+    m_Target: {x: 0, y: 0, z: 0, w: 1}
     speed: 2
-    m_Value: {x: -0.3973767, y: -0.06680689, z: 0.029021375, w: -0.91476035}
+    m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 99.62429
+    m_Target: 378.3674
     speed: 2
-    m_Value: 99.624275
+    m_Value: 378.3674
   m_Ortho:
-    m_Target: 0
+    m_Target: 1
     speed: 2
-    m_Value: 0
+    m_Value: 1
   m_CameraSettings:
     m_Speed: 1
     m_SpeedNormalized: 0.5
@@ -742,9 +742,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 3a790000
-      m_LastClickedID: 31034
-      m_ExpandedIDs: ba9effff2efbffffe4750000147600001c7700008677000038780000e8790000447a0000787a0000
+      m_SelectedIDs: 5626ffff
+      m_LastClickedID: -55722
+      m_ExpandedIDs: 9c61ffff3266ffffba9effff2efbffff4a750000e47500001c77000086770000e8790000447a0000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -984,8 +984,8 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 3a790000
-    m_LastClickedInstanceID: 31034
+    m_SelectedInstanceIDs: 5626ffff
+    m_LastClickedInstanceID: -55722
     m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs: c62300008aea0000887a00003036000050c60000f8a20000
     m_RenameOverlay:

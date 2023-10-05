@@ -12,6 +12,11 @@ public class UIManager : MonoBehaviour
         displayHUDMng.Init();
     }
 
+    public void SpawnUnit(EUnitType _type)
+    {
+        displayHUDMng.SpawnUnit(_type);
+    }
+
     public void HeroDead()
     {
         displayHUDMng.HeroDead();

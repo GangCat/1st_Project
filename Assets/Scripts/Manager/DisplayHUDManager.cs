@@ -13,11 +13,13 @@ public class DisplayHUDManager : MonoBehaviour
         canvasWaveInfo = GetComponentInChildren<CanvasWaveInfo>();
         canvasUnitInfo = GetComponentInChildren<CanvasUnitInfo>();
         canvaHeroRessurection = GetComponentInChildren<CanvasHeroRessurection>();
+        canvasSpawnUnitInfo = GetComponentInChildren<CanvasSpawnUnitInfo>();
 
         canvasMinimap.Init();
         canvasWaveInfo.Init();
         canvasUnitInfo.Init();
         canvaHeroRessurection.Init();
+        canvasSpawnUnitInfo.Init();
 
         ArrayHUDCommand.Add(EHUDCommand.INIT_WAVE_TIME, new CommandInitWaveTime(canvasWaveInfo));
         ArrayHUDCommand.Add(EHUDCommand.UPDATE_WAVE_TIME, new CommandUpdateWaveTime(canvasWaveInfo));
@@ -29,6 +31,12 @@ public class DisplayHUDManager : MonoBehaviour
         ArrayHUDCommand.Add(EHUDCommand.HIDE_UNIT_INFO, new CommandHideUnitInfo(canvasUnitInfo));
         ArrayHUDCommand.Add(EHUDCommand.HERO_RESURRECTION_UPDATE, new CommandHeroRessurectionUpdate(canvaHeroRessurection));
         ArrayHUDCommand.Add(EHUDCommand.HERO_RESSURECTION_FINISH, new CommandHeroRessurectionFinish(canvaHeroRessurection));
+        ArrayHUDCommand.Add(EHUDCommand.FINISH_SPAWN_UNIT, new CommandFinishSpawnUnit(canvasSpawnUnitInfo));
+    }
+
+    public void SpawnUnit(EUnitType _type)
+    {
+        canvasSpawnUnitInfo.AddSpawnQueue(_type);
     }
 
     public void HeroDead()
@@ -63,4 +71,5 @@ public class DisplayHUDManager : MonoBehaviour
     private CanvasWaveInfo canvasWaveInfo = null;
     private CanvasUnitInfo canvasUnitInfo = null;
     private CanvasHeroRessurection canvaHeroRessurection = null;
+    private CanvasSpawnUnitInfo canvasSpawnUnitInfo = null;
 }
