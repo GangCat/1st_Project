@@ -9,7 +9,7 @@ public class CanvasSpawnUnitInfo : MonoBehaviour
         arrImageModel = GetComponentsInChildren<ImageModelSpawnQueue>();
         foreach (ImageModelSpawnQueue image in arrImageModel)
             image.Init();
-        imageSpawnProgressbar.Init();
+        imageProgressbar.Init();
         SetActive(false);
     }
 
@@ -23,32 +23,20 @@ public class CanvasSpawnUnitInfo : MonoBehaviour
         SetActive(true);
     }
 
-    public void AddSpawnQueue(EUnitType _unitType)
+    public void UpdateSpawnList(List<EUnitType> _listUnit)
     {
-        SetActive(true);
-        arrImageModel[curQueueCnt].ChangeSprite(arrUnitSprite[(int)_unitType]);
-        ++curQueueCnt;
-    }
-
-    public void SpawnFinish()
-    {
-        --curQueueCnt;
-        if(curQueueCnt < 1)
-        {
-            SetActive(false);
-            return;
-        }
-
         int i = 0;
-        for (; i < curQueueCnt; ++i)
-            arrImageModel[i].ChangeSprite(arrImageModel[i + 1].GetCurSprite());
-        for (; i < arrImageModel.Length; ++i)
+
+        for (; i < _listUnit.Count; ++i)
+            arrImageModel[i].ChangeSprite(arrUnitSprite[(int)_listUnit[i]]);
+
+        for(; i < arrImageModel.Length; ++i)
             arrImageModel[i].Clear();
     }
 
-    public void Updateprogress(float _progressPercent)
+    public void UpdateTime(float _percent)
     {
-        imageSpawnProgressbar.UpdateLength(_progressPercent);
+        imageProgressbar.UpdateLength(_percent);
     }
 
     private void SetActive(bool _isActive)
@@ -60,8 +48,7 @@ public class CanvasSpawnUnitInfo : MonoBehaviour
     [SerializeField]
     private Sprite[] arrUnitSprite = null;
     [SerializeField]
-    private ImageProgressbar imageSpawnProgressbar = null;
+    private ImageProgressbar imageProgressbar = null;
 
     private ImageModelSpawnQueue[] arrImageModel = null;
-    private int curQueueCnt = 0;
 }

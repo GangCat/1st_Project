@@ -125,17 +125,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
             ++i;
         }
 
-        //foreach (FriendlyObject obj in listSelectedFriendlyObject)
-        //{
-        //    if (obj.Equals(_removeObj))
-        //    {
-        //        obj.unSelect();
-        //        listSelectedFriendlyObject.Remove(obj);
-        //        break;
-        //    }
-        //}
-
-        UpdateFuncButton();
+        UpdateInfo();
     }
 
     public void InUnit(FriendlyObject _friObj)
@@ -194,7 +184,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
         foreach (FriendlyObject obj in listSelectedFriendlyObject)
             obj.unSelect();
 
-        ArrayHUDCommand.Use(EHUDCommand.HIDE_UNIT_INFO);
+        ArrayHUDCommand.Use(EHUDCommand.HIDE_ALL_INFO);
         listSelectedFriendlyObject.Clear();
         if (tempListSelectableObject.Count < 1)
         {
@@ -266,16 +256,18 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
             else if (StructureInList.IsProcessingUpgrade)
             {
                 selectObjectCallback?.Invoke(EObjectType.PROCESSING_UPGRADE_STRUCTURE);
-                ArrayHUDUpgradeCommand.Use(EHUDUpgradeCommand.DISPLAY);
+                ArrayHUDUpgradeCommand.Use(EHUDUpgradeCommand.DISPLAY_UPGRADE_INFO, StructureInList.CurUpgradeType);
                 tempListSelectableObject.Clear();
                 return;
             }
             else if (tempObj.GetObjectType().Equals(EObjectType.BARRACK))
             {
+                StructureBarrack tempBarrack = tempObj.GetComponent<StructureBarrack>();
                 selectObjectCallback?.Invoke(EObjectType.BARRACK);
-                if (tempObj.GetComponent<StructureBarrack>().IsProcessingSpawnUnit)
+                if (tempBarrack.IsProcessingSpawnUnit)
                 {
-                    ArrayHUDCommand.Use(EHUDCommand.DISPLAY_SPAWN_UNIT_INFO);
+                    tempBarrack.UpdateSpawnInfo();
+                    ArrayHUDSpawnUnitCommand.Use(EHUDSpawnUnitCommand.DISPLAY_SPAWN_UNIT_INFO);
                     tempListSelectableObject.Clear();
                     return;
                 }
@@ -353,49 +345,59 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
         }
     }
 
-    public void UpdateFuncButton()
+    public void UpdateInfo()
     {
         ArrayHUDCommand.Use(EHUDCommand.HIDE_ALL_INFO);
+        // 리스트가 비어있지 않을 경우
         if (listSelectedFriendlyObject.Count > 0)
         {
+            // 리스트에 아군 유닛 존재할 경우
             if (isFriendlyUnitInList)
             {
-                if (listSelectedFriendlyObject.Count > 1)
+                // 리스트에 유닛이 하나만 존재할 경우
+                if (listSelectedFriendlyObject.Count < 2)
                 {
-                    if (listSelectedFriendlyObject.Count == 1)
-                    {
-                        InputOtherUnitInfo(listSelectedFriendlyObject[0]);
-                        ArrayHUDCommand.Use(EHUDCommand.DISPLAY_SINGLE_INFO);
-                    }
-                    else
-                    {
-                        InputFriendlyUnitInfo();
-                        ArrayHUDCommand.Use(EHUDCommand.DISPLAY_GROUP_INFO, listSelectedFriendlyObject.Count);
-                    }
-                    selectObjectCallback?.Invoke(listSelectedFriendlyObject[0].GetObjectType());
-                }
-                else
-                {
-                    isFriendlyUnitInList = false;
-                    ArrayHUDCommand.Use(EHUDCommand.HIDE_UNIT_INFO);
-                    selectObjectCallback?.Invoke(EObjectType.NONE);
-                }
-            }
-            else if (isFriendlyStructureInList)
-            {
-                if (listSelectedFriendlyObject[0].GetComponent<Structure>().IsProcessingUpgrade)
-                {
-                    selectObjectCallback?.Invoke(EObjectType.PROCESSING_UPGRADE_STRUCTURE);
-                    ArrayHUDUpgradeCommand.Use(EHUDUpgradeCommand.DISPLAY);
-                }
-                else
-                {
-                    selectObjectCallback?.Invoke(listSelectedFriendlyObject[0].GetObjectType());
                     InputOtherUnitInfo(listSelectedFriendlyObject[0]);
                     ArrayHUDCommand.Use(EHUDCommand.DISPLAY_SINGLE_INFO);
                 }
+                // 리스트에 유닛이 다수 존재할 경우
+                else
+                {
+                    InputFriendlyUnitInfo();
+                    ArrayHUDCommand.Use(EHUDCommand.DISPLAY_GROUP_INFO, listSelectedFriendlyObject.Count);
+                }
+                selectObjectCallback?.Invoke(listSelectedFriendlyObject[0].GetObjectType());
+            }
+            // 리스트에 아군 건물이 존재할 경우
+            else if (isFriendlyStructureInList)
+            {
+                // 해당 건물이 현재 업그레이드를 진행중일 경우
+                if (listSelectedFriendlyObject[0].GetComponent<Structure>().IsProcessingUpgrade)
+                {
+                    selectObjectCallback?.Invoke(EObjectType.PROCESSING_UPGRADE_STRUCTURE);
+                    ArrayHUDUpgradeCommand.Use(EHUDUpgradeCommand.DISPLAY_UPGRADE_INFO, listSelectedFriendlyObject[0].GetComponent<Structure>().CurUpgradeType);
+                }
+                // 그렇지 않다면
+                else
+                {
+                    // 만일 건물이 배럭이고 생산중이라면
+                    StructureBarrack tempBarrack = listSelectedFriendlyObject[0].GetComponent<StructureBarrack>();
+                    if (tempBarrack != null && tempBarrack.IsProcessingSpawnUnit)
+                    {
+                        selectObjectCallback?.Invoke(EObjectType.BARRACK);
+                        tempBarrack.UpdateSpawnInfo();
+                        ArrayHUDSpawnUnitCommand.Use(EHUDSpawnUnitCommand.DISPLAY_SPAWN_UNIT_INFO);
+                    }
+                    else
+                    {
+                        selectObjectCallback?.Invoke(listSelectedFriendlyObject[0].GetObjectType());
+                        InputOtherUnitInfo(listSelectedFriendlyObject[0]);
+                        ArrayHUDCommand.Use(EHUDCommand.DISPLAY_SINGLE_INFO);
+                    }
+                }
             }
         }
+        // 리스트가 비어있거나 적 유닛이 존재할 경우
         else
         {
             ArrayHUDCommand.Use(EHUDCommand.HIDE_UNIT_INFO);

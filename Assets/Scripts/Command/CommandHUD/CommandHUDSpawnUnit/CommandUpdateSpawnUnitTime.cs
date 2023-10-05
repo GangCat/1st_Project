@@ -2,16 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CommandFinishSpawnUnit : Command
+public class CommandUpdateSpawnUnitTime : Command
 {
-    public CommandFinishSpawnUnit(CanvasSpawnUnitInfo _canvasSpawnInfo)
+    public CommandUpdateSpawnUnitTime(CanvasSpawnUnitInfo _canvasSpawn)
     {
-        canvasSpawn = _canvasSpawnInfo;
+        canvasSpawn = _canvasSpawn;
     }
-
     public override void Execute(params object[] _objects)
     {
-        canvasSpawn.SpawnFinish();
+        canvasSpawn.UpdateTime((float)_objects[0]);
     }
 
     private CanvasSpawnUnitInfo canvasSpawn = null;

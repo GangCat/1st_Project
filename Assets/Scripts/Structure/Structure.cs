@@ -28,6 +28,7 @@ public class Structure : MonoBehaviour
 
     public virtual void Init() { }
 
+    public EUpgradeType CurUpgradeType => curUpgradeType;
     public int UpgradeLevel => upgradeLevel;
     public bool IsBuildable => isBuildable;
     public int StructureIdx => myIdx;
@@ -68,7 +69,8 @@ public class Structure : MonoBehaviour
     protected IEnumerator UpgradeCoroutine()
     {
         isProcessingUpgrade = true;
-        ArrayHUDUpgradeCommand.Use(EHUDUpgradeCommand.STRUCTURE);
+        curUpgradeType = EUpgradeType.STRUCTURE;
+        ArrayHUDUpgradeCommand.Use(EHUDUpgradeCommand.DISPLAY_UPGRADE_INFO, curUpgradeType);
 
         float buildFinishTime = Time.time + upgradeDelay;
         while (buildFinishTime > Time.time)
@@ -82,7 +84,9 @@ public class Structure : MonoBehaviour
 
     protected virtual void UpgradeComplete()
     {
+        curUpgradeType = EUpgradeType.NONE;
         ArrayHUDUpgradeCommand.Use(EHUDUpgradeCommand.FINISH);
+        ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
         ++upgradeLevel;
     }
 
@@ -121,13 +125,7 @@ public class Structure : MonoBehaviour
         SetColor();
         IsUnderConstruction = true;
         StopCoroutine("CheckBuildableCoroutine");
-        BuildHBeam();
         UpdateNodeWalkable(false);
-    }
-
-    private void BuildHBeam()
-    {
-
     }
 
     public virtual void BuildComplete()
@@ -214,4 +212,6 @@ public class Structure : MonoBehaviour
 
     protected bool isBuildable = false;
     protected bool isProcessingUpgrade = false;
+    protected EUpgradeType curUpgradeType = EUpgradeType.NONE;
+
 }

@@ -11,6 +11,7 @@ public class StructureBarrack : Structure, ISubscriber
         rallyPoint = spawnPoint;
         listUnit = new List<EUnitType>();
         arrMemoryPool = new MemoryPool[arrUnitPrefab.Length];
+        myObj = GetComponent<FriendlyObject>();
 
         upgradeHpCmd = new CommandUpgradeStructureHP(GetComponent<StatusHp>());
 
@@ -49,8 +50,16 @@ public class StructureBarrack : Structure, ISubscriber
     public void SpawnUnit(EUnitType _unitType)
     {
         listUnit.Add(_unitType);
+        if (myObj.IsSelect)
+            ArrayHUDSpawnUnitCommand.Use(EHUDSpawnUnitCommand.UPDATE_SPAWN_UNIT_LIST, listUnit);
         RequestSpawnUnit();
         // ui에 나타내는 내용
+    }
+
+    public void UpdateSpawnInfo()
+    {
+        ArrayHUDSpawnUnitCommand.Use(EHUDSpawnUnitCommand.UPDATE_SPAWN_UNIT_LIST, listUnit);
+        ArrayHUDSpawnUnitCommand.Use(EHUDSpawnUnitCommand.UPDATE_SPAWN_UNIT_TIME, progressPercent);
     }
 
     public override void DeactivateUnit(GameObject _removeGo, EUnitType _type)
@@ -60,29 +69,34 @@ public class StructureBarrack : Structure, ISubscriber
 
     private void RequestSpawnUnit()
     {
-        if (!isProcessingSpawnUnit && listUnit.Count > 0)
+        if (listUnit.Count < 1 && myObj.IsSelect)
+            ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
+        else if (!isProcessingSpawnUnit)
         {
-            isProcessingSpawnUnit = true;
             EUnitType unitType = listUnit[0];
             StartCoroutine("SpawnUnitCoroutine", unitType);
-        }
-        else if(listUnit.Count < 1)
-        {
-            ArrayHUDCommand.Use(EHUDCommand.DISPLAY_SINGLE_INFO);
         }
     }
 
     private IEnumerator SpawnUnitCoroutine(EUnitType _unitType)
     {
+        isProcessingSpawnUnit = true;
         float elapsedTime = 0f;
         float spawnUnitDelay = arrSpawnUnitDelay[(int)_unitType];
+        if (myObj.IsSelect)
+            ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
 
-        while (elapsedTime < spawnUnitDelay)
+        while (progressPercent < 1)
         {
-            ArrayHUDCommand.Use(EHUDCommand.UPDATE_SPAWN_UNIT_PROGRESS, elapsedTime / spawnUnitDelay);
+            if(myObj.IsSelect)
+                ArrayHUDSpawnUnitCommand.Use(EHUDSpawnUnitCommand.UPDATE_SPAWN_UNIT_TIME, progressPercent);
             yield return new WaitForSeconds(0.5f);
+
             elapsedTime += 0.5f;
+            progressPercent = elapsedTime / spawnUnitDelay;
         }
+
+        progressPercent = 0f;
 
         while (!canProcessSpawnUnit)
             yield return new WaitForSeconds(1f);
@@ -100,7 +114,8 @@ public class StructureBarrack : Structure, ISubscriber
 
         listUnit.RemoveAt(0);
         ArrayPopulationCommand.Use(EPopulationCommand.INCREASE_CUR_POPULATION, _unitType);
-        ArrayHUDCommand.Use(EHUDCommand.FINISH_SPAWN_UNIT);
+        if (myObj.IsSelect)
+            ArrayHUDSpawnUnitCommand.Use(EHUDSpawnUnitCommand.UPDATE_SPAWN_UNIT_LIST, listUnit);
         RequestSpawnUnit();
     }
 
@@ -136,8 +151,25 @@ public class StructureBarrack : Structure, ISubscriber
 
     private IEnumerator UpgradeUnitCoroutine(EUnitUpgradeType _upgradeType)
     {
+        switch (_upgradeType)
+        {
+            case EUnitUpgradeType.RANGED_UNIT_DMG:
+                curUpgradeType = EUpgradeType.RANGED_DMG;
+                break;
+            case EUnitUpgradeType.RANGED_UNIT_HP:
+                curUpgradeType = EUpgradeType.RANGED_HP;
+                break;
+            case EUnitUpgradeType.MELEE_UNIT_DMG:
+                curUpgradeType = EUpgradeType.MELEE_DMG;
+                break;
+            case EUnitUpgradeType.MELEE_UNIT_HP:
+                curUpgradeType = EUpgradeType.MELEE_HP;
+                break;
+            default:
+                break;
+        }
         isProcessingUpgrade = true;
-        ArrayHUDUpgradeCommand.Use(EHUDUpgradeCommand.UNIT, _upgradeType);
+        ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
 
         float buildFinishTime = Time.time + SelectableObjectManager.DelayUnitUpgrade;
         while (buildFinishTime > Time.time)
@@ -164,6 +196,7 @@ public class StructureBarrack : Structure, ISubscriber
         }
 
         ArrayHUDUpgradeCommand.Use(EHUDUpgradeCommand.FINISH);
+        ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
     }
 
     public void Subscribe()
@@ -198,6 +231,7 @@ public class StructureBarrack : Structure, ISubscriber
 
     private bool isProcessingSpawnUnit = false;
     private bool canProcessSpawnUnit = true;
+    private bool isSelected = false;
 
     private CommandUpgradeStructureHP upgradeHpCmd = null;
 
@@ -207,4 +241,8 @@ public class StructureBarrack : Structure, ISubscriber
     private List<EUnitType> listUnit = null;
 
     private MemoryPool[] arrMemoryPool = null;
+    
+    private float progressPercent = 0f;
+    private FriendlyObject myObj = null;
+
 }

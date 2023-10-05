@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class CommandDisplaySpawnUnitInfo : Command
 {
-    public CommandDisplaySpawnUnitInfo(CanvasSpawnUnitInfo _canvas)
+    public CommandDisplaySpawnUnitInfo(CanvasSpawnUnitInfo _canvasSpawn)
     {
-        canvasSpawn = _canvas;
+        canvasSpawn = _canvasSpawn;
     }
     public override void Execute(params object[] _objects)
     {

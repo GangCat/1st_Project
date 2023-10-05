@@ -22,32 +22,15 @@ public class CanvasUpgradeInfo : MonoBehaviour
         gameObject.SetActive(_isActive);
     }
 
-    public void UpgradeMainbase(EUpgradeETCType _upgradeType)
-    {
-        gameObject.SetActive(true);
-        imageUpgradeModel.ChangeSprite(arrSpriteMainbaseupgrade[(int)_upgradeType]);
-    }
-
-    public void UpgradeUnit(EUnitUpgradeType _upgradetype)
-    {
-        gameObject.SetActive(true);
-        imageUpgradeModel.ChangeSprite(arrSpriteUnitUpgrade[(int)_upgradetype]);
-    }
-
-    public void UpgradeStructure()
-    {
-        gameObject.SetActive(true);
-        imageUpgradeModel.ChangeSprite(spriteStructureUpgrade);
-    }
-
     public void UpgradeFinish()
     {
         gameObject.SetActive(false);
     }
 
-    public void DisplayUpgradeInfo()
+    public void DisplayUpgradeInfo(EUpgradeType _type)
     {
         gameObject.SetActive(true);
+        imageUpgradeModel.ChangeSprite(arrSpriteUpgrade[(int)_type]);
     }
 
     public void UpdateUpgradeProgress(float _progressPercent)
@@ -57,15 +40,10 @@ public class CanvasUpgradeInfo : MonoBehaviour
 
     [SerializeField]
     private ImageProgressbar imageUpgradeProgressbar = null;
+    [Header("-Population/Energy/Structure/RangedDmg/RangedHp/MeleeDmg/MeleeHp")]
+    [SerializeField]
+    private Sprite[] arrSpriteUpgrade = null;
 
-    [SerializeField]
-    private Sprite spriteStructureUpgrade = null;
-    [Header("-Population/Energy")]
-    [SerializeField]
-    private Sprite[] arrSpriteMainbaseupgrade = null;
-    [Header("-RD/RH/MD/MH")]
-    [SerializeField]
-    private Sprite[] arrSpriteUnitUpgrade = null;
 
     private ImageModel imageUpgradeModel = null;
 }

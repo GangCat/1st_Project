@@ -252,7 +252,7 @@ public class StructureManager : MonoBehaviour
             newStructure.transform.parent = transform;
         }
 
-        ArrayBuildCommand.Use(EMainBaseCommnad.BUILD_COMPLETE);
+        ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
     }
 
     #region Ruin

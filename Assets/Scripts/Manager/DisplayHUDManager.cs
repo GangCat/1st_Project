@@ -33,13 +33,18 @@ public class DisplayHUDManager : MonoBehaviour
         ArrayHUDCommand.Add(EHUDCommand.HIDE_UNIT_INFO, new CommandHideUnitInfo(canvasUnitInfo));
         ArrayHUDCommand.Add(EHUDCommand.HERO_RESURRECTION_UPDATE, new CommandHeroRessurectionUpdate(canvaHeroRessurection));
         ArrayHUDCommand.Add(EHUDCommand.HERO_RESSURECTION_FINISH, new CommandHeroRessurectionFinish(canvaHeroRessurection));
-        ArrayHUDCommand.Add(EHUDCommand.FINISH_SPAWN_UNIT, new CommandFinishSpawnUnit(canvasSpawnUnitInfo));
-        ArrayHUDCommand.Add(EHUDCommand.DISPLAY_SPAWN_UNIT_INFO, new CommandDisplaySpawnUnitInfo(canvasSpawnUnitInfo));
-        ArrayHUDCommand.Add(EHUDCommand.UPDATE_SPAWN_UNIT_PROGRESS, new CommandUpdateSpawnUnitProgress(canvasSpawnUnitInfo));
         ArrayHUDCommand.Add(EHUDCommand.HIDE_ALL_INFO, new CommandHideAllInfo(canvasUnitInfo, canvasSpawnUnitInfo, canvasUpgradeInfo));
 
-        ArrayHUDUpgradeCommand.Add(EHUDUpgradeCommand.DISPLAY, new CommandDisplayUpgradeProgress(canvasUpgradeInfo));
         ArrayHUDUpgradeCommand.Add(EHUDUpgradeCommand.UPDATE_PROGRESS, new CommandUpdateUpgradeProgress(canvasUpgradeInfo));
+
+        ArrayHUDSpawnUnitCommand.Add(EHUDSpawnUnitCommand.UPDATE_SPAWN_UNIT_LIST, new CommandUpdateSpawnUnitList(canvasSpawnUnitInfo));
+        ArrayHUDSpawnUnitCommand.Add(EHUDSpawnUnitCommand.UPDATE_SPAWN_UNIT_TIME, new CommandUpdateSpawnUnitTime(canvasSpawnUnitInfo));
+        ArrayHUDSpawnUnitCommand.Add(EHUDSpawnUnitCommand.DISPLAY_SPAWN_UNIT_INFO, new CommandDisplaySpawnUnitInfo(canvasSpawnUnitInfo));
+    }
+
+    public void DisplayUpgradeInfo(EUpgradeType _type)
+    {
+        canvasUpgradeInfo.DisplayUpgradeInfo(_type);
     }
 
     public void HideAllInfo()
@@ -52,26 +57,6 @@ public class DisplayHUDManager : MonoBehaviour
     public void UpgradeFinish()
     {
         canvasUpgradeInfo.UpgradeFinish();
-    }
-
-    public void UpgradeMainbase(EUpgradeETCType _type)
-    {
-        canvasUpgradeInfo.UpgradeMainbase(_type);
-    }
-
-    public void UpgradeStructure()
-    {
-        canvasUpgradeInfo.UpgradeStructure();
-    }
-
-    public void UpgradeUnit(EUnitUpgradeType _type)
-    {
-        canvasUpgradeInfo.UpgradeUnit(_type);
-    }
-
-    public void SpawnUnit(EUnitType _type)
-    {
-        canvasSpawnUnitInfo.AddSpawnQueue(_type);
     }
 
     public void HeroDead()
