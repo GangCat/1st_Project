@@ -144,11 +144,6 @@ public class StructureBarrack : Structure, ISubscriber
 
     public void UpgradeUnit(EUnitUpgradeType _upgradeType)
     {
-        StartCoroutine("UpgradeUnitCoroutine", _upgradeType);
-    }
-
-    private IEnumerator UpgradeUnitCoroutine(EUnitUpgradeType _upgradeType)
-    {
         switch (_upgradeType)
         {
             case EUnitUpgradeType.RANGED_UNIT_DMG:
@@ -166,17 +161,32 @@ public class StructureBarrack : Structure, ISubscriber
             default:
                 break;
         }
-        isProcessingUpgrade = true;
-        ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
 
-        float buildFinishTime = Time.time + SelectableObjectManager.DelayUnitUpgrade;
-        while (buildFinishTime > Time.time)
+        StartCoroutine("UpgradeUnitCoroutine", _upgradeType);
+    }
+
+    private IEnumerator UpgradeUnitCoroutine(EUnitUpgradeType _upgradeType)
+    {
+        isProcessingUpgrade = true;
+        if (myObj.IsSelect)
+            ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
+
+        float elapsedTime = 0f;
+        while (elapsedTime < upgradeDelay)
         {
-            // ui Ç¥½Ã
+            if (myObj.IsSelect)
+                ArrayHUDUpgradeCommand.Use(EHUDUpgradeCommand.UPDATE_PROGRESS, elapsedTime / upgradeDelay);
             yield return new WaitForSeconds(0.5f);
+            elapsedTime += 0.5f;
         }
+
         isProcessingUpgrade = false;
 
+        UpgradeUnitComplete(_upgradeType);
+    }
+
+    private void UpgradeUnitComplete(EUnitUpgradeType _upgradeType)
+    {
         switch (_upgradeType)
         {
             case EUnitUpgradeType.RANGED_UNIT_DMG:
@@ -193,8 +203,8 @@ public class StructureBarrack : Structure, ISubscriber
                 break;
         }
 
-        ArrayHUDUpgradeCommand.Use(EHUDUpgradeCommand.FINISH);
-        ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
+        if (myObj.IsSelect)
+            ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
     }
 
     public void Subscribe()
@@ -229,7 +239,6 @@ public class StructureBarrack : Structure, ISubscriber
 
     private bool isProcessingSpawnUnit = false;
     private bool canProcessSpawnUnit = true;
-    private bool isSelected = false;
 
     private CommandUpgradeStructureHP upgradeHpCmd = null;
 
@@ -241,5 +250,4 @@ public class StructureBarrack : Structure, ISubscriber
     private MemoryPool[] arrMemoryPool = null;
     
     private float progressPercent = 0f;
-
 }

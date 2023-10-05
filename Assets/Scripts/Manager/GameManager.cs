@@ -131,7 +131,7 @@ public class GameManager : MonoBehaviour
         ArrayPopulationCommand.Add(EPopulationCommand.UPGRADE_MAX_POPULATION, new CommandUpgradePopulation(populationMng, currencyMng, selectMng));
         ArrayPopulationCommand.Add(EPopulationCommand.UPGRADE_POPULATION_COMPLETE, new CommandUpgradePopulationComplete(populationMng));
 
-        ArrayHUDUpgradeCommand.Add(EHUDUpgradeCommand.FINISH, new CommandFinishUpgrade(uiMng));
+        //ArrayHUDUpgradeCommand.Add(EHUDUpgradeCommand.FINISH, new CommandFinishUpgrade(uiMng));
         ArrayHUDUpgradeCommand.Add(EHUDUpgradeCommand.DISPLAY_UPGRADE_INFO, new CommandDisplayUpgradeInfo(uiMng));
     }
 

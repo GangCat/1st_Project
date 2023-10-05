@@ -22,11 +22,6 @@ public class UIManager : MonoBehaviour
         displayHUDMng.HideAllInfo();
     }
 
-    public void UpgradeFinish()
-    {
-        displayHUDMng.UpgradeFinish();
-    }
-
     public void HeroDead()
     {
         displayHUDMng.HeroDead();

@@ -71,13 +71,17 @@ public class Structure : MonoBehaviour
     {
         isProcessingUpgrade = true;
         curUpgradeType = EUpgradeType.STRUCTURE;
-        ArrayHUDUpgradeCommand.Use(EHUDUpgradeCommand.DISPLAY_UPGRADE_INFO, curUpgradeType);
+        if (myObj.IsSelect)
+            ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
 
-        float buildFinishTime = Time.time + upgradeDelay;
-        while (buildFinishTime > Time.time)
+        float elapsedTime = 0f;
+        while (elapsedTime < upgradeDelay)
         {
             // ui Ç¥½Ã
+            if (myObj.IsSelect)
+                ArrayHUDUpgradeCommand.Use(EHUDUpgradeCommand.UPDATE_PROGRESS, elapsedTime / upgradeDelay);
             yield return new WaitForSeconds(0.5f);
+            elapsedTime += 0.5f;
         }
         isProcessingUpgrade = false;
         UpgradeComplete();
@@ -86,7 +90,6 @@ public class Structure : MonoBehaviour
     protected virtual void UpgradeComplete()
     {
         curUpgradeType = EUpgradeType.NONE;
-        ArrayHUDUpgradeCommand.Use(EHUDUpgradeCommand.FINISH);
         if(myObj.IsSelect)
             ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
         ++upgradeLevel;
@@ -199,7 +202,7 @@ public class Structure : MonoBehaviour
     [SerializeField]
     protected int myGridY = 1;
     [SerializeField]
-    private float upgradeDelay = 0f;
+    protected float upgradeDelay = 0f;
 
     protected PF_Grid grid = null;
     protected PF_Node curNode = null;

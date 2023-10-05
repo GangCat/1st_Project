@@ -31,7 +31,7 @@ public class StructureManager : MonoBehaviour
         return curStructureObjType;
     }
 
-    public void ShowBluepirnt(EObjectType _buildingType)
+    public void ShowBluepirnt(EObjectType _structureType)
     {
         if (isBlueprint)
         {
@@ -39,7 +39,7 @@ public class StructureManager : MonoBehaviour
             StopAllCoroutines();
         }
 
-        switch (_buildingType)
+        switch (_structureType)
         {
             case EObjectType.TURRET:
                 {

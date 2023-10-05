@@ -35,7 +35,7 @@ public class DisplayHUDManager : MonoBehaviour
         ArrayHUDCommand.Add(EHUDCommand.HERO_RESSURECTION_FINISH, new CommandHeroRessurectionFinish(canvaHeroRessurection));
         ArrayHUDCommand.Add(EHUDCommand.HIDE_ALL_INFO, new CommandHideAllInfo(canvasUnitInfo, canvasSpawnUnitInfo, canvasUpgradeInfo));
 
-        ArrayHUDUpgradeCommand.Add(EHUDUpgradeCommand.UPDATE_PROGRESS, new CommandUpdateUpgradeProgress(canvasUpgradeInfo));
+        ArrayHUDUpgradeCommand.Add(EHUDUpgradeCommand.UPDATE_PROGRESS, new CommandUpdateUpgradeTime(canvasUpgradeInfo));
 
         ArrayHUDSpawnUnitCommand.Add(EHUDSpawnUnitCommand.UPDATE_SPAWN_UNIT_LIST, new CommandUpdateSpawnUnitList(canvasSpawnUnitInfo));
         ArrayHUDSpawnUnitCommand.Add(EHUDSpawnUnitCommand.UPDATE_SPAWN_UNIT_TIME, new CommandUpdateSpawnUnitTime(canvasSpawnUnitInfo));
@@ -52,11 +52,6 @@ public class DisplayHUDManager : MonoBehaviour
         canvasUnitInfo.HideDisplay();
         canvasSpawnUnitInfo.HideDisplay();
         canvasUpgradeInfo.HideDisplay();
-    }
-
-    public void UpgradeFinish()
-    {
-        canvasUpgradeInfo.UpgradeFinish();
     }
 
     public void HeroDead()

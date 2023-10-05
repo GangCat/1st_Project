@@ -22,11 +22,6 @@ public class CanvasUpgradeInfo : MonoBehaviour
         gameObject.SetActive(_isActive);
     }
 
-    public void UpgradeFinish()
-    {
-        gameObject.SetActive(false);
-    }
-
     public void DisplayUpgradeInfo(EUpgradeType _type)
     {
         gameObject.SetActive(true);

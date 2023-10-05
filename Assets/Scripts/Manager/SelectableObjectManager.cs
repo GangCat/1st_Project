@@ -371,11 +371,12 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
             // 리스트에 아군 건물이 존재할 경우
             else if (isFriendlyStructureInList)
             {
+                Structure curStructure = listSelectedFriendlyObject[0].GetComponent<Structure>();
                 // 해당 건물이 현재 업그레이드를 진행중일 경우
-                if (listSelectedFriendlyObject[0].GetComponent<Structure>().IsProcessingUpgrade)
+                if (curStructure.IsProcessingUpgrade)
                 {
                     selectObjectCallback?.Invoke(EObjectType.PROCESSING_UPGRADE_STRUCTURE);
-                    ArrayHUDUpgradeCommand.Use(EHUDUpgradeCommand.DISPLAY_UPGRADE_INFO, listSelectedFriendlyObject[0].GetComponent<Structure>().CurUpgradeType);
+                    ArrayHUDUpgradeCommand.Use(EHUDUpgradeCommand.DISPLAY_UPGRADE_INFO, curStructure.CurUpgradeType);
                 }
                 // 그렇지 않다면
                 else

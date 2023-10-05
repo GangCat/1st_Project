@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CommandUpdateUpgradeProgress : Command
+public class CommandUpdateUpgradeTime : Command
 {
-    public CommandUpdateUpgradeProgress(CanvasUpgradeInfo _canvasUpgrade)
+    public CommandUpdateUpgradeTime(CanvasUpgradeInfo _canvasUpgrade)
     {
         canvasUpgrade = _canvasUpgrade;
     }
