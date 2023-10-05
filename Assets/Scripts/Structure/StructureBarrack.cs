@@ -71,7 +71,7 @@ public class StructureBarrack : Structure, ISubscriber
     {
         if (listUnit.Count < 1 && myObj.IsSelect)
             ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
-        else if (!isProcessingSpawnUnit)
+        else if (!isProcessingSpawnUnit && listUnit.Count > 0)
         {
             EUnitType unitType = listUnit[0];
             StartCoroutine("SpawnUnitCoroutine", unitType);

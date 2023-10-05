@@ -99,6 +99,7 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType
 
     protected virtual IEnumerator CheckIsEnemyInChaseStartRangeCoroutine()
     {
+        yield return new WaitForSeconds(0.5f);
         while (true)
         {
             Collider[] arrCollider = null;
