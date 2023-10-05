@@ -12,11 +12,6 @@ public class UIManager : MonoBehaviour
         displayHUDMng.Init();
     }
 
-    public void DisplayUpgradeInfo(EUpgradeType _type)
-    {
-        displayHUDMng.DisplayUpgradeInfo(_type);
-    }
-
     public void HideAllInfo()
     {
         displayHUDMng.HideAllInfo();

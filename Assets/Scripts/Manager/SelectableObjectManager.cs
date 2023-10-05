@@ -250,15 +250,18 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
         {
             InputOtherUnitInfo(tempObj);
             listSelectedFriendlyObject.Add(tempObj.GetComponent<FriendlyObject>());
-            Structure StructureInList = tempObj.GetComponent<Structure>();
-            if (StructureInList.IsUnderConstruction)
-                selectObjectCallback?.Invoke(EObjectType.HBEAM);
-            else if (StructureInList.IsProcessingUpgrade)
+            Structure structureInList = tempObj.GetComponent<Structure>();
+            if (structureInList.IsUnderConstruction)
+            {
+                selectObjectCallback?.Invoke(EObjectType.UNDER_CONSTRUCT);
+                structureInList.UpdateConstructInfo();
+                ArrayHUDConstructCommand.Use(EHUDConstructCommand.DISPLAY_CONSTRUCT_INFO);
+            }
+            else if (structureInList.IsProcessingUpgrade)
             {
                 selectObjectCallback?.Invoke(EObjectType.PROCESSING_UPGRADE_STRUCTURE);
-                ArrayHUDUpgradeCommand.Use(EHUDUpgradeCommand.DISPLAY_UPGRADE_INFO, StructureInList.CurUpgradeType);
-                tempListSelectableObject.Clear();
-                return;
+                structureInList.UpdateUpgradeInfo();
+                ArrayHUDUpgradeCommand.Use(EHUDUpgradeCommand.DISPLAY_UPGRADE_INFO, structureInList.CurUpgradeType);
             }
             else if (tempObj.GetObjectType().Equals(EObjectType.BARRACK))
             {
@@ -268,13 +271,13 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
                 {
                     tempBarrack.UpdateSpawnInfo();
                     ArrayHUDSpawnUnitCommand.Use(EHUDSpawnUnitCommand.DISPLAY_SPAWN_UNIT_INFO);
-                    tempListSelectableObject.Clear();
-                    return;
                 }
             }
             else
+            {
                 selectObjectCallback?.Invoke(listSelectedFriendlyObject[0].GetObjectType());
-            ArrayHUDCommand.Use(EHUDCommand.DISPLAY_SINGLE_INFO);
+                ArrayHUDCommand.Use(EHUDCommand.DISPLAY_SINGLE_INFO);
+            }
         }
         else if (isFriendlyUnitInList)
         {

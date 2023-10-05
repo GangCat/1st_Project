@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class CommandDisplayUpgradeInfo : Command
 {
-    public CommandDisplayUpgradeInfo(UIManager _uiMng)
+    public CommandDisplayUpgradeInfo(CanvasUpgradeInfo _canvasUpgrade)
     {
-        uiMng = _uiMng;
+        canvasUpgrade = _canvasUpgrade;
     }
     public override void Execute(params object[] _objects)
     {
-        uiMng.DisplayUpgradeInfo((EUpgradeType)_objects[0]);
+        canvasUpgrade.DisplayUpgradeInfo((EUpgradeType)_objects[0]);
     }
 
-    private UIManager uiMng = null;
+    private CanvasUpgradeInfo canvasUpgrade = null;
 }

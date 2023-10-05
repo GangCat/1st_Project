@@ -21,6 +21,12 @@ public class StructureBarrack : Structure, ISubscriber
 
     public bool IsProcessingSpawnUnit => isProcessingSpawnUnit;
 
+    public void UpdateSpawnInfo()
+    {
+        ArrayHUDSpawnUnitCommand.Use(EHUDSpawnUnitCommand.UPDATE_SPAWN_UNIT_LIST, listUnit);
+        ArrayHUDSpawnUnitCommand.Use(EHUDSpawnUnitCommand.UPDATE_SPAWN_UNIT_TIME, SpawnUnitProgressPercent);
+    }
+
     protected override void UpgradeComplete()
     {
         base.UpgradeComplete();
@@ -54,11 +60,7 @@ public class StructureBarrack : Structure, ISubscriber
         // ui에 나타내는 내용
     }
 
-    public void UpdateSpawnInfo()
-    {
-        ArrayHUDSpawnUnitCommand.Use(EHUDSpawnUnitCommand.UPDATE_SPAWN_UNIT_LIST, listUnit);
-        ArrayHUDSpawnUnitCommand.Use(EHUDSpawnUnitCommand.UPDATE_SPAWN_UNIT_TIME, progressPercent);
-    }
+
 
     public override void DeactivateUnit(GameObject _removeGo, EUnitType _type)
     {
@@ -84,17 +86,17 @@ public class StructureBarrack : Structure, ISubscriber
         if (myObj.IsSelect)
             ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
 
-        while (progressPercent < 1)
+        while (SpawnUnitProgressPercent < 1)
         {
-            if(myObj.IsSelect)
-                ArrayHUDSpawnUnitCommand.Use(EHUDSpawnUnitCommand.UPDATE_SPAWN_UNIT_TIME, progressPercent);
+            if (myObj.IsSelect)
+                ArrayHUDSpawnUnitCommand.Use(EHUDSpawnUnitCommand.UPDATE_SPAWN_UNIT_TIME, SpawnUnitProgressPercent);
             yield return new WaitForSeconds(0.5f);
 
             elapsedTime += 0.5f;
-            progressPercent = elapsedTime / spawnUnitDelay;
+            SpawnUnitProgressPercent = elapsedTime / spawnUnitDelay;
         }
 
-        progressPercent = 0f;
+        SpawnUnitProgressPercent = 0f;
 
         while (!canProcessSpawnUnit)
             yield return new WaitForSeconds(1f);
@@ -172,12 +174,14 @@ public class StructureBarrack : Structure, ISubscriber
             ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
 
         float elapsedTime = 0f;
+        UpgradeAndConstructProgressPercent = elapsedTime / upgradeDelay;
         while (elapsedTime < upgradeDelay)
         {
             if (myObj.IsSelect)
-                ArrayHUDUpgradeCommand.Use(EHUDUpgradeCommand.UPDATE_PROGRESS, elapsedTime / upgradeDelay);
+                ArrayHUDUpgradeCommand.Use(EHUDUpgradeCommand.UPDATE_UPGRADE_TIME, UpgradeAndConstructProgressPercent);
             yield return new WaitForSeconds(0.5f);
             elapsedTime += 0.5f;
+            UpgradeAndConstructProgressPercent = elapsedTime / upgradeDelay;
         }
 
         isProcessingUpgrade = false;
@@ -248,6 +252,6 @@ public class StructureBarrack : Structure, ISubscriber
     private List<EUnitType> listUnit = null;
 
     private MemoryPool[] arrMemoryPool = null;
-    
-    private float progressPercent = 0f;
+
+    private float SpawnUnitProgressPercent = 0f;
 }
