@@ -13,6 +13,16 @@ public class CanvasSpawnUnitInfo : MonoBehaviour
         SetActive(false);
     }
 
+    public void HideDisplay()
+    {
+        SetActive(false);
+    }
+
+    public void ShowDisplay()
+    {
+        SetActive(true);
+    }
+
     public void AddSpawnQueue(EUnitType _unitType)
     {
         SetActive(true);
@@ -41,7 +51,7 @@ public class CanvasSpawnUnitInfo : MonoBehaviour
         imageSpawnProgressbar.UpdateLength(_progressPercent);
     }
 
-    public void SetActive(bool _isActive)
+    private void SetActive(bool _isActive)
     {
         gameObject.SetActive(_isActive);
     }

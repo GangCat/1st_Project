@@ -10,7 +10,7 @@ public class CommandDisplaySpawnUnitInfo : Command
     }
     public override void Execute(params object[] _objects)
     {
-        canvasSpawn.SetActive(true);
+        canvasSpawn.ShowDisplay();
     }
 
     private CanvasSpawnUnitInfo canvasSpawn = null;

@@ -68,6 +68,8 @@ public class Structure : MonoBehaviour
     protected IEnumerator UpgradeCoroutine()
     {
         isProcessingUpgrade = true;
+        ArrayHUDUpgradeCommand.Use(EHUDUpgradeCommand.STRUCTURE);
+
         float buildFinishTime = Time.time + upgradeDelay;
         while (buildFinishTime > Time.time)
         {
@@ -80,6 +82,7 @@ public class Structure : MonoBehaviour
 
     protected virtual void UpgradeComplete()
     {
+        ArrayHUDUpgradeCommand.Use(EHUDUpgradeCommand.FINISH);
         ++upgradeLevel;
     }
 

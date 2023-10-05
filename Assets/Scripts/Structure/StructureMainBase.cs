@@ -46,6 +46,8 @@ public class StructureMainBase : Structure
     private IEnumerator UpgradePopulationCoroutine()
     {
         isProcessingUpgrade = true;
+        ArrayHUDUpgradeCommand.Use(EHUDUpgradeCommand.MAIN_BASE, EUpgradeETCType.CURRENT_MAX_POPULATION);
+
         float upgradeFinishTime = Time.time + upgradePopulationDelay;
         while(upgradeFinishTime > Time.time)
         {
@@ -54,16 +56,19 @@ public class StructureMainBase : Structure
         }
         isProcessingUpgrade = false;
         ArrayPopulationCommand.Use(EPopulationCommand.UPGRADE_POPULATION_COMPLETE);
+        ArrayHUDUpgradeCommand.Use(EHUDUpgradeCommand.FINISH);
     }
 
     public void UpgradeEnergySupply()
     {
-         StartCoroutine("UpgradeEnergySupplyCoroutine");
+        StartCoroutine("UpgradeEnergySupplyCoroutine");
     }
 
     private IEnumerator UpgradeEnergySupplyCoroutine()
     {
         isProcessingUpgrade = true;
+        ArrayHUDUpgradeCommand.Use(EHUDUpgradeCommand.MAIN_BASE, EUpgradeETCType.ENERGY_SUPPLY);
+
         float upgradeFinishTime = Time.time + upgradeEnergySupplyDelay;
         while (upgradeFinishTime > Time.time)
         {
@@ -72,6 +77,7 @@ public class StructureMainBase : Structure
         }
         isProcessingUpgrade = false;
         ArrayCurrencyCommand.Use(ECurrencyCommand.UPGRADE_ENERGY_SUPPLY_COMPLETE);
+        ArrayHUDUpgradeCommand.Use(EHUDUpgradeCommand.FINISH);
     }
 
     [Header("-Upgrade Attribute")]

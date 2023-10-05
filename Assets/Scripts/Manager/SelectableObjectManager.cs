@@ -264,7 +264,12 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
             if (StructureInList.IsUnderConstruction)
                 selectObjectCallback?.Invoke(EObjectType.HBEAM);
             else if (StructureInList.IsProcessingUpgrade)
+            {
                 selectObjectCallback?.Invoke(EObjectType.PROCESSING_UPGRADE_STRUCTURE);
+                ArrayHUDUpgradeCommand.Use(EHUDUpgradeCommand.DISPLAY);
+                tempListSelectableObject.Clear();
+                return;
+            }
             else if (tempObj.GetObjectType().Equals(EObjectType.BARRACK))
             {
                 selectObjectCallback?.Invoke(EObjectType.BARRACK);
@@ -350,6 +355,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
 
     public void UpdateFuncButton()
     {
+        ArrayHUDCommand.Use(EHUDCommand.HIDE_ALL_INFO);
         if (listSelectedFriendlyObject.Count > 0)
         {
             if (isFriendlyUnitInList)
@@ -370,7 +376,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
                 }
                 else
                 {
-                    isFriendlyStructureInList = false;
+                    isFriendlyUnitInList = false;
                     ArrayHUDCommand.Use(EHUDCommand.HIDE_UNIT_INFO);
                     selectObjectCallback?.Invoke(EObjectType.NONE);
                 }
@@ -378,15 +384,23 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
             else if (isFriendlyStructureInList)
             {
                 if (listSelectedFriendlyObject[0].GetComponent<Structure>().IsProcessingUpgrade)
+                {
                     selectObjectCallback?.Invoke(EObjectType.PROCESSING_UPGRADE_STRUCTURE);
+                    ArrayHUDUpgradeCommand.Use(EHUDUpgradeCommand.DISPLAY);
+                }
                 else
+                {
                     selectObjectCallback?.Invoke(listSelectedFriendlyObject[0].GetObjectType());
-                InputOtherUnitInfo(listSelectedFriendlyObject[0]);
-                ArrayHUDCommand.Use(EHUDCommand.DISPLAY_SINGLE_INFO);
+                    InputOtherUnitInfo(listSelectedFriendlyObject[0]);
+                    ArrayHUDCommand.Use(EHUDCommand.DISPLAY_SINGLE_INFO);
+                }
             }
         }
-        ArrayHUDCommand.Use(EHUDCommand.HIDE_UNIT_INFO);
-        selectObjectCallback?.Invoke(EObjectType.NONE);
+        else
+        {
+            ArrayHUDCommand.Use(EHUDCommand.HIDE_UNIT_INFO);
+            selectObjectCallback?.Invoke(EObjectType.NONE);
+        }
     }
 
     public void ResetTargetBunker()

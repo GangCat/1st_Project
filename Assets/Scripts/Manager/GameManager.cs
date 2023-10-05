@@ -130,7 +130,10 @@ public class GameManager : MonoBehaviour
         ArrayPopulationCommand.Add(EPopulationCommand.UPGRADE_MAX_POPULATION, new CommandUpgradePopulation(populationMng, currencyMng, selectMng));
         ArrayPopulationCommand.Add(EPopulationCommand.UPGRADE_POPULATION_COMPLETE, new CommandUpgradePopulationComplete(populationMng));
 
-
+        ArrayHUDUpgradeCommand.Add(EHUDUpgradeCommand.MAIN_BASE, new CommandDisplayUpgradeMainbase(uiMng, selectMng));
+        ArrayHUDUpgradeCommand.Add(EHUDUpgradeCommand.STRUCTURE, new CommandDisplayUpgradeStructure(uiMng, selectMng));
+        ArrayHUDUpgradeCommand.Add(EHUDUpgradeCommand.UNIT, new CommandDisplayUpgradeUnit(uiMng, selectMng));
+        ArrayHUDUpgradeCommand.Add(EHUDUpgradeCommand.FINISH, new CommandFinishUpgrade(uiMng, selectMng));
     }
 
     private StructureMainBase InitMainBase()

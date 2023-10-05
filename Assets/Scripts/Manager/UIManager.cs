@@ -12,6 +12,31 @@ public class UIManager : MonoBehaviour
         displayHUDMng.Init();
     }
 
+    public void HideAllInfo()
+    {
+        displayHUDMng.HideAllInfo();
+    }
+
+    public void UpgradeFinish()
+    {
+        displayHUDMng.UpgradeFinish();
+    }
+
+    public void UpgradeMainbase(EUpgradeETCType _type)
+    {
+        displayHUDMng.UpgradeMainbase(_type);
+    }
+
+    public void UpgradeStructure()
+    {
+        displayHUDMng.UpgradeStructure();
+    }
+
+    public void UpgradeUnit(EUnitUpgradeType _type)
+    {
+        displayHUDMng.UpgradeUnit(_type);
+    }
+
     public void SpawnUnit(EUnitType _type)
     {
         displayHUDMng.SpawnUnit(_type);

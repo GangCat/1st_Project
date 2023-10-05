@@ -134,49 +134,10 @@ public class StructureBarrack : Structure, ISubscriber
         StartCoroutine("UpgradeUnitCoroutine", _upgradeType);
     }
 
-    public bool UpgradeRangedUnitDmg()
-    {
-        if (!isProcessingUpgrade && SelectableObjectManager.LevelRangedUnitDmgUpgrade < upgradeLevel << 1)
-        {
-            StartCoroutine("UpgradeUnitCoroutine", EUnitUpgradeType.RANGED_UNIT_DMG);
-            return true;
-        }
-        return false;
-    }
-
-    public bool UpgradeRangedUnitHp()
-    {
-        if (!isProcessingUpgrade && SelectableObjectManager.LevelRangedUnitHpUpgrade < upgradeLevel << 1)
-        {
-            StartCoroutine("UpgradeUnitCoroutine", EUnitUpgradeType.RANGED_UNIT_HP);
-            return true;
-        }
-        return false;
-    }
-
-    public bool UpgradeMeleeUnitDmg()
-    {
-        if (!isProcessingUpgrade && SelectableObjectManager.LevelMeleeUnitDmgUpgrade < upgradeLevel << 1)
-        {
-            StartCoroutine("UpgradeUnitCoroutine", EUnitUpgradeType.MELEE_UNIT_DMG);
-            return true;
-        }
-        return false;
-    }
-
-    public bool UpgradeMeleeUnitHp()
-    {
-        if (!isProcessingUpgrade && SelectableObjectManager.LevelMeleeUnitHpUpgrade < upgradeLevel << 1)
-        {
-            StartCoroutine("UpgradeUnitCoroutine", EUnitUpgradeType.MELEE_UNIT_HP);
-            return true;
-        }
-        return false;
-    }
-
     private IEnumerator UpgradeUnitCoroutine(EUnitUpgradeType _upgradeType)
     {
         isProcessingUpgrade = true;
+        ArrayHUDUpgradeCommand.Use(EHUDUpgradeCommand.UNIT, _upgradeType);
 
         float buildFinishTime = Time.time + SelectableObjectManager.DelayUnitUpgrade;
         while (buildFinishTime > Time.time)
@@ -202,6 +163,7 @@ public class StructureBarrack : Structure, ISubscriber
                 break;
         }
 
+        ArrayHUDUpgradeCommand.Use(EHUDUpgradeCommand.FINISH);
     }
 
     public void Subscribe()
