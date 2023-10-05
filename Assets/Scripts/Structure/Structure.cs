@@ -19,7 +19,8 @@ public class Structure : MonoBehaviour
 
     public virtual void Init(int _structureIdx)
     {
-        GetComponent<SelectableObject>().Init();
+        myObj = GetComponent<FriendlyObject>();
+        myObj.Init();
         myIdx = _structureIdx;
         upgradeLevel = 1;
         ShowHBeam();
@@ -86,7 +87,8 @@ public class Structure : MonoBehaviour
     {
         curUpgradeType = EUpgradeType.NONE;
         ArrayHUDUpgradeCommand.Use(EHUDUpgradeCommand.FINISH);
-        ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
+        if(myObj.IsSelect)
+            ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
         ++upgradeLevel;
     }
 
@@ -213,5 +215,6 @@ public class Structure : MonoBehaviour
     protected bool isBuildable = false;
     protected bool isProcessingUpgrade = false;
     protected EUpgradeType curUpgradeType = EUpgradeType.NONE;
+    protected FriendlyObject myObj = null;
 
 }

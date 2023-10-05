@@ -11,8 +11,6 @@ public class StructureBarrack : Structure, ISubscriber
         rallyPoint = spawnPoint;
         listUnit = new List<EUnitType>();
         arrMemoryPool = new MemoryPool[arrUnitPrefab.Length];
-        myObj = GetComponent<FriendlyObject>();
-
         upgradeHpCmd = new CommandUpgradeStructureHP(GetComponent<StatusHp>());
 
         for (int i = 0; i < arrUnitPrefab.Length; ++i)
@@ -243,6 +241,5 @@ public class StructureBarrack : Structure, ISubscriber
     private MemoryPool[] arrMemoryPool = null;
     
     private float progressPercent = 0f;
-    private FriendlyObject myObj = null;
 
 }
