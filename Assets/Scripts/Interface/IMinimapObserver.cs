@@ -3,7 +3,7 @@ using UnityEngine;
 public interface IMinimapObserver
 {
     /// <summary>
-    /// ÁÖÃ¼·ÎºÎÅÍ ¾÷µ¥ÀÌÆ®¸¦ ¹Ş´Â ¸Ş¼Òµå
+    /// ì£¼ì²´ë¡œë¶€í„° ì—…ë°ì´íŠ¸ë¥¼ ë°›ëŠ” ë©”ì†Œë“œ
     /// </summary>
     /// <param name="_pos"></param>
     void GetUnitTargetPos(Vector3 _pos);
