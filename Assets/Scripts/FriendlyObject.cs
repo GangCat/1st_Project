@@ -45,6 +45,7 @@ public class FriendlyObject : SelectableObject, ISubscriber
 
     public EUnitType GetUnitType => unitType;
     public int NodeIdx => nodeIdx;
+    public bool IsSelect => isSelect;
     public void Select(int _listIdx = 0)
     {
         isSelect = true;
@@ -86,7 +87,7 @@ public class FriendlyObject : SelectableObject, ISubscriber
                 ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.DEAD, gameObject, unitType, barrackIdx, this);
                 Broker.UnSubscribe(this, EPublisherType.SELECTABLE_MANAGER);
             }
-            else if (objectType.Equals(EObjectType.HBEAM))
+            else if (objectType.Equals(EObjectType.UNDER_CONSTRUCT))
             {
                 ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.DESTROY_HBEAM, gameObject, unitType, barrackIdx);
             }
@@ -246,21 +247,29 @@ public class FriendlyObject : SelectableObject, ISubscriber
 
     protected override IEnumerator CheckIsEnemyInChaseStartRangeCoroutine()
     {
+        yield return new WaitForSeconds(0.5f);
         while (true)
         {
+            // 추적 범위만큼 overlapLayerMask에 해당하는 충돌체를 overlapSphere로 검사
             Collider[] arrCollider = null;
             arrCollider = overlapSphere(chaseStartRange);
 
+            // 충돌한 오브젝트가 존재한다면
             if (arrCollider.Length > 1)
             {
                 foreach (Collider c in arrCollider)
                 {
+                    // 해당 오브젝트의 ObjectType을 가져온다.
                     EObjectType targetType = c.GetComponent<IGetObjectType>().GetObjectType();
 
+                    // 내가 현재 쫓는 대상이 존재한다면
+                    // 적을 타겟팅해서 쫓는 경우 해당 적이 아니면 무시해야 하기 때문에 넣은 조건
                     if (targetTr != null)
                     {
+                        // 그 대상이 현재 검사중인 오브젝트와 일치한다면
                         if (c.transform.Equals(targetTr))
                         {
+                            // 현재 이동 조건을 prev에 저장하고 이동 조건을 추적으로 변경한 뒤 추적.
                             prevMoveCondition = curMoveCondition;
                             curMoveCondition = EMoveState.CHASE;
                             PushState();
@@ -269,17 +278,21 @@ public class FriendlyObject : SelectableObject, ISubscriber
                         }
                         continue;
                     }
-
+                    // 쫓는 대상은 없는데 검사한 대상이 적 유닛일 경우
                     if (targetType.Equals(EObjectType.ENEMY_UNIT))
                     {
-                        stateMachine.TargetTr = c.transform;
-                        targetTr = c.transform;
-                        isAttack = true;
-                        prevMoveCondition = curMoveCondition;
-                        curMoveCondition = EMoveState.CHASE;
-                        PushState();
-                        StateMove();
-                        yield break;
+                        // 해당 적이 살아있다면
+                        if (c.gameObject.activeSelf)
+                        {
+                            stateMachine.TargetTr = c.transform;
+                            targetTr = c.transform;
+                            isAttack = true;
+                            prevMoveCondition = curMoveCondition;
+                            curMoveCondition = EMoveState.CHASE;
+                            PushState();
+                            StateMove();
+                            yield break;
+                        }
                     }
                 }
             }

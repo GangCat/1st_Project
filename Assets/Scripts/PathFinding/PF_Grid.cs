@@ -6,8 +6,10 @@ public class PF_Grid : MonoBehaviour
 {
     public int MaxSize => gridSizeX * gridSizeY;
 
-    public void Init()
+    public void Init(float _gridWorldSizeX, float _gridWorldSizeY)
     {
+        gridWorldSize.x = _gridWorldSizeX;
+        gridWorldSize.y = _gridWorldSizeY;
         nodeDiameter = nodeRadius * 2;
         gridSizeX = Mathf.RoundToInt(gridWorldSize.x / nodeDiameter);
         gridSizeY = Mathf.RoundToInt(gridWorldSize.y / nodeDiameter);
@@ -193,20 +195,20 @@ public class PF_Grid : MonoBehaviour
 
 
     [SerializeField]
-    private bool displayUnwalkableNodeGizmos;
+    private bool displayUnwalkableNodeGizmos = false;
     [SerializeField]
     private LayerMask unWalkableMask;
     [SerializeField]
-    private Vector2 gridWorldSize;
-    [SerializeField]
-    private float nodeRadius;
+    private float nodeRadius = 0f;
 
-    private float nodeDiameter;
-    private int gridSizeX, gridSizeY;
+    private float nodeDiameter = 0f;
+    private int gridSizeX = 0;
+    private int gridSizeY = 0;
+    private Vector2 gridWorldSize = Vector2.zero;
 
     private Queue<PF_Node> queueNotVisitedNode = new Queue<PF_Node>();
     private HashSet<PF_Node> hashSetVisitedNode = new HashSet<PF_Node>();
     private List<PF_Node> listNeighborNode = new List<PF_Node>();
 
-    private PF_Node[,] grid;
+    private PF_Node[,] grid = null;
 }

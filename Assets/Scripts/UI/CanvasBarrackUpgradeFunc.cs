@@ -30,6 +30,8 @@ public class CanvasBarrackUpgradeFunc : CanvasFunc
             {
                 ArrayBarrackCommand.Use(EBarrackCommand.UPGRADE_UNIT, EUnitUpgradeType.MELEE_UNIT_HP);
             });
+
+        SetActive(false);
     }
 
     public void SetAllButtonUninteractable()

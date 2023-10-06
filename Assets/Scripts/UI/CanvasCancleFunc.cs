@@ -10,7 +10,7 @@ public class CanvasCancleFunc : CanvasFunc
         cancleBtn.onClick.AddListener(
             () =>
             {
-                ArrayUnitButtonCommand.Use(EUnitButtonCommand.CANCLE);
+                ArrayFuncButtonCommand.Use(EFuncButtonCommand.CANCLE);
                 gameObject.SetActive(false);
             });
 

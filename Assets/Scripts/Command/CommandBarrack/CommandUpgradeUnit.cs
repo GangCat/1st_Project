@@ -19,7 +19,6 @@ public class CommandUpgradeUnit : Command
         {
             curMng.UpgradeUnit(upgradeType);
             tempBarrack.UpgradeUnit(upgradeType);
-            selMng.UpdateFuncButton();
         }
     }
 

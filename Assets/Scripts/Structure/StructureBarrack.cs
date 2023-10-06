@@ -9,6 +9,7 @@ public class StructureBarrack : Structure, ISubscriber
         base.Init(_structureIdx);
         spawnPoint = transform.position;
         rallyPoint = spawnPoint;
+        listUnit = new List<EUnitType>();
         arrMemoryPool = new MemoryPool[arrUnitPrefab.Length];
         upgradeHpCmd = new CommandUpgradeStructureHP(GetComponent<StatusHp>());
 
@@ -16,6 +17,14 @@ public class StructureBarrack : Structure, ISubscriber
             arrMemoryPool[i] = new MemoryPool(arrUnitPrefab[i], 3, transform);
 
         Subscribe();
+    }
+
+    public bool IsProcessingSpawnUnit => isProcessingSpawnUnit;
+
+    public void UpdateSpawnInfo()
+    {
+        ArrayHUDSpawnUnitCommand.Use(EHUDSpawnUnitCommand.UPDATE_SPAWN_UNIT_LIST, listUnit);
+        ArrayHUDSpawnUnitCommand.Use(EHUDSpawnUnitCommand.UPDATE_SPAWN_UNIT_TIME, SpawnUnitProgressPercent);
     }
 
     protected override void UpgradeComplete()
@@ -45,9 +54,13 @@ public class StructureBarrack : Structure, ISubscriber
     public void SpawnUnit(EUnitType _unitType)
     {
         listUnit.Add(_unitType);
+        if (myObj.IsSelect)
+            ArrayHUDSpawnUnitCommand.Use(EHUDSpawnUnitCommand.UPDATE_SPAWN_UNIT_LIST, listUnit);
         RequestSpawnUnit();
         // ui에 나타내는 내용
     }
+
+
 
     public override void DeactivateUnit(GameObject _removeGo, EUnitType _type)
     {
@@ -56,9 +69,10 @@ public class StructureBarrack : Structure, ISubscriber
 
     private void RequestSpawnUnit()
     {
-        if (!isProcessingSpawnUnit && listUnit.Count > 0)
+        if (listUnit.Count < 1 && myObj.IsSelect)
+            ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
+        else if (!isProcessingSpawnUnit && listUnit.Count > 0)
         {
-            isProcessingSpawnUnit = true;
             EUnitType unitType = listUnit[0];
             StartCoroutine("SpawnUnitCoroutine", unitType);
         }
@@ -66,14 +80,23 @@ public class StructureBarrack : Structure, ISubscriber
 
     private IEnumerator SpawnUnitCoroutine(EUnitType _unitType)
     {
+        isProcessingSpawnUnit = true;
         float elapsedTime = 0f;
+        float spawnUnitDelay = arrSpawnUnitDelay[(int)_unitType];
+        if (myObj.IsSelect)
+            ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
 
-        while (elapsedTime < spawnUnitDelay[(int)_unitType])
+        while (SpawnUnitProgressPercent < 1)
         {
-            // elapsedTime으로 그 게이지 바 표시하기
+            if (myObj.IsSelect)
+                ArrayHUDSpawnUnitCommand.Use(EHUDSpawnUnitCommand.UPDATE_SPAWN_UNIT_TIME, SpawnUnitProgressPercent);
             yield return new WaitForSeconds(0.5f);
+
             elapsedTime += 0.5f;
+            SpawnUnitProgressPercent = elapsedTime / spawnUnitDelay;
         }
+
+        SpawnUnitProgressPercent = 0f;
 
         while (!canProcessSpawnUnit)
             yield return new WaitForSeconds(1f);
@@ -91,6 +114,8 @@ public class StructureBarrack : Structure, ISubscriber
 
         listUnit.RemoveAt(0);
         ArrayPopulationCommand.Use(EPopulationCommand.INCREASE_CUR_POPULATION, _unitType);
+        if (myObj.IsSelect)
+            ArrayHUDSpawnUnitCommand.Use(EHUDSpawnUnitCommand.UPDATE_SPAWN_UNIT_LIST, listUnit);
         RequestSpawnUnit();
     }
 
@@ -121,61 +146,51 @@ public class StructureBarrack : Structure, ISubscriber
 
     public void UpgradeUnit(EUnitUpgradeType _upgradeType)
     {
+        switch (_upgradeType)
+        {
+            case EUnitUpgradeType.RANGED_UNIT_DMG:
+                curUpgradeType = EUpgradeType.RANGED_DMG;
+                break;
+            case EUnitUpgradeType.RANGED_UNIT_HP:
+                curUpgradeType = EUpgradeType.RANGED_HP;
+                break;
+            case EUnitUpgradeType.MELEE_UNIT_DMG:
+                curUpgradeType = EUpgradeType.MELEE_DMG;
+                break;
+            case EUnitUpgradeType.MELEE_UNIT_HP:
+                curUpgradeType = EUpgradeType.MELEE_HP;
+                break;
+            default:
+                break;
+        }
+
         StartCoroutine("UpgradeUnitCoroutine", _upgradeType);
-    }
-
-    public bool UpgradeRangedUnitDmg()
-    {
-        if (!isProcessingUpgrade && SelectableObjectManager.LevelRangedUnitDmgUpgrade < upgradeLevel << 1)
-        {
-            StartCoroutine("UpgradeUnitCoroutine", EUnitUpgradeType.RANGED_UNIT_DMG);
-            return true;
-        }
-        return false;
-    }
-
-    public bool UpgradeRangedUnitHp()
-    {
-        if (!isProcessingUpgrade && SelectableObjectManager.LevelRangedUnitHpUpgrade < upgradeLevel << 1)
-        {
-            StartCoroutine("UpgradeUnitCoroutine", EUnitUpgradeType.RANGED_UNIT_HP);
-            return true;
-        }
-        return false;
-    }
-
-    public bool UpgradeMeleeUnitDmg()
-    {
-        if (!isProcessingUpgrade && SelectableObjectManager.LevelMeleeUnitDmgUpgrade < upgradeLevel << 1)
-        {
-            StartCoroutine("UpgradeUnitCoroutine", EUnitUpgradeType.MELEE_UNIT_DMG);
-            return true;
-        }
-        return false;
-    }
-
-    public bool UpgradeMeleeUnitHp()
-    {
-        if (!isProcessingUpgrade && SelectableObjectManager.LevelMeleeUnitHpUpgrade < upgradeLevel << 1)
-        {
-            StartCoroutine("UpgradeUnitCoroutine", EUnitUpgradeType.MELEE_UNIT_HP);
-            return true;
-        }
-        return false;
     }
 
     private IEnumerator UpgradeUnitCoroutine(EUnitUpgradeType _upgradeType)
     {
         isProcessingUpgrade = true;
+        if (myObj.IsSelect)
+            ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
 
-        float buildFinishTime = Time.time + SelectableObjectManager.DelayUnitUpgrade;
-        while (buildFinishTime > Time.time)
+        float elapsedTime = 0f;
+        UpgradeAndConstructProgressPercent = elapsedTime / upgradeDelay;
+        while (elapsedTime < upgradeDelay)
         {
-            // ui 표시
+            if (myObj.IsSelect)
+                ArrayHUDUpgradeCommand.Use(EHUDUpgradeCommand.UPDATE_UPGRADE_TIME, UpgradeAndConstructProgressPercent);
             yield return new WaitForSeconds(0.5f);
+            elapsedTime += 0.5f;
+            UpgradeAndConstructProgressPercent = elapsedTime / upgradeDelay;
         }
+
         isProcessingUpgrade = false;
 
+        UpgradeUnitComplete(_upgradeType);
+    }
+
+    private void UpgradeUnitComplete(EUnitUpgradeType _upgradeType)
+    {
         switch (_upgradeType)
         {
             case EUnitUpgradeType.RANGED_UNIT_DMG:
@@ -192,6 +207,8 @@ public class StructureBarrack : Structure, ISubscriber
                 break;
         }
 
+        if (myObj.IsSelect)
+            ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
     }
 
     public void Subscribe()
@@ -214,11 +231,11 @@ public class StructureBarrack : Structure, ISubscriber
         }
     }
 
-    [Header("-Melee(temp), Range, Rocket(temp)")]
+    [Header("-Melee, Range, Rocket(temp)")]
     [SerializeField]
-    private float[] spawnUnitDelay = new float[(int)EUnitType.LENGTH];
+    private float[] arrSpawnUnitDelay = null;
     [SerializeField]
-    private GameObject[] arrUnitPrefab = new GameObject[(int)EUnitType.LENGTH];
+    private GameObject[] arrUnitPrefab = null;
 
     [Header("-Upgrade Attribute")]
     [SerializeField]
@@ -232,7 +249,9 @@ public class StructureBarrack : Structure, ISubscriber
     private Vector3 spawnPoint = Vector3.zero;
     private Vector3 rallyPoint = Vector3.zero;
     private Transform rallyTr = null;
-    private List<EUnitType> listUnit = new List<EUnitType>();
+    private List<EUnitType> listUnit = null;
 
     private MemoryPool[] arrMemoryPool = null;
+
+    private float SpawnUnitProgressPercent = 0f;
 }

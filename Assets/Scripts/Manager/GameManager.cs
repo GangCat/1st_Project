@@ -6,19 +6,18 @@ public class GameManager : MonoBehaviour
 {
     private void Awake()
     {
-        inputMng = FindAnyObjectByType<InputManager>();
-        cameraMng = FindAnyObjectByType<CameraManager>();
-        selectMng = FindAnyObjectByType<SelectableObjectManager>();
-        uiMng = FindAnyObjectByType<UIManager>();
-        structureMng = FindAnyObjectByType<StructureManager>();
-        pathMng = FindAnyObjectByType<PF_PathRequestManager>();
-        enemyMng = FindAnyObjectByType<EnemyManager>();
-        currencyMng = FindAnyObjectByType<CurrencyManager>();
-        populationMng = FindAnyObjectByType<PopulationManager>();
-        heroMng = FindAnyObjectByType<HeroUnitManager>();
-        spawnMng = FindAnyObjectByType<SpawnManager>();
+        inputMng = FindFirstObjectByType<InputManager>();
+        cameraMng = FindFirstObjectByType<CameraManager>();
+        selectMng = FindFirstObjectByType<SelectableObjectManager>();
+        uiMng = FindFirstObjectByType<UIManager>();
+        structureMng = FindFirstObjectByType<StructureManager>();
+        pathMng = FindFirstObjectByType<PF_PathRequestManager>();
+        enemyMng = FindFirstObjectByType<EnemyManager>();
+        currencyMng = FindFirstObjectByType<CurrencyManager>();
+        populationMng = FindFirstObjectByType<PopulationManager>();
+        heroMng = FindFirstObjectByType<HeroUnitManager>();
 
-        mainBaseTr = FindAnyObjectByType<StructureMainBase>().transform;
+        mainBaseTr = FindFirstObjectByType<StructureMainBase>().transform;
     }
 
     private void Start()
@@ -45,18 +44,16 @@ public class GameManager : MonoBehaviour
 
         InitCommandList();
         InitManagers();
+        RegistObserver();
     }
 
     private void InitManagers()
     {
-        pathMng.Init();
+        pathMng.Init(worldSizeX, worldSizeY);
         grid = pathMng.GetComponent<PF_Grid>();
         inputMng.Init(
             MoveUnitByPicking,
             MoveUnitByPickingObject,
-            ZoomCamera,
-            MoveCameraWithMouse,
-            MoveCameraWithKey,
             AddSelectedObject,
             RemoveSelectedObject,
             SelectFinish,
@@ -64,7 +61,7 @@ public class GameManager : MonoBehaviour
             AttackMove,
             PatrolMove);
         cameraMng.Init();
-        structureMng.Init(grid, FindAnyObjectByType<StructureMainBase>());
+        structureMng.Init(grid, FindFirstObjectByType<StructureMainBase>());
 
         uiMng.Init();
         selectMng.Init(UnitSelect, grid);
@@ -72,28 +69,23 @@ public class GameManager : MonoBehaviour
         currencyMng.Init();
         populationMng.Init();
 
-        GameObject spawnPlayer = spawnMng.Init();
-        
-        // heroMng.Init(FindAnyObjectByType<UnitHero>());
-        heroMng.Init(spawnPlayer.GetComponent<UnitHero>());
-        
+        heroMng.Init(FindFirstObjectByType<UnitHero>());
         InitMainBase();
     }
 
     private void InitCommandList()
     {
-        ArrayUnitButtonCommand.Add(EUnitButtonCommand.CANCLE, new CommandButtonCancle());
-        ArrayUnitButtonCommand.Add(EUnitButtonCommand.MOVE, new CommandButtonMove(inputMng));
-        ArrayUnitButtonCommand.Add(EUnitButtonCommand.STOP, new CommandButtonStop(selectMng));
-        ArrayUnitButtonCommand.Add(EUnitButtonCommand.HOLD, new CommandButtonHold(selectMng));
-        ArrayUnitButtonCommand.Add(EUnitButtonCommand.PATROL, new CommandButtonPatrol(inputMng));
-        ArrayUnitButtonCommand.Add(EUnitButtonCommand.ATTACK, new CommandButtonAttack(inputMng));
-        ArrayUnitButtonCommand.Add(EUnitButtonCommand.LAUNCH_NUCLEAR, new CommandButtonLaunchNuclear(inputMng));
+        ArrayFuncButtonCommand.Add(EFuncButtonCommand.CANCLE, new CommandButtonCancle());
+        ArrayFuncButtonCommand.Add(EFuncButtonCommand.MOVE, new CommandButtonMove(inputMng));
+        ArrayFuncButtonCommand.Add(EFuncButtonCommand.STOP, new CommandButtonStop(selectMng));
+        ArrayFuncButtonCommand.Add(EFuncButtonCommand.HOLD, new CommandButtonHold(selectMng));
+        ArrayFuncButtonCommand.Add(EFuncButtonCommand.PATROL, new CommandButtonPatrol(inputMng));
+        ArrayFuncButtonCommand.Add(EFuncButtonCommand.ATTACK, new CommandButtonAttack(inputMng));
+        ArrayFuncButtonCommand.Add(EFuncButtonCommand.LAUNCH_NUCLEAR, new CommandButtonLaunchNuclear(inputMng));
 
         ArrayBuildCommand.Add(EMainBaseCommnad.CANCLE, new CommandBuildCancle(structureMng, inputMng));
         ArrayBuildCommand.Add(EMainBaseCommnad.CONFIRM, new CommandBuildConfirm(structureMng, inputMng, currencyMng));
         ArrayBuildCommand.Add(EMainBaseCommnad.BUILD_STRUCTURE, new CommandBuildStructure(structureMng, inputMng, currencyMng));
-        ArrayBuildCommand.Add(EMainBaseCommnad.BUILD_COMPLETE, new CommandBuildComplete(selectMng));
 
         ArrayBarrackCommand.Add(EBarrackCommand.RALLYPOINT, new CommandRallypoint(inputMng));
         ArrayBarrackCommand.Add(EBarrackCommand.SPAWN_UNIT, new CommandSpawnUnit(selectMng, currencyMng));
@@ -105,6 +97,8 @@ public class GameManager : MonoBehaviour
         ArrayBunkerCommand.Add(EBunkerCommand.OUT_ONE_UNIT, new CommandOutOneUnit(selectMng));
         ArrayBunkerCommand.Add(EBunkerCommand.OUT_ALL_UNIT, new CommandOutAllUnit(selectMng));
         ArrayBunkerCommand.Add(EBunkerCommand.EXPAND_WALL, new CommandExpandWall(selectMng, structureMng, inputMng));
+
+        ArrayUICommand.Add(EUICommand.UPDATE_INFO_UI, new CommandUpdateInfoUI(selectMng));
 
         ArrayEnemyObjectCommand.Add(EEnemyObjectCommand.WAVE_ENEMY_DEAD, new CommandWaveEnemyDead(enemyMng));
         ArrayEnemyObjectCommand.Add(EEnemyObjectCommand.MAP_ENEMY_DEAD, new CommandMapEnemyDead(enemyMng));
@@ -134,8 +128,13 @@ public class GameManager : MonoBehaviour
         ArrayPopulationCommand.Add(EPopulationCommand.INCREASE_CUR_POPULATION, new CommandIncreaseCurPopulation(populationMng));
         ArrayPopulationCommand.Add(EPopulationCommand.UPGRADE_MAX_POPULATION, new CommandUpgradePopulation(populationMng, currencyMng, selectMng));
         ArrayPopulationCommand.Add(EPopulationCommand.UPGRADE_POPULATION_COMPLETE, new CommandUpgradePopulationComplete(populationMng));
+    }
 
-
+    private void RegistObserver()
+    {
+        ImageMinimap minimap = FindFirstObjectByType<ImageMinimap>();
+        minimap.Init(worldSizeX, worldSizeY);
+        minimap.RegisterPauseObserver(inputMng.GetComponent<IMinimapObserver>());
     }
 
     private StructureMainBase InitMainBase()
@@ -225,8 +224,12 @@ public class GameManager : MonoBehaviour
     private CurrencyManager currencyMng = null;
     private PopulationManager populationMng = null;
     private HeroUnitManager heroMng = null;
-    private SpawnManager spawnMng = null;
 
     private PF_Grid grid = null;
     private Transform mainBaseTr = null;
+
+    [SerializeField]
+    private float worldSizeX = 100f; // 미니맵에 표시할 월드의 가로길이
+    [SerializeField]
+    private float worldSizeY = 100f; // 미니맵에 표시할 월드의 세로길이
 }

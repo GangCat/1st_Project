@@ -12,8 +12,8 @@ public class StructureMainBase : Structure
     public override void Init(int _structureIdx)
     {
         upgradeHpCmd = new CommandUpgradeStructureHP(GetComponent<StatusHp>());
-
-        GetComponent<FriendlyObject>().Init();
+        myObj = GetComponent<FriendlyObject>();
+        myObj.Init();
         myIdx = _structureIdx;
         upgradeLevel = 1;
         UpdateNodeWalkable(false);
@@ -46,6 +46,10 @@ public class StructureMainBase : Structure
     private IEnumerator UpgradePopulationCoroutine()
     {
         isProcessingUpgrade = true;
+        curUpgradeType = EUpgradeType.POPULATION;
+        if (myObj.IsSelect)
+            ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
+
         float upgradeFinishTime = Time.time + upgradePopulationDelay;
         while(upgradeFinishTime > Time.time)
         {
@@ -54,16 +58,22 @@ public class StructureMainBase : Structure
         }
         isProcessingUpgrade = false;
         ArrayPopulationCommand.Use(EPopulationCommand.UPGRADE_POPULATION_COMPLETE);
+        if(myObj.IsSelect)
+            ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
     }
 
     public void UpgradeEnergySupply()
     {
-         StartCoroutine("UpgradeEnergySupplyCoroutine");
+        StartCoroutine("UpgradeEnergySupplyCoroutine");
     }
 
     private IEnumerator UpgradeEnergySupplyCoroutine()
     {
         isProcessingUpgrade = true;
+        curUpgradeType = EUpgradeType.ENERGY;
+        if (myObj.IsSelect)
+            ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
+
         float upgradeFinishTime = Time.time + upgradeEnergySupplyDelay;
         while (upgradeFinishTime > Time.time)
         {
@@ -72,6 +82,8 @@ public class StructureMainBase : Structure
         }
         isProcessingUpgrade = false;
         ArrayCurrencyCommand.Use(ECurrencyCommand.UPGRADE_ENERGY_SUPPLY_COMPLETE);
+        if (myObj.IsSelect)
+            ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
     }
 
     [Header("-Upgrade Attribute")]

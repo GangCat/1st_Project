@@ -8,6 +8,12 @@ public class CameraMovement : MonoBehaviour
     {
         mainCamera = GetComponent<Camera>();
         targetZoom = mainCamera.orthographicSize;
+
+    }
+
+    public void WarpCameraWithPos(Vector3 _pos)
+    {
+        transform.position = _pos + cameraOffset;
     }
 
     public void ZoomCamera(float _zoomRatio)
@@ -36,7 +42,7 @@ public class CameraMovement : MonoBehaviour
         transform.position = Vector3.Lerp(transform.position, screenMovePos, Time.deltaTime);
     }
 
-    public void MoveCemeraWithKey(Vector2 _arrowKeyInput)
+    public void MoveCameraWithKey(Vector2 _arrowKeyInput)
     {
         screenMovePos = transform.position;
 

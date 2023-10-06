@@ -7,10 +7,10 @@ public class PF_PathFinding : MonoBehaviour
 {
     public delegate void FinishPathFindDelegate(PF_Node[] _waypoints, bool _isPathSuccess);
 
-    public void Init(FinishPathFindDelegate _finishPathFindCallback)
+    public void Init(FinishPathFindDelegate _finishPathFindCallback, float _gridWorldSizeX, float _gridWorldSizeY)
     {
         grid = GetComponent<PF_Grid>();
-        grid.Init();
+        grid.Init(_gridWorldSizeX, _gridWorldSizeY);
         finishPathFindCallback = _finishPathFindCallback;
 
         openSet = new PF_Heap<PF_Node>(grid.MaxSize);
