@@ -16,9 +16,9 @@ public class UnitHero : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    public void Ressurection(Vector3 _ressurectionPos)
+    public void Resurrection(Vector3 _resurrectionPos)
     {
-        transform.position = _ressurectionPos;
+        transform.position = _resurrectionPos;
         gameObject.SetActive(true);
         myObj.SetIdleState();
         statusHp.Init();
