@@ -19,6 +19,14 @@ public class ImageMinimap : MonoBehaviour, IPointerClickHandler, IMinimapSubject
 
         listStructureNode = new List<PF_Node>();
 
+        int idx = 0;
+
+        while (idx < texW * texH)
+        {
+            tex2d.SetPixel(idx % texW, idx / texH, Color.black);
+            ++idx;
+        }
+
         StartCoroutine("UpdateMinimap");
     }
 
@@ -50,25 +58,33 @@ public class ImageMinimap : MonoBehaviour, IPointerClickHandler, IMinimapSubject
 
     private void UpdateTexture(ref Texture2D tex2d)
     {
-        int idx = 0;
+        for(int i = 0; i < tempFriendlyNodeList.Count; ++i) 
+            tex2d.SetPixel(tempFriendlyNodeList[i].gridX, tempFriendlyNodeList[i].gridY, Color.black);
 
-        while (idx < texW * texH)
-        {
-            tex2d.SetPixel(idx % texW, idx / texH, Color.black);
-            ++idx;
-        }
+        for(int i = 0; i < tempEnemyNodeList.Count; ++i)
+            tex2d.SetPixel(tempEnemyNodeList[i].gridX, tempEnemyNodeList[i].gridY, Color.black);
+
+        tempFriendlyNodeList.Clear();
+        tempEnemyNodeList.Clear();
 
         PF_Node tempNode = null;
 
         foreach (PF_Node node in SelectableObjectManager.DicNodeUnderFriendlyUnit.Values)
+        {
+            tempFriendlyNodeList.Add(node);
             tex2d.SetPixel(node.gridX, node.gridY, Color.green);
+        }
 
         foreach (PF_Node node in SelectableObjectManager.DicNodeUnderEnemyUnit.Values)
+        {
+            tempEnemyNodeList.Add(node);
             tex2d.SetPixel(node.gridX, node.gridY, Color.red);
+        }
 
         for (int i = 0; i < listStructureNode.Count; ++i)
         {
             tempNode = listStructureNode[i];
+            tempFriendlyNodeList.Add(tempNode);
             tex2d.SetPixel(tempNode.gridX, tempNode.gridY, Color.green);
         }
 
@@ -124,6 +140,8 @@ public class ImageMinimap : MonoBehaviour, IPointerClickHandler, IMinimapSubject
     private int texH = 0;
     private int texW = 0;
     private List<IMinimapObserver> listObserver = new List<IMinimapObserver>();
+    private List<PF_Node> tempFriendlyNodeList = new List<PF_Node>();
+    private List<PF_Node> tempEnemyNodeList = new List<PF_Node>();
 
     private float worldSizeX = 0f; // 미니맵에 표시할 월드의 가로길이
     private float worldSizeY = 0f; // 미니맵에 표시할 월드의 세로길이

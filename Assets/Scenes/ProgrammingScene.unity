@@ -1964,8 +1964,8 @@ MonoBehaviour:
   outerCircleRad: 5
   innerCircleRad: 0
   mapSpawnCnt: 3
-  smallWaveDelay_sec: 300
-  bigWaveDelay_sec: 600
+  smallWaveDelay_sec: 60
+  bigWaveDelay_sec: 200
   totalBigWaveCnt: 2
   arrWaveStartPoint:
   - {fileID: 1810121891}
@@ -7540,7 +7540,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraOffset: {x: -7, y: 17, z: -7}
   zoomSpeed: 5
-  camMoveSpeed: 8000
+  camMoveSpeed: 4000
   minZoom: 5
   maxZoom: 20
   smoothTime: 0.2
@@ -19240,7 +19240,7 @@ MonoBehaviour:
   energySupplyAmount: 300
   curEnergy: 300
   maxEnergy: 100000
-  energySupplyRate: 10
+  energySupplyRate: 5
   curCore: 1000
   maxCore: 100000
   buildBarrack: 150
@@ -21273,7 +21273,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2062932715}
   m_Layer: 0
-  m_Name: Obstacle
+  m_Name: TempObstacle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
