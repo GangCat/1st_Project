@@ -59,7 +59,8 @@ public class CameraMovement : MonoBehaviour
         transform.position = _objectPos + cameraOffset;
         
     }
-
+    
+    // YBO TEST
     
     [SerializeField]
     private Vector3 cameraOffset = Vector3.zero;
