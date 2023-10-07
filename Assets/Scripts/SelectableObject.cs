@@ -22,6 +22,7 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType
 
     }
 
+    public Vector3 GetPos => transform.position;
     public int MaxHp => statusHp.MaxHp;
     public float AttRange => attackRange;
     public float GetCurHpPercent => statusHp.GetCurHpPercent;

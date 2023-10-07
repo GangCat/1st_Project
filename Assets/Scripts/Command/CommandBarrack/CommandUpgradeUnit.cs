@@ -4,15 +4,14 @@ using UnityEngine;
 
 public class CommandUpgradeUnit : Command
 {
-    public CommandUpgradeUnit(SelectableObjectManager _selMng, CurrencyManager _curMng)
+    public CommandUpgradeUnit(CurrencyManager _curMng)
     {
-        selMng = _selMng;
         curMng = _curMng;
     }
 
     public override void Execute(params object[] _objects)
     {
-        StructureBarrack tempBarrack = selMng.GetFirstSelectedObjectInList.GetComponent<StructureBarrack>();
+        StructureBarrack tempBarrack = SelectableObjectManager.GetFirstSelectedObjectInList.GetComponent<StructureBarrack>();
         EUnitUpgradeType upgradeType = (EUnitUpgradeType)_objects[0];
 
         if (tempBarrack.CanUpgradeUnit(upgradeType) && curMng.CanUpgradeUnit(upgradeType))
@@ -22,6 +21,5 @@ public class CommandUpgradeUnit : Command
         }
     }
 
-    private SelectableObjectManager selMng = null;
     private CurrencyManager curMng = null;
 }

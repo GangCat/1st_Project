@@ -7,7 +7,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
     public delegate void VoidSelectObjectTypeDelegate(EObjectType _objectType);
     public bool IsListEmpty => listSelectedFriendlyObject.Count < 1;
     public bool IsFriendlyUnit => isFriendlyUnitInList;
-    public FriendlyObject GetFirstSelectedObjectInList => listSelectedFriendlyObject[0];
+    public static FriendlyObject GetFirstSelectedObjectInList => listSelectedFriendlyObject[0];
     public static int LevelRangedUnitDmgUpgrade => levelRangedUnitDmgUpgrade;
     public static int LevelRangedUnitHpUpgrade => levelRangedUnitHpUpgrade;
     public static int LevelMeleeUnitHpUpgrade => levelMeleeUnitHpUpgrade;

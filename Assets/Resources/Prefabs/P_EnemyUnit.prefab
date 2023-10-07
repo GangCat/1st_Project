@@ -110,7 +110,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectType: 8
-  selectDisplayCircle: {fileID: 52691291055329485, guid: 66b3e7d1c0e093b4a9c5f1353cffe397,
+  selectDisplayCircle: {fileID: 52691291055329485, guid: 58ef200a9ea84df48a81a49db5dc2f39,
     type: 3}
   chaseStartRange: 5
   chaseFinishRange: 6

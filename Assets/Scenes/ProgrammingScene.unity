@@ -9983,7 +9983,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: f0d0f0363d0452649866f061a77a7c2d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -15031,7 +15031,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1378570614
 RectTransform:
   m_ObjectHideFlags: 0
@@ -15322,7 +15322,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: ed8ef41e0593c444f89985400bb18768, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -16273,7 +16273,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1516028855
 RectTransform:
   m_ObjectHideFlags: 0
@@ -16834,7 +16834,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfaeabc5d5b66ed4b995318836c28e1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pickPosPrefab: {fileID: 52691291055329485, guid: 58ef200a9ea84df48a81a49db5dc2f39,
+  pickPosPrefab: {fileID: 52691291055329485, guid: 66b3e7d1c0e093b4a9c5f1353cffe397,
     type: 3}
   pickPosDisplayHideDelay: 0.3
   cancleKey: 27

@@ -8,13 +8,11 @@ public class InputManager : MonoBehaviour, IMinimapObserver
     public void Init(
         VoidVec3Delegate _pickingCallback,
         VoidTransformDelegate _PickingObjectCallback,
-        VoidVoidDelegate _moveCameraWithObjectCallback,
         VoidVec3Delegate _attackMoveCallback,
         VoidVec3Delegate _patrolCallback)
     {
         pickingCallback = _pickingCallback;
         PickingObjectCallback = _PickingObjectCallback;
-        moveCameraWithObjectCallback = _moveCameraWithObjectCallback;
         attackMoveCallback = _attackMoveCallback;
         patrolCallback = _patrolCallback;
 
@@ -291,7 +289,8 @@ public class InputManager : MonoBehaviour, IMinimapObserver
     {
         if (Input.GetKey(KeyCode.Space))
         {
-            moveCameraWithObjectCallback?.Invoke();
+            ArrayCameraMoveCommand.Use(ECameraCommand.MOVE_WITH_OBJECT);
+            //moveCameraWithObjectCallback?.Invoke();
         }
         else if (Input.GetAxisRaw("Horizontal Arrow").Equals(0) && Input.GetAxisRaw("Vertical Arrow").Equals(0))
             ArrayCameraMoveCommand.Use(ECameraCommand.MOVE_WITH_MOUSE, Input.mousePosition);
@@ -304,7 +303,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver
 
     public void GetUnitTargetPos(Vector3 _pos)
     {
-
+        
     }
 
     public void GetCameraTargetPos(Vector3 _pos)
@@ -341,7 +340,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver
 
     private VoidVec3Delegate pickingCallback = null;
     private VoidTransformDelegate PickingObjectCallback = null;
-    private VoidVoidDelegate moveCameraWithObjectCallback = null;
+    //private VoidVoidDelegate moveCameraWithObjectCallback = null;
     private VoidVec3Delegate attackMoveCallback = null;
     private VoidVec3Delegate patrolCallback = null;
 }
