@@ -17,6 +17,17 @@ public class StructureBunker : Structure
         upgradeBuffRatioCmd = new CommandUpgradeStructureBuffRatio(this);
     }
 
+    public override bool StartUpgrade()
+    {
+        if (!isProcessingUpgrade && upgradeLevel < StructureManager.UpgradeLimit)
+        {
+            OutAllUnit();
+            StartCoroutine("UpgradeCoroutine");
+            return true;
+        }
+        return false;
+    }
+
     protected override void UpgradeComplete()
     {
         base.UpgradeComplete();

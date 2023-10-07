@@ -24,7 +24,7 @@ RenderSettings:
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
-  m_AmbientMode: 4
+  m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
   m_SkyboxMaterial: {fileID: 0}
   m_HaloStrength: 0.5
@@ -16837,13 +16837,17 @@ MonoBehaviour:
   pickPosPrefab: {fileID: 52691291055329485, guid: 66b3e7d1c0e093b4a9c5f1353cffe397,
     type: 3}
   pickPosDisplayHideDelay: 0.3
-  cancleKey: 27
   floorLayer:
     serializedVersion: 2
     m_Bits: 64
   selectableLayer:
     serializedVersion: 2
     m_Bits: 1152
+  arrUnitFuncHotkey: 6d000000730000006800000070000000610000006e000000
+  arrBuildFuncHotkey: 7400000075000000620000006e00000077000000
+  arrBarrackFuncHotkey: 6d0000006c0000007200000061000000730000006400000066000000
+  arrStructureFuncHotkey: 67000000640000006e0000006f000000750000006500000070000000
+  cancleKey: 27
 --- !u!4 &1606740354
 Transform:
   m_ObjectHideFlags: 0
