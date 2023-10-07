@@ -24,6 +24,8 @@ public class GameManager : MonoBehaviour
     {
         // 마우스 가두기
         Cursor.lockState = CursorLockMode.Confined;
+        // 마우스 모양 바꾸기
+        Cursor.SetCursor(customCursor, Vector2.zero, CursorMode.ForceSoftware);
         // 유니티 에디터에서 실행할 때 창 모드로 실행
         //#if UNITY_EDITOR
         //        Screen.SetResolution(Screen.width, Screen.height, false);
@@ -181,7 +183,12 @@ public class GameManager : MonoBehaviour
     #endregion
 
 
-
+    [SerializeField]
+    private float worldSizeX = 100f; // 미니맵에 표시할 월드의 가로길이
+    [SerializeField]
+    private float worldSizeY = 100f; // 미니맵에 표시할 월드의 세로길이
+    [SerializeField]
+    private Texture2D customCursor;
 
     private InputManager inputMng = null;
     private CameraManager cameraMng = null;
@@ -196,9 +203,4 @@ public class GameManager : MonoBehaviour
 
     private PF_Grid grid = null;
     private Transform mainBaseTr = null;
-
-    [SerializeField]
-    private float worldSizeX = 100f; // 미니맵에 표시할 월드의 가로길이
-    [SerializeField]
-    private float worldSizeY = 100f; // 미니맵에 표시할 월드의 세로길이
 }
