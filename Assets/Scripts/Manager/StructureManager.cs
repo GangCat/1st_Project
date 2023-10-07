@@ -85,6 +85,7 @@ public class StructureManager : MonoBehaviour
 
     public void Demolish(int _structureIdx)
     {
+        if (_structureIdx.Equals(0)) return;
         StartCoroutine("DemolishCoroutine", _structureIdx);
     }
 
@@ -104,11 +105,16 @@ public class StructureManager : MonoBehaviour
     {
         Structure structure = null;
         dicStructure.TryGetValue(_structureIdx, out structure);
+        if (structure == null) return;
+
         InstantiateRuin(structure);
         structure.UpdateNodeWalkable(true);
         dicStructure.Remove(_structureIdx);
-        if (structure.GetComponent<FriendlyObject>().GetObjectType().Equals(EObjectType.NUCLEAR))
+        FriendlyObject fObj = structure.GetComponent<FriendlyObject>();
+        if (fObj.GetObjectType().Equals(EObjectType.NUCLEAR))
             listNuclearStructure.Remove(structure.GetComponent<StructureNuclear>());
+        fObj.unSelect();
+        ArraySelectCommand.Use(ESelectCommand.REMOVE_FROM_LIST, fObj);
         structure.DestroyStructure();
     }
 

@@ -423,7 +423,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
                 }
             }
         }
-        // 리스트가 비어있거나 적 유닛이 존재할 경우
+        // 리스트가 비어있거나 적 유닛만 존재할 경우
         else
         {
             ArrayHUDCommand.Use(EHUDCommand.HIDE_UNIT_INFO);
