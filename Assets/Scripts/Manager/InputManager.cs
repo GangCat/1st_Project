@@ -8,23 +8,18 @@ public class InputManager : MonoBehaviour, IMinimapObserver
     public void Init(
         VoidVec3Delegate _pickingCallback,
         VoidTransformDelegate _PickingObjectCallback,
-        VoidTemplateDelegate<SelectableObject> _selectObjectCallback,
-        VoidTemplateDelegate<SelectableObject> _unSelectObjectCallback,
-        VoidVoidDelegate _selectFinishCallback,
         VoidVoidDelegate _moveCameraWithObjectCallback,
         VoidVec3Delegate _attackMoveCallback,
         VoidVec3Delegate _patrolCallback)
     {
         pickingCallback = _pickingCallback;
         PickingObjectCallback = _PickingObjectCallback;
-        selectFinishCallback = _selectFinishCallback;
         moveCameraWithObjectCallback = _moveCameraWithObjectCallback;
-        selectObjectCallback = _selectObjectCallback;
         attackMoveCallback = _attackMoveCallback;
         patrolCallback = _patrolCallback;
 
         selectArea = GetComponentInChildren<SelectArea>();
-        selectArea.Init(_selectObjectCallback, _unSelectObjectCallback);
+        selectArea.Init();
     }
     public bool IsBuildOperation
     {
@@ -281,7 +276,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver
             yield return null;
         }
 
-        selectFinishCallback?.Invoke();
+        ArraySelectCommand.Use(ESelectCommand.SELECT_FINISH);
         selectArea.SetActive(false);
     }
 
@@ -344,7 +339,6 @@ public class InputManager : MonoBehaviour, IMinimapObserver
 
     private VoidVec3Delegate pickingCallback = null;
     private VoidTransformDelegate PickingObjectCallback = null;
-    private VoidVoidDelegate selectFinishCallback = null;
     private VoidVoidDelegate moveCameraWithObjectCallback = null;
     private VoidTemplateDelegate<SelectableObject> selectObjectCallback = null;
     private VoidVec3Delegate attackMoveCallback = null;

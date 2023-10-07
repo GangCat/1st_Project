@@ -54,9 +54,6 @@ public class GameManager : MonoBehaviour
         inputMng.Init(
             MoveUnitByPicking,
             MoveUnitByPickingObject,
-            AddSelectedObject,
-            RemoveSelectedObject,
-            SelectFinish,
             MoveCameraWithObject,
             AttackMove,
             PatrolMove);
@@ -128,6 +125,10 @@ public class GameManager : MonoBehaviour
         ArrayPopulationCommand.Add(EPopulationCommand.INCREASE_CUR_POPULATION, new CommandIncreaseCurPopulation(populationMng));
         ArrayPopulationCommand.Add(EPopulationCommand.UPGRADE_MAX_POPULATION, new CommandUpgradePopulation(populationMng, currencyMng, selectMng));
         ArrayPopulationCommand.Add(EPopulationCommand.UPGRADE_POPULATION_COMPLETE, new CommandUpgradePopulationComplete(populationMng));
+
+        ArraySelectCommand.Add(ESelectCommand.TEMP_SELECT, new CommandTempSelect(selectMng));
+        ArraySelectCommand.Add(ESelectCommand.TEMP_UNSELECT, new CommandTempUnselect(selectMng));
+        ArraySelectCommand.Add(ESelectCommand.SELECT_FINISH, new CommandSelectFinish(selectMng));
     }
 
     private void RegistObserver()
@@ -165,24 +166,6 @@ public class GameManager : MonoBehaviour
     private void MoveCameraWithObject()
     {
         cameraMng.MoveCameraWithObject(selectMng.GetFirstSelectedObjectInList.Position);
-    }
-
-    private void AddSelectedObject(SelectableObject _object)
-    {
-        selectMng.AddSelectedObject(_object);
-        // 선택된 obj 아웃라인 표시
-    }
-
-    private void RemoveSelectedObject(SelectableObject _object)
-    {
-        selectMng.RemoveSelectedObject(_object);
-        // 해당 obj 아웃라인 해제
-    }
-
-    private void SelectFinish()
-    {
-        // 반환되는 배열을 가지고 해당 배열의 오브젝트들의 발 밑에 둥근 원을 생성
-        selectMng.SelectFinish();
     }
 
     private void AttackMove(Vector3 _targetPos)
