@@ -110,6 +110,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectType: 8
+  selectDisplayCircle: {fileID: 52691291055329485, guid: 66b3e7d1c0e093b4a9c5f1353cffe397,
+    type: 3}
   chaseStartRange: 5
   chaseFinishRange: 6
   attackRange: 4
@@ -138,7 +140,8 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 2632642936934636510}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0

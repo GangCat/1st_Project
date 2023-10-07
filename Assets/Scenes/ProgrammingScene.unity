@@ -16175,6 +16175,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2018547504}
     m_Modifications:
+    - target: {fileID: 3259663480990585806, guid: b1841c0cd9c4e6d439fd42a2caeb4d6b,
+        type: 3}
+      propertyPath: sceneViewId
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5209549203731370052, guid: b1841c0cd9c4e6d439fd42a2caeb4d6b,
         type: 3}
       propertyPath: maxHp
@@ -20936,8 +20941,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff91674aebdbec643958a58fae834e78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ressurectionDelay: 30
-  ressurectionPos: {x: 3.5, y: 0, z: -3.5}
+  resurrectionDelay: 30
+  resurrectionPos: {x: 0, y: 0, z: 0}
 --- !u!1 &2024433290
 GameObject:
   m_ObjectHideFlags: 0

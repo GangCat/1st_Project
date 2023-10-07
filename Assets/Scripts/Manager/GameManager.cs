@@ -162,21 +162,6 @@ public class GameManager : MonoBehaviour
             selectMng.MoveUnitByPicking(_targetTr);
     }
 
-    private void ZoomCamera(float _zoomRatio)
-    {
-        cameraMng.ZoomCamera(_zoomRatio);
-    }
-
-    private void MoveCameraWithMouse(Vector2 _mousePos)
-    {
-        cameraMng.MoveCameraWithMouse(_mousePos);
-    }
-
-    private void MoveCameraWithKey(Vector2 _arrowKeyInput)
-    {
-        cameraMng.MoveCameraWithKey(_arrowKeyInput);
-    }
-
     private void MoveCameraWithObject()
     {
         cameraMng.MoveCameraWithObject(selectMng.GetFirstSelectedObjectInList.Position);

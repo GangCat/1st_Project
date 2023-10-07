@@ -33,12 +33,16 @@ public class SelectArea : MonoBehaviour
 
     private void OnTriggerEnter(Collider _other)
     {
-        selectObjectCallback?.Invoke(_other.GetComponent<SelectableObject>());
+        SelectableObject sObj = _other.GetComponent<SelectableObject>();
+        if(sObj != null)
+            selectObjectCallback?.Invoke(sObj);
     }
 
     private void OnTriggerExit(Collider _other)
     {
-        unSelectObjectCallback?.Invoke(_other.GetComponent<SelectableObject>());
+        SelectableObject sObj = _other.GetComponent<SelectableObject>();
+        if (sObj != null)
+            unSelectObjectCallback?.Invoke(sObj);
     }
 
     private VoidTemplateDelegate<SelectableObject> selectObjectCallback = null;

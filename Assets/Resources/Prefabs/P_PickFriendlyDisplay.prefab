@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3309632986339933209}
   m_Layer: 0
-  m_Name: P_PickPosDisplay
+  m_Name: P_PickFriendlyDisplay
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -105,7 +105,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: c60ed75d40e57c2499e27a62d4982eac, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8b56933583035e043ad14bb7b56bd5ec, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

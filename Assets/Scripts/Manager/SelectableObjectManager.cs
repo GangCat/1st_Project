@@ -1,7 +1,5 @@
-using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class SelectableObjectManager : MonoBehaviour, IPublisher
@@ -90,11 +88,6 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
         dicNodeUnderEnemyUnit.Remove(_idx);
     }
 
-    public static bool isCurNodwWalkable(Vector3 _pos)
-    {
-        return grid.GetNodeFromWorldPoint(_pos).walkable;
-    }
-
     public static Vector3 ResetPosition(Vector3 _pos)
     {
         PF_Node unitNode = grid.GetNodeFromWorldPoint(_pos);
@@ -171,27 +164,30 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
 
     public void AddSelectedObject(SelectableObject _object)
     {
+        if (_object.IsTempSelect) return;
+
         tempListSelectableObject.Add(_object);
+        _object.IsTempSelect = true;
+        _object.DisplayCircle();
     }
 
     public void RemoveSelectedObject(SelectableObject _object)
     {
         tempListSelectableObject.Remove(_object);
+        _object.IsTempSelect = false;
+        _object.DestroyCircle();
     }
 
     public void SelectFinish()
     {
+        if (tempListSelectableObject.Count < 1)
+            return;
+
         foreach (FriendlyObject obj in listSelectedFriendlyObject)
             obj.unSelect();
 
-        ArrayHUDCommand.Use(EHUDCommand.HIDE_ALL_INFO);
         listSelectedFriendlyObject.Clear();
-        if (tempListSelectableObject.Count < 1)
-        {
-            selectObjectCallback?.Invoke(EObjectType.NONE);
-            return;
-        }
-
+        ArrayHUDCommand.Use(EHUDCommand.HIDE_ALL_INFO);
         SelectableObject tempObj = null;
         isFriendlyUnitInList = false;
         isFriendlyStructureInList = false;
@@ -200,6 +196,8 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
         foreach (SelectableObject obj in tempListSelectableObject)
         {
             if (obj == null) continue;
+            obj.DestroyCircle();
+            obj.IsTempSelect = false;
 
             if (listSelectedFriendlyObject.Count > 11) break;
 
@@ -243,6 +241,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
         // 임시 리스트에 적 유닛만 있을 경우
         if (isEnemyObjectInList)
         {
+            tempObj.DisplayCircle();
             selectObjectCallback?.Invoke(tempObj.GetObjectType());
             InputOtherUnitInfo(tempObj);
             ArrayHUDCommand.Use(EHUDCommand.DISPLAY_SINGLE_INFO);
@@ -250,6 +249,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
         // 임시 리스트에 아군 건물만 있을 경우
         else if (isFriendlyStructureInList)
         {
+            tempObj.DisplayCircle();
             InputOtherUnitInfo(tempObj);
             listSelectedFriendlyObject.Add(tempObj.GetComponent<FriendlyObject>());
             Structure structureInList = tempObj.GetComponent<Structure>();
@@ -292,6 +292,8 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
         else if (isFriendlyUnitInList)
         {
             selectObjectCallback?.Invoke(listSelectedFriendlyObject[0].GetObjectType());
+            for (int i = 0; i < listSelectedFriendlyObject.Count; ++i)
+                listSelectedFriendlyObject[i].DisplayCircle();
             // 아군 유닛 1마리만 존재할 경우
             if (listSelectedFriendlyObject.Count < 2)
             {

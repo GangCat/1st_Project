@@ -24,6 +24,8 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType
 
     public int MaxHp => statusHp.MaxHp;
     public float AttRange => attackRange;
+    public float GetCurHpPercent => statusHp.GetCurHpPercent;
+    public bool IsTempSelect { get; set; }
     public float AttDmg
     {
         get
@@ -44,7 +46,16 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType
                 return 0;
         }
     }
-    public float GetCurHpPercent => statusHp.GetCurHpPercent;
+
+    public void DisplayCircle()
+    {
+        displayCircleObject = Instantiate(selectDisplayCircle, transform.position, Quaternion.identity, transform);
+    }
+
+    public void DestroyCircle()
+    {
+        Destroy(displayCircleObject);
+    }
 
     public EObjectType GetObjectType()
     {
@@ -574,6 +585,8 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType
     [Header("-Unit Attribute")]
     [SerializeField]
     protected EObjectType objectType = EObjectType.NONE;
+    [SerializeField]
+    protected GameObject selectDisplayCircle = null;
 
 
     [Header("-Unit Control Values")]
@@ -606,4 +619,5 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType
     protected StatusHp statusHp = null;
 
     protected int nodeIdx = 0;
+    protected GameObject displayCircleObject = null;
 }
