@@ -5,17 +5,8 @@ using UnityEngine.EventSystems;
 
 public class InputManager : MonoBehaviour, IMinimapObserver
 {
-    public void Init(
-        VoidVec3Delegate _pickingCallback,
-        VoidTransformDelegate _PickingObjectCallback,
-        VoidVec3Delegate _attackMoveCallback,
-        VoidVec3Delegate _patrolCallback)
+    public void Init()
     {
-        pickingCallback = _pickingCallback;
-        PickingObjectCallback = _PickingObjectCallback;
-        attackMoveCallback = _attackMoveCallback;
-        patrolCallback = _patrolCallback;
-
         selectArea = GetComponentInChildren<SelectArea>();
         selectArea.Init();
     }
@@ -178,12 +169,12 @@ public class InputManager : MonoBehaviour, IMinimapObserver
         Vector3 pickPos = Vector3.zero;
         RaycastHit hit;
         if (Functions.Picking(selectableLayer, out hit))
-            PickingObjectCallback?.Invoke(hit.transform);
+            ArrayUnitActionCommand.Use(EUnitActionCommand.FOLLOW_OBJECT, hit.transform);
         else if (Functions.Picking("StageFloor", floorLayer, ref pickPos))
         {
             GameObject pickPosDisplayGo = Instantiate(pickPosPrefab, pickPos, Quaternion.identity, transform);
             StartCoroutine("DestroypickPosDisplay", pickPosDisplayGo);
-            pickingCallback?.Invoke(pickPos);
+            ArrayUnitActionCommand.Use(EUnitActionCommand.MOVE_WITH_POS, pickPos);
         }
 
         ClearCurFunc();
@@ -202,12 +193,12 @@ public class InputManager : MonoBehaviour, IMinimapObserver
         Vector3 pickPos = Vector3.zero;
         RaycastHit hit;
         if (Functions.Picking(selectableLayer, out hit))
-            PickingObjectCallback?.Invoke(hit.transform);
+            ArrayUnitActionCommand.Use(EUnitActionCommand.FOLLOW_OBJECT, hit.transform);
         else if (Functions.Picking("StageFloor", floorLayer, ref pickPos))
         {
             GameObject pickPosDisplayGo = Instantiate(pickPosPrefab, pickPos, Quaternion.identity, transform);
             StartCoroutine("DestroypickPosDisplay", pickPosDisplayGo);
-            attackMoveCallback?.Invoke(pickPos);
+            ArrayUnitActionCommand.Use(EUnitActionCommand.MOVE_ATTACK, pickPos);
         }
 
         ClearCurFunc();
@@ -226,12 +217,12 @@ public class InputManager : MonoBehaviour, IMinimapObserver
         Vector3 pickPos = Vector3.zero;
         RaycastHit hit;
         if (Functions.Picking(selectableLayer, out hit))
-            PickingObjectCallback?.Invoke(hit.transform);
+            ArrayUnitActionCommand.Use(EUnitActionCommand.FOLLOW_OBJECT, hit.transform);
         else if (Functions.Picking("StageFloor", floorLayer, ref pickPos))
         {
             GameObject pickPosDisplayGo = Instantiate(pickPosPrefab, pickPos, Quaternion.identity, transform);
             StartCoroutine("DestroypickPosDisplay", pickPosDisplayGo);
-            patrolCallback?.Invoke(pickPos);
+            ArrayUnitActionCommand.Use(EUnitActionCommand.PATROL, pickPos);
         }
 
         ClearCurFunc();
@@ -337,10 +328,4 @@ public class InputManager : MonoBehaviour, IMinimapObserver
     private Vector3 dragEndPos = Vector3.zero;
 
     private SelectArea selectArea = null;
-
-    private VoidVec3Delegate pickingCallback = null;
-    private VoidTransformDelegate PickingObjectCallback = null;
-    //private VoidVoidDelegate moveCameraWithObjectCallback = null;
-    private VoidVec3Delegate attackMoveCallback = null;
-    private VoidVec3Delegate patrolCallback = null;
 }

@@ -53,11 +53,7 @@ public class GameManager : MonoBehaviour
     {
         pathMng.Init(worldSizeX, worldSizeY);
         grid = pathMng.GetComponent<PF_Grid>();
-        inputMng.Init(
-            MoveUnitByPicking,
-            MoveUnitByPickingObject,
-            AttackMove,
-            PatrolMove);
+        inputMng.Init();
         cameraMng.Init();
         structureMng.Init(grid, FindFirstObjectByType<StructureMainBase>());
 
@@ -131,6 +127,11 @@ public class GameManager : MonoBehaviour
         ArraySelectCommand.Add(ESelectCommand.TEMP_UNSELECT, new CommandTempUnselect(selectMng));
         ArraySelectCommand.Add(ESelectCommand.SELECT_FINISH, new CommandSelectFinish(selectMng));
         ArraySelectCommand.Add(ESelectCommand.SELECT_START, new CommandSelectStart(selectMng));
+
+        ArrayUnitActionCommand.Add(EUnitActionCommand.MOVE_WITH_POS, new CommandUnitMoveWithPos(selectMng));
+        ArrayUnitActionCommand.Add(EUnitActionCommand.MOVE_ATTACK, new CommandUnitMoveAttack(selectMng));
+        ArrayUnitActionCommand.Add(EUnitActionCommand.FOLLOW_OBJECT, new CommandUnitFollowObject(selectMng));
+        ArrayUnitActionCommand.Add(EUnitActionCommand.PATROL, new CommandUnitPatrol(selectMng));
     }
 
     private void RegistObserver()
@@ -151,30 +152,6 @@ public class GameManager : MonoBehaviour
     {
         uiMng.ShowFuncButton(_selectObjectType);
     }
-
-    #region inputMngCallback
-    private void MoveUnitByPicking(Vector3 _pickPos)
-    {
-        if (!SelectableObjectManager.IsListEmpty && selectMng.IsFriendlyUnit)
-            selectMng.MoveUnitByPicking(_pickPos);
-    }
-
-    private void MoveUnitByPickingObject(Transform _targetTr)
-    {
-        if (!SelectableObjectManager.IsListEmpty && selectMng.IsFriendlyUnit)
-            selectMng.MoveUnitByPicking(_targetTr);
-    }
-
-    private void AttackMove(Vector3 _targetPos)
-    {
-        selectMng.MoveUnitByPicking(_targetPos, true);
-    }
-
-    private void PatrolMove(Vector3 _wayPointTo)
-    {
-        selectMng.Patrol(_wayPointTo);
-    }
-    #endregion
 
 
     [SerializeField]
