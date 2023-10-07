@@ -248,11 +248,13 @@ public class InputManager : MonoBehaviour, IMinimapObserver
     private void DragOperateWithMouseClick()
     {
         RaycastHit hit;
+        ArraySelectCommand.Use(ESelectCommand.SELECT_START);
 
         if (Functions.Picking(selectableLayer, out hit))
         {
-            if (hit.transform.GetComponent<SelectableObject>())
-                selectObjectCallback?.Invoke(hit.transform.GetComponent<SelectableObject>());
+            SelectableObject sObj = hit.transform.GetComponent<SelectableObject>();
+            if (sObj != null)
+                ArraySelectCommand.Use(ESelectCommand.TEMP_SELECT, sObj);
         }
 
         Functions.Picking("StageFloor", floorLayer, ref dragStartPos);
@@ -340,7 +342,6 @@ public class InputManager : MonoBehaviour, IMinimapObserver
     private VoidVec3Delegate pickingCallback = null;
     private VoidTransformDelegate PickingObjectCallback = null;
     private VoidVoidDelegate moveCameraWithObjectCallback = null;
-    private VoidTemplateDelegate<SelectableObject> selectObjectCallback = null;
     private VoidVec3Delegate attackMoveCallback = null;
     private VoidVec3Delegate patrolCallback = null;
 }

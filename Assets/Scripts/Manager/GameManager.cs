@@ -129,6 +129,7 @@ public class GameManager : MonoBehaviour
         ArraySelectCommand.Add(ESelectCommand.TEMP_SELECT, new CommandTempSelect(selectMng));
         ArraySelectCommand.Add(ESelectCommand.TEMP_UNSELECT, new CommandTempUnselect(selectMng));
         ArraySelectCommand.Add(ESelectCommand.SELECT_FINISH, new CommandSelectFinish(selectMng));
+        ArraySelectCommand.Add(ESelectCommand.SELECT_START, new CommandSelectStart(selectMng));
     }
 
     private void RegistObserver()

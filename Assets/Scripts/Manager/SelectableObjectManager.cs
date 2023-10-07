@@ -98,6 +98,12 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
         return unitNode.worldPos;
     }
 
+    public void SelectStart()
+    {
+        for (int i = 0; i < listSelectedFriendlyObject.Count; ++i)
+            listSelectedFriendlyObject[i].DestroyCircle();
+    }
+
     public void RemoveUnitAtList(FriendlyObject _removeObj)
     {
         if (_removeObj == null) return;
@@ -181,7 +187,11 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
     public void SelectFinish()
     {
         if (tempListSelectableObject.Count < 1)
+        {
+            for (int i = 0; i < listSelectedFriendlyObject.Count; ++i)
+                listSelectedFriendlyObject[i].DisplayCircle();
             return;
+        }
 
         foreach (FriendlyObject obj in listSelectedFriendlyObject)
             obj.unSelect();
