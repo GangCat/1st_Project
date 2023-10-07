@@ -240,49 +240,59 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
             }
         }
 
+        // 임시 리스트에 적 유닛만 있을 경우
         if (isEnemyObjectInList)
         {
             selectObjectCallback?.Invoke(tempObj.GetObjectType());
             InputOtherUnitInfo(tempObj);
             ArrayHUDCommand.Use(EHUDCommand.DISPLAY_SINGLE_INFO);
         }
+        // 임시 리스트에 아군 건물만 있을 경우
         else if (isFriendlyStructureInList)
         {
             InputOtherUnitInfo(tempObj);
             listSelectedFriendlyObject.Add(tempObj.GetComponent<FriendlyObject>());
             Structure structureInList = tempObj.GetComponent<Structure>();
+            // 아군 건물이 건설중인 건물일 경우
             if (structureInList.IsUnderConstruction)
             {
                 selectObjectCallback?.Invoke(EObjectType.UNDER_CONSTRUCT);
                 structureInList.UpdateConstructInfo();
                 ArrayHUDConstructCommand.Use(EHUDConstructCommand.DISPLAY_CONSTRUCT_INFO);
             }
+            // 아군 건물이 업그레이드중일 경우
             else if (structureInList.IsProcessingUpgrade)
             {
                 selectObjectCallback?.Invoke(EObjectType.PROCESSING_UPGRADE_STRUCTURE);
                 structureInList.UpdateUpgradeInfo();
                 ArrayHUDUpgradeCommand.Use(EHUDUpgradeCommand.DISPLAY_UPGRADE_INFO, structureInList.CurUpgradeType);
             }
+            // 아군 건물이 배럭일 때
             else if (tempObj.GetObjectType().Equals(EObjectType.BARRACK))
             {
                 StructureBarrack tempBarrack = tempObj.GetComponent<StructureBarrack>();
                 selectObjectCallback?.Invoke(EObjectType.BARRACK);
+                // 배럭이 유닛을 생산중일 경우
                 if (tempBarrack.IsProcessingSpawnUnit)
                 {
                     tempBarrack.UpdateSpawnInfo();
                     ArrayHUDSpawnUnitCommand.Use(EHUDSpawnUnitCommand.DISPLAY_SPAWN_UNIT_INFO);
                 }
+                else
+                    ArrayHUDCommand.Use(EHUDCommand.DISPLAY_SINGLE_INFO);
             }
+            // 아무것도 하지 않는 상태의 건물일 경우
             else
             {
                 selectObjectCallback?.Invoke(listSelectedFriendlyObject[0].GetObjectType());
                 ArrayHUDCommand.Use(EHUDCommand.DISPLAY_SINGLE_INFO);
             }
         }
+        // 임시 리스트에 아군 유닛이 존재할 경우
         else if (isFriendlyUnitInList)
         {
             selectObjectCallback?.Invoke(listSelectedFriendlyObject[0].GetObjectType());
-
+            // 아군 유닛 1마리만 존재할 경우
             if (listSelectedFriendlyObject.Count < 2)
             {
                 InputOtherUnitInfo(listSelectedFriendlyObject[0]);

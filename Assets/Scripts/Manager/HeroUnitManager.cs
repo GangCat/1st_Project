@@ -14,12 +14,12 @@ public class HeroUnitManager : MonoBehaviour
     {
         hero.Dead();
         
-        StartCoroutine("HeroRessurectionTimeCalcCoroutine");
+        StartCoroutine("HeroResurrectionTimeCalcCoroutine");
     }
 
-    private IEnumerator HeroRessurectionTimeCalcCoroutine()
+    private IEnumerator HeroResurrectionTimeCalcCoroutine()
     {
-        float remainingTime = ressurectionDelay;
+        float remainingTime = resurrectionDelay;
         while(remainingTime > 0)
         {
             ArrayHUDCommand.Use(EHUDCommand.HERO_RESURRECTION_UPDATE, remainingTime);
@@ -33,13 +33,13 @@ public class HeroUnitManager : MonoBehaviour
 
     private void Ressurection()
     {
-        hero.Ressurection(ressurectionPos);
+        hero.Resurrection(resurrectionPos);
     }
 
     [SerializeField]
-    private float ressurectionDelay = 30f;
+    private float resurrectionDelay = 30f;
     [SerializeField]
-    private Vector3 ressurectionPos = Vector3.zero;
+    private Vector3 resurrectionPos = Vector3.zero;
 
     private UnitHero hero = null;
 }

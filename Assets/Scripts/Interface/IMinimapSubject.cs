@@ -1,13 +1,13 @@
 public interface IMinimapSubject
 {
     /// <summary>
-    /// ¹Ì´Ï¸Ê °ü·Ã ¿ÉÀú¹ö µî·Ï ¸Ş¼Òµå
+    /// ë¯¸ë‹ˆë§µ ê´€ë ¨ ì˜µì €ë²„ ë“±ë¡ ë©”ì†Œë“œ
     /// </summary>
     /// <param name="_observer"></param>
     void RegisterPauseObserver(IMinimapObserver _observer);
 
     /// <summary>
-    /// ¹Ì´Ï¸Ê °ü·Ã ¿ÉÀú¹ö Á¦°Å ¸Ş¼Òµå
+    /// ë¯¸ë‹ˆë§µ ê´€ë ¨ ì˜µì €ë²„ ì œê±° ë©”ì†Œë“œ
     /// </summary>
     /// <param name="_observer"></param>
     void RemovePauseObserver(IMinimapObserver _observer);

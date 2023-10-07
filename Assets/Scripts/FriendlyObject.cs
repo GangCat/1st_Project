@@ -279,7 +279,7 @@ public class FriendlyObject : SelectableObject, ISubscriber
                         continue;
                     }
                     // 쫓는 대상은 없는데 검사한 대상이 적 유닛일 경우
-                    if (targetType.Equals(EObjectType.ENEMY_UNIT))
+                    else if (targetType.Equals(EObjectType.ENEMY_UNIT))
                     {
                         // 해당 적이 살아있다면
                         if (c.gameObject.activeSelf)

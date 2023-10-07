@@ -50,11 +50,16 @@ public class StructureMainBase : Structure
         if (myObj.IsSelect)
             ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
 
-        float upgradeFinishTime = Time.time + upgradePopulationDelay;
-        while(upgradeFinishTime > Time.time)
+        float elapsedTime = 0f;
+        upgradeAndConstructProgressPercent = elapsedTime / upgradePopulationDelay;
+        while(upgradeAndConstructProgressPercent < 1)
         {
+            if (myObj.IsSelect)
+                ArrayHUDUpgradeCommand.Use(EHUDUpgradeCommand.UPDATE_UPGRADE_TIME, upgradeAndConstructProgressPercent);
             // ui ㅠ표시
             yield return new WaitForSeconds(0.5f);
+            elapsedTime += 0.5f;
+            upgradeAndConstructProgressPercent = elapsedTime / upgradePopulationDelay;
         }
         isProcessingUpgrade = false;
         ArrayPopulationCommand.Use(EPopulationCommand.UPGRADE_POPULATION_COMPLETE);
@@ -74,11 +79,16 @@ public class StructureMainBase : Structure
         if (myObj.IsSelect)
             ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
 
-        float upgradeFinishTime = Time.time + upgradeEnergySupplyDelay;
-        while (upgradeFinishTime > Time.time)
+        float elapsedTime = 0f;
+        upgradeAndConstructProgressPercent = elapsedTime / upgradeEnergySupplyDelay;
+        while (upgradeAndConstructProgressPercent < 1)
         {
+            if (myObj.IsSelect)
+                ArrayHUDUpgradeCommand.Use(EHUDUpgradeCommand.UPDATE_UPGRADE_TIME, upgradeAndConstructProgressPercent);
             // ui ㅠ표시
             yield return new WaitForSeconds(0.5f);
+            elapsedTime += 0.5f;
+            upgradeAndConstructProgressPercent = elapsedTime / upgradeEnergySupplyDelay;
         }
         isProcessingUpgrade = false;
         ArrayCurrencyCommand.Use(ECurrencyCommand.UPGRADE_ENERGY_SUPPLY_COMPLETE);

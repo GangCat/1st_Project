@@ -8,12 +8,12 @@ public class CameraMovement : MonoBehaviour
     {
         mainCamera = GetComponent<Camera>();
         targetZoom = mainCamera.orthographicSize;
-
     }
 
     public void WarpCameraWithPos(Vector3 _pos)
     {
         transform.position = _pos + cameraOffset;
+        
     }
 
     public void ZoomCamera(float _zoomRatio)
@@ -40,6 +40,7 @@ public class CameraMovement : MonoBehaviour
             screenMovePos += Quaternion.Euler(0f, 45f, 0f) * Vector3.forward * camMoveSpeed * Time.deltaTime;
 
         transform.position = Vector3.Lerp(transform.position, screenMovePos, Time.deltaTime);
+        
     }
 
     public void MoveCameraWithKey(Vector2 _arrowKeyInput)
@@ -50,14 +51,17 @@ public class CameraMovement : MonoBehaviour
         screenMovePos += Quaternion.Euler(0f, 45f, 0f) * Vector3.forward * _arrowKeyInput.y * camMoveSpeed * Time.deltaTime;
 
         transform.position = Vector3.Lerp(transform.position, screenMovePos, Time.deltaTime);
+        
     }
 
     public void MoveCameraWithObject(Vector3 _objectPos)
     {
         transform.position = _objectPos + cameraOffset;
+        
     }
-
-
+    
+    // YBO TEST
+    
     [SerializeField]
     private Vector3 cameraOffset = Vector3.zero;
     [SerializeField]
@@ -74,6 +78,7 @@ public class CameraMovement : MonoBehaviour
     private float screenOffsetX = 20f;
     [SerializeField]
     private float screenOffsetY = 10f;
+    
 
     private float targetZoom = 0f;
     private float currentZoomVelocity = 0f;
