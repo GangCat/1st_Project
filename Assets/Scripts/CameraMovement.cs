@@ -57,7 +57,6 @@ public class CameraMovement : MonoBehaviour
     public void MoveCameraWithObject(Vector3 _objectPos)
     {
         transform.position = _objectPos + cameraOffset;
-        
     }
     
     // YBO TEST

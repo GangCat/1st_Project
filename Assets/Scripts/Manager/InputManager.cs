@@ -289,8 +289,8 @@ public class InputManager : MonoBehaviour, IMinimapObserver
     {
         if (Input.GetKey(KeyCode.Space))
         {
-            ArrayCameraMoveCommand.Use(ECameraCommand.MOVE_WITH_OBJECT);
-            //moveCameraWithObjectCallback?.Invoke();
+            if(!SelectableObjectManager.IsListEmpty)
+                ArrayCameraMoveCommand.Use(ECameraCommand.MOVE_WITH_OBJECT);
         }
         else if (Input.GetAxisRaw("Horizontal Arrow").Equals(0) && Input.GetAxisRaw("Vertical Arrow").Equals(0))
             ArrayCameraMoveCommand.Use(ECameraCommand.MOVE_WITH_MOUSE, Input.mousePosition);

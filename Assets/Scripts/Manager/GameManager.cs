@@ -155,13 +155,13 @@ public class GameManager : MonoBehaviour
     #region inputMngCallback
     private void MoveUnitByPicking(Vector3 _pickPos)
     {
-        if (!selectMng.IsListEmpty && selectMng.IsFriendlyUnit)
+        if (!SelectableObjectManager.IsListEmpty && selectMng.IsFriendlyUnit)
             selectMng.MoveUnitByPicking(_pickPos);
     }
 
     private void MoveUnitByPickingObject(Transform _targetTr)
     {
-        if (!selectMng.IsListEmpty && selectMng.IsFriendlyUnit)
+        if (!SelectableObjectManager.IsListEmpty && selectMng.IsFriendlyUnit)
             selectMng.MoveUnitByPicking(_targetTr);
     }
 
