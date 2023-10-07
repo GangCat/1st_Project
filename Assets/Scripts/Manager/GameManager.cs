@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
         // 마우스 가두기
         Cursor.lockState = CursorLockMode.Confined;
         // 마우스 모양 바꾸기
-        Cursor.SetCursor(customCursor, Vector2.zero, CursorMode.ForceSoftware);
+        //Cursor.SetCursor(customCursor, Vector2.zero, CursorMode.ForceSoftware);
         // 유니티 에디터에서 실행할 때 창 모드로 실행
         //#if UNITY_EDITOR
         //        Screen.SetResolution(Screen.width, Screen.height, false);

@@ -119,6 +119,7 @@ public class ImageMinimap : MonoBehaviour, IPointerClickHandler, IMinimapSubject
             foreach (IMinimapObserver ob in listObserver)
                 ob.GetUnitTargetPos(new Vector3(relativeX * worldSizeX, 0f, relativeY * worldSizeY));
         }
+        Debug.Log(new Vector3(relativeX * worldSizeX, 0f, relativeY * worldSizeY));
     }
 
     public void RegisterPauseObserver(IMinimapObserver _observer)

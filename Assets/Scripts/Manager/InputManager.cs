@@ -294,7 +294,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver
 
     public void GetUnitTargetPos(Vector3 _pos)
     {
-        
+        ArrayUnitActionCommand.Use(EUnitActionCommand.MOVE_WITH_POS, _pos);
     }
 
     public void GetCameraTargetPos(Vector3 _pos)
