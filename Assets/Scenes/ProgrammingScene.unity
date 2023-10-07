@@ -3078,7 +3078,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8f11c2f0869a2749a2431ddd165fac5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rangeGroupLimitDist: 3
+  rangeGroupLimitDist: 5
 --- !u!1 &339815429
 GameObject:
   m_ObjectHideFlags: 0
