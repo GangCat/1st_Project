@@ -300,6 +300,25 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
                     selectObjectCallback?.Invoke(EObjectType.BARRACK);
                 }
             }
+            // 아군 건물이 핵 생산 건물일 경우
+            else if(tempObj.GetObjectType().Equals(EObjectType.NUCLEAR))
+            {
+                StructureNuclear tempNuclear = listSelectedFriendlyObject[0].GetComponent<StructureNuclear>();
+                // 핵을 생산중일 경우
+                if (tempNuclear.IsProcessingSpawnNuclear)
+                {
+                    selectObjectCallback?.Invoke(EObjectType.PROCESSING_SPAWN_NUCLEAR);
+                    //tempNuclear.UpdateSpawnInfo();
+                    //ArrayHUDSpawnUnitCommand.Use(EHUDSpawnUnitCommand.DISPLAY_SPAWN_UNIT_INFO);
+                    InputOtherUnitInfo(listSelectedFriendlyObject[0]);
+                    ArrayHUDCommand.Use(EHUDCommand.DISPLAY_SINGLE_INFO);
+                }
+                else
+                {
+                    ArrayHUDCommand.Use(EHUDCommand.DISPLAY_SINGLE_INFO);
+                    selectObjectCallback?.Invoke(EObjectType.NUCLEAR);
+                }
+            }
             // 아무것도 하지 않는 상태의 건물일 경우
             else
             {
@@ -353,6 +372,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
                     selectObjectCallback?.Invoke(EObjectType.PROCESSING_DEMOLISH_STRUCTURE);
                     ArrayHUDConstructCommand.Use(EHUDConstructCommand.DISPLAY_DEMOLISH_INFO, curStructure);
                 }
+                // 해당 건물이 현재 건설중일 경우
                 else if (curStructure.IsProcessingConstruct)
                 {
                     curStructure.UpdateConstructInfo();
@@ -362,13 +382,23 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
                 // 그렇지 않다면
                 else
                 {
-                    // 만일 건물이 배럭이고 생산중이라면
                     StructureBarrack tempBarrack = listSelectedFriendlyObject[0].GetComponent<StructureBarrack>();
+                    StructureNuclear tempNuclear = listSelectedFriendlyObject[0].GetComponent<StructureNuclear>();
+                    // 만일 건물이 배럭이고 생산중이라면
                     if (tempBarrack != null && tempBarrack.IsProcessingSpawnUnit)
                     {
                         selectObjectCallback?.Invoke(EObjectType.PROCESSING_SPAWN_UNIT);
                         tempBarrack.UpdateSpawnInfo();
                         ArrayHUDSpawnUnitCommand.Use(EHUDSpawnUnitCommand.DISPLAY_SPAWN_UNIT_INFO);
+                    }
+                    // 만일 건물이 핵 건물이고 핵 생산중이라면
+                    else if(tempNuclear != null && tempNuclear.IsProcessingSpawnNuclear)
+                    {
+                        selectObjectCallback?.Invoke(EObjectType.PROCESSING_SPAWN_NUCLEAR);
+                        //tempNuclear.UpdateSpawnInfo();
+                        //ArrayHUDSpawnUnitCommand.Use(EHUDSpawnUnitCommand.DISPLAY_SPAWN_UNIT_INFO);
+                        InputOtherUnitInfo(listSelectedFriendlyObject[0]);
+                        ArrayHUDCommand.Use(EHUDCommand.DISPLAY_SINGLE_INFO);
                     }
                     else
                     {

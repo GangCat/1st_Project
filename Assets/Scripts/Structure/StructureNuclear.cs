@@ -11,15 +11,49 @@ public class StructureNuclear : Structure
         myNuclear.SetActive(false);
     }
 
+    public bool IsProcessingSpawnNuclear => isProcessingSpawnNuclear;
+
+    public override void CancleCurAction()
+    {
+        if (isProcessingUpgrade)
+        {
+            StopCoroutine("UpgradeCoroutine");
+            isProcessingUpgrade = false;
+            curUpgradeType = EUpgradeType.NONE;
+        }
+        else if (isProcessingConstruct)
+        {
+            StopCoroutine("BuildStructureCoroutine");
+            isProcessingConstruct = false;
+            ArrayStructureFuncButtonCommand.Use(EStructureButtonCommand.DEMOLISH_COMPLETE, myStructureIdx);
+            DestroyStructure();
+        }
+        else if (isProcessingDemolish)
+        {
+            StopCoroutine("DemolishCoroutine");
+            isProcessingDemolish = false;
+        }
+        else if (isProcessingSpawnNuclear)
+        {
+            StopCoroutine("SpawnNuclearCoroutine");
+            isProcessingSpawnNuclear = false;
+        }
+
+        if (myObj.IsSelect)
+            ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
+    }
+
     public void SpawnNuclear(VoidNuclearDelegate _spwnCompleteCallback)
     {
-        if(!hasNuclear)
+        if(!isProcessingSpawnNuclear && !hasNuclear)
             StartCoroutine("SpawnNuclearCoroutine", _spwnCompleteCallback);
     }
 
     private IEnumerator SpawnNuclearCoroutine(VoidNuclearDelegate _spwnCompleteCallback)
     {
-        hasNuclear = true;
+        isProcessingSpawnNuclear = true;
+        if (myObj.IsSelect)
+            ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
         float buildFinishTime = Time.time + nuclearProduceDelay;
         while (buildFinishTime > Time.time)
         {
@@ -27,11 +61,15 @@ public class StructureNuclear : Structure
             yield return new WaitForSeconds(0.5f);
         }
 
+        isProcessingSpawnNuclear = false;
+        if (myObj.IsSelect)
+            ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
         SpawnComplete(_spwnCompleteCallback);
     }
 
     private void SpawnComplete(VoidNuclearDelegate _spwnCompleteCallback)
     {
+        hasNuclear = true;
         myNuclear.SetPos(nuclearSpawnPos);
         myNuclear.SetActive(true);
         myNuclear.ResetRotate();
@@ -52,4 +90,5 @@ public class StructureNuclear : Structure
 
     private MissileNuclear myNuclear = null;
     private bool hasNuclear = false;
+    private bool isProcessingSpawnNuclear = false;
 }

@@ -88,6 +88,7 @@ public class FuncButtonManager : MonoBehaviour
             case EObjectType.PROCESSING_CONSTRUCT_STRUCTURE:
             case EObjectType.PROCESSING_UPGRADE_STRUCTURE:
             case EObjectType.PROCESSING_DEMOLISH_STRUCTURE:
+            case EObjectType.PROCESSING_SPAWN_NUCLEAR:
                 canvasStructureCancleFunc.SetActive(true);
                 break;
             default:
@@ -139,6 +140,7 @@ public class FuncButtonManager : MonoBehaviour
             case EObjectType.PROCESSING_CONSTRUCT_STRUCTURE:
             case EObjectType.PROCESSING_UPGRADE_STRUCTURE:
             case EObjectType.PROCESSING_DEMOLISH_STRUCTURE:
+            case EObjectType.PROCESSING_SPAWN_NUCLEAR:
                 canvasStructureCancleFunc.SetActive(false);
                 break;
             case EObjectType.NUCLEAR:
