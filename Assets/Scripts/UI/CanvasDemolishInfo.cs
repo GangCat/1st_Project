@@ -12,6 +12,7 @@ public class CanvasDemolishInfo : MonoBehaviour
         imageUnit.Init();
         textInfoStructureName.Init();
         imageProgressbar.Init();
+        SetActive(false);
     }
 
     public void ShowDisplay()

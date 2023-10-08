@@ -12,6 +12,7 @@ public class CanvasConstructInfo : MonoBehaviour
         imageUnit.Init();
         textInfoStructureName.Init();
         imageProgressbar.Init();
+        SetActive(false);
     }
 
     public void ShowDisplay()
