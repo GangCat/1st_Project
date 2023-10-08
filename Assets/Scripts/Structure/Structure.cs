@@ -212,7 +212,7 @@ public class Structure : MonoBehaviour
             ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
     }
 
-    public void Demolish()
+    public virtual void Demolish()
     {
         isProcessingDemolish = true;
         if (myObj.IsSelect)

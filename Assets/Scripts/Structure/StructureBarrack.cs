@@ -60,7 +60,11 @@ public class StructureBarrack : Structure, ISubscriber
         // ui에 나타내는 내용
     }
 
-
+    public override void Demolish()
+    {
+        if (isProcessingSpawnUnit) return;
+        base.Demolish();
+    }
 
     public override void DeactivateUnit(GameObject _removeGo, EUnitType _type)
     {
