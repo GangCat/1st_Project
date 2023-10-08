@@ -105,7 +105,7 @@ public class StructureBarrack : Structure, ISubscriber
         FriendlyObject tempObj = arrMemoryPool[(int)_unitType].ActivatePoolItem(spawnPoint, 3, transform).GetComponent<FriendlyObject>();
         tempObj.Position = SelectableObjectManager.ResetPosition(tempObj.Position);
         tempObj.Init();
-        tempObj.Init(myIdx);
+        tempObj.Init(myStructureIdx);
 
         if (!rallyPoint.Equals(spawnPoint))
             tempObj.MoveByPos(rallyPoint);

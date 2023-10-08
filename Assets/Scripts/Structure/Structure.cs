@@ -21,7 +21,7 @@ public class Structure : MonoBehaviour
     {
         myObj = GetComponent<FriendlyObject>();
         myObj.Init();
-        myIdx = _structureIdx;
+        myStructureIdx = _structureIdx;
         upgradeLevel = 1;
         ShowHBeam();
         HideModel();
@@ -34,12 +34,39 @@ public class Structure : MonoBehaviour
     public bool IsBuildable => isBuildable;
     public bool IsProcessingUpgrade => isProcessingUpgrade;
     public bool IsProcessingDemolish => isProcessingDemolish;
-    public int StructureIdx => myIdx;
+    public bool IsProcessingConstruct => isProcessingConstruct;
+    public int StructureIdx => myStructureIdx;
     public int GridX => myGridX;
     public int GridY => myGridY;
     public int FactorX => factorGridX;
     public int FactorY => factorGridY;
-    public bool IsUnderConstruction { get; private set; }
+
+    public void CancleUpgrade()
+    {
+        StopCoroutine("UpgradeCoroutine");
+        isProcessingUpgrade = false;
+        curUpgradeType = EUpgradeType.NONE;
+        if (myObj.IsSelect)
+            ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
+    }
+
+    public void CancleConstruct()
+    {
+        StopCoroutine("BuildStructureCoroutine");
+        isProcessingConstruct = false;
+        ArrayStructureFuncButtonCommand.Use(EStructureButtonCommand.DEMOLISH_COMPLETE, myStructureIdx);
+        DestroyStructure();
+        if (myObj.IsSelect)
+            ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
+    }
+
+    public void CancleDemolish()
+    {
+        StopCoroutine("DemolishCoroutine");
+        isProcessingDemolish = false;
+        if (myObj.IsSelect)
+            ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
+    }
 
     public void UpdateConstructInfo()
     {
@@ -148,7 +175,7 @@ public class Structure : MonoBehaviour
     {
         isBuildable = true;
         SetColor();
-        IsUnderConstruction = true;
+        isProcessingConstruct = true;
         if (myObj.IsSelect)
         {
             UpdateConstructInfo();
@@ -178,7 +205,7 @@ public class Structure : MonoBehaviour
 
     protected virtual void BuildComplete()
     {
-        IsUnderConstruction = false;
+        isProcessingConstruct = false;
         HideHBeam();
         ShowModel();
         if (myObj.IsSelect)
@@ -210,7 +237,7 @@ public class Structure : MonoBehaviour
             elapsedTime += 0.5f;
             progressPercent = elapsedTime / demolishDelay;
         }
-
+        ArrayStructureFuncButtonCommand.Use(EStructureButtonCommand.DEMOLISH_COMPLETE, myStructureIdx);
         DestroyStructure();
     }
 
@@ -293,7 +320,7 @@ public class Structure : MonoBehaviour
     protected StructureCollider[] arrCollider = null;
     protected int factorGridX = 1;
     protected int factorGridY = 1;
-    protected int myIdx = -1;
+    protected int myStructureIdx = -1;
     protected int upgradeLevel = 0;
 
     protected float progressPercent = 0f;
@@ -301,6 +328,7 @@ public class Structure : MonoBehaviour
     protected bool isBuildable = false;
     protected bool isProcessingUpgrade = false;
     protected bool isProcessingDemolish = false;
+    protected bool isProcessingConstruct = false;
     protected EUpgradeType curUpgradeType = EUpgradeType.NONE;
     protected FriendlyObject myObj = null;
 }

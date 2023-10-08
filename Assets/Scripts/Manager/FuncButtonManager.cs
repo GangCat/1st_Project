@@ -15,7 +15,7 @@ public class FuncButtonManager : MonoBehaviour
         canvasBunkerFunc = GetComponentInChildren<CanvasBunkerFunc>();
         canvasSpawnNuclearFunc = GetComponentInChildren<CanvasSpawnNuclearFunc>();
         canvasHeroFunc = GetComponentInChildren<CanvasHeroFunc>();
-        canvasCancleFunc = GetComponentInChildren<CanvasCancleFunc>();
+        canvasStructureCancleFunc = GetComponentInChildren<CanvasStructureCancleFunc>();
 
         canvasUnitBaseFunc.Init();
         canvasStructureBaseFunc.Init();
@@ -26,7 +26,7 @@ public class FuncButtonManager : MonoBehaviour
         canvasBunkerFunc.Init();
         canvasSpawnNuclearFunc.Init();
         canvasHeroFunc.Init();
-        canvasCancleFunc.Init();
+        canvasStructureCancleFunc.Init();
 
         ArrayUnitFuncButtonCommand.Add(EUnitFuncButtonCommand.DISPLAY_CANCLE_BUTTON, new CommandDisplayUnitCancleButton(canvasUnitBaseFunc));
         ArrayUnitFuncButtonCommand.Add(EUnitFuncButtonCommand.HIDE_CANCLE_BUTTON, new CommandHideUnitCancleButton(canvasUnitBaseFunc));
@@ -79,9 +79,10 @@ public class FuncButtonManager : MonoBehaviour
                 canvasStructureBaseFunc.SetActive(true);
                 canvasSpawnNuclearFunc.SetActive(true);
                 break;
-            case EObjectType.UNDER_CONSTRUCT:
+            case EObjectType.PROCESSING_CONSTRUCT_STRUCTURE:
             case EObjectType.PROCESSING_UPGRADE_STRUCTURE:
-                canvasCancleFunc.SetActive(true);
+            case EObjectType.PROCESSING_DEMOLISH_STRUCTURE:
+                canvasStructureCancleFunc.SetActive(true);
                 break;
             default:
                 break;
@@ -92,7 +93,7 @@ public class FuncButtonManager : MonoBehaviour
 
     private void HideFuncButton()
     {
-        canvasCancleFunc.SetActive(false);
+        canvasStructureCancleFunc.SetActive(false);
 
         switch (curActiveBtnFunc)
         {
@@ -123,9 +124,10 @@ public class FuncButtonManager : MonoBehaviour
                 canvasBarrackFunc.SetActive(false);
                 canvasBarrackUpgradeFunc.SetActive(false);
                 break;
-            case EObjectType.UNDER_CONSTRUCT:
+            case EObjectType.PROCESSING_CONSTRUCT_STRUCTURE:
             case EObjectType.PROCESSING_UPGRADE_STRUCTURE:
-                canvasCancleFunc.SetActive(false);
+            case EObjectType.PROCESSING_DEMOLISH_STRUCTURE:
+                canvasStructureCancleFunc.SetActive(false);
                 break;
             case EObjectType.NUCLEAR:
                 canvasStructureBaseFunc.SetActive(false);
@@ -145,7 +147,7 @@ public class FuncButtonManager : MonoBehaviour
     private CanvasBunkerFunc canvasBunkerFunc = null;
     private CanvasSpawnNuclearFunc canvasSpawnNuclearFunc = null;
     private CanvasHeroFunc canvasHeroFunc = null;
-    private CanvasCancleFunc canvasCancleFunc = null;
+    private CanvasStructureCancleFunc canvasStructureCancleFunc = null;
 
     private EObjectType curActiveBtnFunc = EObjectType.NONE;
 }

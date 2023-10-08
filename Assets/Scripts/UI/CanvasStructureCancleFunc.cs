@@ -3,20 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CanvasCancleFunc : CanvasFunc
+public class CanvasStructureCancleFunc : CanvasFunc
 {
     public void Init()
     {
-        cancleBtn.onClick.AddListener(
+        btnStructureCancle.onClick.AddListener(
             () =>
             {
-                ArrayUnitFuncButtonCommand.Use(EUnitFuncButtonCommand.CANCLE);
-                gameObject.SetActive(false);
+                ArrayStructureFuncButtonCommand.Use(EStructureButtonCommand.CANCLE);
             });
 
         gameObject.SetActive(false);
     }
 
     [SerializeField]
-    private Button cancleBtn = null;
+    private Button btnStructureCancle = null;
 }

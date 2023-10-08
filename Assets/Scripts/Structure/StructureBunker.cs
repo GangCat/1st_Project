@@ -12,7 +12,7 @@ public class StructureBunker : Structure
         warpPos = transform.position;
         warpPos.y += height;
         trigger.Init(transform);
-        myIdx = _structureIdx;
+        myStructureIdx = _structureIdx;
         upgradeHpCmd = new CommandUpgradeStructureHP(GetComponent<StatusHp>());
         upgradeBuffRatioCmd = new CommandUpgradeStructureBuffRatio(this);
     }

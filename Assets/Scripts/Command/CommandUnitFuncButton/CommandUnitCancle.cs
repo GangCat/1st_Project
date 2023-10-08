@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CommandButtonCancle : Command
+public class CommandUnitCancle : Command
 {
-    public CommandButtonCancle(InputManager _inputMng) 
+    public CommandUnitCancle(InputManager _inputMng) 
     {
         inputMng = _inputMng;
     }

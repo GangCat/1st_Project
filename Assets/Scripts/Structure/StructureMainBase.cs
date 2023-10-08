@@ -14,7 +14,7 @@ public class StructureMainBase : Structure
         upgradeHpCmd = new CommandUpgradeStructureHP(GetComponent<StatusHp>());
         myObj = GetComponent<FriendlyObject>();
         myObj.Init();
-        myIdx = _structureIdx;
+        myStructureIdx = _structureIdx;
         upgradeLevel = 1;
         UpdateNodeWalkable(false);
     }

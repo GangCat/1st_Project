@@ -264,9 +264,9 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
             listSelectedFriendlyObject.Add(tempObj.GetComponent<FriendlyObject>());
             Structure structureInList = tempObj.GetComponent<Structure>();
             // 아군 건물이 건설중인 건물일 경우
-            if (structureInList.IsUnderConstruction)
+            if (structureInList.IsProcessingConstruct)
             {
-                selectObjectCallback?.Invoke(EObjectType.UNDER_CONSTRUCT);
+                selectObjectCallback?.Invoke(EObjectType.PROCESSING_CONSTRUCT_STRUCTURE);
                 structureInList.UpdateConstructInfo();
                 ArrayHUDConstructCommand.Use(EHUDConstructCommand.DISPLAY_CONSTRUCT_INFO);
             }
@@ -279,7 +279,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
             }
             else if (structureInList.IsProcessingDemolish)
             {
-                selectObjectCallback?.Invoke(EObjectType.PROCESSING_DEMOLISH);
+                selectObjectCallback?.Invoke(EObjectType.PROCESSING_DEMOLISH_STRUCTURE);
                 structureInList.UpdateDemolishInfo();
                 ArrayHUDConstructCommand.Use(EHUDConstructCommand.DISPLAY_DEMOLISH_INFO);
             }
@@ -388,13 +388,22 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
                 // 해당 건물이 현재 업그레이드를 진행중일 경우
                 if (curStructure.IsProcessingUpgrade)
                 {
+                    curStructure.UpdateUpgradeInfo();
                     selectObjectCallback?.Invoke(EObjectType.PROCESSING_UPGRADE_STRUCTURE);
                     ArrayHUDUpgradeCommand.Use(EHUDUpgradeCommand.DISPLAY_UPGRADE_INFO, curStructure.CurUpgradeType);
                 }
+                // 해당 건물이 현재 해체중일 경우
                 else if (curStructure.IsProcessingDemolish)
                 {
-                    selectObjectCallback?.Invoke(EObjectType.PROCESSING_DEMOLISH);
+                    curStructure.UpdateDemolishInfo();
+                    selectObjectCallback?.Invoke(EObjectType.PROCESSING_DEMOLISH_STRUCTURE);
                     ArrayHUDConstructCommand.Use(EHUDConstructCommand.DISPLAY_DEMOLISH_INFO, curStructure);
+                }
+                else if (curStructure.IsProcessingConstruct)
+                {
+                    curStructure.UpdateConstructInfo();
+                    selectObjectCallback?.Invoke(EObjectType.PROCESSING_CONSTRUCT_STRUCTURE);
+                    ArrayHUDConstructCommand.Use(EHUDConstructCommand.DISPLAY_CONSTRUCT_INFO, curStructure);
                 }
                 // 그렇지 않다면
                 else

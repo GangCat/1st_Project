@@ -214,7 +214,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver
                 if (Input.GetKeyDown(arrStructureFuncHotkey[(int)EStructureFuncHotkey.SPAWN_NUCLEAR]))
                     ArrayNuclearCommand.Use(ENuclearCommand.SPAWN_NUCLEAR);
                 break;
-            case EObjectType.UNDER_CONSTRUCT:
+            case EObjectType.PROCESSING_CONSTRUCT_STRUCTURE:
             case EObjectType.PROCESSING_UPGRADE_STRUCTURE:
                 if (Input.GetKeyDown(cancleKey))
                     Debug.Log("Cancle");

@@ -69,7 +69,7 @@ public class GameManager : MonoBehaviour
 
     private void InitCommandList()
     {
-        ArrayUnitFuncButtonCommand.Add(EUnitFuncButtonCommand.CANCLE, new CommandButtonCancle(inputMng));
+        ArrayUnitFuncButtonCommand.Add(EUnitFuncButtonCommand.CANCLE, new CommandUnitCancle(inputMng));
         ArrayUnitFuncButtonCommand.Add(EUnitFuncButtonCommand.MOVE, new CommandButtonMove(inputMng));
         ArrayUnitFuncButtonCommand.Add(EUnitFuncButtonCommand.STOP, new CommandButtonStop(selectMng));
         ArrayUnitFuncButtonCommand.Add(EUnitFuncButtonCommand.HOLD, new CommandButtonHold(selectMng));
@@ -80,6 +80,7 @@ public class GameManager : MonoBehaviour
         ArrayMainbaseCommand.Add(EMainbaseCommnad.CANCLE, new CommandBuildCancle(structureMng, inputMng));
         ArrayMainbaseCommand.Add(EMainbaseCommnad.CONFIRM, new CommandBuildConfirm(structureMng, inputMng, currencyMng));
         ArrayMainbaseCommand.Add(EMainbaseCommnad.BUILD_STRUCTURE, new CommandBuildStructure(structureMng, inputMng, currencyMng));
+        
 
         ArrayBarrackCommand.Add(EBarrackCommand.RALLYPOINT, new CommandRallypoint(inputMng));
         ArrayBarrackCommand.Add(EBarrackCommand.SPAWN_UNIT, new CommandSpawnUnit(selectMng, currencyMng));
@@ -108,8 +109,10 @@ public class GameManager : MonoBehaviour
         ArrayNuclearCommand.Add(ENuclearCommand.SPAWN_NUCLEAR, new CommandSpawnNuclear(structureMng));
         ArrayNuclearCommand.Add(ENuclearCommand.LAUNCH_NUCLEAR, new CommandLaunchNuclear(structureMng));
 
-        ArrayStructureFuncButtonCommand.Add(EStructureButtonCommand.DEMOLISH, new CommandDemolition());
+        ArrayStructureFuncButtonCommand.Add(EStructureButtonCommand.DEMOLISH, new CommandDemolition(currencyMng));
         ArrayStructureFuncButtonCommand.Add(EStructureButtonCommand.UPGRADE, new CommandUpgrade(structureMng, currencyMng));
+        ArrayStructureFuncButtonCommand.Add(EStructureButtonCommand.CANCLE, new CommandStructureCancle(currencyMng));
+        ArrayStructureFuncButtonCommand.Add(EStructureButtonCommand.DEMOLISH_COMPLETE, new CommandDemolishComplete(structureMng));
 
         ArrayCurrencyCommand.Add(ECurrencyCommand.COLLECT_CORE, new CommandCollectPowerCore(currencyMng));
         ArrayCurrencyCommand.Add(ECurrencyCommand.UPDATE_CORE_HUD, new CommandUpdateCoreHUD(uiMng));
