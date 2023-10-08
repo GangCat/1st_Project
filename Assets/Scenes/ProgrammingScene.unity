@@ -7563,10 +7563,10 @@ MonoBehaviour:
   smoothTime: 0.2
   screenOffsetX: 20
   screenOffsetY: 10
-  terrainLayerMask:
-    serializedVersion: 2
-    m_Bits: 64
-  checkBoundaryInterval: 0.01
+  minX: -90
+  maxX: 90
+  minZ: -110
+  maxZ: 80
 --- !u!1 &833493611
 GameObject:
   m_ObjectHideFlags: 0
@@ -9285,6 +9285,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   worldSizeX: 128
   worldSizeY: 128
+  customCursor: {fileID: 0}
 --- !u!1 &936201668
 GameObject:
   m_ObjectHideFlags: 0
@@ -16876,13 +16877,17 @@ MonoBehaviour:
   pickPosPrefab: {fileID: 52691291055329485, guid: 58ef200a9ea84df48a81a49db5dc2f39,
     type: 3}
   pickPosDisplayHideDelay: 0.3
-  cancleKey: 27
   floorLayer:
     serializedVersion: 2
     m_Bits: 64
   selectableLayer:
     serializedVersion: 2
     m_Bits: 1152
+  arrUnitFuncHotkey: 
+  arrBuildFuncHotkey: 
+  arrBarrackFuncHotkey: 
+  arrStructureFuncHotkey: 
+  cancleKey: 27
 --- !u!4 &1606740354
 Transform:
   m_ObjectHideFlags: 0
