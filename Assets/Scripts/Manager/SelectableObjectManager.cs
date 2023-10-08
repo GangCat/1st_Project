@@ -277,6 +277,12 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
                 structureInList.UpdateUpgradeInfo();
                 ArrayHUDUpgradeCommand.Use(EHUDUpgradeCommand.DISPLAY_UPGRADE_INFO, structureInList.CurUpgradeType);
             }
+            else if (structureInList.IsProcessingDemolish)
+            {
+                selectObjectCallback?.Invoke(EObjectType.PROCESSING_DEMOLISH);
+                structureInList.UpdateDemolishInfo();
+                ArrayHUDConstructCommand.Use(EHUDConstructCommand.DISPLAY_DEMOLISH_INFO);
+            }
             // 아군 건물이 배럭일 때
             else if (tempObj.GetObjectType().Equals(EObjectType.BARRACK))
             {
@@ -376,25 +382,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
         // 리스트가 비어있지 않을 경우
         if (listSelectedFriendlyObject.Count > 0)
         {
-            // 리스트에 아군 유닛 존재할 경우
-            if (isFriendlyUnitInList)
-            {
-                // 리스트에 유닛이 하나만 존재할 경우
-                if (listSelectedFriendlyObject.Count < 2)
-                {
-                    InputOtherUnitInfo(listSelectedFriendlyObject[0]);
-                    ArrayHUDCommand.Use(EHUDCommand.DISPLAY_SINGLE_INFO);
-                }
-                // 리스트에 유닛이 다수 존재할 경우
-                else
-                {
-                    InputFriendlyUnitInfo();
-                    ArrayHUDCommand.Use(EHUDCommand.DISPLAY_GROUP_INFO, listSelectedFriendlyObject.Count);
-                }
-                selectObjectCallback?.Invoke(listSelectedFriendlyObject[0].GetObjectType());
-            }
-            // 리스트에 아군 건물이 존재할 경우
-            else if (isFriendlyStructureInList)
+            if (isFriendlyStructureInList)
             {
                 Structure curStructure = listSelectedFriendlyObject[0].GetComponent<Structure>();
                 // 해당 건물이 현재 업그레이드를 진행중일 경우
@@ -402,6 +390,11 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
                 {
                     selectObjectCallback?.Invoke(EObjectType.PROCESSING_UPGRADE_STRUCTURE);
                     ArrayHUDUpgradeCommand.Use(EHUDUpgradeCommand.DISPLAY_UPGRADE_INFO, curStructure.CurUpgradeType);
+                }
+                else if (curStructure.IsProcessingDemolish)
+                {
+                    selectObjectCallback?.Invoke(EObjectType.PROCESSING_DEMOLISH);
+                    ArrayHUDConstructCommand.Use(EHUDConstructCommand.DISPLAY_DEMOLISH_INFO, curStructure);
                 }
                 // 그렇지 않다면
                 else
@@ -422,6 +415,25 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
                     }
                 }
             }
+            // 리스트에 아군 유닛 존재할 경우
+            else if (isFriendlyUnitInList)
+            {
+                // 리스트에 유닛이 하나만 존재할 경우
+                if (listSelectedFriendlyObject.Count < 2)
+                {
+                    InputOtherUnitInfo(listSelectedFriendlyObject[0]);
+                    ArrayHUDCommand.Use(EHUDCommand.DISPLAY_SINGLE_INFO);
+                }
+                // 리스트에 유닛이 다수 존재할 경우
+                else
+                {
+                    InputFriendlyUnitInfo();
+                    ArrayHUDCommand.Use(EHUDCommand.DISPLAY_GROUP_INFO, listSelectedFriendlyObject.Count);
+                }
+                selectObjectCallback?.Invoke(listSelectedFriendlyObject[0].GetObjectType());
+            }
+            // 리스트에 아군 건물이 존재할 경우
+
         }
         // 리스트가 비어있거나 적 유닛만 존재할 경우
         else

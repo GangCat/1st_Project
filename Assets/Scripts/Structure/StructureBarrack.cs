@@ -174,14 +174,14 @@ public class StructureBarrack : Structure, ISubscriber
             ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
 
         float elapsedTime = 0f;
-        upgradeAndConstructProgressPercent = elapsedTime / upgradeDelay;
+        progressPercent = elapsedTime / upgradeDelay;
         while (elapsedTime < upgradeDelay)
         {
             if (myObj.IsSelect)
-                ArrayHUDUpgradeCommand.Use(EHUDUpgradeCommand.UPDATE_UPGRADE_TIME, upgradeAndConstructProgressPercent);
+                ArrayHUDUpgradeCommand.Use(EHUDUpgradeCommand.UPDATE_UPGRADE_TIME, progressPercent);
             yield return new WaitForSeconds(0.5f);
             elapsedTime += 0.5f;
-            upgradeAndConstructProgressPercent = elapsedTime / upgradeDelay;
+            progressPercent = elapsedTime / upgradeDelay;
         }
 
         isProcessingUpgrade = false;

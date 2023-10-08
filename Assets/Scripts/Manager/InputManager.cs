@@ -92,7 +92,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver
 
             if (IsBuildOperation)
             {
-                ArrayBuildCommand.Use(EMainBaseCommnad.CONFIRM);
+                ArrayMainbaseCommand.Use(EMainbaseCommnad.CONFIRM);
                 return;
             }
             else if (isAttackClick)
@@ -115,7 +115,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver
         {
             if (IsBuildOperation)
             {
-                ArrayBuildCommand.Use(EMainBaseCommnad.CANCLE);
+                ArrayMainbaseCommand.Use(EMainbaseCommnad.CANCLE);
                 return;
             }
 
@@ -144,7 +144,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver
                 if (UnitDefaultHotkeyAction())
                     break;
                 if (Input.GetKeyDown(arrUnitFuncHotkey[(int)EUnitFuncHotkey.LAUNCH_NUCLEAR]))
-                    ArrayFuncButtonCommand.Use(EFuncButtonCommand.LAUNCH_NUCLEAR);
+                    ArrayUnitFuncButtonCommand.Use(EUnitFuncButtonCommand.LAUNCH_NUCLEAR);
                 break;
             case EObjectType.MAIN_BASE:
                 if (StructureDefaultHotkeyAction())
@@ -210,9 +210,9 @@ public class InputManager : MonoBehaviour, IMinimapObserver
     private bool StructureDefaultHotkeyAction()
     {
         if (Input.GetKeyDown(arrStructureFuncHotkey[(int)EStructureFuncHotkey.DEMOLISH]))
-            ArrayStructureButtonCommand.Use(EStructureButtonCommand.DEMOLISH);
+            ArrayStructureFuncButtonCommand.Use(EStructureButtonCommand.DEMOLISH);
         else if (Input.GetKeyDown(arrStructureFuncHotkey[(int)EStructureFuncHotkey.UPGRADE]))
-            ArrayStructureButtonCommand.Use(EStructureButtonCommand.UPGRADE);
+            ArrayStructureFuncButtonCommand.Use(EStructureButtonCommand.UPGRADE);
         else
             return false;
         return true;
@@ -221,15 +221,15 @@ public class InputManager : MonoBehaviour, IMinimapObserver
     private bool UnitDefaultHotkeyAction()
     {
         if (Input.GetKeyDown(arrUnitFuncHotkey[(int)EUnitFuncHotkey.MOVE]))
-            ArrayFuncButtonCommand.Use(EFuncButtonCommand.MOVE);
+            ArrayUnitFuncButtonCommand.Use(EUnitFuncButtonCommand.MOVE);
         else if (Input.GetKeyDown(arrUnitFuncHotkey[(int)EUnitFuncHotkey.STOP]))
-            ArrayFuncButtonCommand.Use(EFuncButtonCommand.STOP);
+            ArrayUnitFuncButtonCommand.Use(EUnitFuncButtonCommand.STOP);
         else if (Input.GetKeyDown(arrUnitFuncHotkey[(int)EUnitFuncHotkey.HOLD]))
-            ArrayFuncButtonCommand.Use(EFuncButtonCommand.HOLD);
+            ArrayUnitFuncButtonCommand.Use(EUnitFuncButtonCommand.HOLD);
         else if (Input.GetKeyDown(arrUnitFuncHotkey[(int)EUnitFuncHotkey.PATROL]))
-            ArrayFuncButtonCommand.Use(EFuncButtonCommand.PATROL);
+            ArrayUnitFuncButtonCommand.Use(EUnitFuncButtonCommand.PATROL);
         else if (Input.GetKeyDown(arrUnitFuncHotkey[(int)EUnitFuncHotkey.ATTACK]))
-            ArrayFuncButtonCommand.Use(EFuncButtonCommand.ATTACK);
+            ArrayUnitFuncButtonCommand.Use(EUnitFuncButtonCommand.ATTACK);
         else
             return false;
 
@@ -239,13 +239,13 @@ public class InputManager : MonoBehaviour, IMinimapObserver
     private bool MainbaseBuildHotkeyAction()
     {
         if (Input.GetKeyDown(arrBuildFuncHotkey[(int)EBuildFuncHotkey.TURRET]))
-            ArrayBuildCommand.Use(EMainBaseCommnad.BUILD_STRUCTURE, EObjectType.TURRET);
+            ArrayMainbaseCommand.Use(EMainbaseCommnad.BUILD_STRUCTURE, EObjectType.TURRET);
         else if (Input.GetKeyDown(arrBuildFuncHotkey[(int)EBuildFuncHotkey.BUNKER]))
-            ArrayBuildCommand.Use(EMainBaseCommnad.BUILD_STRUCTURE, EObjectType.BUNKER);
+            ArrayMainbaseCommand.Use(EMainbaseCommnad.BUILD_STRUCTURE, EObjectType.BUNKER);
         else if (Input.GetKeyDown(arrBuildFuncHotkey[(int)EBuildFuncHotkey.BARRACK]))
-            ArrayBuildCommand.Use(EMainBaseCommnad.BUILD_STRUCTURE, EObjectType.BARRACK);
+            ArrayMainbaseCommand.Use(EMainbaseCommnad.BUILD_STRUCTURE, EObjectType.BARRACK);
         else if (Input.GetKeyDown(arrBuildFuncHotkey[(int)EBuildFuncHotkey.NUCLEAR]))
-            ArrayBuildCommand.Use(EMainBaseCommnad.BUILD_STRUCTURE, EObjectType.NUCLEAR);
+            ArrayMainbaseCommand.Use(EMainbaseCommnad.BUILD_STRUCTURE, EObjectType.NUCLEAR);
         else
             return false;
         return true;

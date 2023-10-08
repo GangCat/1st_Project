@@ -51,15 +51,15 @@ public class StructureMainBase : Structure
             ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
 
         float elapsedTime = 0f;
-        upgradeAndConstructProgressPercent = elapsedTime / upgradePopulationDelay;
-        while(upgradeAndConstructProgressPercent < 1)
+        progressPercent = elapsedTime / upgradePopulationDelay;
+        while(progressPercent < 1)
         {
             if (myObj.IsSelect)
-                ArrayHUDUpgradeCommand.Use(EHUDUpgradeCommand.UPDATE_UPGRADE_TIME, upgradeAndConstructProgressPercent);
+                ArrayHUDUpgradeCommand.Use(EHUDUpgradeCommand.UPDATE_UPGRADE_TIME, progressPercent);
             // ui ㅠ표시
             yield return new WaitForSeconds(0.5f);
             elapsedTime += 0.5f;
-            upgradeAndConstructProgressPercent = elapsedTime / upgradePopulationDelay;
+            progressPercent = elapsedTime / upgradePopulationDelay;
         }
         isProcessingUpgrade = false;
         ArrayPopulationCommand.Use(EPopulationCommand.UPGRADE_POPULATION_COMPLETE);
@@ -80,15 +80,15 @@ public class StructureMainBase : Structure
             ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
 
         float elapsedTime = 0f;
-        upgradeAndConstructProgressPercent = elapsedTime / upgradeEnergySupplyDelay;
-        while (upgradeAndConstructProgressPercent < 1)
+        progressPercent = elapsedTime / upgradeEnergySupplyDelay;
+        while (progressPercent < 1)
         {
             if (myObj.IsSelect)
-                ArrayHUDUpgradeCommand.Use(EHUDUpgradeCommand.UPDATE_UPGRADE_TIME, upgradeAndConstructProgressPercent);
+                ArrayHUDUpgradeCommand.Use(EHUDUpgradeCommand.UPDATE_UPGRADE_TIME, progressPercent);
             // ui ㅠ표시
             yield return new WaitForSeconds(0.5f);
             elapsedTime += 0.5f;
-            upgradeAndConstructProgressPercent = elapsedTime / upgradeEnergySupplyDelay;
+            progressPercent = elapsedTime / upgradeEnergySupplyDelay;
         }
         isProcessingUpgrade = false;
         ArrayCurrencyCommand.Use(ECurrencyCommand.UPGRADE_ENERGY_SUPPLY_COMPLETE);

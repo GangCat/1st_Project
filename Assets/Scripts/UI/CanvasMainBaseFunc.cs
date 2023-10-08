@@ -10,25 +10,25 @@ public class CanvasMainBaseFunc : CanvasFunc, ISubscriber
         btnBuildTurret.onClick.AddListener(
             () =>
             {
-                ArrayBuildCommand.Use(EMainBaseCommnad.BUILD_STRUCTURE, EObjectType.TURRET);
+                ArrayMainbaseCommand.Use(EMainbaseCommnad.BUILD_STRUCTURE, EObjectType.TURRET);
             });
 
         btnBuildBunker.onClick.AddListener(
             () =>
             {
-                ArrayBuildCommand.Use(EMainBaseCommnad.BUILD_STRUCTURE, EObjectType.BUNKER);
+                ArrayMainbaseCommand.Use(EMainbaseCommnad.BUILD_STRUCTURE, EObjectType.BUNKER);
             });
 
         btnBuildBarrack.onClick.AddListener(
             () =>
             {
-                ArrayBuildCommand.Use(EMainBaseCommnad.BUILD_STRUCTURE, EObjectType.BARRACK);
+                ArrayMainbaseCommand.Use(EMainbaseCommnad.BUILD_STRUCTURE, EObjectType.BARRACK);
             });
 
         btnBuildNuclear.onClick.AddListener(
             () =>
             {
-                ArrayBuildCommand.Use(EMainBaseCommnad.BUILD_STRUCTURE, EObjectType.NUCLEAR);
+                ArrayMainbaseCommand.Use(EMainbaseCommnad.BUILD_STRUCTURE, EObjectType.NUCLEAR);
             });
 
         btnUpgradeEnergySup.onClick.AddListener(

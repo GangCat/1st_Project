@@ -2,16 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CommandDemolition : Command
+public class CommandDemolishComplete : Command
 {
-    public CommandDemolition(StructureManager _structureMng)
+    public CommandDemolishComplete(StructureManager _structureMng)
     {
         structureMng = _structureMng;
     }
 
     public override void Execute(params object[] _objects)
     {
-        structureMng.Demolish(SelectableObjectManager.GetFirstSelectedObjectInList.GetComponent<Structure>().StructureIdx);
+        structureMng.DestroyStructure((int)_objects[0]);
     }
 
     private StructureManager structureMng = null;
