@@ -1,15 +1,13 @@
-using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class SelectableObjectManager : MonoBehaviour, IPublisher
 {
     public delegate void VoidSelectObjectTypeDelegate(EObjectType _objectType);
-    public bool IsListEmpty => listSelectedFriendlyObject.Count < 1;
     public bool IsFriendlyUnit => isFriendlyUnitInList;
-    public FriendlyObject GetFirstSelectedObjectInList => listSelectedFriendlyObject[0];
+    public static bool IsListEmpty => listSelectedFriendlyObject.Count < 1;
+    public static FriendlyObject GetFirstSelectedObjectInList => listSelectedFriendlyObject[0];
     public static int LevelRangedUnitDmgUpgrade => levelRangedUnitDmgUpgrade;
     public static int LevelRangedUnitHpUpgrade => levelRangedUnitHpUpgrade;
     public static int LevelMeleeUnitHpUpgrade => levelMeleeUnitHpUpgrade;
@@ -90,11 +88,6 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
         dicNodeUnderEnemyUnit.Remove(_idx);
     }
 
-    public static bool isCurNodwWalkable(Vector3 _pos)
-    {
-        return grid.GetNodeFromWorldPoint(_pos).walkable;
-    }
-
     public static Vector3 ResetPosition(Vector3 _pos)
     {
         PF_Node unitNode = grid.GetNodeFromWorldPoint(_pos);
@@ -103,6 +96,12 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
             return grid.GetAccessibleNodeWithoutTargetNode(unitNode).worldPos;
 
         return unitNode.worldPos;
+    }
+
+    public void SelectStart()
+    {
+        for (int i = 0; i < listSelectedFriendlyObject.Count; ++i)
+            listSelectedFriendlyObject[i].DestroyCircle();
     }
 
     public void RemoveUnitAtList(FriendlyObject _removeObj)
@@ -171,27 +170,34 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
 
     public void AddSelectedObject(SelectableObject _object)
     {
+        if (_object.IsTempSelect) return;
+
         tempListSelectableObject.Add(_object);
+        _object.IsTempSelect = true;
+        _object.DisplayCircle();
     }
 
     public void RemoveSelectedObject(SelectableObject _object)
     {
         tempListSelectableObject.Remove(_object);
+        _object.IsTempSelect = false;
+        _object.DestroyCircle();
     }
 
     public void SelectFinish()
     {
-        foreach (FriendlyObject obj in listSelectedFriendlyObject)
-            obj.unSelect();
-
-        ArrayHUDCommand.Use(EHUDCommand.HIDE_ALL_INFO);
-        listSelectedFriendlyObject.Clear();
         if (tempListSelectableObject.Count < 1)
         {
-            selectObjectCallback?.Invoke(EObjectType.NONE);
+            for (int i = 0; i < listSelectedFriendlyObject.Count; ++i)
+                listSelectedFriendlyObject[i].DisplayCircle();
             return;
         }
 
+        foreach (FriendlyObject obj in listSelectedFriendlyObject)
+            obj.unSelect();
+
+        listSelectedFriendlyObject.Clear();
+        ArrayHUDCommand.Use(EHUDCommand.HIDE_ALL_INFO);
         SelectableObject tempObj = null;
         isFriendlyUnitInList = false;
         isFriendlyStructureInList = false;
@@ -200,6 +206,8 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
         foreach (SelectableObject obj in tempListSelectableObject)
         {
             if (obj == null) continue;
+            obj.DestroyCircle();
+            obj.IsTempSelect = false;
 
             if (listSelectedFriendlyObject.Count > 11) break;
 
@@ -240,49 +248,63 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
             }
         }
 
+        // 임시 리스트에 적 유닛만 있을 경우
         if (isEnemyObjectInList)
         {
+            tempObj.DisplayCircle();
             selectObjectCallback?.Invoke(tempObj.GetObjectType());
             InputOtherUnitInfo(tempObj);
             ArrayHUDCommand.Use(EHUDCommand.DISPLAY_SINGLE_INFO);
         }
+        // 임시 리스트에 아군 건물만 있을 경우
         else if (isFriendlyStructureInList)
         {
+            tempObj.DisplayCircle();
             InputOtherUnitInfo(tempObj);
             listSelectedFriendlyObject.Add(tempObj.GetComponent<FriendlyObject>());
             Structure structureInList = tempObj.GetComponent<Structure>();
+            // 아군 건물이 건설중인 건물일 경우
             if (structureInList.IsUnderConstruction)
             {
                 selectObjectCallback?.Invoke(EObjectType.UNDER_CONSTRUCT);
                 structureInList.UpdateConstructInfo();
                 ArrayHUDConstructCommand.Use(EHUDConstructCommand.DISPLAY_CONSTRUCT_INFO);
             }
+            // 아군 건물이 업그레이드중일 경우
             else if (structureInList.IsProcessingUpgrade)
             {
                 selectObjectCallback?.Invoke(EObjectType.PROCESSING_UPGRADE_STRUCTURE);
                 structureInList.UpdateUpgradeInfo();
                 ArrayHUDUpgradeCommand.Use(EHUDUpgradeCommand.DISPLAY_UPGRADE_INFO, structureInList.CurUpgradeType);
             }
+            // 아군 건물이 배럭일 때
             else if (tempObj.GetObjectType().Equals(EObjectType.BARRACK))
             {
                 StructureBarrack tempBarrack = tempObj.GetComponent<StructureBarrack>();
                 selectObjectCallback?.Invoke(EObjectType.BARRACK);
+                // 배럭이 유닛을 생산중일 경우
                 if (tempBarrack.IsProcessingSpawnUnit)
                 {
                     tempBarrack.UpdateSpawnInfo();
                     ArrayHUDSpawnUnitCommand.Use(EHUDSpawnUnitCommand.DISPLAY_SPAWN_UNIT_INFO);
                 }
+                else
+                    ArrayHUDCommand.Use(EHUDCommand.DISPLAY_SINGLE_INFO);
             }
+            // 아무것도 하지 않는 상태의 건물일 경우
             else
             {
                 selectObjectCallback?.Invoke(listSelectedFriendlyObject[0].GetObjectType());
                 ArrayHUDCommand.Use(EHUDCommand.DISPLAY_SINGLE_INFO);
             }
         }
+        // 임시 리스트에 아군 유닛이 존재할 경우
         else if (isFriendlyUnitInList)
         {
             selectObjectCallback?.Invoke(listSelectedFriendlyObject[0].GetObjectType());
-
+            for (int i = 0; i < listSelectedFriendlyObject.Count; ++i)
+                listSelectedFriendlyObject[i].DisplayCircle();
+            // 아군 유닛 1마리만 존재할 경우
             if (listSelectedFriendlyObject.Count < 2)
             {
                 InputOtherUnitInfo(listSelectedFriendlyObject[0]);
@@ -401,7 +423,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
                 }
             }
         }
-        // 리스트가 비어있거나 적 유닛이 존재할 경우
+        // 리스트가 비어있거나 적 유닛만 존재할 경우
         else
         {
             ArrayHUDCommand.Use(EHUDCommand.HIDE_UNIT_INFO);
@@ -417,6 +439,8 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
 
     public void MoveUnitByPicking(Vector3 _targetPos, bool isAttackMove = false)
     {
+        if (IsListEmpty) return;
+
         if (isAttackMove)
         {
             Vector3 centerPos = CalcFormationCenterPos(_targetPos.y);

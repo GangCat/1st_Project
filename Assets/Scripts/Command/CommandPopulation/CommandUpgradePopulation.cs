@@ -4,16 +4,15 @@ using UnityEngine;
 
 public class CommandUpgradePopulation : Command
 {
-    public CommandUpgradePopulation(PopulationManager _popMng, CurrencyManager _curMng, SelectableObjectManager _selMng)
+    public CommandUpgradePopulation(PopulationManager _popMng, CurrencyManager _curMng)
     {
         popMng = _popMng;
         curMng = _curMng;
-        selMng = _selMng;
     }
 
     public override void Execute(params object[] _objects)
     {
-        StructureMainBase main = selMng.GetFirstSelectedObjectInList.GetComponent<StructureMainBase>();
+        StructureMainBase main = SelectableObjectManager.GetFirstSelectedObjectInList.GetComponent<StructureMainBase>();
 
         if (curMng.CanUpgradeETC(EUpgradeETCType.CURRENT_MAX_POPULATION) && popMng.CanUpgradePopulation() && !main.IsProcessingUpgrade)
         {
@@ -24,5 +23,4 @@ public class CommandUpgradePopulation : Command
 
     private PopulationManager popMng = null;
     private CurrencyManager curMng = null;
-    private SelectableObjectManager selMng = null;
 }

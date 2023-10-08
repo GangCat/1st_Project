@@ -43,12 +43,12 @@ public class Structure : MonoBehaviour
     public void UpdateConstructInfo()
     {
         ArrayHUDConstructCommand.Use(EHUDConstructCommand.UPDATE_CONSTRUCT_STRUCTURE, myObj.GetObjectType());
-        ArrayHUDConstructCommand.Use(EHUDConstructCommand.UPDATE_CONSTRUCT_TIME, UpgradeAndConstructProgressPercent);
+        ArrayHUDConstructCommand.Use(EHUDConstructCommand.UPDATE_CONSTRUCT_TIME, upgradeAndConstructProgressPercent);
     }
 
     public void UpdateUpgradeInfo()
     {
-        ArrayHUDUpgradeCommand.Use(EHUDUpgradeCommand.UPDATE_UPGRADE_TIME, UpgradeAndConstructProgressPercent);
+        ArrayHUDUpgradeCommand.Use(EHUDUpgradeCommand.UPDATE_UPGRADE_TIME, upgradeAndConstructProgressPercent);
     }
 
     public void SetGrid(int _gridX, int _gridY)
@@ -86,15 +86,15 @@ public class Structure : MonoBehaviour
             ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
 
         float elapsedTime = 0f;
-        UpgradeAndConstructProgressPercent = elapsedTime / upgradeDelay;
-        while (UpgradeAndConstructProgressPercent < 1)
+        upgradeAndConstructProgressPercent = elapsedTime / upgradeDelay;
+        while (upgradeAndConstructProgressPercent < 1)
         {
             // ui Ç¥½Ã
             if (myObj.IsSelect)
                 ArrayHUDUpgradeCommand.Use(EHUDUpgradeCommand.UPDATE_UPGRADE_TIME, elapsedTime / upgradeDelay);
             yield return new WaitForSeconds(0.5f);
             elapsedTime += 0.5f;
-            UpgradeAndConstructProgressPercent = elapsedTime / upgradeDelay;
+            upgradeAndConstructProgressPercent = elapsedTime / upgradeDelay;
         }
         isProcessingUpgrade = false;
         UpgradeComplete();
@@ -155,14 +155,14 @@ public class Structure : MonoBehaviour
     protected IEnumerator BuildStructureCoroutine(float _buildDelay)
     {
         float elapsedTime = 0f;
-        UpgradeAndConstructProgressPercent = elapsedTime / _buildDelay;
-        while (UpgradeAndConstructProgressPercent < 1)
+        upgradeAndConstructProgressPercent = elapsedTime / _buildDelay;
+        while (upgradeAndConstructProgressPercent < 1)
         {
             if (myObj.IsSelect)
-                ArrayHUDConstructCommand.Use(EHUDConstructCommand.UPDATE_CONSTRUCT_TIME, UpgradeAndConstructProgressPercent);
+                ArrayHUDConstructCommand.Use(EHUDConstructCommand.UPDATE_CONSTRUCT_TIME, upgradeAndConstructProgressPercent);
             yield return new WaitForSeconds(0.5f);
             elapsedTime += 0.5f;
-            UpgradeAndConstructProgressPercent = elapsedTime / _buildDelay;
+            upgradeAndConstructProgressPercent = elapsedTime / _buildDelay;
         }
 
         BuildComplete();
@@ -252,7 +252,7 @@ public class Structure : MonoBehaviour
     protected int myIdx = -1;
     protected int upgradeLevel = 0;
 
-    protected float UpgradeAndConstructProgressPercent = 0f;
+    protected float upgradeAndConstructProgressPercent = 0f;
 
     protected bool isBuildable = false;
     protected bool isProcessingUpgrade = false;

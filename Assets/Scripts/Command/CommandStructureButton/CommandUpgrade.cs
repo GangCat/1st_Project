@@ -4,25 +4,30 @@ using UnityEngine;
 
 public class CommandUpgrade : Command
 {
-    public CommandUpgrade(StructureManager _structureMng, SelectableObjectManager _selMng, CurrencyManager _curMng)
+    public CommandUpgrade(StructureManager _structureMng, CurrencyManager _curMng)
     {
         structureMng = _structureMng;
-        selMng = _selMng;
         curMng = _curMng;
     }
 
     public override void Execute(params object[] _objects)
     {
-        Structure tempStructure = selMng.GetFirstSelectedObjectInList.GetComponent<Structure>();
+        
+        Structure tempStructure = SelectableObjectManager.GetFirstSelectedObjectInList.GetComponent<Structure>();
         EObjectType structureObjType = tempStructure.GetComponent<FriendlyObject>().GetObjectType();
-        if (curMng.CanUpgradeSturcture(structureObjType, tempStructure.UpgradeLevel))
+        if(structureObjType.Equals(EObjectType.BARRACK))
+        {
+            StructureBarrack barrack = tempStructure.GetComponent<StructureBarrack>();
+            if (barrack.IsProcessingSpawnUnit)
+                return;
+        }
+        else if (curMng.CanUpgradeSturcture(structureObjType, tempStructure.UpgradeLevel))
         {
             if(structureMng.UpgradeStructure(tempStructure.StructureIdx))
                 curMng.UpgradeStructure(structureObjType, tempStructure.UpgradeLevel);
         }
     }
 
-    private SelectableObjectManager selMng = null;
     private StructureManager structureMng = null;
     private CurrencyManager curMng = null;
 }

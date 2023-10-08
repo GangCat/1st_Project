@@ -7563,10 +7563,10 @@ MonoBehaviour:
   smoothTime: 0.2
   screenOffsetX: 20
   screenOffsetY: 10
-  minX: -90
-  maxX: 90
-  minZ: -110
-  maxZ: 80
+  terrainLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
+  checkBoundaryInterval: 0.01
 --- !u!1 &833493611
 GameObject:
   m_ObjectHideFlags: 0

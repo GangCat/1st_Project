@@ -109,6 +109,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectType: 0
+  selectDisplayCircle: {fileID: 52691291055329485, guid: d02d8a447130d5d4bbc9d60ffde1d811,
+    type: 3}
   chaseStartRange: 4
   chaseFinishRange: 5
   attackRange: 1.5

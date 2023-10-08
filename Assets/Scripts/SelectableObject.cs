@@ -22,8 +22,11 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType
 
     }
 
+    public Vector3 GetPos => transform.position;
     public int MaxHp => statusHp.MaxHp;
     public float AttRange => attackRange;
+    public float GetCurHpPercent => statusHp.GetCurHpPercent;
+    public bool IsTempSelect { get; set; }
     public float AttDmg
     {
         get
@@ -44,7 +47,16 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType
                 return 0;
         }
     }
-    public float GetCurHpPercent => statusHp.GetCurHpPercent;
+
+    public void DisplayCircle()
+    {
+        displayCircleObject = Instantiate(selectDisplayCircle, transform.position, Quaternion.identity, transform);
+    }
+
+    public void DestroyCircle()
+    {
+        Destroy(displayCircleObject);
+    }
 
     public EObjectType GetObjectType()
     {
@@ -91,6 +103,7 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType
     {
         stateMachine.TargetTr = null;
         targetTr = null;
+        StopAllCoroutines();
         UpdateCurNode();
         ChangeState(EState.IDLE);
         StartCoroutine("CheckIsEnemyInChaseStartRangeCoroutine");
@@ -102,14 +115,17 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType
         yield return new WaitForSeconds(0.5f);
         while (true)
         {
+            // 추적 범위만큼 overlapLayerMask에 해당하는 충돌체를 overlapSphere로 검사
             Collider[] arrCollider = null;
             arrCollider = overlapSphere(chaseStartRange);
-
+            // 충돌한 오브젝트가 존재한다면
             if (arrCollider.Length > 1)
             {
                 foreach (Collider c in arrCollider)
                 {
+                    // 해당 오브젝트의 ObjectType을 가져온다.
                     EObjectType targetType = c.GetComponent<IGetObjectType>().GetObjectType();
+                    // 쫓는 대상은 없는데 검사한 대상이 적 유닛이 아닐 경우(적 유닛만 사용할 조건이기 때문)
                     if (!targetType.Equals(EObjectType.ENEMY_UNIT))
                     {
                         stateMachine.TargetTr = c.transform;
@@ -570,6 +586,8 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType
     [Header("-Unit Attribute")]
     [SerializeField]
     protected EObjectType objectType = EObjectType.NONE;
+    [SerializeField]
+    protected GameObject selectDisplayCircle = null;
 
 
     [Header("-Unit Control Values")]
@@ -602,4 +620,5 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType
     protected StatusHp statusHp = null;
 
     protected int nodeIdx = 0;
+    protected GameObject displayCircleObject = null;
 }

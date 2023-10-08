@@ -12,12 +12,8 @@ public class CameraMovement : MonoBehaviour
 
     public void WarpCameraWithPos(Vector3 _pos)
     {
-        // transform.position = _pos + cameraOffset;
+        transform.position = _pos + cameraOffset;
         
-        Vector3 newPos = _pos + cameraOffset;
-        
-        // 카메라의 위치를 제한된 범위 내로 설정
-        transform.position = ClampCameraPosition(newPos);
     }
 
     public void ZoomCamera(float _zoomRatio)
@@ -45,9 +41,6 @@ public class CameraMovement : MonoBehaviour
 
         transform.position = Vector3.Lerp(transform.position, screenMovePos, Time.deltaTime);
         
-        // 새로운 위치를 제한된 범위 내로 설정
-        transform.position = ClampCameraPosition(Vector3.Lerp(transform.position, screenMovePos, Time.deltaTime));
-        
     }
 
     public void MoveCameraWithKey(Vector2 _arrowKeyInput)
@@ -59,51 +52,15 @@ public class CameraMovement : MonoBehaviour
 
         transform.position = Vector3.Lerp(transform.position, screenMovePos, Time.deltaTime);
         
-        // 새로운 위치를 제한된 범위 내로 설정합니다.
-        transform.position = ClampCameraPosition(Vector3.Lerp(transform.position, screenMovePos, Time.deltaTime));
     }
 
     public void MoveCameraWithObject(Vector3 _objectPos)
     {
-        // transform.position = _objectPos + cameraOffset;
-        
-        Vector3 newPos = _objectPos + cameraOffset;
-        
-        // 카메라의 위치를 제한된 범위 내로 설정
-        transform.position = ClampCameraPosition(newPos);
+        transform.position = _objectPos + cameraOffset;
         
     }
     
-    // 카메라 위치 제한
-    private Vector3 ClampCameraPosition(Vector3 _targetPos)
-    {
-        // 카메라의 현재 orthographicSize에 따라 제한 범위를 계산
-        float aspectRatio = mainCamera.aspect;  // 카메라의 가로/세로 비율
-        float cameraHeight = mainCamera.orthographicSize;  // 카메라의 높이
-        float cameraWidth = cameraHeight * aspectRatio;  // 카메라의 너비
-
-        // 현재 카메라 크기를 고려하여 실제 제한 범위를 계산
-        float actualMinX = minX + cameraWidth;
-        float actualMaxX = maxX - cameraWidth;
-        float actualMinZ = minZ + cameraHeight;
-        float actualMaxZ = maxZ - cameraHeight;
-
-        // 45도 회전시켜 가상의 위치를 계산
-        float rotatedX = _targetPos.x * Mathf.Cos(Mathf.Deg2Rad * 45) - _targetPos.z * Mathf.Sin(Mathf.Deg2Rad * 45);
-        float rotatedZ = _targetPos.x * Mathf.Sin(Mathf.Deg2Rad * 45) + _targetPos.z * Mathf.Cos(Mathf.Deg2Rad * 45);
-    
-        // 가상의 위치를 제한
-        float clampedX = Mathf.Clamp(rotatedX, actualMinX, actualMaxX);
-        float clampedZ = Mathf.Clamp(rotatedZ, actualMinZ, actualMaxZ);
-    
-        // 제한된 가상의 위치를 다시 역회전시켜 실제 위치를 얻음
-        float unrotatedX = clampedX * Mathf.Cos(Mathf.Deg2Rad * -45) - clampedZ * Mathf.Sin(Mathf.Deg2Rad * -45);
-        float unrotatedZ = clampedX * Mathf.Sin(Mathf.Deg2Rad * -45) + clampedZ * Mathf.Cos(Mathf.Deg2Rad * -45);
-    
-        return new Vector3(unrotatedX, _targetPos.y, unrotatedZ);
-    }
-
-    
+    // YBO TEST
     
     [SerializeField]
     private Vector3 cameraOffset = Vector3.zero;
@@ -121,9 +78,6 @@ public class CameraMovement : MonoBehaviour
     private float screenOffsetX = 20f;
     [SerializeField]
     private float screenOffsetY = 10f;
-    
-    [SerializeField]
-    private float minX, maxX, minZ, maxZ;  // 카메라의 이동 제한 최대 좌표
     
 
     private float targetZoom = 0f;

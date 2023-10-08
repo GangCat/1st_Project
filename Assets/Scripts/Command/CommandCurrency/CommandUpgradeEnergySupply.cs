@@ -4,15 +4,14 @@ using UnityEngine;
 
 public class CommandUpgradeEnergySupply : Command
 {
-    public CommandUpgradeEnergySupply(CurrencyManager _curMng, SelectableObjectManager _selMng)
+    public CommandUpgradeEnergySupply(CurrencyManager _curMng)
     {
         curMng = _curMng;
-        selMng = _selMng;
     }
 
     public override void Execute(params object[] _objects)
     {
-        StructureMainBase main = selMng.GetFirstSelectedObjectInList.GetComponent<StructureMainBase>();
+        StructureMainBase main = SelectableObjectManager.GetFirstSelectedObjectInList.GetComponent<StructureMainBase>();
 
         if (curMng.CanUpgradeETC(EUpgradeETCType.ENERGY_SUPPLY) && !main.IsProcessingUpgrade)
         {
@@ -22,5 +21,4 @@ public class CommandUpgradeEnergySupply : Command
     }
 
     private CurrencyManager curMng = null;
-    private SelectableObjectManager selMng = null;
 }

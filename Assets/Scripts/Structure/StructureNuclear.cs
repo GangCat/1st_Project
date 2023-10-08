@@ -20,7 +20,7 @@ public class StructureNuclear : Structure
     private IEnumerator SpawnNuclearCoroutine(VoidNuclearDelegate _spwnCompleteCallback)
     {
         hasNuclear = true;
-        float buildFinishTime = Time.time + NuclearProduceDelay;
+        float buildFinishTime = Time.time + nuclearProduceDelay;
         while (buildFinishTime > Time.time)
         {
             // ui Ç¥½Ã
@@ -32,20 +32,23 @@ public class StructureNuclear : Structure
 
     private void SpawnComplete(VoidNuclearDelegate _spwnCompleteCallback)
     {
+        myNuclear.SetPos(nuclearSpawnPos);
         myNuclear.SetActive(true);
+        myNuclear.ResetRotate();
         _spwnCompleteCallback?.Invoke(this);
     }
 
     public void LaunchNuclear(Vector3 _destPos)
     {
-        Debug.Log(StructureIdx);
         myNuclear.Launch(_destPos);
         hasNuclear = false;
     }
 
 
     [SerializeField]
-    private float NuclearProduceDelay = 0f;
+    private float nuclearProduceDelay = 0f;
+    [SerializeField]
+    private Vector3 nuclearSpawnPos = Vector3.zero;
 
     private MissileNuclear myNuclear = null;
     private bool hasNuclear = false;

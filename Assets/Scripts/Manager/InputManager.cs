@@ -1,30 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class InputManager : MonoBehaviour, IMinimapObserver
 {
-    public void Init(
-        VoidVec3Delegate _pickingCallback,
-        VoidTransformDelegate _PickingObjectCallback,
-        VoidTemplateDelegate<SelectableObject> _selectObjectCallback,
-        VoidTemplateDelegate<SelectableObject> _unSelectObjectCallback,
-        VoidVoidDelegate _selectFinishCallback,
-        VoidVoidDelegate _moveCameraWithObjectCallback,
-        VoidVec3Delegate _attackMoveCallback,
-        VoidVec3Delegate _patrolCallback)
+    
+    
+    public void Init()
     {
-        pickingCallback = _pickingCallback;
-        PickingObjectCallback = _PickingObjectCallback;
-        selectFinishCallback = _selectFinishCallback;
-        moveCameraWithObjectCallback = _moveCameraWithObjectCallback;
-        selectObjectCallback = _selectObjectCallback;
-        attackMoveCallback = _attackMoveCallback;
-        patrolCallback = _patrolCallback;
-
         selectArea = GetComponentInChildren<SelectArea>();
-        selectArea.Init(_selectObjectCallback, _unSelectObjectCallback);
+        selectArea.Init();
     }
     public bool IsBuildOperation
     {
@@ -95,6 +82,9 @@ public class InputManager : MonoBehaviour, IMinimapObserver
         if (pickPosDisplayGo != null && Functions.Picking(out hit))
             pickPosDisplayGo.transform.position = hit.point;
 
+        if (Input.anyKey)
+            CheckIsHotkey();
+
         if (Input.GetMouseButtonDown(0))
         {
             if (EventSystem.current.IsPointerOverGameObject())
@@ -137,6 +127,128 @@ public class InputManager : MonoBehaviour, IMinimapObserver
             else
                 MoveWithMouseClick();
         }
+    }
+
+    private void CheckIsHotkey()
+    {
+        if (SelectableObjectManager.IsListEmpty) return;
+
+        EObjectType objType = SelectableObjectManager.GetFirstSelectedObjectInList.GetObjectType();
+        switch (objType)
+        {
+            case EObjectType.UNIT:
+                if (UnitDefaultHotkeyAction())
+                    break;
+                break;
+            case EObjectType.UNIT_HERO:
+                if (UnitDefaultHotkeyAction())
+                    break;
+                if (Input.GetKeyDown(arrUnitFuncHotkey[(int)EUnitFuncHotkey.LAUNCH_NUCLEAR]))
+                    ArrayFuncButtonCommand.Use(EFuncButtonCommand.LAUNCH_NUCLEAR);
+                break;
+            case EObjectType.MAIN_BASE:
+                if (StructureDefaultHotkeyAction())
+                    break;
+                if (MainbaseBuildHotkeyAction())
+                    break;
+                if (Input.GetKeyDown(arrStructureFuncHotkey[(int)EStructureFuncHotkey.UPGRADE_ENERGY_SUPPLY]))
+                    ArrayCurrencyCommand.Use(ECurrencyCommand.UPGRADE_ENERGY_SUPPLY);
+                else if (Input.GetKeyDown(arrStructureFuncHotkey[(int)EStructureFuncHotkey.UPGRADE_POPULATION_MAX]))
+                    ArrayPopulationCommand.Use(EPopulationCommand.UPGRADE_MAX_POPULATION);
+
+                break;
+            case EObjectType.TURRET:
+                StructureDefaultHotkeyAction();
+                break;
+            case EObjectType.BUNKER:
+                if (StructureDefaultHotkeyAction())
+                    break;
+                if (Input.GetKeyDown(arrStructureFuncHotkey[(int)EStructureFuncHotkey.OUT_ONE_UNIT]))
+                    ArrayBunkerCommand.Use(EBunkerCommand.OUT_ONE_UNIT);
+                else if (Input.GetKeyDown(arrStructureFuncHotkey[(int)EStructureFuncHotkey.OUT_ALL_UNIT]))
+                    ArrayBunkerCommand.Use(EBunkerCommand.OUT_ALL_UNIT);
+                else if (Input.GetKeyDown(arrBuildFuncHotkey[(int)EBuildFuncHotkey.NUCLEAR]))
+                    ArrayBunkerCommand.Use(EBunkerCommand.EXPAND_WALL);
+                break;
+            case EObjectType.WALL:
+                StructureDefaultHotkeyAction();
+                break;
+            case EObjectType.BARRACK:
+                if (StructureDefaultHotkeyAction())
+                    break;
+                if (Input.GetKeyDown(arrBarrackFuncHotkey[(int)EBarrackFuncHotkey.SPAWN_MELEE]))
+                    ArrayBarrackCommand.Use(EBarrackCommand.SPAWN_UNIT, EUnitType.MELEE);
+                else if (Input.GetKeyDown(arrBarrackFuncHotkey[(int)EBarrackFuncHotkey.SPAWN_RANGED]))
+                    ArrayBarrackCommand.Use(EBarrackCommand.SPAWN_UNIT, EUnitType.RANGED);
+                else if (Input.GetKeyDown(arrBarrackFuncHotkey[(int)EBarrackFuncHotkey.SET_RALLYPOINT]))
+                    ArrayBarrackCommand.Use(EBarrackCommand.RALLYPOINT);
+                else if (Input.GetKeyDown(arrBarrackFuncHotkey[(int)EBarrackFuncHotkey.UPGRADE_RANGED_DMG]))
+                    ArrayBarrackCommand.Use(EBarrackCommand.UPGRADE_UNIT, EUnitUpgradeType.RANGED_UNIT_DMG);
+                else if (Input.GetKeyDown(arrBarrackFuncHotkey[(int)EBarrackFuncHotkey.UPGRADE_RANGED_HP]))
+                    ArrayBarrackCommand.Use(EBarrackCommand.UPGRADE_UNIT, EUnitUpgradeType.RANGED_UNIT_HP);
+                else if (Input.GetKeyDown(arrBarrackFuncHotkey[(int)EBarrackFuncHotkey.UPGRADE_MELEE_DMG]))
+                    ArrayBarrackCommand.Use(EBarrackCommand.UPGRADE_UNIT, EUnitUpgradeType.MELEE_UNIT_DMG);
+                else if (Input.GetKeyDown(arrBarrackFuncHotkey[(int)EBarrackFuncHotkey.UPGRADE_MELEE_HP]))
+                    ArrayBarrackCommand.Use(EBarrackCommand.UPGRADE_UNIT, EUnitUpgradeType.MELEE_UNIT_HP);
+                break;
+            case EObjectType.NUCLEAR:
+                if (StructureDefaultHotkeyAction())
+                    break;
+                if (Input.GetKeyDown(arrStructureFuncHotkey[(int)EStructureFuncHotkey.SPAWN_NUCLEAR]))
+                    ArrayNuclearCommand.Use(ENuclearCommand.SPAWN_NUCLEAR);
+                break;
+            case EObjectType.UNDER_CONSTRUCT:
+            case EObjectType.PROCESSING_UPGRADE_STRUCTURE:
+                if (Input.GetKeyDown(cancleKey))
+                    Debug.Log("Cancle");
+                break;
+            default:
+                break;
+        }
+    }
+
+    private bool StructureDefaultHotkeyAction()
+    {
+        if (Input.GetKeyDown(arrStructureFuncHotkey[(int)EStructureFuncHotkey.DEMOLISH]))
+            ArrayStructureButtonCommand.Use(EStructureButtonCommand.DEMOLISH);
+        else if (Input.GetKeyDown(arrStructureFuncHotkey[(int)EStructureFuncHotkey.UPGRADE]))
+            ArrayStructureButtonCommand.Use(EStructureButtonCommand.UPGRADE);
+        else
+            return false;
+        return true;
+    }
+
+    private bool UnitDefaultHotkeyAction()
+    {
+        if (Input.GetKeyDown(arrUnitFuncHotkey[(int)EUnitFuncHotkey.MOVE]))
+            ArrayFuncButtonCommand.Use(EFuncButtonCommand.MOVE);
+        else if (Input.GetKeyDown(arrUnitFuncHotkey[(int)EUnitFuncHotkey.STOP]))
+            ArrayFuncButtonCommand.Use(EFuncButtonCommand.STOP);
+        else if (Input.GetKeyDown(arrUnitFuncHotkey[(int)EUnitFuncHotkey.HOLD]))
+            ArrayFuncButtonCommand.Use(EFuncButtonCommand.HOLD);
+        else if (Input.GetKeyDown(arrUnitFuncHotkey[(int)EUnitFuncHotkey.PATROL]))
+            ArrayFuncButtonCommand.Use(EFuncButtonCommand.PATROL);
+        else if (Input.GetKeyDown(arrUnitFuncHotkey[(int)EUnitFuncHotkey.ATTACK]))
+            ArrayFuncButtonCommand.Use(EFuncButtonCommand.ATTACK);
+        else
+            return false;
+
+        return true;
+    }
+
+    private bool MainbaseBuildHotkeyAction()
+    {
+        if (Input.GetKeyDown(arrBuildFuncHotkey[(int)EBuildFuncHotkey.TURRET]))
+            ArrayBuildCommand.Use(EMainBaseCommnad.BUILD_STRUCTURE, EObjectType.TURRET);
+        else if (Input.GetKeyDown(arrBuildFuncHotkey[(int)EBuildFuncHotkey.BUNKER]))
+            ArrayBuildCommand.Use(EMainBaseCommnad.BUILD_STRUCTURE, EObjectType.BUNKER);
+        else if (Input.GetKeyDown(arrBuildFuncHotkey[(int)EBuildFuncHotkey.BARRACK]))
+            ArrayBuildCommand.Use(EMainBaseCommnad.BUILD_STRUCTURE, EObjectType.BARRACK);
+        else if (Input.GetKeyDown(arrBuildFuncHotkey[(int)EBuildFuncHotkey.NUCLEAR]))
+            ArrayBuildCommand.Use(EMainBaseCommnad.BUILD_STRUCTURE, EObjectType.NUCLEAR);
+        else
+            return false;
+        return true;
     }
 
     private void LateUpdate()
@@ -185,12 +297,12 @@ public class InputManager : MonoBehaviour, IMinimapObserver
         Vector3 pickPos = Vector3.zero;
         RaycastHit hit;
         if (Functions.Picking(selectableLayer, out hit))
-            PickingObjectCallback?.Invoke(hit.transform);
+            ArrayUnitActionCommand.Use(EUnitActionCommand.FOLLOW_OBJECT, hit.transform);
         else if (Functions.Picking("StageFloor", floorLayer, ref pickPos))
         {
             GameObject pickPosDisplayGo = Instantiate(pickPosPrefab, pickPos, Quaternion.identity, transform);
             StartCoroutine("DestroypickPosDisplay", pickPosDisplayGo);
-            pickingCallback?.Invoke(pickPos);
+            ArrayUnitActionCommand.Use(EUnitActionCommand.MOVE_WITH_POS, pickPos);
         }
 
         ClearCurFunc();
@@ -209,12 +321,12 @@ public class InputManager : MonoBehaviour, IMinimapObserver
         Vector3 pickPos = Vector3.zero;
         RaycastHit hit;
         if (Functions.Picking(selectableLayer, out hit))
-            PickingObjectCallback?.Invoke(hit.transform);
+            ArrayUnitActionCommand.Use(EUnitActionCommand.FOLLOW_OBJECT, hit.transform);
         else if (Functions.Picking("StageFloor", floorLayer, ref pickPos))
         {
             GameObject pickPosDisplayGo = Instantiate(pickPosPrefab, pickPos, Quaternion.identity, transform);
             StartCoroutine("DestroypickPosDisplay", pickPosDisplayGo);
-            attackMoveCallback?.Invoke(pickPos);
+            ArrayUnitActionCommand.Use(EUnitActionCommand.MOVE_ATTACK, pickPos);
         }
 
         ClearCurFunc();
@@ -233,12 +345,12 @@ public class InputManager : MonoBehaviour, IMinimapObserver
         Vector3 pickPos = Vector3.zero;
         RaycastHit hit;
         if (Functions.Picking(selectableLayer, out hit))
-            PickingObjectCallback?.Invoke(hit.transform);
+            ArrayUnitActionCommand.Use(EUnitActionCommand.FOLLOW_OBJECT, hit.transform);
         else if (Functions.Picking("StageFloor", floorLayer, ref pickPos))
         {
             GameObject pickPosDisplayGo = Instantiate(pickPosPrefab, pickPos, Quaternion.identity, transform);
             StartCoroutine("DestroypickPosDisplay", pickPosDisplayGo);
-            patrolCallback?.Invoke(pickPos);
+            ArrayUnitActionCommand.Use(EUnitActionCommand.PATROL, pickPos);
         }
 
         ClearCurFunc();
@@ -253,11 +365,13 @@ public class InputManager : MonoBehaviour, IMinimapObserver
     private void DragOperateWithMouseClick()
     {
         RaycastHit hit;
+        ArraySelectCommand.Use(ESelectCommand.SELECT_START);
 
         if (Functions.Picking(selectableLayer, out hit))
         {
-            if (hit.transform.GetComponent<SelectableObject>())
-                selectObjectCallback?.Invoke(hit.transform.GetComponent<SelectableObject>());
+            SelectableObject sObj = hit.transform.GetComponent<SelectableObject>();
+            if (sObj != null)
+                ArraySelectCommand.Use(ESelectCommand.TEMP_SELECT, sObj);
         }
 
         Functions.Picking("StageFloor", floorLayer, ref dragStartPos);
@@ -281,7 +395,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver
             yield return null;
         }
 
-        selectFinishCallback?.Invoke();
+        ArraySelectCommand.Use(ESelectCommand.SELECT_FINISH);
         selectArea.SetActive(false);
     }
 
@@ -294,7 +408,8 @@ public class InputManager : MonoBehaviour, IMinimapObserver
     {
         if (Input.GetKey(KeyCode.Space))
         {
-            moveCameraWithObjectCallback?.Invoke();
+            if(!SelectableObjectManager.IsListEmpty)
+                ArrayCameraMoveCommand.Use(ECameraCommand.MOVE_WITH_OBJECT);
         }
         else if (Input.GetAxisRaw("Horizontal Arrow").Equals(0) && Input.GetAxisRaw("Vertical Arrow").Equals(0))
             ArrayCameraMoveCommand.Use(ECameraCommand.MOVE_WITH_MOUSE, Input.mousePosition);
@@ -307,7 +422,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver
 
     public void GetUnitTargetPos(Vector3 _pos)
     {
-
+        ArrayUnitActionCommand.Use(EUnitActionCommand.MOVE_WITH_POS, _pos);
     }
 
     public void GetCameraTargetPos(Vector3 _pos)
@@ -320,11 +435,21 @@ public class InputManager : MonoBehaviour, IMinimapObserver
     [SerializeField]
     private float pickPosDisplayHideDelay = 0.3f;
     [SerializeField]
-    private KeyCode cancleKey = KeyCode.Escape;
-    [SerializeField]
     private LayerMask floorLayer;
     [SerializeField]
     private LayerMask selectableLayer;
+
+    [Header("-Hotkeys")]
+    [SerializeField]
+    private KeyCode[] arrUnitFuncHotkey = null;
+    [SerializeField]
+    private KeyCode[] arrBuildFuncHotkey = null;
+    [SerializeField]
+    private KeyCode[] arrBarrackFuncHotkey = null;
+    [SerializeField]
+    private KeyCode[] arrStructureFuncHotkey = null;
+    [SerializeField]
+    private KeyCode cancleKey = KeyCode.Escape;
 
     private float elapsedTime = 0f;
 
@@ -342,11 +467,8 @@ public class InputManager : MonoBehaviour, IMinimapObserver
 
     private SelectArea selectArea = null;
 
-    private VoidVec3Delegate pickingCallback = null;
-    private VoidTransformDelegate PickingObjectCallback = null;
-    private VoidVoidDelegate selectFinishCallback = null;
-    private VoidVoidDelegate moveCameraWithObjectCallback = null;
-    private VoidTemplateDelegate<SelectableObject> selectObjectCallback = null;
-    private VoidVec3Delegate attackMoveCallback = null;
-    private VoidVec3Delegate patrolCallback = null;
+    private enum EUnitFuncHotkey { NONE = -1, MOVE, STOP, HOLD, PATROL, ATTACK, LAUNCH_NUCLEAR, LENGTH }
+    private enum EBuildFuncHotkey { NONE = -1, TURRET, BUNKER, BARRACK, NUCLEAR, WALL, LENGTH }
+    private enum EBarrackFuncHotkey { NONE = -1, SPAWN_MELEE, SPAWN_RANGED, SET_RALLYPOINT, UPGRADE_RANGED_DMG, UPGRADE_RANGED_HP, UPGRADE_MELEE_DMG, UPGRADE_MELEE_HP, LENGTH }
+    private enum EStructureFuncHotkey { NONE = -1, UPGRADE, DEMOLISH, SPAWN_NUCLEAR, OUT_ONE_UNIT, OUT_ALL_UNIT, UPGRADE_ENERGY_SUPPLY, UPGRADE_POPULATION_MAX, LENGTH }
 }
