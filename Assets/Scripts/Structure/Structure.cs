@@ -41,29 +41,28 @@ public class Structure : MonoBehaviour
     public int FactorX => factorGridX;
     public int FactorY => factorGridY;
 
-    public void CancleUpgrade()
+    public virtual void CancleCurAction()
     {
-        StopCoroutine("UpgradeCoroutine");
-        isProcessingUpgrade = false;
-        curUpgradeType = EUpgradeType.NONE;
-        if (myObj.IsSelect)
-            ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
-    }
+        if(isProcessingUpgrade)
+        {
+            StopCoroutine("UpgradeCoroutine");
+            isProcessingUpgrade = false;
+            curUpgradeType = EUpgradeType.NONE;
+        }
+        else if (isProcessingConstruct)
+        {
+            StopCoroutine("BuildStructureCoroutine");
+            isProcessingConstruct = false;
+            ArrayStructureFuncButtonCommand.Use(EStructureButtonCommand.DEMOLISH_COMPLETE, myStructureIdx);
+            DestroyStructure();
+        }
+        else if (isProcessingDemolish)
+        {
+            StopCoroutine("DemolishCoroutine");
+            isProcessingDemolish = false;
+        }
 
-    public void CancleConstruct()
-    {
-        StopCoroutine("BuildStructureCoroutine");
-        isProcessingConstruct = false;
-        ArrayStructureFuncButtonCommand.Use(EStructureButtonCommand.DEMOLISH_COMPLETE, myStructureIdx);
-        DestroyStructure();
-        if (myObj.IsSelect)
-            ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
-    }
 
-    public void CancleDemolish()
-    {
-        StopCoroutine("DemolishCoroutine");
-        isProcessingDemolish = false;
         if (myObj.IsSelect)
             ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
     }

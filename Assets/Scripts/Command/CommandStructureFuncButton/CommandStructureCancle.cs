@@ -11,14 +11,7 @@ public class CommandStructureCancle : Command
 
     public override void Execute(params object[] _objects)
     {
-        Structure curStructure = SelectableObjectManager.GetFirstSelectedObjectInList.GetComponent<Structure>();
-
-        if (curStructure.IsProcessingUpgrade)
-            curStructure.CancleUpgrade();
-        else if (curStructure.IsProcessingConstruct)
-            curStructure.CancleConstruct();
-        else if (curStructure.IsProcessingDemolish)
-            curStructure.CancleDemolish();
+        SelectableObjectManager.GetFirstSelectedObjectInList.GetComponent<Structure>().CancleCurAction();
     }
 
     private CurrencyManager curMng = null;
