@@ -21,6 +21,48 @@ public class StructureBarrack : Structure, ISubscriber
 
     public bool IsProcessingSpawnUnit => isProcessingSpawnUnit;
 
+    public override void CancleCurAction()
+    {
+        if (isProcessingUpgrade)
+        {
+            if (isProcessingUpgradeUnit)
+            {
+                StopCoroutine("UpgradeUnitCoroutine");
+                isProcessingUpgrade = false;
+                isProcessingUpgradeUnit = false;
+                curUpgradeType = EUpgradeType.NONE;
+            }
+            else
+            {
+                StopCoroutine("UpgradeCoroutine");
+                isProcessingUpgrade = false;
+                curUpgradeType = EUpgradeType.NONE;
+            }
+        }
+        else if (isProcessingConstruct)
+        {
+            StopCoroutine("BuildStructureCoroutine");
+            isProcessingConstruct = false;
+            ArrayStructureFuncButtonCommand.Use(EStructureButtonCommand.DEMOLISH_COMPLETE, myStructureIdx);
+            DestroyStructure();
+        }
+        else if (isProcessingDemolish)
+        {
+            StopCoroutine("DemolishCoroutine");
+            isProcessingDemolish = false;
+        }
+        else if (isProcessingSpawnUnit)
+        {
+            StopCoroutine("SpawnUnitCoroutine");
+            listUnit.RemoveAt(0);
+            isProcessingSpawnUnit = false;
+            RequestSpawnUnit();
+        }
+
+        if (myObj.IsSelect)
+            ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
+    }
+
     public void UpdateSpawnInfo()
     {
         ArrayHUDSpawnUnitCommand.Use(EHUDSpawnUnitCommand.UPDATE_SPAWN_UNIT_LIST, listUnit);
@@ -85,10 +127,11 @@ public class StructureBarrack : Structure, ISubscriber
     private IEnumerator SpawnUnitCoroutine(EUnitType _unitType)
     {
         isProcessingSpawnUnit = true;
-        float elapsedTime = 0f;
-        float spawnUnitDelay = arrSpawnUnitDelay[(int)_unitType];
         if (myObj.IsSelect)
             ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
+        float elapsedTime = 0f;
+        float spawnUnitDelay = arrSpawnUnitDelay[(int)_unitType];
+        SpawnUnitProgressPercent = elapsedTime / spawnUnitDelay;
 
         while (SpawnUnitProgressPercent < 1)
         {
@@ -99,8 +142,6 @@ public class StructureBarrack : Structure, ISubscriber
             elapsedTime += 0.5f;
             SpawnUnitProgressPercent = elapsedTime / spawnUnitDelay;
         }
-
-        SpawnUnitProgressPercent = 0f;
 
         while (!canProcessSpawnUnit)
             yield return new WaitForSeconds(1f);
@@ -174,6 +215,8 @@ public class StructureBarrack : Structure, ISubscriber
     private IEnumerator UpgradeUnitCoroutine(EUnitUpgradeType _upgradeType)
     {
         isProcessingUpgrade = true;
+        isProcessingUpgradeUnit = true;
+
         if (myObj.IsSelect)
             ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
 
@@ -189,7 +232,7 @@ public class StructureBarrack : Structure, ISubscriber
         }
 
         isProcessingUpgrade = false;
-
+        isProcessingUpgradeUnit = false;
         UpgradeUnitComplete(_upgradeType);
     }
 
@@ -247,6 +290,7 @@ public class StructureBarrack : Structure, ISubscriber
 
     private bool isProcessingSpawnUnit = false;
     private bool canProcessSpawnUnit = true;
+    private bool isProcessingUpgradeUnit = false;
 
     private CommandUpgradeStructureHP upgradeHpCmd = null;
 

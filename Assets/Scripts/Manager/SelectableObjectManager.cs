@@ -287,15 +287,18 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
             else if (tempObj.GetObjectType().Equals(EObjectType.BARRACK))
             {
                 StructureBarrack tempBarrack = tempObj.GetComponent<StructureBarrack>();
-                selectObjectCallback?.Invoke(EObjectType.BARRACK);
                 // 배럭이 유닛을 생산중일 경우
                 if (tempBarrack.IsProcessingSpawnUnit)
                 {
                     tempBarrack.UpdateSpawnInfo();
                     ArrayHUDSpawnUnitCommand.Use(EHUDSpawnUnitCommand.DISPLAY_SPAWN_UNIT_INFO);
+                    selectObjectCallback?.Invoke(EObjectType.PROCESSING_SPAWN_UNIT);
                 }
                 else
+                {
                     ArrayHUDCommand.Use(EHUDCommand.DISPLAY_SINGLE_INFO);
+                    selectObjectCallback?.Invoke(EObjectType.BARRACK);
+                }
             }
             // 아무것도 하지 않는 상태의 건물일 경우
             else
@@ -325,6 +328,82 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
 
         tempListSelectableObject.Clear();
         return;
+    }
+
+    public void UpdateInfo()
+    {
+        ArrayHUDCommand.Use(EHUDCommand.HIDE_ALL_INFO);
+        // 리스트가 비어있지 않을 경우
+        if (listSelectedFriendlyObject.Count > 0)
+        {
+            if (isFriendlyStructureInList)
+            {
+                Structure curStructure = listSelectedFriendlyObject[0].GetComponent<Structure>();
+                // 해당 건물이 현재 업그레이드를 진행중일 경우
+                if (curStructure.IsProcessingUpgrade)
+                {
+                    curStructure.UpdateUpgradeInfo();
+                    selectObjectCallback?.Invoke(EObjectType.PROCESSING_UPGRADE_STRUCTURE);
+                    ArrayHUDUpgradeCommand.Use(EHUDUpgradeCommand.DISPLAY_UPGRADE_INFO, curStructure.CurUpgradeType);
+                }
+                // 해당 건물이 현재 해체중일 경우
+                else if (curStructure.IsProcessingDemolish)
+                {
+                    curStructure.UpdateDemolishInfo();
+                    selectObjectCallback?.Invoke(EObjectType.PROCESSING_DEMOLISH_STRUCTURE);
+                    ArrayHUDConstructCommand.Use(EHUDConstructCommand.DISPLAY_DEMOLISH_INFO, curStructure);
+                }
+                else if (curStructure.IsProcessingConstruct)
+                {
+                    curStructure.UpdateConstructInfo();
+                    selectObjectCallback?.Invoke(EObjectType.PROCESSING_CONSTRUCT_STRUCTURE);
+                    ArrayHUDConstructCommand.Use(EHUDConstructCommand.DISPLAY_CONSTRUCT_INFO, curStructure);
+                }
+                // 그렇지 않다면
+                else
+                {
+                    // 만일 건물이 배럭이고 생산중이라면
+                    StructureBarrack tempBarrack = listSelectedFriendlyObject[0].GetComponent<StructureBarrack>();
+                    if (tempBarrack != null && tempBarrack.IsProcessingSpawnUnit)
+                    {
+                        selectObjectCallback?.Invoke(EObjectType.PROCESSING_SPAWN_UNIT);
+                        tempBarrack.UpdateSpawnInfo();
+                        ArrayHUDSpawnUnitCommand.Use(EHUDSpawnUnitCommand.DISPLAY_SPAWN_UNIT_INFO);
+                    }
+                    else
+                    {
+                        selectObjectCallback?.Invoke(listSelectedFriendlyObject[0].GetObjectType());
+                        InputOtherUnitInfo(listSelectedFriendlyObject[0]);
+                        ArrayHUDCommand.Use(EHUDCommand.DISPLAY_SINGLE_INFO);
+                    }
+                }
+            }
+            // 리스트에 아군 유닛 존재할 경우
+            else if (isFriendlyUnitInList)
+            {
+                // 리스트에 유닛이 하나만 존재할 경우
+                if (listSelectedFriendlyObject.Count < 2)
+                {
+                    InputOtherUnitInfo(listSelectedFriendlyObject[0]);
+                    ArrayHUDCommand.Use(EHUDCommand.DISPLAY_SINGLE_INFO);
+                }
+                // 리스트에 유닛이 다수 존재할 경우
+                else
+                {
+                    InputFriendlyUnitInfo();
+                    ArrayHUDCommand.Use(EHUDCommand.DISPLAY_GROUP_INFO, listSelectedFriendlyObject.Count);
+                }
+                selectObjectCallback?.Invoke(listSelectedFriendlyObject[0].GetObjectType());
+            }
+            // 리스트에 아군 건물이 존재할 경우
+
+        }
+        // 리스트가 비어있거나 적 유닛만 존재할 경우
+        else
+        {
+            ArrayHUDCommand.Use(EHUDCommand.HIDE_UNIT_INFO);
+            selectObjectCallback?.Invoke(EObjectType.NONE);
+        }
     }
 
     public static void UpdateHp(int _listIdx = -2)
@@ -376,81 +455,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
         }
     }
 
-    public void UpdateInfo()
-    {
-        ArrayHUDCommand.Use(EHUDCommand.HIDE_ALL_INFO);
-        // 리스트가 비어있지 않을 경우
-        if (listSelectedFriendlyObject.Count > 0)
-        {
-            if (isFriendlyStructureInList)
-            {
-                Structure curStructure = listSelectedFriendlyObject[0].GetComponent<Structure>();
-                // 해당 건물이 현재 업그레이드를 진행중일 경우
-                if (curStructure.IsProcessingUpgrade)
-                {
-                    curStructure.UpdateUpgradeInfo();
-                    selectObjectCallback?.Invoke(EObjectType.PROCESSING_UPGRADE_STRUCTURE);
-                    ArrayHUDUpgradeCommand.Use(EHUDUpgradeCommand.DISPLAY_UPGRADE_INFO, curStructure.CurUpgradeType);
-                }
-                // 해당 건물이 현재 해체중일 경우
-                else if (curStructure.IsProcessingDemolish)
-                {
-                    curStructure.UpdateDemolishInfo();
-                    selectObjectCallback?.Invoke(EObjectType.PROCESSING_DEMOLISH_STRUCTURE);
-                    ArrayHUDConstructCommand.Use(EHUDConstructCommand.DISPLAY_DEMOLISH_INFO, curStructure);
-                }
-                else if (curStructure.IsProcessingConstruct)
-                {
-                    curStructure.UpdateConstructInfo();
-                    selectObjectCallback?.Invoke(EObjectType.PROCESSING_CONSTRUCT_STRUCTURE);
-                    ArrayHUDConstructCommand.Use(EHUDConstructCommand.DISPLAY_CONSTRUCT_INFO, curStructure);
-                }
-                // 그렇지 않다면
-                else
-                {
-                    // 만일 건물이 배럭이고 생산중이라면
-                    StructureBarrack tempBarrack = listSelectedFriendlyObject[0].GetComponent<StructureBarrack>();
-                    if (tempBarrack != null && tempBarrack.IsProcessingSpawnUnit)
-                    {
-                        selectObjectCallback?.Invoke(EObjectType.BARRACK);
-                        tempBarrack.UpdateSpawnInfo();
-                        ArrayHUDSpawnUnitCommand.Use(EHUDSpawnUnitCommand.DISPLAY_SPAWN_UNIT_INFO);
-                    }
-                    else
-                    {
-                        selectObjectCallback?.Invoke(listSelectedFriendlyObject[0].GetObjectType());
-                        InputOtherUnitInfo(listSelectedFriendlyObject[0]);
-                        ArrayHUDCommand.Use(EHUDCommand.DISPLAY_SINGLE_INFO);
-                    }
-                }
-            }
-            // 리스트에 아군 유닛 존재할 경우
-            else if (isFriendlyUnitInList)
-            {
-                // 리스트에 유닛이 하나만 존재할 경우
-                if (listSelectedFriendlyObject.Count < 2)
-                {
-                    InputOtherUnitInfo(listSelectedFriendlyObject[0]);
-                    ArrayHUDCommand.Use(EHUDCommand.DISPLAY_SINGLE_INFO);
-                }
-                // 리스트에 유닛이 다수 존재할 경우
-                else
-                {
-                    InputFriendlyUnitInfo();
-                    ArrayHUDCommand.Use(EHUDCommand.DISPLAY_GROUP_INFO, listSelectedFriendlyObject.Count);
-                }
-                selectObjectCallback?.Invoke(listSelectedFriendlyObject[0].GetObjectType());
-            }
-            // 리스트에 아군 건물이 존재할 경우
-
-        }
-        // 리스트가 비어있거나 적 유닛만 존재할 경우
-        else
-        {
-            ArrayHUDCommand.Use(EHUDCommand.HIDE_UNIT_INFO);
-            selectObjectCallback?.Invoke(EObjectType.NONE);
-        }
-    }
+ 
 
     public void ResetTargetBunker()
     {
