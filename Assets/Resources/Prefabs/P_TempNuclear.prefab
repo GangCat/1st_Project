@@ -116,7 +116,8 @@ MonoBehaviour:
   myGridX: 4
   myGridY: 4
   upgradeDelay: 0
-  NuclearProduceDelay: 3
+  nuclearProduceDelay: 10
+  nuclearSpawnPos: {x: 0.75, y: 2.5, z: 0.75}
 --- !u!1001 &109404280035626104
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -464,7 +465,7 @@ PrefabInstance:
     - target: {fileID: 1848857445697840332, guid: 46fc1b812e7caf14bb3624b7a780bbc9,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 1848857445697840332, guid: 46fc1b812e7caf14bb3624b7a780bbc9,
         type: 3}

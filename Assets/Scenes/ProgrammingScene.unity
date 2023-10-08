@@ -19248,7 +19248,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   energySupplyAmount: 300
-  curEnergy: 300
+  curEnergy: 30000
   maxEnergy: 100000
   energySupplyRate: 10
   curCore: 1000
