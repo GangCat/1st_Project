@@ -40,7 +40,6 @@ public class StructureNuclear : Structure
 
     public void LaunchNuclear(Vector3 _destPos)
     {
-        Debug.Log(StructureIdx);
         myNuclear.Launch(_destPos);
         hasNuclear = false;
     }
