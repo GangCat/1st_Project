@@ -27,6 +27,9 @@ public class FuncButtonManager : MonoBehaviour
         canvasSpawnNuclearFunc.Init();
         canvasHeroFunc.Init();
         canvasCancleFunc.Init();
+
+        ArrayUnitFuncButtonCommand.Add(EUnitFuncButtonCommand.DISPLAY_CANCLE_BUTTON, new CommandDisplayUnitCancleButton(canvasUnitBaseFunc));
+        ArrayUnitFuncButtonCommand.Add(EUnitFuncButtonCommand.HIDE_CANCLE_BUTTON, new CommandHideUnitCancleButton(canvasUnitBaseFunc));
     }
 
     public void SetBarrackButtonUninteractable()

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CanvasFunc : MonoBehaviour
 {
-    public void SetActive(bool _isActive)
+    public virtual void SetActive(bool _isActive)
     {
         gameObject.SetActive(_isActive);
     }

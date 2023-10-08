@@ -7,8 +7,6 @@ public class CanvasUnitBaseFunc : CanvasFunc
 {
     public void Init()
     {
-        gameObject.SetActive(false);
-
         btnMove.onClick.AddListener(
             ()=>
             {
@@ -39,6 +37,29 @@ public class CanvasUnitBaseFunc : CanvasFunc
                 ArrayUnitFuncButtonCommand.Use(EUnitFuncButtonCommand.ATTACK);
             });
 
+        btnCancle.onClick.AddListener(
+            () =>
+            {
+                ArrayUnitFuncButtonCommand.Use(EUnitFuncButtonCommand.CANCLE);
+            });
+
+        gameObject.SetActive(false);
+    }
+
+    public override void SetActive(bool _isActive)
+    {
+        HideCancleButton();
+        base.SetActive(_isActive);
+    }
+
+    public void DisplayCancleButton()
+    {
+        btnCancle.gameObject.SetActive(true);
+    }
+
+    public void HideCancleButton()
+    {
+        btnCancle.gameObject.SetActive(false);
     }
 
     [SerializeField]
@@ -51,4 +72,6 @@ public class CanvasUnitBaseFunc : CanvasFunc
     private Button btnPatrol = null;
     [SerializeField]
     private Button btnAttack = null;
+    [SerializeField]
+    private Button btnCancle = null;
 }

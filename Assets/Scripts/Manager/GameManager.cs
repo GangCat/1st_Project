@@ -69,7 +69,7 @@ public class GameManager : MonoBehaviour
 
     private void InitCommandList()
     {
-        ArrayUnitFuncButtonCommand.Add(EUnitFuncButtonCommand.CANCLE, new CommandButtonCancle());
+        ArrayUnitFuncButtonCommand.Add(EUnitFuncButtonCommand.CANCLE, new CommandButtonCancle(inputMng));
         ArrayUnitFuncButtonCommand.Add(EUnitFuncButtonCommand.MOVE, new CommandButtonMove(inputMng));
         ArrayUnitFuncButtonCommand.Add(EUnitFuncButtonCommand.STOP, new CommandButtonStop(selectMng));
         ArrayUnitFuncButtonCommand.Add(EUnitFuncButtonCommand.HOLD, new CommandButtonHold(selectMng));

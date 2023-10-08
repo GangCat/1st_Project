@@ -4,10 +4,15 @@ using UnityEngine;
 
 public class CommandButtonCancle : Command
 {
-    public CommandButtonCancle() { }
+    public CommandButtonCancle(InputManager _inputMng) 
+    {
+        inputMng = _inputMng;
+    }
 
     public override void Execute(params object[] _objects)
     {
-        Debug.Log("Cancle");
+        inputMng.CancleFunc();
     }
+
+    private InputManager inputMng = null;
 }

@@ -34,6 +34,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver
         ClearCurFunc();
         pickPosDisplayGo = Instantiate(pickPosPrefab, transform);
         isMoveClick = true;
+        ArrayUnitFuncButtonCommand.Use(EUnitFuncButtonCommand.DISPLAY_CANCLE_BUTTON);
     }
 
     public void OnClickAttackButton()
@@ -41,6 +42,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver
         ClearCurFunc();
         pickPosDisplayGo = Instantiate(pickPosPrefab, transform);
         isAttackClick = true;
+        ArrayUnitFuncButtonCommand.Use(EUnitFuncButtonCommand.DISPLAY_CANCLE_BUTTON);
     }
 
     public void OnClickPatrolButton()
@@ -48,6 +50,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver
         ClearCurFunc();
         pickPosDisplayGo = Instantiate(pickPosPrefab, transform);
         isPatrolClick = true;
+        ArrayUnitFuncButtonCommand.Use(EUnitFuncButtonCommand.DISPLAY_CANCLE_BUTTON);
     }
 
     public void OnClickRallyPointButton()
@@ -62,6 +65,19 @@ public class InputManager : MonoBehaviour, IMinimapObserver
         ClearCurFunc();
         pickPosDisplayGo = Instantiate(pickPosPrefab, transform);
         isLaunchNuclearClick = true;
+        ArrayUnitFuncButtonCommand.Use(EUnitFuncButtonCommand.DISPLAY_CANCLE_BUTTON);
+    }
+
+    public void CancleFunc()
+    {
+        isMoveClick = false;
+        isAttackClick = false;
+        isPatrolClick = false;
+        isRallyPointClick = false;
+        isBuildOperation = false;
+        isLaunchNuclearClick = false;
+        Destroy(pickPosDisplayGo);
+        ArrayUnitFuncButtonCommand.Use(EUnitFuncButtonCommand.HIDE_CANCLE_BUTTON);
     }
 
     private void ClearCurFunc()
@@ -73,6 +89,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver
         isBuildOperation = false;
         isLaunchNuclearClick = false;
         // 등등 기능과 관련된 bool값 모두 초기화
+        ArrayUnitFuncButtonCommand.Use(EUnitFuncButtonCommand.HIDE_CANCLE_BUTTON);
     }
 
     private void Update()
