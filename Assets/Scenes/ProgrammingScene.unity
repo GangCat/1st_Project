@@ -14812,7 +14812,7 @@ GameObject:
   - component: {fileID: 1348180058}
   - component: {fileID: 1348180057}
   m_Layer: 5
-  m_Name: Button_Cancle_12
+  m_Name: Button_StructureCancle_12
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -18376,7 +18376,7 @@ GameObject:
   - component: {fileID: 1701275362}
   - component: {fileID: 1701275365}
   m_Layer: 0
-  m_Name: Canvas_CancleFunc
+  m_Name: Canvas_StructureCancleFunc
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -18477,7 +18477,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28cc1c0d9b855ee44bd142b4765c7ac6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cancleBtn: {fileID: 1348180057}
+  btnStructureCancle: {fileID: 1348180057}
 --- !u!1 &1713239757
 GameObject:
   m_ObjectHideFlags: 0
