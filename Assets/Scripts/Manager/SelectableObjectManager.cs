@@ -266,52 +266,56 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
             // 아군 건물이 건설중인 건물일 경우
             if (structureInList.IsProcessingConstruct)
             {
-                selectObjectCallback?.Invoke(EObjectType.PROCESSING_CONSTRUCT_STRUCTURE);
+                selectObjectCallback?.Invoke(EObjectType.NONE);
                 structureInList.UpdateConstructInfo();
                 ArrayHUDConstructCommand.Use(EHUDConstructCommand.DISPLAY_CONSTRUCT_INFO);
+                ArrayStructureFuncButtonCommand.Use(EStructureButtonCommand.DISPLAY_CANCLE_BUTTON);
             }
             // 아군 건물이 업그레이드중일 경우
             else if (structureInList.IsProcessingUpgrade)
             {
-                selectObjectCallback?.Invoke(EObjectType.PROCESSING_UPGRADE_STRUCTURE);
+                selectObjectCallback?.Invoke(EObjectType.NONE);
                 structureInList.UpdateUpgradeInfo();
                 ArrayHUDUpgradeCommand.Use(EHUDUpgradeCommand.DISPLAY_UPGRADE_INFO, structureInList.CurUpgradeType);
+                ArrayStructureFuncButtonCommand.Use(EStructureButtonCommand.DISPLAY_CANCLE_BUTTON);
             }
             // 아군 건물이 해체중일 경우
             else if (structureInList.IsProcessingDemolish)
             {
-                selectObjectCallback?.Invoke(EObjectType.PROCESSING_DEMOLISH_STRUCTURE);
+                selectObjectCallback?.Invoke(EObjectType.NONE);
                 structureInList.UpdateDemolishInfo();
                 ArrayHUDConstructCommand.Use(EHUDConstructCommand.DISPLAY_DEMOLISH_INFO);
+                ArrayStructureFuncButtonCommand.Use(EStructureButtonCommand.DISPLAY_CANCLE_BUTTON);
             }
             // 아군 건물이 배럭일 때
             else if (tempObj.GetObjectType().Equals(EObjectType.BARRACK))
             {
                 StructureBarrack tempBarrack = tempObj.GetComponent<StructureBarrack>();
+                selectObjectCallback?.Invoke(EObjectType.BARRACK);
                 // 배럭이 유닛을 생산중일 경우
                 if (tempBarrack.IsProcessingSpawnUnit)
                 {
                     tempBarrack.UpdateSpawnInfo();
                     ArrayHUDSpawnUnitCommand.Use(EHUDSpawnUnitCommand.DISPLAY_SPAWN_UNIT_INFO);
-                    selectObjectCallback?.Invoke(EObjectType.PROCESSING_SPAWN_UNIT);
+                    ArrayStructureFuncButtonCommand.Use(EStructureButtonCommand.DISPLAY_CANCLE_BUTTON);
                 }
                 else
                 {
-                    ArrayHUDCommand.Use(EHUDCommand.DISPLAY_SINGLE_INFO);
                     InputOtherUnitInfo(tempObj);
-                    selectObjectCallback?.Invoke(EObjectType.BARRACK);
+                    ArrayHUDCommand.Use(EHUDCommand.DISPLAY_SINGLE_INFO);
                 }
             }
             // 아군 건물이 핵 생산 건물일 경우
             else if(tempObj.GetObjectType().Equals(EObjectType.NUCLEAR))
             {
                 StructureNuclear tempNuclear = listSelectedFriendlyObject[0].GetComponent<StructureNuclear>();
+
                 // 핵을 생산중일 경우
                 if (tempNuclear.IsProcessingSpawnNuclear)
                 {
-                    selectObjectCallback?.Invoke(EObjectType.PROCESSING_SPAWN_NUCLEAR);
                     tempNuclear.UpdateSpawnNuclearInfo();
                     ArrayHUDSpawnNuclearCommand.Use(EHUDSpawnNuclearCommand.DISPLAY_SPAWN_NUCLEAR_INFO);
+                    ArrayStructureFuncButtonCommand.Use(EStructureButtonCommand.DISPLAY_CANCLE_BUTTON);
                 }
                 else
                 {
@@ -364,22 +368,25 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
                 if (curStructure.IsProcessingUpgrade)
                 {
                     curStructure.UpdateUpgradeInfo();
-                    selectObjectCallback?.Invoke(EObjectType.PROCESSING_UPGRADE_STRUCTURE);
+                    selectObjectCallback?.Invoke(EObjectType.NONE);
                     ArrayHUDUpgradeCommand.Use(EHUDUpgradeCommand.DISPLAY_UPGRADE_INFO, curStructure.CurUpgradeType);
+                    ArrayStructureFuncButtonCommand.Use(EStructureButtonCommand.DISPLAY_CANCLE_BUTTON);
                 }
                 // 해당 건물이 현재 해체중일 경우
                 else if (curStructure.IsProcessingDemolish)
                 {
                     curStructure.UpdateDemolishInfo();
-                    selectObjectCallback?.Invoke(EObjectType.PROCESSING_DEMOLISH_STRUCTURE);
+                    selectObjectCallback?.Invoke(EObjectType.NONE);
                     ArrayHUDConstructCommand.Use(EHUDConstructCommand.DISPLAY_DEMOLISH_INFO, curStructure);
+                    ArrayStructureFuncButtonCommand.Use(EStructureButtonCommand.DISPLAY_CANCLE_BUTTON);
                 }
                 // 해당 건물이 현재 건설중일 경우
                 else if (curStructure.IsProcessingConstruct)
                 {
                     curStructure.UpdateConstructInfo();
-                    selectObjectCallback?.Invoke(EObjectType.PROCESSING_CONSTRUCT_STRUCTURE);
+                    selectObjectCallback?.Invoke(EObjectType.NONE);
                     ArrayHUDConstructCommand.Use(EHUDConstructCommand.DISPLAY_CONSTRUCT_INFO, curStructure);
+                    ArrayStructureFuncButtonCommand.Use(EStructureButtonCommand.DISPLAY_CANCLE_BUTTON);
                 }
                 // 그렇지 않다면
                 else
@@ -389,16 +396,18 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
                     // 만일 건물이 배럭이고 생산중이라면
                     if (tempBarrack != null && tempBarrack.IsProcessingSpawnUnit)
                     {
-                        selectObjectCallback?.Invoke(EObjectType.PROCESSING_SPAWN_UNIT);
+                        selectObjectCallback?.Invoke(EObjectType.BARRACK);
                         tempBarrack.UpdateSpawnInfo();
                         ArrayHUDSpawnUnitCommand.Use(EHUDSpawnUnitCommand.DISPLAY_SPAWN_UNIT_INFO);
+                        ArrayStructureFuncButtonCommand.Use(EStructureButtonCommand.DISPLAY_CANCLE_BUTTON);
                     }
                     // 만일 건물이 핵 건물이고 핵 생산중이라면
                     else if(tempNuclear != null && tempNuclear.IsProcessingSpawnNuclear)
                     {
-                        selectObjectCallback?.Invoke(EObjectType.PROCESSING_SPAWN_NUCLEAR);
+                        selectObjectCallback?.Invoke(EObjectType.NUCLEAR);
                         tempNuclear.UpdateSpawnNuclearInfo();
                         ArrayHUDSpawnNuclearCommand.Use(EHUDSpawnNuclearCommand.DISPLAY_SPAWN_NUCLEAR_INFO);
+                        ArrayStructureFuncButtonCommand.Use(EStructureButtonCommand.DISPLAY_CANCLE_BUTTON);
                     }
                     else
                     {

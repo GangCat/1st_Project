@@ -111,7 +111,7 @@ public class GameManager : MonoBehaviour
 
         ArrayStructureFuncButtonCommand.Add(EStructureButtonCommand.DEMOLISH, new CommandDemolition(currencyMng));
         ArrayStructureFuncButtonCommand.Add(EStructureButtonCommand.UPGRADE, new CommandUpgrade(structureMng, currencyMng));
-        ArrayStructureFuncButtonCommand.Add(EStructureButtonCommand.CANCLE, new CommandStructureCancle(currencyMng));
+        ArrayStructureFuncButtonCommand.Add(EStructureButtonCommand.CANCLE_CURRENT_FUNCTION, new CommandStructureCancle(currencyMng, inputMng));
         ArrayStructureFuncButtonCommand.Add(EStructureButtonCommand.DEMOLISH_COMPLETE, new CommandDemolishComplete(structureMng));
 
         ArrayCurrencyCommand.Add(ECurrencyCommand.COLLECT_CORE, new CommandCollectPowerCore(currencyMng));

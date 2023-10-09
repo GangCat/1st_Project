@@ -30,6 +30,9 @@ public class FuncButtonManager : MonoBehaviour
 
         ArrayUnitFuncButtonCommand.Add(EUnitFuncButtonCommand.DISPLAY_CANCLE_BUTTON, new CommandDisplayUnitCancleButton(canvasUnitBaseFunc));
         ArrayUnitFuncButtonCommand.Add(EUnitFuncButtonCommand.HIDE_CANCLE_BUTTON, new CommandHideUnitCancleButton(canvasUnitBaseFunc));
+
+        ArrayStructureFuncButtonCommand.Add(EStructureButtonCommand.DISPLAY_CANCLE_BUTTON, new CommandDisplayStructureCancleButton(canvasStructureCancleFunc));
+        ArrayStructureFuncButtonCommand.Add(EStructureButtonCommand.HIDE_CANCLE_BUTTON, new CommandHideStructureCancleButton(canvasStructureCancleFunc));
     }
 
     public void SetBarrackButtonUninteractable()
@@ -75,21 +78,9 @@ public class FuncButtonManager : MonoBehaviour
                 canvasBarrackFunc.SetActive(true);
                 canvasBarrackUpgradeFunc.SetActive(true);
                 break;
-            case EObjectType.PROCESSING_SPAWN_UNIT:
-                canvasStructureBaseFunc.SetActive(true);
-                canvasBarrackFunc.SetActive(true);
-                canvasBarrackUpgradeFunc.SetActive(true);
-                canvasStructureCancleFunc.SetActive(true);
-                break;
             case EObjectType.NUCLEAR:
                 canvasStructureBaseFunc.SetActive(true);
                 canvasSpawnNuclearFunc.SetActive(true);
-                break;
-            case EObjectType.PROCESSING_CONSTRUCT_STRUCTURE:
-            case EObjectType.PROCESSING_UPGRADE_STRUCTURE:
-            case EObjectType.PROCESSING_DEMOLISH_STRUCTURE:
-            case EObjectType.PROCESSING_SPAWN_NUCLEAR:
-                canvasStructureCancleFunc.SetActive(true);
                 break;
             default:
                 break;
@@ -130,18 +121,6 @@ public class FuncButtonManager : MonoBehaviour
                 canvasStructureBaseFunc.SetActive(false);
                 canvasBarrackFunc.SetActive(false);
                 canvasBarrackUpgradeFunc.SetActive(false);
-                break;
-            case EObjectType.PROCESSING_SPAWN_UNIT:
-                canvasStructureBaseFunc.SetActive(false);
-                canvasBarrackFunc.SetActive(false);
-                canvasBarrackUpgradeFunc.SetActive(false);
-                canvasStructureCancleFunc.SetActive(false);
-                break;
-            case EObjectType.PROCESSING_CONSTRUCT_STRUCTURE:
-            case EObjectType.PROCESSING_UPGRADE_STRUCTURE:
-            case EObjectType.PROCESSING_DEMOLISH_STRUCTURE:
-            case EObjectType.PROCESSING_SPAWN_NUCLEAR:
-                canvasStructureCancleFunc.SetActive(false);
                 break;
             case EObjectType.NUCLEAR:
                 canvasStructureBaseFunc.SetActive(false);

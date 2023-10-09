@@ -10,10 +10,20 @@ public class CanvasStructureCancleFunc : CanvasFunc
         btnStructureCancle.onClick.AddListener(
             () =>
             {
-                ArrayStructureFuncButtonCommand.Use(EStructureButtonCommand.CANCLE);
+                ArrayStructureFuncButtonCommand.Use(EStructureButtonCommand.CANCLE_CURRENT_FUNCTION);
             });
 
         gameObject.SetActive(false);
+    }
+
+    public void DisplayCancleButton()
+    {
+        SetActive(true);
+    }
+
+    public void HideCancleButton()
+    {
+        SetActive(false);
     }
 
     [SerializeField]
