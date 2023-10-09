@@ -109,9 +109,21 @@ public class InputManager : MonoBehaviour, IMinimapObserver
     private void Update()
     {
         elapsedTime += Time.deltaTime;
+        if (isCheckDoubleClick)
+        {
+            if (leftClickElapsedTime > 0.5f)
+            {
+                isCheckDoubleClick = false;
+                leftClickElapsedTime = 0f;
+            }
+            else
+                leftClickElapsedTime += Time.deltaTime;
+        }
+
         RaycastHit hit;
         if (pickPosDisplayGo != null && Functions.Picking(out hit))
             pickPosDisplayGo.transform.position = hit.point;
+
 
         if (Input.anyKey)
             CheckIsHotkey();
@@ -395,6 +407,20 @@ public class InputManager : MonoBehaviour, IMinimapObserver
         if (Functions.Picking(selectableLayer, out hit))
         {
             SelectableObject sObj = hit.transform.GetComponent<SelectableObject>();
+
+            if (isCheckDoubleClick)
+            {
+                if (hit.transform.Equals(SelectableObjectManager.GetFirstSelectedObjectInList.transform))
+                {
+                    Debug.Log("double Click");
+                    // 여기서 카메라 커맨드로 박스캐스트나 오버랩 박스로 화면내의 selectable다 찾아내고
+                    // 그 배열 받아와서 그 배열에 있는 애들 중 hit랑 타입 같은 애들만 골라서 temp에 일일이 다 넣어주기
+                }
+
+                isCheckDoubleClick = false;
+            }
+
+
             if (sObj != null)
                 ArraySelectCommand.Use(ESelectCommand.TEMP_SELECT, sObj);
         }
@@ -403,6 +429,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver
         selectArea.SetPos(dragStartPos);
         selectArea.SetLocalScale(Vector3.zero);
         selectArea.SetActive(true);
+        isCheckDoubleClick = true;
 
         StartCoroutine("DragCoroutine");
     }
@@ -477,6 +504,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver
     private KeyCode cancleKey = KeyCode.Escape;
 
     private float elapsedTime = 0f;
+    private float leftClickElapsedTime = 0f;
 
     private bool isMoveClick = false;
     private bool isAttackClick = false;
@@ -484,6 +512,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver
     private bool isBuildOperation = false;
     private bool isRallyPointClick = false;
     private bool isLaunchNuclearClick = false;
+    private bool isCheckDoubleClick = false;
 
     private GameObject pickPosDisplayGo = null;
 
