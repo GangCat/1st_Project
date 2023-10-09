@@ -277,6 +277,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
                 structureInList.UpdateUpgradeInfo();
                 ArrayHUDUpgradeCommand.Use(EHUDUpgradeCommand.DISPLAY_UPGRADE_INFO, structureInList.CurUpgradeType);
             }
+            // 아군 건물이 해체중일 경우
             else if (structureInList.IsProcessingDemolish)
             {
                 selectObjectCallback?.Invoke(EObjectType.PROCESSING_DEMOLISH_STRUCTURE);
@@ -297,6 +298,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
                 else
                 {
                     ArrayHUDCommand.Use(EHUDCommand.DISPLAY_SINGLE_INFO);
+                    InputOtherUnitInfo(tempObj);
                     selectObjectCallback?.Invoke(EObjectType.BARRACK);
                 }
             }
@@ -308,21 +310,21 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
                 if (tempNuclear.IsProcessingSpawnNuclear)
                 {
                     selectObjectCallback?.Invoke(EObjectType.PROCESSING_SPAWN_NUCLEAR);
-                    //tempNuclear.UpdateSpawnInfo();
-                    //ArrayHUDSpawnUnitCommand.Use(EHUDSpawnUnitCommand.DISPLAY_SPAWN_UNIT_INFO);
-                    InputOtherUnitInfo(listSelectedFriendlyObject[0]);
-                    ArrayHUDCommand.Use(EHUDCommand.DISPLAY_SINGLE_INFO);
+                    tempNuclear.UpdateSpawnNuclearInfo();
+                    ArrayHUDSpawnNuclearCommand.Use(EHUDSpawnNuclearCommand.DISPLAY_SPAWN_NUCLEAR_INFO);
                 }
                 else
                 {
-                    ArrayHUDCommand.Use(EHUDCommand.DISPLAY_SINGLE_INFO);
                     selectObjectCallback?.Invoke(EObjectType.NUCLEAR);
+                    InputOtherUnitInfo(tempObj);
+                    ArrayHUDCommand.Use(EHUDCommand.DISPLAY_SINGLE_INFO);
                 }
             }
             // 아무것도 하지 않는 상태의 건물일 경우
             else
             {
-                selectObjectCallback?.Invoke(listSelectedFriendlyObject[0].GetObjectType());
+                selectObjectCallback?.Invoke(tempObj.GetObjectType());
+                InputOtherUnitInfo(tempObj);
                 ArrayHUDCommand.Use(EHUDCommand.DISPLAY_SINGLE_INFO);
             }
         }
@@ -395,10 +397,8 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
                     else if(tempNuclear != null && tempNuclear.IsProcessingSpawnNuclear)
                     {
                         selectObjectCallback?.Invoke(EObjectType.PROCESSING_SPAWN_NUCLEAR);
-                        //tempNuclear.UpdateSpawnInfo();
-                        //ArrayHUDSpawnUnitCommand.Use(EHUDSpawnUnitCommand.DISPLAY_SPAWN_UNIT_INFO);
-                        InputOtherUnitInfo(listSelectedFriendlyObject[0]);
-                        ArrayHUDCommand.Use(EHUDCommand.DISPLAY_SINGLE_INFO);
+                        tempNuclear.UpdateSpawnNuclearInfo();
+                        ArrayHUDSpawnNuclearCommand.Use(EHUDSpawnNuclearCommand.DISPLAY_SPAWN_NUCLEAR_INFO);
                     }
                     else
                     {

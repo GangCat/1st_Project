@@ -17,6 +17,7 @@ public class DisplayHUDManager : MonoBehaviour
         canvasUpgradeInfo = GetComponentInChildren<CanvasUpgradeInfo>();
         canvasConstructInfo = GetComponentInChildren<CanvasConstructInfo>();
         canvasDemolishInfo = GetComponentInChildren<CanvasDemolishInfo>();
+        canvasNuclearInfo = GetComponentInChildren<CanvasSpawnNuclearInfo>();
 
         canvasMinimap.Init();
         canvasWaveInfo.Init();
@@ -26,6 +27,7 @@ public class DisplayHUDManager : MonoBehaviour
         canvasUpgradeInfo.Init();
         canvasConstructInfo.Init();
         canvasDemolishInfo.Init();
+        canvasNuclearInfo.Init();
 
         ArrayHUDCommand.Add(EHUDCommand.INIT_WAVE_TIME, new CommandInitWaveTime(canvasWaveInfo));
         ArrayHUDCommand.Add(EHUDCommand.UPDATE_WAVE_TIME, new CommandUpdateWaveTime(canvasWaveInfo));
@@ -52,6 +54,9 @@ public class DisplayHUDManager : MonoBehaviour
         ArrayHUDConstructCommand.Add(EHUDConstructCommand.DISPLAY_DEMOLISH_INFO, new CommandDisplayDemolishInfo(canvasDemolishInfo));
         ArrayHUDConstructCommand.Add(EHUDConstructCommand.UPDATE_DEMOLISH_TIME, new CommandUpdateDemolishTime(canvasDemolishInfo));
         ArrayHUDConstructCommand.Add(EHUDConstructCommand.UPDATE_DEMOLISH_STRUCTURE, new CommandUpdateDemolishStructure(canvasDemolishInfo));
+
+        ArrayHUDSpawnNuclearCommand.Add(EHUDSpawnNuclearCommand.DISPLAY_SPAWN_NUCLEAR_INFO, new CommandDisplaySpawnNuclearInfo(canvasNuclearInfo));
+        ArrayHUDSpawnNuclearCommand.Add(EHUDSpawnNuclearCommand.UPDATE_SPAWN_NUCLEAR_TIME, new CommandUpdateSpawnNuclearTime(canvasNuclearInfo));
     }
 
     public void HideDisplay()
@@ -61,6 +66,7 @@ public class DisplayHUDManager : MonoBehaviour
         canvasUpgradeInfo.HideDisplay();
         canvasConstructInfo.HideDisplay();
         canvasDemolishInfo.HideDisplay();
+        canvasNuclearInfo.HideDisplay();
     }
 
     public void HeroDead()
@@ -99,4 +105,5 @@ public class DisplayHUDManager : MonoBehaviour
     private CanvasUpgradeInfo canvasUpgradeInfo = null;
     private CanvasConstructInfo canvasConstructInfo = null;
     private CanvasDemolishInfo canvasDemolishInfo = null;
+    private CanvasSpawnNuclearInfo canvasNuclearInfo = null;
 }
