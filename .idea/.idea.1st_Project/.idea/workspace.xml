@@ -5,97 +5,45 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8b33c29f-1ced-47a6-96e0-2e9883714488" name="변경" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/BGM.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/BGM/Combat.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/BGM/Combat/Barren Boss LOOP.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/BGM/Combat/Barren Boss LOOP.wav.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/BGM/Combat/Barren Boss.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/BGM/Combat/Barren Boss.wav.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/BGM/Combat/Big Percussion LOOP.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/BGM/Combat/Big Percussion LOOP.wav.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/BGM/Combat/Big Percussion.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/BGM/Combat/Big Percussion.wav.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/BGM/Combat/Boss Battle 1 Loop.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/BGM/Combat/Boss Battle 1 Loop.wav.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/BGM/Combat/Boss Battle 5 Loop.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/BGM/Combat/Boss Battle 5 Loop.wav.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/BGM/Combat/Danger.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/BGM/Combat/Danger.wav.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/BGM/Combat/Enemies LOOP.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/BGM/Combat/Enemies LOOP.wav.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/BGM/Combat/Enemies.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/BGM/Combat/Enemies.wav.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/BGM/Combat/Enemy Territory LOOP.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/BGM/Combat/Enemy Territory LOOP.wav.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/BGM/Dark Dungeon AMBIENT LOOP.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/BGM/Dark Dungeon AMBIENT LOOP.wav.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/BGM/Sophisticated City.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/BGM/Sophisticated City.wav.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/BGM/Upbeat City LOOP.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/BGM/Upbeat City LOOP.wav.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Coin.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Coin/8BIT_RETRO_Coin_Collect_Two_Note_Bright_Slow_mono.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Coin/8BIT_RETRO_Coin_Collect_Two_Note_Bright_Slow_mono.wav.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Shot.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Shot/Bio gun Shot 1.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Shot/Bio gun Shot 1.wav.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Shot/Bio gun Shot 6.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Shot/Bio gun Shot 6.wav.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Shot/Bio gun Shot 9.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Shot/Bio gun Shot 9.wav.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Shot/Sci Fi Assault Rifle 1.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Shot/Sci Fi Assault Rifle 1.wav.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Shot/Sci Fi Assault Rifle 9.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Shot/Sci Fi Assault Rifle 9.wav.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Audio.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Manager/AudioManager.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Build,Struct.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Build,Struct/Engine 9 Stop 1.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Build,Struct/Engine 9 Stop 1.wav.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Build,Struct/Engine 9 Stop 2.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Build,Struct/Engine 9 Stop 2.wav.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Coin/DropAmuletGemsRingsSounds04 - Mono.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Coin/DropAmuletGemsRingsSounds04 - Mono.wav.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Menu,Click.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Menu,Click/Digital Click 01.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Menu,Click/Digital Click 01.wav.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Menu,Click/WAVE_SE_032.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Menu,Click/WAVE_SE_032.wav.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Menu,Click/WAVE_SE_040.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Menu,Click/WAVE_SE_040.wav.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Shot/Weapon 14 Shoot 1 (Flamethrower).wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Shot/Weapon 14 Shoot 1 (Flamethrower).wav.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Shot/Weapon 14 Shoot 2 (Flamethrower).wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Shot/Weapon 14 Shoot 2 (Flamethrower).wav.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Shot/Weapon 14 Shoot 3 (Flamethrower).wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Shot/Weapon 14 Shoot 3 (Flamethrower).wav.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Shot/Weapon 14 Shoot 4 (Flamethrower).wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Shot/Weapon 14 Shoot 4 (Flamethrower).wav.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Shot/etfx_explosion_laser.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Shot/etfx_explosion_laser.wav.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Shot/etfx_shoot_fireball.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Shot/etfx_shoot_fireball.wav.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Shot/etfx_shoot_laser.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Shot/etfx_shoot_laser.wav.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Audio/HeroAudioPlayer.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.1st_Project/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.1st_Project/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ParrelSync.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ParrelSync/Editor.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ParrelSync/Editor/AssetModBlock.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ParrelSync/Editor/AssetModBlock/EditorQuit.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ParrelSync/Editor/AssetModBlock/EditorQuit.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ParrelSync/Editor/AssetModBlock/ParrelSyncAssetModificationProcessor.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ParrelSync/Editor/AssetModBlock/ParrelSyncAssetModificationProcessor.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ParrelSync/Editor/ClonesManager.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ParrelSync/Editor/ClonesManager.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ParrelSync/Editor/ClonesManagerWindow.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ParrelSync/Editor/ClonesManagerWindow.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ParrelSync/Editor/ExternalLinks.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ParrelSync/Editor/ExternalLinks.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ParrelSync/Editor/FileUtilities.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ParrelSync/Editor/FileUtilities.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ParrelSync/Editor/NonCore.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ParrelSync/Editor/NonCore/AskFeedbackDialog.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ParrelSync/Editor/NonCore/AskFeedbackDialog.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ParrelSync/Editor/NonCore/OtherMenuItem.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ParrelSync/Editor/NonCore/OtherMenuItem.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ParrelSync/Editor/ParrelSyncProjectSettings.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ParrelSync/Editor/ParrelSyncProjectSettings.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ParrelSync/Editor/Preferences.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ParrelSync/Editor/Preferences.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ParrelSync/Editor/Project.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ParrelSync/Editor/Project.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ParrelSync/Editor/UpdateChecker.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ParrelSync/Editor/UpdateChecker.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ParrelSync/Editor/ValidateCopiedFoldersIntegrity.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ParrelSync/Editor/ValidateCopiedFoldersIntegrity.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ParrelSync/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ParrelSync/package.json.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ParrelSync/projectCloner.asmdef" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ParrelSync/projectCloner.asmdef.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/ParrelSync.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/ParrelSync/ScriptableObjects.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/ParrelSync/ScriptableObjects/ParrelSyncProjectSettings.asset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/ParrelSync/ScriptableObjects/ParrelSyncProjectSettings.asset.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Prefabs/P_EnemyUnit.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/P_EnemyUnit.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Prefabs/P_Player.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/P_Player.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/ProgrammingScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/ProgrammingScene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/State/StateTurretAttack.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/State/StateTurretAttack.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/State/UnitState/StateAttack.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/State/UnitState/StateAttack.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Utility/Defines.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Utility/Defines.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UserSettings/Layouts/CurrentMaximizeLayout.dwlt" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/Layouts/CurrentMaximizeLayout.dwlt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Audio/EnemyAudioPlayer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Audio/EnemyAudioPlayer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Audio/FriendlyAudioPlayer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Audio/FriendlyAudioPlayer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Manager/AudioManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Manager/AudioManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Settings/HDRPDefaultResources/HDRenderPipelineGlobalSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Settings/HDRPDefaultResources/HDRenderPipelineGlobalSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Packages/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Packages/packages-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/packages-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectVersion.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectVersion.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/VFXManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/VFXManager.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UserSettings/Layouts/default-2022.dwlt" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/Layouts/default-2022.dwlt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -148,7 +96,7 @@
 }</component>
   <component name="RunManager" selected="Unity 에디터에 연결.Unity 에디터에 연결">
     <configuration name="유닛 테스트(배치 모드)" type="RunUnityExe" factoryName="Unity Executable">
-      <option name="EXE_PATH" value="C:\Program Files\Unity 2022.3.8f1\Editor\Unity.exe" />
+      <option name="EXE_PATH" value="C:\Program Files\Unity\Hub\Editor\2023.1.16f1\Editor\Unity.exe" />
       <option name="PROGRAM_PARAMETERS" value="-runTests -batchmode -projectPath E:\YBO\_Project_E5_\1st_Project -testResults Logs/results.xml -testPlatform EditMode -debugCodeOptimization" />
       <option name="WORKING_DIRECTORY" value="E:\YBO\_Project_E5_\1st_Project" />
       <option name="PASS_PARENT_ENVS" value="1" />
@@ -164,7 +112,7 @@
       <method v="2" />
     </configuration>
     <configuration name="Unity 시작" type="RunUnityExe" factoryName="Unity Executable">
-      <option name="EXE_PATH" value="C:\Program Files\Unity 2022.3.8f1\Editor\Unity.exe" />
+      <option name="EXE_PATH" value="C:\Program Files\Unity\Hub\Editor\2023.1.16f1\Editor\Unity.exe" />
       <option name="PROGRAM_PARAMETERS" value="-projectPath E:\YBO\_Project_E5_\1st_Project -debugCodeOptimization" />
       <option name="WORKING_DIRECTORY" value="E:\YBO\_Project_E5_\1st_Project" />
       <option name="PASS_PARENT_ENVS" value="1" />
@@ -215,7 +163,8 @@
       <workItem from="1696897657804" duration="12000" />
       <workItem from="1696897777626" duration="131000" />
       <workItem from="1696898002285" duration="267000" />
-      <workItem from="1696916235481" duration="12073000" />
+      <workItem from="1696916235481" duration="12882000" />
+      <workItem from="1696935751518" duration="613000" />
     </task>
     <servers />
   </component>

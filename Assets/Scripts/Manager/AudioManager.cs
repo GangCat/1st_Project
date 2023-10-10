@@ -18,16 +18,13 @@ public class AudioManager : MonoBehaviour
         switch (_objectType)
         {
             case EObjectType.UNIT:
-                Debug.Log("Unit Attack Audio!");
-                FriendlyAudioPlayer.instance.PlayAttackAudio(FriendlyAudioPlayer.EFriendlyAudioType.SHOT);
+                FriendlyAudioPlayer.instance.PlayAttackAudio(FriendlyAudioPlayer.EFriendlyAudioType.ATTACK);
                 break;
             case EObjectType.UNIT_HERO:
-                Debug.Log("Hero Attack Audio!");
-                FriendlyAudioPlayer.instance.PlayAttackAudio(FriendlyAudioPlayer.EFriendlyAudioType.SHOT);
+                HeroAudioPlayer.instance.PlayAttackAudio(HeroAudioPlayer.EHeroAudioType.ATTACK);
                 break;
             case EObjectType.ENEMY_UNIT:
-                Debug.Log("Enemy Attack Audio!");
-                EnemyAudioPlayer.instance.PlayAttackAudio(EnemyAudioPlayer.EEnemyAudioType.SHOT);
+                EnemyAudioPlayer.instance.PlayAttackAudio(EnemyAudioPlayer.EEnemyAudioType.ATTACK);
                 break;
             default:
                 break;

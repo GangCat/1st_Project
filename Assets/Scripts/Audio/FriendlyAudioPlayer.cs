@@ -76,7 +76,7 @@ public class FriendlyAudioPlayer : MonoBehaviour
 
 
     public static FriendlyAudioPlayer instance;
-    public enum EFriendlyAudioType { NONE = -1, SHOT, MOVE, LENGTH } 
+    public enum EFriendlyAudioType { NONE = -1, ATTACK, MOVE, LENGTH } 
     
     [Header("#FriendlyAudio")]
     [SerializeField] private AudioClip[] audioClips;

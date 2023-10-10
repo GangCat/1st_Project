@@ -67,9 +67,6 @@ LightmapSettings:
     m_LightmapParameters: {fileID: 0}
     m_LightmapsBakeMode: 1
     m_TextureCompression: 1
-    m_FinalGather: 0
-    m_FinalGatherFiltering: 1
-    m_FinalGatherRayCount: 256
     m_ReflectionCompression: 2
     m_MixedBakeMode: 2
     m_BakeBackend: 1
@@ -205,7 +202,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioClips:
-  - {fileID: 8300000, guid: 3cf1c82d60385504c96ab9aeecd3c0e8, type: 3}
+  - {fileID: 8300000, guid: 74475ea52580bde438e3333b2bd76fcb, type: 3}
   audioVolume: 0.5
   audioChannels: 4
 --- !u!1 &13302610
@@ -5127,6 +5124,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 485179752}
+  - component: {fileID: 485179753}
   m_Layer: 0
   m_Name: HeroAudioPlayer
   m_TagString: Untagged
@@ -5149,6 +5147,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1023234128}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &485179753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 485179751}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0f346071ae97bf4dbfba7dd7efa5ffd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioClips:
+  - {fileID: 8300000, guid: 13af21643768e3f4b9c901e8c0d0c671, type: 3}
+  audioVolume: 0.5
+  audioChannels: 4
 --- !u!1 &492267355
 GameObject:
   m_ObjectHideFlags: 0
@@ -8326,6 +8340,8 @@ MonoBehaviour:
   stopNaNs: 0
   taaSharpenStrength: 0.5
   TAAQuality: 1
+  taaSharpenMode: 0
+  taaRingingReduction: 0
   taaHistorySharpening: 0.35
   taaAntiFlicker: 0.5
   taaMotionVectorRejection: 0
@@ -8376,6 +8392,7 @@ MonoBehaviour:
     sssQualityMode: 0
     sssQualityLevel: 0
     sssCustomSampleBudget: 20
+    sssCustomDownsampleSteps: 0
     msaaMode: 1
     materialQuality: 0
   renderingPathCustomFrameSettingsOverrideMask:
