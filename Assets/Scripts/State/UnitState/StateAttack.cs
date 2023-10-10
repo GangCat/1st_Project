@@ -10,6 +10,8 @@ public class StateAttack : IState
         targetTr = _structState.targetTr;
         attRate = _structState.attRate;
         attDmg = _structState.attDmg;
+        objectType = _structState.objectType;
+
     }
 
     public void Update(ref SUnitState _structState)
@@ -26,6 +28,10 @@ public class StateAttack : IState
         {
             elapsedTime = 0f;
             // 공격 애니메이션 출력
+            
+            // 공격 Audio 재생
+            AudioManager.instance.PlayAttackAudio(objectType);
+            
             targetTr.GetComponent<IDamageable>().GetDmg(attDmg);
         }
     }
@@ -37,6 +43,7 @@ public class StateAttack : IState
     private float attDmg = 0;
     private float elapsedTime = 0f;
     private float attRate = 0f;
+    private EObjectType objectType;
 
     private Transform targetTr = null;
     private Transform myTr = null;

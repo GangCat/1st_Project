@@ -26,7 +26,10 @@ public class StateTurretAttack : IState
         {
             elapsedTime = 0f;
             // 공격 애니메이션 출력
+            
             // 미사일 발사
+            Debug.Log("Missile Fire!!");
+            
             GameObject missile = GameObject.Instantiate(_structState.TurretMissile, spawnTr.position, spawnTr.rotation);
             missile.GetComponent<MissileTurret>().Init(spawnTr.position);
         }

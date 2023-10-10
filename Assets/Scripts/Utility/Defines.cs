@@ -29,6 +29,9 @@ public struct SUnitState
     public float attRate;
     public float attDmg;
 
+    public EObjectType objectType;
+    
+
     public GameObject TurretMissile;
     public Transform missileSpawnTr;
 }
@@ -81,3 +84,5 @@ public enum EMessageType { NONE = -1, UPGRADE_RANGED_DMG, UPGRADE_RANGED_HP, UPG
 
 public enum EUpgradeETCType { NONE = -1, CURRENT_MAX_POPULATION, ENERGY_SUPPLY, LENGTH }
 public enum EUpgradeType { NONE = -1, ENERGY, POPULATION, STRUCTURE, RANGED_DMG, RANGED_HP, MELEE_DMG, MELEE_HP, LENGTH }
+
+// public enum EAudioHero1 { NONE = -1, SHOT, MOVE, LENGTH }
