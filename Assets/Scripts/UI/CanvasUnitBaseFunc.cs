@@ -7,38 +7,59 @@ public class CanvasUnitBaseFunc : CanvasFunc
 {
     public void Init()
     {
-        gameObject.SetActive(false);
-
         btnMove.onClick.AddListener(
             ()=>
             {
-                ArrayFuncButtonCommand.Use(EFuncButtonCommand.MOVE);
+                ArrayUnitFuncButtonCommand.Use(EUnitFuncButtonCommand.MOVE);
             });
 
         btnStop.onClick.AddListener(
             () =>
             {
-                ArrayFuncButtonCommand.Use(EFuncButtonCommand.STOP);
+                ArrayUnitFuncButtonCommand.Use(EUnitFuncButtonCommand.STOP);
             });
 
         btnHold.onClick.AddListener(
             () =>
             {
-                ArrayFuncButtonCommand.Use(EFuncButtonCommand.HOLD);
+                ArrayUnitFuncButtonCommand.Use(EUnitFuncButtonCommand.HOLD);
             });
 
         btnPatrol.onClick.AddListener(
             () =>
             {
-                ArrayFuncButtonCommand.Use(EFuncButtonCommand.PATROL);
+                ArrayUnitFuncButtonCommand.Use(EUnitFuncButtonCommand.PATROL);
             });
 
         btnAttack.onClick.AddListener(
             () =>
             {
-                ArrayFuncButtonCommand.Use(EFuncButtonCommand.ATTACK);
+                ArrayUnitFuncButtonCommand.Use(EUnitFuncButtonCommand.ATTACK);
             });
 
+        btnCancle.onClick.AddListener(
+            () =>
+            {
+                ArrayUnitFuncButtonCommand.Use(EUnitFuncButtonCommand.CANCLE);
+            });
+
+        gameObject.SetActive(false);
+    }
+
+    public override void SetActive(bool _isActive)
+    {
+        HideCancleButton();
+        base.SetActive(_isActive);
+    }
+
+    public void DisplayCancleButton()
+    {
+        btnCancle.gameObject.SetActive(true);
+    }
+
+    public void HideCancleButton()
+    {
+        btnCancle.gameObject.SetActive(false);
     }
 
     [SerializeField]
@@ -51,4 +72,6 @@ public class CanvasUnitBaseFunc : CanvasFunc
     private Button btnPatrol = null;
     [SerializeField]
     private Button btnAttack = null;
+    [SerializeField]
+    private Button btnCancle = null;
 }

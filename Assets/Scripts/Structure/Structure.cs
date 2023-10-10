@@ -21,7 +21,7 @@ public class Structure : MonoBehaviour
     {
         myObj = GetComponent<FriendlyObject>();
         myObj.Init();
-        myIdx = _structureIdx;
+        myStructureIdx = _structureIdx;
         upgradeLevel = 1;
         ShowHBeam();
         HideModel();
@@ -33,22 +33,55 @@ public class Structure : MonoBehaviour
     public int UpgradeLevel => upgradeLevel;
     public bool IsBuildable => isBuildable;
     public bool IsProcessingUpgrade => isProcessingUpgrade;
-    public int StructureIdx => myIdx;
+    public bool IsProcessingDemolish => isProcessingDemolish;
+    public bool IsProcessingConstruct => isProcessingConstruct;
+    public int StructureIdx => myStructureIdx;
     public int GridX => myGridX;
     public int GridY => myGridY;
     public int FactorX => factorGridX;
     public int FactorY => factorGridY;
-    public bool IsUnderConstruction { get; private set; }
+
+    public virtual void CancleCurAction()
+    {
+        if(isProcessingUpgrade)
+        {
+            StopCoroutine("UpgradeCoroutine");
+            isProcessingUpgrade = false;
+            curUpgradeType = EUpgradeType.NONE;
+        }
+        else if (isProcessingConstruct)
+        {
+            StopCoroutine("BuildStructureCoroutine");
+            isProcessingConstruct = false;
+            ArrayStructureFuncButtonCommand.Use(EStructureButtonCommand.DEMOLISH_COMPLETE, myStructureIdx);
+            DestroyStructure();
+        }
+        else if (isProcessingDemolish)
+        {
+            StopCoroutine("DemolishCoroutine");
+            isProcessingDemolish = false;
+        }
+
+
+        if (myObj.IsSelect)
+            ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
+    }
 
     public void UpdateConstructInfo()
     {
         ArrayHUDConstructCommand.Use(EHUDConstructCommand.UPDATE_CONSTRUCT_STRUCTURE, myObj.GetObjectType());
-        ArrayHUDConstructCommand.Use(EHUDConstructCommand.UPDATE_CONSTRUCT_TIME, upgradeAndConstructProgressPercent);
+        ArrayHUDConstructCommand.Use(EHUDConstructCommand.UPDATE_CONSTRUCT_TIME, progressPercent);
+    }
+
+    public void UpdateDemolishInfo()
+    {
+        ArrayHUDConstructCommand.Use(EHUDConstructCommand.UPDATE_DEMOLISH_STRUCTURE, myObj.GetObjectType());
+        ArrayHUDConstructCommand.Use(EHUDConstructCommand.UPDATE_DEMOLISH_TIME, progressPercent);
     }
 
     public void UpdateUpgradeInfo()
     {
-        ArrayHUDUpgradeCommand.Use(EHUDUpgradeCommand.UPDATE_UPGRADE_TIME, upgradeAndConstructProgressPercent);
+        ArrayHUDUpgradeCommand.Use(EHUDUpgradeCommand.UPDATE_UPGRADE_TIME, progressPercent);
     }
 
     public void SetGrid(int _gridX, int _gridY)
@@ -86,15 +119,15 @@ public class Structure : MonoBehaviour
             ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
 
         float elapsedTime = 0f;
-        upgradeAndConstructProgressPercent = elapsedTime / upgradeDelay;
-        while (upgradeAndConstructProgressPercent < 1)
+        progressPercent = elapsedTime / upgradeDelay;
+        while (progressPercent < 1)
         {
             // ui 표시
             if (myObj.IsSelect)
                 ArrayHUDUpgradeCommand.Use(EHUDUpgradeCommand.UPDATE_UPGRADE_TIME, elapsedTime / upgradeDelay);
             yield return new WaitForSeconds(0.5f);
             elapsedTime += 0.5f;
-            upgradeAndConstructProgressPercent = elapsedTime / upgradeDelay;
+            progressPercent = elapsedTime / upgradeDelay;
         }
         isProcessingUpgrade = false;
         UpgradeComplete();
@@ -141,9 +174,10 @@ public class Structure : MonoBehaviour
     {
         isBuildable = true;
         SetColor();
-        IsUnderConstruction = true;
+        isProcessingConstruct = true;
         if (myObj.IsSelect)
         {
+            UpdateConstructInfo();
             ArrayHUDConstructCommand.Use(EHUDConstructCommand.UPDATE_CONSTRUCT_STRUCTURE, myObj.GetObjectType());
             ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
         }
@@ -155,14 +189,14 @@ public class Structure : MonoBehaviour
     protected IEnumerator BuildStructureCoroutine(float _buildDelay)
     {
         float elapsedTime = 0f;
-        upgradeAndConstructProgressPercent = elapsedTime / _buildDelay;
-        while (upgradeAndConstructProgressPercent < 1)
+        progressPercent = elapsedTime / _buildDelay;
+        while (progressPercent < 1)
         {
             if (myObj.IsSelect)
-                ArrayHUDConstructCommand.Use(EHUDConstructCommand.UPDATE_CONSTRUCT_TIME, upgradeAndConstructProgressPercent);
+                ArrayHUDConstructCommand.Use(EHUDConstructCommand.UPDATE_CONSTRUCT_TIME, progressPercent);
             yield return new WaitForSeconds(0.5f);
             elapsedTime += 0.5f;
-            upgradeAndConstructProgressPercent = elapsedTime / _buildDelay;
+            progressPercent = elapsedTime / _buildDelay;
         }
 
         BuildComplete();
@@ -170,15 +204,49 @@ public class Structure : MonoBehaviour
 
     protected virtual void BuildComplete()
     {
-        IsUnderConstruction = false;
+        isProcessingConstruct = false;
         HideHBeam();
         ShowModel();
         if (myObj.IsSelect)
             ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
     }
 
+    public virtual void Demolish()
+    {
+        isProcessingDemolish = true;
+        if (myObj.IsSelect)
+        {
+            UpdateDemolishInfo();
+            ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
+        }
+        StartCoroutine("DemolishCoroutine");
+    }
+
+    protected IEnumerator DemolishCoroutine()
+    {
+        float elapsedTime = 0f;
+        progressPercent = elapsedTime / demolishDelay;
+
+        while (progressPercent < 1f)
+        {
+            if (myObj.IsSelect)
+                ArrayHUDConstructCommand.Use(EHUDConstructCommand.UPDATE_DEMOLISH_TIME, progressPercent);
+            // ui 표시
+            yield return new WaitForSeconds(0.5f);
+            elapsedTime += 0.5f;
+            progressPercent = elapsedTime / demolishDelay;
+        }
+        ArrayStructureFuncButtonCommand.Use(EStructureButtonCommand.DEMOLISH_COMPLETE, myStructureIdx);
+        DestroyStructure();
+    }
+
     public void DestroyStructure()
     {
+        isProcessingDemolish = false;
+        UpdateNodeWalkable(true);
+        FriendlyObject fObj = GetComponent<FriendlyObject>();
+        fObj.unSelect();
+        ArraySelectCommand.Use(ESelectCommand.REMOVE_FROM_LIST, fObj);
         Destroy(gameObject);
     }
 
@@ -240,6 +308,8 @@ public class Structure : MonoBehaviour
     protected int myGridY = 1;
     [SerializeField]
     protected float upgradeDelay = 0f;
+    [SerializeField]
+    protected float demolishDelay = 4f;
 
     protected PF_Grid grid = null;
     protected PF_Node curNode = null;
@@ -249,13 +319,15 @@ public class Structure : MonoBehaviour
     protected StructureCollider[] arrCollider = null;
     protected int factorGridX = 1;
     protected int factorGridY = 1;
-    protected int myIdx = -1;
+    protected int myStructureIdx = -1;
     protected int upgradeLevel = 0;
 
-    protected float upgradeAndConstructProgressPercent = 0f;
+    protected float progressPercent = 0f;
 
     protected bool isBuildable = false;
     protected bool isProcessingUpgrade = false;
+    protected bool isProcessingDemolish = false;
+    protected bool isProcessingConstruct = false;
     protected EUpgradeType curUpgradeType = EUpgradeType.NONE;
     protected FriendlyObject myObj = null;
 }

@@ -21,6 +21,48 @@ public class StructureBarrack : Structure, ISubscriber
 
     public bool IsProcessingSpawnUnit => isProcessingSpawnUnit;
 
+    public override void CancleCurAction()
+    {
+        if (isProcessingUpgrade)
+        {
+            if (isProcessingUpgradeUnit)
+            {
+                StopCoroutine("UpgradeUnitCoroutine");
+                isProcessingUpgrade = false;
+                isProcessingUpgradeUnit = false;
+                curUpgradeType = EUpgradeType.NONE;
+            }
+            else
+            {
+                StopCoroutine("UpgradeCoroutine");
+                isProcessingUpgrade = false;
+                curUpgradeType = EUpgradeType.NONE;
+            }
+        }
+        else if (isProcessingConstruct)
+        {
+            StopCoroutine("BuildStructureCoroutine");
+            isProcessingConstruct = false;
+            ArrayStructureFuncButtonCommand.Use(EStructureButtonCommand.DEMOLISH_COMPLETE, myStructureIdx);
+            DestroyStructure();
+        }
+        else if (isProcessingDemolish)
+        {
+            StopCoroutine("DemolishCoroutine");
+            isProcessingDemolish = false;
+        }
+        else if (isProcessingSpawnUnit)
+        {
+            StopCoroutine("SpawnUnitCoroutine");
+            listUnit.RemoveAt(0);
+            isProcessingSpawnUnit = false;
+            RequestSpawnUnit();
+        }
+
+        if (myObj.IsSelect)
+            ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
+    }
+
     public void UpdateSpawnInfo()
     {
         ArrayHUDSpawnUnitCommand.Use(EHUDSpawnUnitCommand.UPDATE_SPAWN_UNIT_LIST, listUnit);
@@ -60,7 +102,11 @@ public class StructureBarrack : Structure, ISubscriber
         // ui에 나타내는 내용
     }
 
-
+    public override void Demolish()
+    {
+        if (isProcessingSpawnUnit) return;
+        base.Demolish();
+    }
 
     public override void DeactivateUnit(GameObject _removeGo, EUnitType _type)
     {
@@ -81,10 +127,11 @@ public class StructureBarrack : Structure, ISubscriber
     private IEnumerator SpawnUnitCoroutine(EUnitType _unitType)
     {
         isProcessingSpawnUnit = true;
-        float elapsedTime = 0f;
-        float spawnUnitDelay = arrSpawnUnitDelay[(int)_unitType];
         if (myObj.IsSelect)
             ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
+        float elapsedTime = 0f;
+        float spawnUnitDelay = arrSpawnUnitDelay[(int)_unitType];
+        SpawnUnitProgressPercent = elapsedTime / spawnUnitDelay;
 
         while (SpawnUnitProgressPercent < 1)
         {
@@ -96,8 +143,6 @@ public class StructureBarrack : Structure, ISubscriber
             SpawnUnitProgressPercent = elapsedTime / spawnUnitDelay;
         }
 
-        SpawnUnitProgressPercent = 0f;
-
         while (!canProcessSpawnUnit)
             yield return new WaitForSeconds(1f);
 
@@ -105,7 +150,7 @@ public class StructureBarrack : Structure, ISubscriber
         FriendlyObject tempObj = arrMemoryPool[(int)_unitType].ActivatePoolItem(spawnPoint, 3, transform).GetComponent<FriendlyObject>();
         tempObj.Position = SelectableObjectManager.ResetPosition(tempObj.Position);
         tempObj.Init();
-        tempObj.Init(myIdx);
+        tempObj.Init(myStructureIdx);
 
         if (!rallyPoint.Equals(spawnPoint))
             tempObj.MoveByPos(rallyPoint);
@@ -170,22 +215,24 @@ public class StructureBarrack : Structure, ISubscriber
     private IEnumerator UpgradeUnitCoroutine(EUnitUpgradeType _upgradeType)
     {
         isProcessingUpgrade = true;
+        isProcessingUpgradeUnit = true;
+
         if (myObj.IsSelect)
             ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
 
         float elapsedTime = 0f;
-        upgradeAndConstructProgressPercent = elapsedTime / upgradeDelay;
+        progressPercent = elapsedTime / upgradeDelay;
         while (elapsedTime < upgradeDelay)
         {
             if (myObj.IsSelect)
-                ArrayHUDUpgradeCommand.Use(EHUDUpgradeCommand.UPDATE_UPGRADE_TIME, upgradeAndConstructProgressPercent);
+                ArrayHUDUpgradeCommand.Use(EHUDUpgradeCommand.UPDATE_UPGRADE_TIME, progressPercent);
             yield return new WaitForSeconds(0.5f);
             elapsedTime += 0.5f;
-            upgradeAndConstructProgressPercent = elapsedTime / upgradeDelay;
+            progressPercent = elapsedTime / upgradeDelay;
         }
 
         isProcessingUpgrade = false;
-
+        isProcessingUpgradeUnit = false;
         UpgradeUnitComplete(_upgradeType);
     }
 
@@ -243,6 +290,7 @@ public class StructureBarrack : Structure, ISubscriber
 
     private bool isProcessingSpawnUnit = false;
     private bool canProcessSpawnUnit = true;
+    private bool isProcessingUpgradeUnit = false;
 
     private CommandUpgradeStructureHP upgradeHpCmd = null;
 

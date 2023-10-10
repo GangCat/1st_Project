@@ -14,10 +14,13 @@ public class StructureMainBase : Structure
         upgradeHpCmd = new CommandUpgradeStructureHP(GetComponent<StatusHp>());
         myObj = GetComponent<FriendlyObject>();
         myObj.Init();
-        myIdx = _structureIdx;
+        myStructureIdx = _structureIdx;
         upgradeLevel = 1;
         UpdateNodeWalkable(false);
     }
+
+    public bool IsPopulationUpgrade => isPopulationUpgrade;
+    public bool IsEnergySupplyUpgrade => isEnergySupplyUpgrade;
 
     public override bool StartUpgrade()
     {
@@ -35,11 +38,54 @@ public class StructureMainBase : Structure
         upgradeHpCmd.Execute(upgradeHpAmount);
         StructureManager.UpgradeLimit = upgradeLevel;
 
-        Debug.Log("UpgradeCompleteMainBase");
+        //Debug.Log("UpgradeCompleteMainBase");
+    }
+
+    public override void CancleCurAction()
+    {
+        if (isProcessingUpgrade)
+        {
+            if (isPopulationUpgrade)
+            {
+                isProcessingUpgrade = false;
+                isPopulationUpgrade = false;
+                StopCoroutine("UpgradePopulationCoroutine");
+                curUpgradeType = EUpgradeType.NONE;
+            }
+            else if (isEnergySupplyUpgrade)
+            {
+                isProcessingUpgrade = false;
+                isEnergySupplyUpgrade = false;
+                StopCoroutine("UpgradeEnergySupplyCoroutine");
+                curUpgradeType = EUpgradeType.NONE;
+            }
+            else
+            {
+                StopCoroutine("UpgradeCoroutine");
+                isProcessingUpgrade = false;
+                curUpgradeType = EUpgradeType.NONE;
+            }
+        }
+        else if (isProcessingConstruct)
+        {
+            StopCoroutine("BuildStructureCoroutine");
+            isProcessingConstruct = false;
+            ArrayStructureFuncButtonCommand.Use(EStructureButtonCommand.DEMOLISH_COMPLETE, myStructureIdx);
+            DestroyStructure();
+        }
+        else if (isProcessingDemolish)
+        {
+            StopCoroutine("DemolishCoroutine");
+            isProcessingDemolish = false;
+        }
+
+        if (myObj.IsSelect)
+            ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
     }
 
     public void UpgradeMaxPopulation()
     {
+        isPopulationUpgrade = true;
         StartCoroutine("UpgradePopulationCoroutine");
     }
 
@@ -51,17 +97,19 @@ public class StructureMainBase : Structure
             ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
 
         float elapsedTime = 0f;
-        upgradeAndConstructProgressPercent = elapsedTime / upgradePopulationDelay;
-        while(upgradeAndConstructProgressPercent < 1)
+        progressPercent = elapsedTime / upgradePopulationDelay;
+        while(progressPercent < 1)
         {
             if (myObj.IsSelect)
-                ArrayHUDUpgradeCommand.Use(EHUDUpgradeCommand.UPDATE_UPGRADE_TIME, upgradeAndConstructProgressPercent);
+                ArrayHUDUpgradeCommand.Use(EHUDUpgradeCommand.UPDATE_UPGRADE_TIME, progressPercent);
             // ui ㅠ표시
             yield return new WaitForSeconds(0.5f);
             elapsedTime += 0.5f;
-            upgradeAndConstructProgressPercent = elapsedTime / upgradePopulationDelay;
+            progressPercent = elapsedTime / upgradePopulationDelay;
         }
         isProcessingUpgrade = false;
+        isPopulationUpgrade = false; 
+        curUpgradeType = EUpgradeType.NONE;
         ArrayPopulationCommand.Use(EPopulationCommand.UPGRADE_POPULATION_COMPLETE);
         if(myObj.IsSelect)
             ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
@@ -75,22 +123,25 @@ public class StructureMainBase : Structure
     private IEnumerator UpgradeEnergySupplyCoroutine()
     {
         isProcessingUpgrade = true;
+        isEnergySupplyUpgrade = true;
         curUpgradeType = EUpgradeType.ENERGY;
         if (myObj.IsSelect)
             ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
 
         float elapsedTime = 0f;
-        upgradeAndConstructProgressPercent = elapsedTime / upgradeEnergySupplyDelay;
-        while (upgradeAndConstructProgressPercent < 1)
+        progressPercent = elapsedTime / upgradeEnergySupplyDelay;
+        while (progressPercent < 1)
         {
             if (myObj.IsSelect)
-                ArrayHUDUpgradeCommand.Use(EHUDUpgradeCommand.UPDATE_UPGRADE_TIME, upgradeAndConstructProgressPercent);
+                ArrayHUDUpgradeCommand.Use(EHUDUpgradeCommand.UPDATE_UPGRADE_TIME, progressPercent);
             // ui ㅠ표시
             yield return new WaitForSeconds(0.5f);
             elapsedTime += 0.5f;
-            upgradeAndConstructProgressPercent = elapsedTime / upgradeEnergySupplyDelay;
+            progressPercent = elapsedTime / upgradeEnergySupplyDelay;
         }
         isProcessingUpgrade = false;
+        isEnergySupplyUpgrade = false;
+        curUpgradeType = EUpgradeType.NONE;
         ArrayCurrencyCommand.Use(ECurrencyCommand.UPGRADE_ENERGY_SUPPLY_COMPLETE);
         if (myObj.IsSelect)
             ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
@@ -105,4 +156,7 @@ public class StructureMainBase : Structure
     private float upgradeEnergySupplyDelay = 10f;
 
     private CommandUpgradeStructureHP upgradeHpCmd = null;
+    private bool isPopulationUpgrade = false;
+    private bool isEnergySupplyUpgrade = false;
+
 }

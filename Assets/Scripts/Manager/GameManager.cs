@@ -69,17 +69,18 @@ public class GameManager : MonoBehaviour
 
     private void InitCommandList()
     {
-        ArrayFuncButtonCommand.Add(EFuncButtonCommand.CANCLE, new CommandButtonCancle());
-        ArrayFuncButtonCommand.Add(EFuncButtonCommand.MOVE, new CommandButtonMove(inputMng));
-        ArrayFuncButtonCommand.Add(EFuncButtonCommand.STOP, new CommandButtonStop(selectMng));
-        ArrayFuncButtonCommand.Add(EFuncButtonCommand.HOLD, new CommandButtonHold(selectMng));
-        ArrayFuncButtonCommand.Add(EFuncButtonCommand.PATROL, new CommandButtonPatrol(inputMng));
-        ArrayFuncButtonCommand.Add(EFuncButtonCommand.ATTACK, new CommandButtonAttack(inputMng));
-        ArrayFuncButtonCommand.Add(EFuncButtonCommand.LAUNCH_NUCLEAR, new CommandButtonLaunchNuclear(inputMng));
+        ArrayUnitFuncButtonCommand.Add(EUnitFuncButtonCommand.CANCLE, new CommandUnitCancle(inputMng));
+        ArrayUnitFuncButtonCommand.Add(EUnitFuncButtonCommand.MOVE, new CommandButtonMove(inputMng));
+        ArrayUnitFuncButtonCommand.Add(EUnitFuncButtonCommand.STOP, new CommandButtonStop(selectMng));
+        ArrayUnitFuncButtonCommand.Add(EUnitFuncButtonCommand.HOLD, new CommandButtonHold(selectMng));
+        ArrayUnitFuncButtonCommand.Add(EUnitFuncButtonCommand.PATROL, new CommandButtonPatrol(inputMng));
+        ArrayUnitFuncButtonCommand.Add(EUnitFuncButtonCommand.ATTACK, new CommandButtonAttack(inputMng));
+        ArrayUnitFuncButtonCommand.Add(EUnitFuncButtonCommand.LAUNCH_NUCLEAR, new CommandButtonLaunchNuclear(inputMng));
 
-        ArrayBuildCommand.Add(EMainBaseCommnad.CANCLE, new CommandBuildCancle(structureMng, inputMng));
-        ArrayBuildCommand.Add(EMainBaseCommnad.CONFIRM, new CommandBuildConfirm(structureMng, inputMng, currencyMng));
-        ArrayBuildCommand.Add(EMainBaseCommnad.BUILD_STRUCTURE, new CommandBuildStructure(structureMng, inputMng, currencyMng));
+        ArrayMainbaseCommand.Add(EMainbaseCommnad.CANCLE, new CommandBuildCancle(structureMng, inputMng));
+        ArrayMainbaseCommand.Add(EMainbaseCommnad.CONFIRM, new CommandBuildConfirm(structureMng, inputMng, currencyMng));
+        ArrayMainbaseCommand.Add(EMainbaseCommnad.BUILD_STRUCTURE, new CommandBuildStructure(structureMng, inputMng, currencyMng));
+        
 
         ArrayBarrackCommand.Add(EBarrackCommand.RALLYPOINT, new CommandRallypoint(inputMng));
         ArrayBarrackCommand.Add(EBarrackCommand.SPAWN_UNIT, new CommandSpawnUnit(selectMng, currencyMng));
@@ -108,8 +109,10 @@ public class GameManager : MonoBehaviour
         ArrayNuclearCommand.Add(ENuclearCommand.SPAWN_NUCLEAR, new CommandSpawnNuclear(structureMng));
         ArrayNuclearCommand.Add(ENuclearCommand.LAUNCH_NUCLEAR, new CommandLaunchNuclear(structureMng));
 
-        ArrayStructureButtonCommand.Add(EStructureButtonCommand.DEMOLISH, new CommandDemolition(structureMng));
-        ArrayStructureButtonCommand.Add(EStructureButtonCommand.UPGRADE, new CommandUpgrade(structureMng, currencyMng));
+        ArrayStructureFuncButtonCommand.Add(EStructureButtonCommand.DEMOLISH, new CommandDemolition(currencyMng));
+        ArrayStructureFuncButtonCommand.Add(EStructureButtonCommand.UPGRADE, new CommandUpgrade(structureMng, currencyMng));
+        ArrayStructureFuncButtonCommand.Add(EStructureButtonCommand.CANCLE_CURRENT_FUNCTION, new CommandStructureCancle(currencyMng, inputMng));
+        ArrayStructureFuncButtonCommand.Add(EStructureButtonCommand.DEMOLISH_COMPLETE, new CommandDemolishComplete(structureMng));
 
         ArrayCurrencyCommand.Add(ECurrencyCommand.COLLECT_CORE, new CommandCollectPowerCore(currencyMng));
         ArrayCurrencyCommand.Add(ECurrencyCommand.UPDATE_CORE_HUD, new CommandUpdateCoreHUD(uiMng));

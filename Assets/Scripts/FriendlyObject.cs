@@ -88,7 +88,7 @@ public class FriendlyObject : SelectableObject, ISubscriber
                 ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.DEAD, gameObject, unitType, barrackIdx, this);
                 Broker.UnSubscribe(this, EPublisherType.SELECTABLE_MANAGER);
             }
-            else if (objectType.Equals(EObjectType.UNDER_CONSTRUCT))
+            else if (objectType.Equals(EObjectType.PROCESSING_CONSTRUCT_STRUCTURE))
             {
                 ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.DESTROY_HBEAM, gameObject, unitType, barrackIdx);
             }

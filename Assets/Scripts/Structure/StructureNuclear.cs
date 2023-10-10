@@ -11,27 +11,77 @@ public class StructureNuclear : Structure
         myNuclear.SetActive(false);
     }
 
+    public void UpdateSpawnNuclearInfo()
+    {
+        ArrayHUDSpawnNuclearCommand.Use(EHUDSpawnNuclearCommand.UPDATE_SPAWN_NUCLEAR_TIME, progressPercent);
+    }
+
+    public bool IsProcessingSpawnNuclear => isProcessingSpawnNuclear;
+
+    public override void CancleCurAction()
+    {
+        if (isProcessingUpgrade)
+        {
+            StopCoroutine("UpgradeCoroutine");
+            isProcessingUpgrade = false;
+            curUpgradeType = EUpgradeType.NONE;
+        }
+        else if (isProcessingConstruct)
+        {
+            StopCoroutine("BuildStructureCoroutine");
+            isProcessingConstruct = false;
+            ArrayStructureFuncButtonCommand.Use(EStructureButtonCommand.DEMOLISH_COMPLETE, myStructureIdx);
+            DestroyStructure();
+        }
+        else if (isProcessingDemolish)
+        {
+            StopCoroutine("DemolishCoroutine");
+            isProcessingDemolish = false;
+        }
+        else if (isProcessingSpawnNuclear)
+        {
+            StopCoroutine("SpawnNuclearCoroutine");
+            isProcessingSpawnNuclear = false;
+        }
+
+        if (myObj.IsSelect)
+            ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
+    }
+
     public void SpawnNuclear(VoidNuclearDelegate _spwnCompleteCallback)
     {
-        if(!hasNuclear)
+        if(!isProcessingSpawnNuclear && !hasNuclear)
+        {
             StartCoroutine("SpawnNuclearCoroutine", _spwnCompleteCallback);
+        }
     }
 
     private IEnumerator SpawnNuclearCoroutine(VoidNuclearDelegate _spwnCompleteCallback)
     {
-        hasNuclear = true;
-        float buildFinishTime = Time.time + nuclearProduceDelay;
-        while (buildFinishTime > Time.time)
+        isProcessingSpawnNuclear = true;
+        if (myObj.IsSelect)
+            ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
+        float elapsedTime = 0f;
+        progressPercent = elapsedTime / nuclearProduceDelay;
+        while (progressPercent < 1)
         {
+            if (myObj.IsSelect)
+                ArrayHUDSpawnNuclearCommand.Use(EHUDSpawnNuclearCommand.UPDATE_SPAWN_NUCLEAR_TIME, progressPercent);
             // ui Ç¥½Ã
             yield return new WaitForSeconds(0.5f);
+            elapsedTime += 0.5f;
+            progressPercent = elapsedTime / nuclearProduceDelay;
         }
 
+        isProcessingSpawnNuclear = false;
+        if (myObj.IsSelect)
+            ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
         SpawnComplete(_spwnCompleteCallback);
     }
 
     private void SpawnComplete(VoidNuclearDelegate _spwnCompleteCallback)
     {
+        hasNuclear = true;
         myNuclear.SetPos(nuclearSpawnPos);
         myNuclear.SetActive(true);
         myNuclear.ResetRotate();
@@ -42,6 +92,8 @@ public class StructureNuclear : Structure
     {
         myNuclear.Launch(_destPos);
         hasNuclear = false;
+        if (myObj.IsSelect)
+            ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
     }
 
 
@@ -52,4 +104,5 @@ public class StructureNuclear : Structure
 
     private MissileNuclear myNuclear = null;
     private bool hasNuclear = false;
+    private bool isProcessingSpawnNuclear = false;
 }

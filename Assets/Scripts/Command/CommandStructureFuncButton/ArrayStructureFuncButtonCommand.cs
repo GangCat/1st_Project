@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ArrayStructureButtonCommand : MonoBehaviour
+public class ArrayStructureFuncButtonCommand : MonoBehaviour
 {
     private static Command[] arrCmd = new Command[(int)EStructureButtonCommand.LENGTH];
 

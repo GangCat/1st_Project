@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CanvasConstructInfo : MonoBehaviour
+public class CanvasDemolishInfo : MonoBehaviour
 {
     public void Init()
     {
@@ -30,14 +30,14 @@ public class CanvasConstructInfo : MonoBehaviour
         gameObject.SetActive(_isActive);
     }
 
-    public void UpdateConstructTime(float _percent)
+    public void UpdateDemolishTime(float _percent)
     {
         imageProgressbar.UpdateLength(_percent);
     }
 
     public void UpdateUnit(EObjectType _type)
     {
-        imageUnit.ChangeSprite(arrSpriteObject[(int)_type - 2]);
+        imageUnit.ChangeSprite(arrSpriteObject[(int)_type - 3]);
         textInfoStructureName.UpdateText(Enum.GetName(typeof(EObjectType), _type));
     }
 
@@ -45,7 +45,7 @@ public class CanvasConstructInfo : MonoBehaviour
     [SerializeField]
     private ImageProgressbar imageProgressbar = null;
 
-    [Header("-MAIN_BASE, TURRET, BUNKER, WALL, BARRACK, NUCLEAR")]
+    [Header("-TURRET, BUNKER, WALL, BARRACK, NUCLEAR")]
     [SerializeField]
     private Sprite[] arrSpriteObject = null;
 

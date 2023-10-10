@@ -10,13 +10,13 @@ public class CanvasStructureBaseFunc : CanvasFunc
         btnDemolishStructure.onClick.AddListener(
             () =>
             {
-                ArrayStructureButtonCommand.Use(EStructureButtonCommand.DEMOLISH);
+                ArrayStructureFuncButtonCommand.Use(EStructureButtonCommand.DEMOLISH);
             });
 
         btnUpgradeStructure.onClick.AddListener(
             () =>
             {
-                ArrayStructureButtonCommand.Use(EStructureButtonCommand.UPGRADE);
+                ArrayStructureFuncButtonCommand.Use(EStructureButtonCommand.UPGRADE);
             });
 
         gameObject.SetActive(false);

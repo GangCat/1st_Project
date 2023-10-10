@@ -1,13 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class InputManager : MonoBehaviour, IMinimapObserver
 {
-    
-    
     public void Init()
     {
         selectArea = GetComponentInChildren<SelectArea>();
@@ -31,37 +28,68 @@ public class InputManager : MonoBehaviour, IMinimapObserver
 
     public void OnClickMoveButton()
     {
+        if (isMoveClick) return;
         ClearCurFunc();
         pickPosDisplayGo = Instantiate(pickPosPrefab, transform);
         isMoveClick = true;
+        ArrayUnitFuncButtonCommand.Use(EUnitFuncButtonCommand.DISPLAY_CANCLE_BUTTON);
     }
 
     public void OnClickAttackButton()
     {
+        if (isAttackClick) return;
         ClearCurFunc();
         pickPosDisplayGo = Instantiate(pickPosPrefab, transform);
         isAttackClick = true;
+        ArrayUnitFuncButtonCommand.Use(EUnitFuncButtonCommand.DISPLAY_CANCLE_BUTTON);
     }
 
     public void OnClickPatrolButton()
     {
+        if (isPatrolClick) return;
         ClearCurFunc();
         pickPosDisplayGo = Instantiate(pickPosPrefab, transform);
         isPatrolClick = true;
+        ArrayUnitFuncButtonCommand.Use(EUnitFuncButtonCommand.DISPLAY_CANCLE_BUTTON);
     }
 
     public void OnClickRallyPointButton()
     {
+        if (isRallyPointClick) return;
         ClearCurFunc();
         pickPosDisplayGo = Instantiate(pickPosPrefab, transform);
         isRallyPointClick = true;
+        ArrayStructureFuncButtonCommand.Use(EStructureButtonCommand.DISPLAY_CANCLE_BUTTON);
     }
 
     public void OnClickLaunchNuclearButton()
     {
+        if (isLaunchNuclearClick) return;
         ClearCurFunc();
         pickPosDisplayGo = Instantiate(pickPosPrefab, transform);
         isLaunchNuclearClick = true;
+        ArrayUnitFuncButtonCommand.Use(EUnitFuncButtonCommand.DISPLAY_CANCLE_BUTTON);
+    }
+
+    public void CancleFunc()
+    {
+        isMoveClick = false;
+        isAttackClick = false;
+        isPatrolClick = false;
+        isBuildOperation = false;
+        isLaunchNuclearClick = false;
+        Destroy(pickPosDisplayGo);
+        ArrayUnitFuncButtonCommand.Use(EUnitFuncButtonCommand.HIDE_CANCLE_BUTTON);
+    }
+
+    public void CancleRallypoint()
+    {
+        if (isRallyPointClick)
+        {
+            isRallyPointClick = false;
+            Destroy(pickPosDisplayGo);
+            ArrayStructureFuncButtonCommand.Use(EStructureButtonCommand.HIDE_CANCLE_BUTTON);
+        }
     }
 
     private void ClearCurFunc()
@@ -72,15 +100,30 @@ public class InputManager : MonoBehaviour, IMinimapObserver
         isRallyPointClick = false;
         isBuildOperation = false;
         isLaunchNuclearClick = false;
+        Destroy(pickPosDisplayGo);
         // 등등 기능과 관련된 bool값 모두 초기화
+        ArrayUnitFuncButtonCommand.Use(EUnitFuncButtonCommand.HIDE_CANCLE_BUTTON);
+        ArrayStructureFuncButtonCommand.Use(EStructureButtonCommand.HIDE_CANCLE_BUTTON);
     }
 
     private void Update()
     {
         elapsedTime += Time.deltaTime;
+        if (isCheckDoubleClick)
+        {
+            if (leftClickElapsedTime > 0.5f)
+            {
+                isCheckDoubleClick = false;
+                leftClickElapsedTime = 0f;
+            }
+            else
+                leftClickElapsedTime += Time.deltaTime;
+        }
+
         RaycastHit hit;
         if (pickPosDisplayGo != null && Functions.Picking(out hit))
             pickPosDisplayGo.transform.position = hit.point;
+
 
         if (Input.anyKey)
             CheckIsHotkey();
@@ -92,7 +135,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver
 
             if (IsBuildOperation)
             {
-                ArrayBuildCommand.Use(EMainBaseCommnad.CONFIRM);
+                ArrayMainbaseCommand.Use(EMainbaseCommnad.CONFIRM);
                 return;
             }
             else if (isAttackClick)
@@ -115,15 +158,12 @@ public class InputManager : MonoBehaviour, IMinimapObserver
         {
             if (IsBuildOperation)
             {
-                ArrayBuildCommand.Use(EMainBaseCommnad.CANCLE);
+                ArrayMainbaseCommand.Use(EMainbaseCommnad.CANCLE);
                 return;
             }
 
-            if (isAttackClick || isMoveClick || isPatrolClick || isRallyPointClick)
-            {
-                Destroy(pickPosDisplayGo);
+            if (isAttackClick || isMoveClick || isPatrolClick || isRallyPointClick || isLaunchNuclearClick)
                 ClearCurFunc();
-            }
             else
                 MoveWithMouseClick();
         }
@@ -144,7 +184,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver
                 if (UnitDefaultHotkeyAction())
                     break;
                 if (Input.GetKeyDown(arrUnitFuncHotkey[(int)EUnitFuncHotkey.LAUNCH_NUCLEAR]))
-                    ArrayFuncButtonCommand.Use(EFuncButtonCommand.LAUNCH_NUCLEAR);
+                    ArrayUnitFuncButtonCommand.Use(EUnitFuncButtonCommand.LAUNCH_NUCLEAR);
                 break;
             case EObjectType.MAIN_BASE:
                 if (StructureDefaultHotkeyAction())
@@ -197,11 +237,6 @@ public class InputManager : MonoBehaviour, IMinimapObserver
                 if (Input.GetKeyDown(arrStructureFuncHotkey[(int)EStructureFuncHotkey.SPAWN_NUCLEAR]))
                     ArrayNuclearCommand.Use(ENuclearCommand.SPAWN_NUCLEAR);
                 break;
-            case EObjectType.UNDER_CONSTRUCT:
-            case EObjectType.PROCESSING_UPGRADE_STRUCTURE:
-                if (Input.GetKeyDown(cancleKey))
-                    Debug.Log("Cancle");
-                break;
             default:
                 break;
         }
@@ -210,9 +245,11 @@ public class InputManager : MonoBehaviour, IMinimapObserver
     private bool StructureDefaultHotkeyAction()
     {
         if (Input.GetKeyDown(arrStructureFuncHotkey[(int)EStructureFuncHotkey.DEMOLISH]))
-            ArrayStructureButtonCommand.Use(EStructureButtonCommand.DEMOLISH);
+            ArrayStructureFuncButtonCommand.Use(EStructureButtonCommand.DEMOLISH);
         else if (Input.GetKeyDown(arrStructureFuncHotkey[(int)EStructureFuncHotkey.UPGRADE]))
-            ArrayStructureButtonCommand.Use(EStructureButtonCommand.UPGRADE);
+            ArrayStructureFuncButtonCommand.Use(EStructureButtonCommand.UPGRADE);
+        else if (Input.GetKeyDown(cancleKey))
+            ArrayStructureFuncButtonCommand.Use(EStructureButtonCommand.CANCLE_CURRENT_FUNCTION);
         else
             return false;
         return true;
@@ -221,15 +258,15 @@ public class InputManager : MonoBehaviour, IMinimapObserver
     private bool UnitDefaultHotkeyAction()
     {
         if (Input.GetKeyDown(arrUnitFuncHotkey[(int)EUnitFuncHotkey.MOVE]))
-            ArrayFuncButtonCommand.Use(EFuncButtonCommand.MOVE);
+            ArrayUnitFuncButtonCommand.Use(EUnitFuncButtonCommand.MOVE);
         else if (Input.GetKeyDown(arrUnitFuncHotkey[(int)EUnitFuncHotkey.STOP]))
-            ArrayFuncButtonCommand.Use(EFuncButtonCommand.STOP);
+            ArrayUnitFuncButtonCommand.Use(EUnitFuncButtonCommand.STOP);
         else if (Input.GetKeyDown(arrUnitFuncHotkey[(int)EUnitFuncHotkey.HOLD]))
-            ArrayFuncButtonCommand.Use(EFuncButtonCommand.HOLD);
+            ArrayUnitFuncButtonCommand.Use(EUnitFuncButtonCommand.HOLD);
         else if (Input.GetKeyDown(arrUnitFuncHotkey[(int)EUnitFuncHotkey.PATROL]))
-            ArrayFuncButtonCommand.Use(EFuncButtonCommand.PATROL);
+            ArrayUnitFuncButtonCommand.Use(EUnitFuncButtonCommand.PATROL);
         else if (Input.GetKeyDown(arrUnitFuncHotkey[(int)EUnitFuncHotkey.ATTACK]))
-            ArrayFuncButtonCommand.Use(EFuncButtonCommand.ATTACK);
+            ArrayUnitFuncButtonCommand.Use(EUnitFuncButtonCommand.ATTACK);
         else
             return false;
 
@@ -239,13 +276,13 @@ public class InputManager : MonoBehaviour, IMinimapObserver
     private bool MainbaseBuildHotkeyAction()
     {
         if (Input.GetKeyDown(arrBuildFuncHotkey[(int)EBuildFuncHotkey.TURRET]))
-            ArrayBuildCommand.Use(EMainBaseCommnad.BUILD_STRUCTURE, EObjectType.TURRET);
+            ArrayMainbaseCommand.Use(EMainbaseCommnad.BUILD_STRUCTURE, EObjectType.TURRET);
         else if (Input.GetKeyDown(arrBuildFuncHotkey[(int)EBuildFuncHotkey.BUNKER]))
-            ArrayBuildCommand.Use(EMainBaseCommnad.BUILD_STRUCTURE, EObjectType.BUNKER);
+            ArrayMainbaseCommand.Use(EMainbaseCommnad.BUILD_STRUCTURE, EObjectType.BUNKER);
         else if (Input.GetKeyDown(arrBuildFuncHotkey[(int)EBuildFuncHotkey.BARRACK]))
-            ArrayBuildCommand.Use(EMainBaseCommnad.BUILD_STRUCTURE, EObjectType.BARRACK);
+            ArrayMainbaseCommand.Use(EMainbaseCommnad.BUILD_STRUCTURE, EObjectType.BARRACK);
         else if (Input.GetKeyDown(arrBuildFuncHotkey[(int)EBuildFuncHotkey.NUCLEAR]))
-            ArrayBuildCommand.Use(EMainBaseCommnad.BUILD_STRUCTURE, EObjectType.NUCLEAR);
+            ArrayMainbaseCommand.Use(EMainbaseCommnad.BUILD_STRUCTURE, EObjectType.NUCLEAR);
         else
             return false;
         return true;
@@ -370,6 +407,20 @@ public class InputManager : MonoBehaviour, IMinimapObserver
         if (Functions.Picking(selectableLayer, out hit))
         {
             SelectableObject sObj = hit.transform.GetComponent<SelectableObject>();
+
+            if (isCheckDoubleClick)
+            {
+                if (hit.transform.Equals(SelectableObjectManager.GetFirstSelectedObjectInList.transform))
+                {
+                    Debug.Log("double Click");
+                    // 여기서 카메라 커맨드로 박스캐스트나 오버랩 박스로 화면내의 selectable다 찾아내고
+                    // 그 배열 받아와서 그 배열에 있는 애들 중 hit랑 타입 같은 애들만 골라서 temp에 일일이 다 넣어주기
+                }
+
+                isCheckDoubleClick = false;
+            }
+
+
             if (sObj != null)
                 ArraySelectCommand.Use(ESelectCommand.TEMP_SELECT, sObj);
         }
@@ -378,6 +429,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver
         selectArea.SetPos(dragStartPos);
         selectArea.SetLocalScale(Vector3.zero);
         selectArea.SetActive(true);
+        isCheckDoubleClick = true;
 
         StartCoroutine("DragCoroutine");
     }
@@ -452,6 +504,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver
     private KeyCode cancleKey = KeyCode.Escape;
 
     private float elapsedTime = 0f;
+    private float leftClickElapsedTime = 0f;
 
     private bool isMoveClick = false;
     private bool isAttackClick = false;
@@ -459,6 +512,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver
     private bool isBuildOperation = false;
     private bool isRallyPointClick = false;
     private bool isLaunchNuclearClick = false;
+    private bool isCheckDoubleClick = false;
 
     private GameObject pickPosDisplayGo = null;
 

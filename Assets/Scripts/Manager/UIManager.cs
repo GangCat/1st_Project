@@ -12,11 +12,6 @@ public class UIManager : MonoBehaviour
         displayHUDMng.Init();
     }
 
-    public void HideAllInfo()
-    {
-        displayHUDMng.HideAllInfo();
-    }
-
     public void HeroDead()
     {
         displayHUDMng.HeroDead();

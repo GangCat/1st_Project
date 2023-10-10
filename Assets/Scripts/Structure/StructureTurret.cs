@@ -10,7 +10,7 @@ public class StructureTurret : Structure
         selectObj = GetComponent<FriendlyObject>();
         selectObj.Init();
         selectObj.SetMyTr(turretHeadTr);
-        myIdx = _structureIdx;
+        myStructureIdx = _structureIdx;
         upgradeHpCmd = new CommandUpgradeStructureHP(GetComponent<StatusHp>());
         upgradeDmgCmd = new CommandUpgradeStructureAttDmg(selectObj);
         upgradeRangeCmd = new CommandUpgradeStructureAttRange(selectObj);

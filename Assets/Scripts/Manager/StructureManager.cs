@@ -83,39 +83,18 @@ public class StructureManager : MonoBehaviour
         StartCoroutine("ShowWallBlueprint", _bunkerTr);
     }
 
-    public void Demolish(int _structureIdx)
+    public void DestroyStructure(int _structureIdx, StructureNuclear _nuclear = null)
     {
         if (_structureIdx.Equals(0)) return;
-        StartCoroutine("DemolishCoroutine", _structureIdx);
-    }
 
-    private IEnumerator DemolishCoroutine(int _structureIdx)
-    {
-        float demolishTime = Time.time + 4f;
-        while (demolishTime > Time.time)
-        {
-            // ui Ç¥½Ã
-            yield return new WaitForSeconds(0.5f);
-        }
-
-        DestroyStructure(_structureIdx);
-    }
-
-    public void DestroyStructure(int _structureIdx)
-    {
         Structure structure = null;
-        dicStructure.TryGetValue(_structureIdx, out structure);
-        if (structure == null) return;
+        if (!dicStructure.TryGetValue(_structureIdx, out structure)) return;
 
-        InstantiateRuin(structure);
-        structure.UpdateNodeWalkable(true);
+        if(_nuclear != null)
+            listNuclearStructure.Remove(_nuclear);
+
         dicStructure.Remove(_structureIdx);
-        FriendlyObject fObj = structure.GetComponent<FriendlyObject>();
-        if (fObj.GetObjectType().Equals(EObjectType.NUCLEAR))
-            listNuclearStructure.Remove(structure.GetComponent<StructureNuclear>());
-        fObj.unSelect();
-        ArraySelectCommand.Use(ESelectCommand.REMOVE_FROM_LIST, fObj);
-        structure.DestroyStructure();
+        InstantiateRuin(structure);
     }
 
     private IEnumerator ShowBlueprint()
