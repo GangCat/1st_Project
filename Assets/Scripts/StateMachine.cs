@@ -86,6 +86,10 @@ public class StateMachine : MonoBehaviour
         //}
         //curState.Start(ref unitState);
 
+#if UNITY_EDITOR
+        if (GetComponent<UnitHero>())
+            HeroUnitManager.UpdateCurState(_newState);
+#endif
         curState.End(ref unitState);
 
         //stackStateEnum.Push(curStateEnum);
