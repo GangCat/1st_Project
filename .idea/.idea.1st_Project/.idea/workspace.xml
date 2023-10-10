@@ -5,46 +5,38 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8b33c29f-1ced-47a6-96e0-2e9883714488" name="변경" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Build,Struct.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Build,Struct/Engine 9 Stop 1.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Build,Struct/Engine 9 Stop 1.wav.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Build,Struct/Engine 9 Stop 2.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Build,Struct/Engine 9 Stop 2.wav.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Coin/DropAmuletGemsRingsSounds04 - Mono.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Coin/DropAmuletGemsRingsSounds04 - Mono.wav.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Menu,Click.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Menu,Click/Digital Click 01.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Menu,Click/Digital Click 01.wav.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Menu,Click/WAVE_SE_032.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Menu,Click/WAVE_SE_032.wav.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Menu,Click/WAVE_SE_040.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Menu,Click/WAVE_SE_040.wav.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Shot/Weapon 14 Shoot 1 (Flamethrower).wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Shot/Weapon 14 Shoot 1 (Flamethrower).wav.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Shot/Weapon 14 Shoot 2 (Flamethrower).wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Shot/Weapon 14 Shoot 2 (Flamethrower).wav.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Shot/Weapon 14 Shoot 3 (Flamethrower).wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Shot/Weapon 14 Shoot 3 (Flamethrower).wav.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Shot/Weapon 14 Shoot 4 (Flamethrower).wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Shot/Weapon 14 Shoot 4 (Flamethrower).wav.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Shot/etfx_explosion_laser.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Shot/etfx_explosion_laser.wav.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Shot/etfx_shoot_fireball.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Shot/etfx_shoot_fireball.wav.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Shot/etfx_shoot_laser.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Shot/etfx_shoot_laser.wav.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Audio/HeroAudioPlayer.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Materials/M_CameraRect.mat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Materials/M_CameraRect.mat.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Materials/M_White.mat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Materials/M_White.mat.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Textures/T_MinimapRect.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Textures/T_MinimapRect.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Textures/T_MinimapRect.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Textures/T_MinimapRect.svg.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Textures/T_MinimapRect2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Textures/T_MinimapRect2.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Textures/T_MinimapRect3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Textures/T_MinimapRect3.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Textures/T_MinimapRect_0.5.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Textures/T_MinimapRect_0.5.svg.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Textures/T_MinimapRect_2.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Textures/T_MinimapRect_2.svg.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Textures/T_MinimapRect_2_outline.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Textures/T_MinimapRect_2_outline.svg.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/UI/MinimapCameraBorder.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/UI/MinimapCameraBorder.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/UI/MinimapCameraIndicator.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/UI/MinimapCameraIndicator.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/UI/MinimapCameraViewport.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/UI/MinimapCameraViewport.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.1st_Project/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.1st_Project/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/ProgrammingScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/ProgrammingScene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Audio/EnemyAudioPlayer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Audio/EnemyAudioPlayer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Audio/FriendlyAudioPlayer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Audio/FriendlyAudioPlayer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Manager/AudioManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Manager/AudioManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Settings/HDRPDefaultResources/HDRenderPipelineGlobalSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Settings/HDRPDefaultResources/HDRenderPipelineGlobalSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/CameraMovement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/CameraMovement.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/ImageMinimap.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/ImageMinimap.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Packages/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/manifest.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Packages/packages-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/packages-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectVersion.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectVersion.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/VFXManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/VFXManager.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UserSettings/Layouts/default-2022.dwlt" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/Layouts/default-2022.dwlt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserSettings/Layouts/CurrentMaximizeLayout.dwlt" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/Layouts/CurrentMaximizeLayout.dwlt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserSettings/Layouts/default-2023.dwlt" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/Layouts/default-2023.dwlt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,10 +47,14 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/5a41d6b7189842eca409fd0b1c3e3dcf17bf78/33/3e32d5a6/NotImplementedException.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Audio/EnemyAudioPlayer.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Audio/FriendlyAudioPlayer.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Manager/HeroUnitManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/UI/MinimapCameraBorder.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/UI/MinimapCameraIndicator.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/UI/MinimapCameraViewport.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.high-definition@15.0.6/Runtime/Material/Lit/Lit.shader" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.high-definition@15.0.6/Runtime/RenderPipeline/HDRenderPipeline.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
@@ -72,28 +68,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;YBO&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.fonts.default&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "YBO",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "settings.editor.selected.configurable": "editor.preferences.fonts.default",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;rider.external.source.directories&quot;: [
-      &quot;C:\\Users\\user\\AppData\\Roaming\\JetBrains\\Rider2023.2\\resharper-host\\DecompilerCache&quot;,
-      &quot;C:\\Users\\user\\AppData\\Roaming\\JetBrains\\Rider2023.2\\resharper-host\\SourcesCache&quot;,
-      &quot;C:\\Users\\user\\AppData\\Local\\Symbols\\src&quot;
+  "keyToStringList": {
+    "rider.external.source.directories": [
+      "C:\\Users\\Administrator\\AppData\\Roaming\\JetBrains\\Rider2023.2\\resharper-host\\DecompilerCache",
+      "C:\\Users\\Administrator\\AppData\\Roaming\\JetBrains\\Rider2023.2\\resharper-host\\SourcesCache",
+      "C:\\Users\\Administrator\\AppData\\Local\\Symbols\\src"
     ]
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected="Unity 에디터에 연결.Unity 에디터에 연결">
     <configuration name="유닛 테스트(배치 모드)" type="RunUnityExe" factoryName="Unity Executable">
       <option name="EXE_PATH" value="C:\Program Files\Unity\Hub\Editor\2023.1.16f1\Editor\Unity.exe" />
@@ -165,6 +161,7 @@
       <workItem from="1696898002285" duration="267000" />
       <workItem from="1696916235481" duration="12882000" />
       <workItem from="1696935751518" duration="613000" />
+      <workItem from="1696951105003" duration="8423000" />
     </task>
     <servers />
   </component>

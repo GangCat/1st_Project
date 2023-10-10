@@ -52,6 +52,7 @@ public class ImageMinimap : MonoBehaviour, IPointerClickHandler, IMinimapSubject
         {
             UpdateTexture(ref tex2d);
             imageMinimap.sprite = Sprite.Create(tex2d, texRect, pivotVec);
+            
             yield return new WaitForSeconds(1f);
         }
     }
@@ -130,7 +131,8 @@ public class ImageMinimap : MonoBehaviour, IPointerClickHandler, IMinimapSubject
     {
         listObserver.Remove(_observer);
     }
-
+    
+    
     private Image imageMinimap = null;
     private Texture2D tex2d = null;
     private Rect texRect;
@@ -145,4 +147,5 @@ public class ImageMinimap : MonoBehaviour, IPointerClickHandler, IMinimapSubject
 
     private float worldSizeX = 0f; // 미니맵에 표시할 월드의 가로길이
     private float worldSizeY = 0f; // 미니맵에 표시할 월드의 세로길이
+    
 }
