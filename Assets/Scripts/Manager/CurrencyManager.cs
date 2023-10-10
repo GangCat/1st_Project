@@ -208,8 +208,6 @@ public class CurrencyManager : MonoBehaviour, IPublisher
                 return IsEnergyEnough(spawnMeleeUnit);
             case EUnitType.RANGED:
                 return IsEnergyEnough(spawnRangedUnit);
-            case EUnitType.ROCKET:
-                return false;
             default:
                 return false;
         }
@@ -224,8 +222,6 @@ public class CurrencyManager : MonoBehaviour, IPublisher
                 break;
             case EUnitType.RANGED:
                 DecreaseEnergy(spawnRangedUnit);
-                break;
-            case EUnitType.ROCKET:
                 break;
             default:
                 break;
@@ -291,8 +287,6 @@ public class CurrencyManager : MonoBehaviour, IPublisher
     private uint spawnMeleeUnit = 70;
     [SerializeField]
     private uint spawnRangedUnit = 50;
-    [SerializeField]
-    private uint spawnRocketUnit = 0;
 
     [Header("-Core")]
     [Header("-Upgrade Unit Cost")]

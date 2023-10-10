@@ -532,7 +532,8 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
 
     public void MoveUnitByPicking(Vector3 _targetPos, bool isAttackMove = false)
     {
-        if (IsListEmpty) return;
+        if (IsListEmpty) 
+            return;
 
         if (isAttackMove)
         {

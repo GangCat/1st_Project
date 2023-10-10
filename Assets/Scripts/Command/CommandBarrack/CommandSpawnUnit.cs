@@ -18,8 +18,8 @@ public class CommandSpawnUnit : Command
             selMng.RequestSpawnUnit(tempType);
             curMng.SpawnUnit(tempType);
         }
-        else
-            Debug.Log("fail");
+        //else
+        //    Debug.Log("fail");
     }
 
     private SelectableObjectManager selMng = null;

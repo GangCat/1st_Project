@@ -19,12 +19,6 @@ public class CanvasBarrackFunc : CanvasFunc
                 ArrayBarrackCommand.Use(EBarrackCommand.SPAWN_UNIT, EUnitType.RANGED);
             });
 
-        btnSpawnRocketUnit.onClick.AddListener(
-            () =>
-            {
-                ArrayBarrackCommand.Use(EBarrackCommand.SPAWN_UNIT, EUnitType.ROCKET);
-            });
-
         btnRallyPoint.onClick.AddListener(
             () =>
             {
@@ -38,7 +32,6 @@ public class CanvasBarrackFunc : CanvasFunc
     {
         btnSpawnMeleeUnit.interactable = false;
         btnSpawnRangedUnit.interactable = false;
-        btnSpawnRocketUnit.interactable = false;
         btnRallyPoint.interactable = false;
     }
 
@@ -46,7 +39,6 @@ public class CanvasBarrackFunc : CanvasFunc
     {
         btnSpawnMeleeUnit.interactable = true;
         btnSpawnRangedUnit.interactable = true;
-        btnSpawnRocketUnit.interactable = true;
         btnRallyPoint.interactable = true;
     }
 
@@ -55,8 +47,6 @@ public class CanvasBarrackFunc : CanvasFunc
     private Button btnSpawnMeleeUnit = null;
     [SerializeField]
     private Button btnSpawnRangedUnit = null;
-    [SerializeField]
-    private Button btnSpawnRocketUnit = null;
     [SerializeField]
     private Button btnRallyPoint = null;
 }

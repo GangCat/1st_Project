@@ -86,6 +86,9 @@ public class StructureBarrack : Structure, ISubscriber
 
     public bool CanSpawnUnit()
     {
+        if(isProcessingConstruct)
+            return false;
+
         return listUnit.Count < 5;
     }
 
