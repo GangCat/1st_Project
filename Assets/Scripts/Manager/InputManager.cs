@@ -255,8 +255,10 @@ public class InputManager : MonoBehaviour, IMinimapObserver
         return true;
     }
 
+    
     private bool UnitDefaultHotkeyAction()
     {
+        /*
         if (Input.GetKeyDown(arrUnitFuncHotkey[(int)EUnitFuncHotkey.MOVE]))
             ArrayUnitFuncButtonCommand.Use(EUnitFuncButtonCommand.MOVE);
         else if (Input.GetKeyDown(arrUnitFuncHotkey[(int)EUnitFuncHotkey.STOP]))
@@ -269,9 +271,11 @@ public class InputManager : MonoBehaviour, IMinimapObserver
             ArrayUnitFuncButtonCommand.Use(EUnitFuncButtonCommand.ATTACK);
         else
             return false;
-
+        */
         return true;
+        
     }
+    
 
     private bool MainbaseBuildHotkeyAction()
     {
