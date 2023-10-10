@@ -41,6 +41,8 @@ public class PF_PathRequestManager : MonoBehaviour
         TryProcessNext();
     }
 
+    
+
     private void TryProcessNext()
     {
         if(!isProcessingPath && pathRequestQueue.Count > 0)

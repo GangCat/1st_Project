@@ -35,7 +35,7 @@ public class CanvasUpgradeInfo : MonoBehaviour
 
     [SerializeField]
     private ImageProgressbar imageUpgradeProgressbar = null;
-    [Header("-Population/Energy/Structure/RangedDmg/RangedHp/MeleeDmg/MeleeHp")]
+    [Header("-Energy/Population/Structure/RangedDmg/RangedHp/MeleeDmg/MeleeHp")]
     [SerializeField]
     private Sprite[] arrSpriteUpgrade = null;
 
