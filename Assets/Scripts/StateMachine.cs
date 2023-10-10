@@ -111,9 +111,6 @@ public class StateMachine : MonoBehaviour
     public void PushCurState()
     {
         stackStateEnum.Push(curStateEnum);
-        if (stackStateEnum.Count > 10)
-            ResetState();
-
     }
 
     public void ResetState()

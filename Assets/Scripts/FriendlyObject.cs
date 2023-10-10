@@ -22,7 +22,7 @@ public class FriendlyObject : SelectableObject, ISubscriber
                 for (int i = 0; i < arrCollider.Length; ++i)
                     arrCollider[i].Init(GetDmg, objectType);
             }
-            else if(unitType.Equals(EUnitType.RANGED))
+            else if (unitType.Equals(EUnitType.RANGED))
             {
                 stateMachine.UpgradeAttDmg((SelectableObjectManager.LevelRangedUnitDmgUpgrade - 1) * 2);
                 statusHp.UpgradeHp((SelectableObjectManager.LevelRangedUnitHpUpgrade - 1) * 10);
@@ -77,7 +77,7 @@ public class FriendlyObject : SelectableObject, ISubscriber
 
     public Transform TargetBunker => targetBunker;
 
-    public override void GetDmg(float _dmg) 
+    public override void GetDmg(float _dmg)
     {
         if (statusHp.DecreaseHpAndCheckIsDead(_dmg))
         {
@@ -85,8 +85,9 @@ public class FriendlyObject : SelectableObject, ISubscriber
 
             if (objectType.Equals(EObjectType.UNIT))
             {
-                ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.DEAD, gameObject, unitType, barrackIdx, this);
+                ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.DEAD, gameObject, unitType, this);
                 Broker.UnSubscribe(this, EPublisherType.SELECTABLE_MANAGER);
+                SelectableObjectManager.ResetFriendlyNodeWalkable(transform.position, nodeIdx);
             }
             else if (objectType.Equals(EObjectType.PROCESSING_CONSTRUCT_STRUCTURE))
             {
@@ -101,12 +102,10 @@ public class FriendlyObject : SelectableObject, ISubscriber
             {
                 SelectableObjectManager.ResetHeroUnitNode(transform.position);
                 ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.DEAD_HERO, this);
-                return;
             }
-            else 
+            else
                 ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.DESTROY, gameObject);
 
-            SelectableObjectManager.ResetFriendlyNodeWalkable(transform.position, nodeIdx);
         }
         else if (isSelect)
         {
@@ -248,6 +247,11 @@ public class FriendlyObject : SelectableObject, ISubscriber
 
     protected override IEnumerator CheckIsEnemyInChaseStartRangeCoroutine()
     {
+        if (targetTr != null && !targetTr.gameObject.activeSelf)
+        {
+            targetTr = null;
+            stateMachine.TargetTr = null;
+        }
         //yield return new WaitForSeconds(0.1f);
         while (true)
         {
@@ -255,38 +259,38 @@ public class FriendlyObject : SelectableObject, ISubscriber
             Collider[] arrCollider = null;
             arrCollider = overlapSphere(chaseStartRange);
 
-            // 충돌한 오브젝트가 존재한다면
-            if (arrCollider.Length > 1)
+            if (targetTr != null)
             {
-                foreach (Collider c in arrCollider)
-                {
-                    // 해당 오브젝트의 ObjectType을 가져온다.
-                    EObjectType targetType = c.GetComponent<IGetObjectType>().GetObjectType();
+                Debug.Log("part1");
 
-                    // 내가 현재 쫓는 대상이 존재한다면
-                    // 적을 타겟팅해서 쫓는 경우 해당 적이 아니면 무시해야 하기 때문에 넣은 조건
-                    if (targetTr != null)
+                for (int i = 0; i < arrCollider.Length; ++i)
+                {
+                    if (arrCollider[i].transform.Equals(targetTr))
                     {
-                        // 그 대상이 현재 검사중인 오브젝트와 일치한다면
-                        if (c.transform.Equals(targetTr))
-                        {
-                            // 현재 이동 조건을 prev에 저장하고 이동 조건을 추적으로 변경한 뒤 추적.
-                            prevMoveCondition = curMoveCondition;
-                            curMoveCondition = EMoveState.CHASE;
-                            PushState();
-                            StateMove();
-                            yield break;
-                        }
-                        continue;
+                        // 현재 이동 조건을 prev에 저장하고 이동 조건을 추적으로 변경한 뒤 추적.
+                        prevMoveCondition = curMoveCondition;
+                        curMoveCondition = EMoveState.CHASE;
+                        PushState();
+                        StateMove();
+                        yield break;
                     }
-                    // 쫓는 대상은 없는데 검사한 대상이 적 유닛일 경우
-                    else if (targetType.Equals(EObjectType.ENEMY_UNIT))
+                }
+            }
+            else
+            {
+                Debug.Log("part2");
+
+                for (int i = 0; i < arrCollider.Length; ++i)
+                {
+                    EObjectType targetType = arrCollider[i].GetComponent<IGetObjectType>().GetObjectType();
+
+                    if (targetType.Equals(EObjectType.ENEMY_UNIT))
                     {
                         // 해당 적이 살아있다면
-                        if (c.gameObject.activeSelf)
+                        if (arrCollider[i].gameObject.activeSelf)
                         {
-                            stateMachine.TargetTr = c.transform;
-                            targetTr = c.transform;
+                            targetTr = arrCollider[i].transform;
+                            stateMachine.TargetTr = targetTr;
                             isAttack = true;
                             prevMoveCondition = curMoveCondition;
                             curMoveCondition = EMoveState.CHASE;
@@ -326,12 +330,9 @@ public class FriendlyObject : SelectableObject, ISubscriber
             case EMoveState.CHASE:
                 if (targetTr == null || targetTr.gameObject.activeSelf == false)
                 {
-                    if (prevMoveCondition != EMoveState.NONE)
-                    {
-                        curMoveCondition = prevMoveCondition;
-                        prevMoveCondition = EMoveState.NONE;
-                    }
-                        FinishState();
+                    curMoveCondition = prevMoveCondition;
+                    prevMoveCondition = EMoveState.NONE;
+                    FinishState();
                 }
                 else
                 {
@@ -441,7 +442,7 @@ public class FriendlyObject : SelectableObject, ISubscriber
             {
                 curWayNode = null;
                 stateMachine.SetWaitForNewPath(true);
-                RequestPath(transform.position, wayPointTo);                
+                RequestPath(transform.position, wayPointTo);
 
                 while (curWayNode == null)
                     yield return null;

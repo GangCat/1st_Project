@@ -94,6 +94,7 @@ public class StructureManager : MonoBehaviour
             listNuclearStructure.Remove(_nuclear);
 
         dicStructure.Remove(_structureIdx);
+        structure.DestroyStructure();
         InstantiateRuin(structure);
     }
 
@@ -237,12 +238,12 @@ public class StructureManager : MonoBehaviour
     }
     #endregion
 
-    public void DeactivateUnit(GameObject _removeGo, EUnitType _unitType, int _barrackIdx)
-    {
-        Structure barrack = null;
-        dicStructure.TryGetValue(_barrackIdx, out barrack);
-        barrack.DeactivateUnit(_removeGo, _unitType);
-    }
+    //public void DeactivateUnit(GameObject _removeGo, EUnitType _unitType, int _barrackIdx)
+    //{
+    //    Structure barrack = null;
+    //    dicStructure.TryGetValue(_barrackIdx, out barrack);
+    //    barrack.DeactivateUnit(_removeGo, _unitType);
+    //}
 
     public void SpawnNuclear(int _structureIdx)
     {

@@ -4,6 +4,27 @@ using UnityEngine;
 
 public class SelectableObjectManager : MonoBehaviour, IPublisher
 {
+    public void Init(VoidSelectObjectTypeDelegate _selectObjectCallback, PF_Grid _grid)
+    {
+        listSelectedFriendlyObject.Clear();
+        tempListSelectableObject.Clear();
+        selectObjectCallback = _selectObjectCallback;
+        grid = _grid;
+        RegisterBroker();
+
+        unitInfoContainer = new UnitInfoContainer();
+        listFriendlyUnitInfo = new List<SFriendlyUnitInfo>(12);
+        arrMemoryPool = new MemoryPool[arrUnitPrefab.Length];
+
+        for (int i = 0; i < listFriendlyUnitInfo.Capacity; ++i)
+            listFriendlyUnitInfo.Add(new SFriendlyUnitInfo());
+        for (int i = 0; i < arrUnitPrefab.Length; ++i)
+            arrMemoryPool[i] = new MemoryPool(arrUnitPrefab[i], 5, transform);
+
+        ArrayHUDCommand.Use(EHUDCommand.INIT_DISPLAY_GROUP_INFO, listFriendlyUnitInfo);
+        ArrayHUDCommand.Use(EHUDCommand.INIT_DISPLAY_SINGLE_INFO, unitInfoContainer);
+    }
+
     public delegate void VoidSelectObjectTypeDelegate(EObjectType _objectType);
     public bool IsFriendlyUnit => isFriendlyUnitInList;
     public static bool IsListEmpty => listSelectedFriendlyObject.Count < 1;
@@ -15,24 +36,6 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
     public static float DelayUnitUpgrade => delayUnitUpgrade;
     public static Dictionary<int, PF_Node> DicNodeUnderFriendlyUnit => dicNodeUnderFriendlyUnit;
     public static Dictionary<int, PF_Node> DicNodeUnderEnemyUnit => dicNodeUnderEnemyUnit;
-
-    public void Init(VoidSelectObjectTypeDelegate _selectObjectCallback, PF_Grid _grid)
-    {
-        listSelectedFriendlyObject.Clear();
-        tempListSelectableObject.Clear();
-        selectObjectCallback = _selectObjectCallback;
-        grid = _grid;
-        RegisterBroker();
-
-        unitInfoContainer = new UnitInfoContainer();
-        listFriendlyUnitInfo = new List<SFriendlyUnitInfo>(12);
-
-        for(int i = 0; i < listFriendlyUnitInfo.Capacity; ++i)
-            listFriendlyUnitInfo.Add(new SFriendlyUnitInfo());
-
-        ArrayHUDCommand.Use(EHUDCommand.INIT_DISPLAY_GROUP_INFO, listFriendlyUnitInfo);
-        ArrayHUDCommand.Use(EHUDCommand.INIT_DISPLAY_SINGLE_INFO, unitInfoContainer);
-    }
 
     public static void InitNodeFriendly(Vector3 _pos, out int _idx)
     {
@@ -154,10 +157,28 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
             return false;
     }
 
-    public void SpawnUnit(EUnitType _unitType)
+    public void RequestSpawnUnit(EUnitType _unitType)
     {
         if (listSelectedFriendlyObject[0].GetObjectType().Equals(EObjectType.BARRACK))
-            listSelectedFriendlyObject[0].GetComponent<StructureBarrack>().SpawnUnit(_unitType);
+            listSelectedFriendlyObject[0].GetComponent<StructureBarrack>().StartSpawnUnit(_unitType);
+    }
+
+    public void SpawnUnit(EUnitType _unitType, Vector3 _spawnPos, Vector3 _rallyPoint, Transform _rallyTr = null)
+    {
+        FriendlyObject tempObj = arrMemoryPool[(int)_unitType].ActivatePoolItem(_spawnPos, 5, transform).GetComponent<FriendlyObject>();
+        tempObj.Position = ResetPosition(tempObj.Position);
+        tempObj.Init();
+
+        if (_rallyTr != null)
+            tempObj.FollowTarget(_rallyTr);
+        else if (!_rallyPoint.Equals(_spawnPos))
+            tempObj.MoveByPos(_rallyPoint);
+    }
+
+    public void DeactivateUnit(GameObject _removeGo, EUnitType _unitType, FriendlyObject _fObj)
+    {
+        arrMemoryPool[(int)_unitType].DeactivatePoolItem(_removeGo);
+        RemoveUnitAtList(_fObj);
     }
 
     public void SetRallyPoint(Vector3 _pos)
@@ -665,6 +686,8 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
 
     [SerializeField]
     private float rangeGroupLimitDist = 5f;
+    [SerializeField]
+    private GameObject[] arrUnitPrefab = null;
 
     private static int levelRangedUnitDmgUpgrade = 1;
     private static int levelRangedUnitHpUpgrade = 1;
@@ -691,4 +714,6 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
 
     private static UnitInfoContainer unitInfoContainer = null;
     private static List<SFriendlyUnitInfo> listFriendlyUnitInfo = null;
+
+    private MemoryPool[] arrMemoryPool = null;
 }

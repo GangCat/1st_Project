@@ -144,33 +144,38 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType
 
     protected IEnumerator CheckIsTargetInChaseFinishRangeCoroutine()
     {
+        yield return null;
         while (true)
         {
             if (targetTr == null)
             {
                 stateMachine.TargetTr = null;
-                StateMove();
+                FinishState();
+                //StateMove();
                 yield break;
             }
-            else if (targetTr.gameObject.activeSelf.Equals(false))
+            else if (!targetTr.gameObject.activeSelf)
             {
                 stateMachine.TargetTr = null;
                 targetTr = null;
-                StateMove();
+                FinishState();
+                //StateMove();
                 yield break;
             }
             else if (!targetTr.Equals(stateMachine.TargetTr))
             {
                 stateMachine.TargetTr = null;
                 targetTr = null;
-                StateMove();
+                FinishState();
+                //StateMove();
                 yield break;
             }
             else if(!isTargetInRangeFromMyPos(targetTr.position, chaseFinishRange))
             {
                 stateMachine.TargetTr = null;
                 targetTr = null;
-                StateMove();
+                FinishState();
+                //StateMove();
                 yield break;
             }
             yield return new WaitForSeconds(0.5f);
