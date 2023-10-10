@@ -5,8 +5,102 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8b33c29f-1ced-47a6-96e0-2e9883714488" name="변경" comment="">
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/CameraMovement.cs.orig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/CameraMovement.cs.orig.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandBarrack/CommandCancleSpawnUnit.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandBuild/ArrayMainbaseCommand.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandHUD/CommandHUDConstruct/CommandDisplayDemolishInfo.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandHUD/CommandHUDConstruct/CommandDisplayDemolishInfo.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandHUD/CommandHUDConstruct/CommandUpdateDemolishStructure.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandHUD/CommandHUDConstruct/CommandUpdateDemolishStructure.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandHUD/CommandHUDConstruct/CommandUpdateDemolishTime.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandHUD/CommandHUDConstruct/CommandUpdateDemolishTime.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandHUD/CommandHUDSpawnNuclear.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandHUD/CommandHUDSpawnNuclear/ArrayHUDSpawnNuclearCommand.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandHUD/CommandHUDSpawnNuclear/ArrayHUDSpawnNuclearCommand.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandHUD/CommandHUDSpawnNuclear/CommandDisplaySpawnNuclearInfo.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandHUD/CommandHUDSpawnNuclear/CommandDisplaySpawnNuclearInfo.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandHUD/CommandHUDSpawnNuclear/CommandUpdateSpawnNuclearTime.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandHUD/CommandHUDSpawnNuclear/CommandUpdateSpawnNuclearTime.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandStructureFuncButton/CommandDemolishComplete.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandStructureFuncButton/CommandDemolition.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandStructureFuncButton/CommandDisplayStructureCancleButton.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandStructureFuncButton/CommandDisplayStructureCancleButton.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandStructureFuncButton/CommandHideStructureCancleButton.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandStructureFuncButton/CommandHideStructureCancleButton.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandStructureFuncButton/CommandStructureCancle.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandStructureFuncButton/CommandStructureCancle.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandUnitFuncButton/ArrayUnitFuncButtonCommand.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandUnitFuncButton/CommandDisplayUnitCancleButton.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandUnitFuncButton/CommandDisplayUnitCancleButton.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandUnitFuncButton/CommandHideUnitCancleButton.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandUnitFuncButton/CommandHideUnitCancleButton.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandUnitFuncButton/CommandUnitCancle.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/UI/CanvasDemolishInfo.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/UI/CanvasDemolishInfo.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/UI/CanvasSpawnNuclearInfo.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/UI/CanvasSpawnNuclearInfo.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/UI/CanvasStructureCancleFunc.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.1st_Project/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.1st_Project/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.1st_Project/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.1st_Project/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/ProgrammingScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/ProgrammingScene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/ProgrammingScene.unity.orig" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/ProgrammingScene.unity.orig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/CameraMovement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/CameraMovement.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Command/CommandBuild/ArrayBuildCommand.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Command/CommandBuild/ArrayBuildCommand.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandBuild/ArrayMainbaseCommand.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Command/CommandButtonCancle.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandBarrack/CommandCancleSpawnUnit.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Command/CommandButtonCancle.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandUnitFuncButton/CommandUnitCancle.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Command/CommandFuncButton.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandUnitFuncButton.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Command/CommandFuncButton/ArrayFuncButtonCommand.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Command/CommandFuncButton/ArrayFuncButtonCommand.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandUnitFuncButton/ArrayUnitFuncButtonCommand.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Command/CommandFuncButton/CommandButtonAttack.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandUnitFuncButton/CommandButtonAttack.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Command/CommandFuncButton/CommandButtonAttack.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandUnitFuncButton/CommandButtonAttack.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Command/CommandFuncButton/CommandButtonHold.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandUnitFuncButton/CommandButtonHold.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Command/CommandFuncButton/CommandButtonHold.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandUnitFuncButton/CommandButtonHold.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Command/CommandFuncButton/CommandButtonLaunchNuclear.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandUnitFuncButton/CommandButtonLaunchNuclear.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Command/CommandFuncButton/CommandButtonLaunchNuclear.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandUnitFuncButton/CommandButtonLaunchNuclear.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Command/CommandFuncButton/CommandButtonMove.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandUnitFuncButton/CommandButtonMove.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Command/CommandFuncButton/CommandButtonMove.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandUnitFuncButton/CommandButtonMove.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Command/CommandFuncButton/CommandButtonPatrol.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandUnitFuncButton/CommandButtonPatrol.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Command/CommandFuncButton/CommandButtonPatrol.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandUnitFuncButton/CommandButtonPatrol.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Command/CommandFuncButton/CommandButtonStop.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandUnitFuncButton/CommandButtonStop.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Command/CommandFuncButton/CommandButtonStop.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandUnitFuncButton/CommandButtonStop.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Command/CommandHUD/CommandHideAllInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandHUD/CommandHideAllInfo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Command/CommandStructureButton.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandStructureFuncButton.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Command/CommandStructureButton/ArrayStructureButtonCommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandStructureFuncButton/ArrayStructureFuncButtonCommand.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Command/CommandStructureButton/ArrayStructureButtonCommand.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandStructureFuncButton/ArrayStructureFuncButtonCommand.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Command/CommandStructureButton/CommandDemolition.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandStructureFuncButton/CommandDemolishComplete.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Command/CommandStructureButton/CommandDemolition.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandStructureFuncButton/CommandDemolition.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Command/CommandStructureButton/CommandUpgrade.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandStructureFuncButton/CommandUpgrade.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Command/CommandStructureButton/CommandUpgrade.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandStructureFuncButton/CommandUpgrade.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/FriendlyObject.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/FriendlyObject.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Manager/DisplayHUDManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Manager/DisplayHUDManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Manager/FuncButtonManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Manager/FuncButtonManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Manager/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Manager/GameManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Manager/InputManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Manager/InputManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Manager/SelectableObjectManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Manager/SelectableObjectManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Manager/StructureManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Manager/StructureManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Manager/UIManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Manager/UIManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Structure/Structure.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Structure/Structure.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Structure/StructureBarrack.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Structure/StructureBarrack.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Structure/StructureBunker.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Structure/StructureBunker.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Structure/StructureMainBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Structure/StructureMainBase.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Structure/StructureNuclear.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Structure/StructureNuclear.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Structure/StructureTurret.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Structure/StructureTurret.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/CanvasCancleFunc.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/CanvasCancleFunc.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/CanvasStructureCancleFunc.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/CanvasConstructInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/CanvasConstructInfo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/CanvasFunc.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/CanvasFunc.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/CanvasHeroFunc.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/CanvasHeroFunc.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/CanvasMainBaseFunc.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/CanvasMainBaseFunc.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/CanvasStructureBaseFunc.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/CanvasStructureBaseFunc.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/CanvasUnitBaseFunc.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/CanvasUnitBaseFunc.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Utility/Defines.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Utility/Defines.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserSettings/Layouts/CurrentMaximizeLayout.dwlt" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/Layouts/CurrentMaximizeLayout.dwlt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserSettings/Layouts/CurrentMaximizeLayout.dwlt.orig" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/Layouts/CurrentMaximizeLayout.dwlt.orig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UserSettings/Layouts/default-2022.dwlt" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/Layouts/default-2022.dwlt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserSettings/Layouts/default-2022.dwlt.orig" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/Layouts/default-2022.dwlt.orig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,28 +125,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "YBO",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "settings.editor.selected.configurable": "editor.preferences.fonts.default",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;YBO&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.fonts.default&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "rider.external.source.directories": [
-      "C:\\Users\\user\\AppData\\Roaming\\JetBrains\\Rider2023.2\\resharper-host\\DecompilerCache",
-      "C:\\Users\\user\\AppData\\Roaming\\JetBrains\\Rider2023.2\\resharper-host\\SourcesCache",
-      "C:\\Users\\user\\AppData\\Local\\Symbols\\src"
+  &quot;keyToStringList&quot;: {
+    &quot;rider.external.source.directories&quot;: [
+      &quot;C:\\Users\\user\\AppData\\Roaming\\JetBrains\\Rider2023.2\\resharper-host\\DecompilerCache&quot;,
+      &quot;C:\\Users\\user\\AppData\\Roaming\\JetBrains\\Rider2023.2\\resharper-host\\SourcesCache&quot;,
+      &quot;C:\\Users\\user\\AppData\\Local\\Symbols\\src&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Unity 에디터에 연결.Unity 에디터에 연결">
     <configuration name="유닛 테스트(배치 모드)" type="RunUnityExe" factoryName="Unity Executable">
       <option name="EXE_PATH" value="C:\Program Files\Unity 2022.3.8f1\Editor\Unity.exe" />
@@ -119,6 +213,9 @@
       <workItem from="1696750840888" duration="763000" />
       <workItem from="1696752027249" duration="424000" />
       <workItem from="1696897460655" duration="22000" />
+      <workItem from="1696897657804" duration="12000" />
+      <workItem from="1696897777626" duration="131000" />
+      <workItem from="1696898002285" duration="267000" />
     </task>
     <servers />
   </component>
