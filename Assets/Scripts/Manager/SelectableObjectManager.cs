@@ -683,11 +683,12 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
         PushMessageToBroker(EMessageType.UPGRADE_MELEE_HP);
     }
 
+    [Header("-Melee/Ranged")]
+    [SerializeField]
+    private GameObject[] arrUnitPrefab = null;
 
     [SerializeField]
     private float rangeGroupLimitDist = 5f;
-    [SerializeField]
-    private GameObject[] arrUnitPrefab = null;
 
     private static int levelRangedUnitDmgUpgrade = 1;
     private static int levelRangedUnitHpUpgrade = 1;

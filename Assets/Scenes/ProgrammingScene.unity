@@ -3480,6 +3480,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8f11c2f0869a2749a2431ddd165fac5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  arrUnitPrefab:
+  - {fileID: 186232715040071189, guid: 1a6427e02f043fb49b31dd80f757f371, type: 3}
+  - {fileID: 186232715040071189, guid: 1d5cc84301d48b94e942f2403a988fbd, type: 3}
   rangeGroupLimitDist: 5
 --- !u!1 &339815429
 GameObject:
@@ -16574,7 +16577,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40c08009765cc0346823b520eabe2da5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  displayUnwalkableNodeGizmos: 1
+  displayUnwalkableNodeGizmos: 0
   unWalkableMask:
     serializedVersion: 2
     m_Bits: 1536

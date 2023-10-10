@@ -26,11 +26,13 @@ public class FriendlyObject : SelectableObject, ISubscriber
             {
                 stateMachine.UpgradeAttDmg((SelectableObjectManager.LevelRangedUnitDmgUpgrade - 1) * 2);
                 statusHp.UpgradeHp((SelectableObjectManager.LevelRangedUnitHpUpgrade - 1) * 10);
+                Subscribe();
             }
             else if (unitType.Equals(EUnitType.MELEE))
             {
                 stateMachine.UpgradeAttDmg((SelectableObjectManager.LevelMeleeUnitDmgUpgrade - 1) * 2);
                 statusHp.UpgradeHp((SelectableObjectManager.LevelMeleeUnitHpUpgrade - 1) * 10);
+                Subscribe();
             }
             StateIdle();
             UpdateCurNode();
@@ -64,12 +66,6 @@ public class FriendlyObject : SelectableObject, ISubscriber
         listIdx = _listidx;
     }
 
-    public void Init(int _barrackIdx)
-    {
-        barrackIdx = _barrackIdx;
-        Subscribe();
-    }
-
     public override void UpdateCurNode()
     {
         SelectableObjectManager.UpdateFriendlyNodeWalkable(transform.position, nodeIdx);
@@ -91,7 +87,7 @@ public class FriendlyObject : SelectableObject, ISubscriber
             }
             else if (objectType.Equals(EObjectType.PROCESSING_CONSTRUCT_STRUCTURE))
             {
-                ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.DESTROY_HBEAM, gameObject, unitType, barrackIdx);
+                ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.DESTROY_HBEAM, gameObject);
             }
             else if (objectType.Equals(EObjectType.BUNKER))
             {
@@ -710,7 +706,6 @@ public class FriendlyObject : SelectableObject, ISubscriber
     private Vector3 wayPointStart = Vector3.zero;
     private Transform targetBunker = null;
 
-    private int barrackIdx = -1;
     private int listIdx = -1;
     private float oriAttRange = 0f;
     private bool isAttack = false;
