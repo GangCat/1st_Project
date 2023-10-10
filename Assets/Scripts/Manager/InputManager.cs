@@ -207,7 +207,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver
                     ArrayBunkerCommand.Use(EBunkerCommand.OUT_ONE_UNIT);
                 else if (Input.GetKeyDown(arrStructureFuncHotkey[(int)EStructureFuncHotkey.OUT_ALL_UNIT]))
                     ArrayBunkerCommand.Use(EBunkerCommand.OUT_ALL_UNIT);
-                else if (Input.GetKeyDown(arrBuildFuncHotkey[(int)EBuildFuncHotkey.NUCLEAR]))
+                else if (Input.GetKeyDown(arrBuildFuncHotkey[(int)EBuildFuncHotkey.WALL]))
                     ArrayBunkerCommand.Use(EBunkerCommand.EXPAND_WALL);
                 break;
             case EObjectType.WALL:

@@ -6,7 +6,7 @@ public class FriendlyObject : SelectableObject, ISubscriber
 {
     public override void Init()
     {
-        nodeIdx = SelectableObjectManager.InitNodeFriendly(transform.position);
+        SelectableObjectManager.InitNodeFriendly(transform.position, out nodeIdx);
         stateMachine = GetComponent<StateMachine>();
         statusHp = GetComponent<StatusHp>();
         statusHp.Init();
@@ -248,7 +248,7 @@ public class FriendlyObject : SelectableObject, ISubscriber
 
     protected override IEnumerator CheckIsEnemyInChaseStartRangeCoroutine()
     {
-        yield return new WaitForSeconds(0.5f);
+        //yield return new WaitForSeconds(0.1f);
         while (true)
         {
             // 추적 범위만큼 overlapLayerMask에 해당하는 충돌체를 overlapSphere로 검사
@@ -362,7 +362,7 @@ public class FriendlyObject : SelectableObject, ISubscriber
 
     protected override IEnumerator CheckNormalMoveCoroutine()
     {
-        PF_PathRequestManager.RequestPath(transform.position, targetPos, OnPathFound);
+        RequestPath(transform.position, targetPos);
 
         while (curWayNode == null)
             yield return null;
@@ -374,7 +374,7 @@ public class FriendlyObject : SelectableObject, ISubscriber
             {
                 curWayNode = null;
                 stateMachine.SetWaitForNewPath(true);
-                PF_PathRequestManager.RequestPath(transform.position, targetPos, OnPathFound);
+                RequestPath(transform.position, targetPos);
 
                 while (curWayNode == null)
                     yield return null;
@@ -404,7 +404,7 @@ public class FriendlyObject : SelectableObject, ISubscriber
 
                     if (Vector3.SqrMagnitude(targetPos - transform.position) > Mathf.Pow(3f, 2f))
                     {
-                        PF_PathRequestManager.RequestPath(transform.position, targetPos, OnPathFound);
+                        RequestPath(transform.position, targetPos);
                         stateMachine.SetWaitForNewPath(true);
                         while (curWayNode == null)
                             yield return null;
@@ -429,7 +429,7 @@ public class FriendlyObject : SelectableObject, ISubscriber
         Vector3 wayPointFrom = wayPointStart;
         Vector3 wayPointTo = targetPos;
 
-        PF_PathRequestManager.RequestPath(transform.position, wayPointTo, OnPathFound);
+        RequestPath(transform.position, wayPointTo);
         while (curWayNode == null)
             yield return null;
 
@@ -441,7 +441,7 @@ public class FriendlyObject : SelectableObject, ISubscriber
             {
                 curWayNode = null;
                 stateMachine.SetWaitForNewPath(true);
-                PF_PathRequestManager.RequestPath(transform.position, wayPointTo, OnPathFound);
+                RequestPath(transform.position, wayPointTo);                
 
                 while (curWayNode == null)
                     yield return null;
@@ -467,7 +467,7 @@ public class FriendlyObject : SelectableObject, ISubscriber
                 {
                     if (Vector3.SqrMagnitude(transform.position - wayPointTo) > Mathf.Pow(2f, 2f))
                     {
-                        PF_PathRequestManager.RequestPath(transform.position, wayPointTo, OnPathFound);
+                        RequestPath(transform.position, wayPointTo);
                         stateMachine.SetWaitForNewPath(true);
                         while (curWayNode == null)
                             yield return null;
@@ -480,7 +480,7 @@ public class FriendlyObject : SelectableObject, ISubscriber
                     wayPointFrom = wayPointTo;
                     wayPointTo = tempWayPoint;
 
-                    PF_PathRequestManager.RequestPath(wayPointFrom, wayPointTo, OnPathFound);
+                    RequestPath(wayPointFrom, wayPointTo);
                     stateMachine.SetWaitForNewPath(true);
 
                     while (targetIdx != 0)
@@ -498,7 +498,7 @@ public class FriendlyObject : SelectableObject, ISubscriber
 
     protected override IEnumerator CheckFollowMoveCoroutine()
     {
-        PF_PathRequestManager.RequestPath(transform.position, targetTr.position, OnPathFound);
+        RequestPath(transform.position, targetTr.position);
 
         while (curWayNode == null)
             yield return null;
@@ -531,7 +531,7 @@ public class FriendlyObject : SelectableObject, ISubscriber
                 if (!isTargetInRangeFromMyPos(targetTr.position, followOffset))
                 {
                     curWayNode = null;
-                    PF_PathRequestManager.RequestPath(transform.position, targetTr.position, OnPathFound);
+                    RequestPath(transform.position, targetTr.position);
                     stateMachine.SetWaitForNewPath(true);
                     while (curWayNode == null)
                         yield return null;
@@ -546,7 +546,7 @@ public class FriendlyObject : SelectableObject, ISubscriber
                     if (!curWayNode.walkable)
                     {
                         curWayNode = null;
-                        PF_PathRequestManager.RequestPath(transform.position, targetTr.position, OnPathFound);
+                        RequestPath(transform.position, targetTr.position);
                         stateMachine.SetWaitForNewPath(true);
 
                         while (curWayNode == null)
@@ -697,6 +697,8 @@ public class FriendlyObject : SelectableObject, ISubscriber
     {
         stateMachine.UpgradeAttDmg((_level - 1) * 2);
     }
+
+
 
     [Header("-Friendly Unit Attribute")]
     [SerializeField]

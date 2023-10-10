@@ -7,7 +7,7 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType
     protected enum EMoveState { NONE = -1, NORMAL, ATTACK, PATROL, CHASE, FOLLOW, FOLLOW_ENEMY }
     public virtual void Init()
     {
-        nodeIdx = SelectableObjectManager.InitNodeEnemy(transform.position);
+        SelectableObjectManager.InitNodeEnemy(transform.position, out nodeIdx);
         stateMachine = GetComponent<StateMachine>();
         statusHp = GetComponent<StatusHp>();
         statusHp.Init();
@@ -112,7 +112,7 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType
 
     protected virtual IEnumerator CheckIsEnemyInChaseStartRangeCoroutine()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.1f);
         while (true)
         {
             // 추적 범위만큼 overlapLayerMask에 해당하는 충돌체를 overlapSphere로 검사
@@ -244,7 +244,7 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType
 
     protected virtual IEnumerator CheckNormalMoveCoroutine()
     {
-        PF_PathRequestManager.RequestPath(transform.position, targetPos, OnPathFound);
+        RequestPath(transform.position, targetPos);
 
         while (curWayNode == null)
             yield return null;
@@ -257,7 +257,7 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType
                 stateMachine.TargetPos = transform.position;
                 curWayNode = null;
 
-                PF_PathRequestManager.RequestPath(transform.position, targetPos, OnPathFound);
+                RequestPath(transform.position, targetPos);
                 stateMachine.SetWaitForNewPath(true);
                 while (curWayNode == null)
                     yield return null;
@@ -286,7 +286,7 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType
 
                     if (Vector3.SqrMagnitude(targetPos - transform.position) > Mathf.Pow(1.4f, 2f))
                     {
-                        PF_PathRequestManager.RequestPath(transform.position, targetPos, OnPathFound);
+                        RequestPath(transform.position, targetPos);
                         stateMachine.SetWaitForNewPath(true);
                         while (curWayNode == null)
                             yield return null;
@@ -308,7 +308,7 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType
 
     protected virtual IEnumerator CheckFollowMoveCoroutine()
     {
-        PF_PathRequestManager.RequestPath(transform.position, targetTr.position, OnPathFound);
+        RequestPath(transform.position, targetTr.position);
 
         while (curWayNode == null)
             yield return null;
@@ -339,7 +339,7 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType
                 if (Vector3.SqrMagnitude(transform.position - targetTr.position) > Mathf.Pow(followOffset, 2f))
                 {
                     curWayNode = null;
-                    PF_PathRequestManager.RequestPath(transform.position, targetTr.position, OnPathFound);
+                    RequestPath(transform.position, targetTr.position);
                     stateMachine.SetWaitForNewPath(true);
                     while (curWayNode == null)
                         yield return null;
@@ -354,7 +354,7 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType
                     if (!curWayNode.walkable)
                     {
                         curWayNode = null;
-                        PF_PathRequestManager.RequestPath(transform.position, targetTr.position, OnPathFound);
+                        RequestPath(transform.position, targetTr.position);
                         stateMachine.SetWaitForNewPath(true);
 
                         while (curWayNode == null)
@@ -428,12 +428,6 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType
         stateMachine.TargetPos = curWayNode.worldPos;
     }
 
-    protected void ResearchPath()
-    {
-        if(targetTr != null)
-            PF_PathRequestManager.RequestPath(transform.position, targetTr.position, OnPathFound);
-    }
-
     protected bool IsObjectBlocked()
     {
         curPos = transform.position;
@@ -479,7 +473,7 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType
         yield return null;
         targetTr = stateMachine.TargetTr;
         while (true)
-        {
+        {  
             if(targetTr == null)
             {
                 stateMachine.TargetTr = null;
@@ -580,6 +574,11 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType
                     Gizmos.DrawLine(arrPath[i - 1].worldPos, arrPath[i].worldPos);
             }
         }
+    }
+
+    protected virtual void RequestPath(Vector3 _startPos, Vector3 _endPos)
+    {
+        PF_PathRequestManager.FriendlyRequestPath(_startPos, _endPos, OnPathFound);
     }
 
 

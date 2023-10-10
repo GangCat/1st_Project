@@ -2366,8 +2366,8 @@ MonoBehaviour:
   outerCircleRad: 5
   innerCircleRad: 0
   mapSpawnCnt: 3
-  smallWaveDelay_sec: 300
-  bigWaveDelay_sec: 600
+  smallWaveDelay_sec: 30
+  bigWaveDelay_sec: 100
   totalBigWaveCnt: 2
   arrWaveStartPoint:
   - {fileID: 1810121891}
@@ -8292,6 +8292,10 @@ MonoBehaviour:
   smoothTime: 0.2
   screenOffsetX: 20
   screenOffsetY: 10
+  minX: -90
+  maxX: 90
+  minZ: -110
+  maxZ: 80
 --- !u!1 &833493611
 GameObject:
   m_ObjectHideFlags: 0

@@ -34,16 +34,18 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
         ArrayHUDCommand.Use(EHUDCommand.INIT_DISPLAY_SINGLE_INFO, unitInfoContainer);
     }
 
-    public static int InitNodeFriendly(Vector3 _pos)
+    public static void InitNodeFriendly(Vector3 _pos, out int _idx)
     {
         dicNodeUnderFriendlyUnit.Add(dicFriendlyIdx, grid.GetNodeFromWorldPoint(_pos));
-        return dicFriendlyIdx++;
+        _idx = dicFriendlyIdx;
+        ++dicFriendlyIdx;
     }
 
-    public static int InitNodeEnemy(Vector3 _pos)
+    public static void InitNodeEnemy(Vector3 _pos, out int _idx)
     {
         dicNodeUnderEnemyUnit.Add(dicEnemyIdx, grid.GetNodeFromWorldPoint(_pos));
-        return dicEnemyIdx++;
+        _idx = dicEnemyIdx;
+        ++dicEnemyIdx;
     }
 
     public static void UpdateFriendlyNodeWalkable(Vector3 _pos, int _idx)
@@ -196,6 +198,12 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
         foreach (FriendlyObject obj in listSelectedFriendlyObject)
             obj.unSelect();
 
+        for (int i = 0; i < tempListSelectableObject.Count; ++i)
+        {
+            tempListSelectableObject[i].IsTempSelect = false;
+            tempListSelectableObject[i].DestroyCircle();
+        }
+
         listSelectedFriendlyObject.Clear();
         ArrayHUDCommand.Use(EHUDCommand.HIDE_ALL_INFO);
         SelectableObject tempObj = null;
@@ -207,7 +215,6 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
         {
             if (obj == null) continue;
             obj.DestroyCircle();
-            obj.IsTempSelect = false;
 
             if (listSelectedFriendlyObject.Count > 11) break;
 
