@@ -8,8 +8,27 @@ public class HeroUnitManager : MonoBehaviour
     {
         hero = _hero;
         hero.Init();
+#if UNITY_EDITOR
+        StartCoroutine("DisplayHeroStateCoroutine");
+#endif
+    }
+#if UNITY_EDITOR
+    public static void UpdateCurState(EState _state)
+    {
+        curState = _state;
     }
 
+    private IEnumerator DisplayHeroStateCoroutine()
+    {
+        while (true)
+        {
+            Vector3 screenPos = Camera.main.WorldToScreenPoint(hero.transform.position);
+            DebugModeManager.DisplayCurState(screenPos, curState);
+
+            yield return null;
+        }
+    }
+#endif
     public void Dead()
     {
         hero.Dead();
@@ -42,4 +61,5 @@ public class HeroUnitManager : MonoBehaviour
     private Vector3 resurrectionPos = Vector3.zero;
 
     private UnitHero hero = null;
+    private static EState curState = EState.NONE;
 }

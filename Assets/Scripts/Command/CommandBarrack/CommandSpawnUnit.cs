@@ -15,11 +15,11 @@ public class CommandSpawnUnit : Command
         EUnitType tempType = (EUnitType)_objects[0];
         if (curMng.CanSpawnUnit(tempType) && selMng.CanSpawnunit())
         {
-            selMng.SpawnUnit(tempType);
+            selMng.RequestSpawnUnit(tempType);
             curMng.SpawnUnit(tempType);
         }
-        else
-            Debug.Log("fail");
+        //else
+        //    Debug.Log("fail");
     }
 
     private SelectableObjectManager selMng = null;

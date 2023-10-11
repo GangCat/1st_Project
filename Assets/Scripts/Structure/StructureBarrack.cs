@@ -10,11 +10,7 @@ public class StructureBarrack : Structure, ISubscriber
         spawnPoint = transform.position;
         rallyPoint = spawnPoint;
         listUnit = new List<EUnitType>();
-        arrMemoryPool = new MemoryPool[arrUnitPrefab.Length];
         upgradeHpCmd = new CommandUpgradeStructureHP(GetComponent<StatusHp>());
-
-        for (int i = 0; i < arrUnitPrefab.Length; ++i)
-            arrMemoryPool[i] = new MemoryPool(arrUnitPrefab[i], 3, transform);
 
         Subscribe();
     }
@@ -90,10 +86,13 @@ public class StructureBarrack : Structure, ISubscriber
 
     public bool CanSpawnUnit()
     {
+        if(isProcessingConstruct)
+            return false;
+
         return listUnit.Count < 5;
     }
 
-    public void SpawnUnit(EUnitType _unitType)
+    public void StartSpawnUnit(EUnitType _unitType)
     {
         listUnit.Add(_unitType);
         if (myObj.IsSelect)
@@ -106,11 +105,6 @@ public class StructureBarrack : Structure, ISubscriber
     {
         if (isProcessingSpawnUnit) return;
         base.Demolish();
-    }
-
-    public override void DeactivateUnit(GameObject _removeGo, EUnitType _type)
-    {
-        arrMemoryPool[(int)_type].DeactivatePoolItem(_removeGo);
     }
 
     private void RequestSpawnUnit()
@@ -147,17 +141,8 @@ public class StructureBarrack : Structure, ISubscriber
             yield return new WaitForSeconds(1f);
 
         isProcessingSpawnUnit = false;
-        FriendlyObject tempObj = arrMemoryPool[(int)_unitType].ActivatePoolItem(spawnPoint, 3, transform).GetComponent<FriendlyObject>();
-        tempObj.Position = SelectableObjectManager.ResetPosition(tempObj.Position);
-        tempObj.Init();
-        tempObj.Init(myStructureIdx);
-
-        if (!rallyPoint.Equals(spawnPoint))
-            tempObj.MoveByPos(rallyPoint);
-        else if (rallyTr != null)
-            tempObj.FollowTarget(rallyTr);
-
         listUnit.RemoveAt(0);
+        ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.COMPLETE_SPAWN_UNIT, _unitType, spawnPoint, rallyPoint, rallyTr);
         ArrayPopulationCommand.Use(EPopulationCommand.INCREASE_CUR_POPULATION, _unitType);
         if (myObj.IsSelect)
             ArrayHUDSpawnUnitCommand.Use(EHUDSpawnUnitCommand.UPDATE_SPAWN_UNIT_LIST, listUnit);
@@ -298,8 +283,6 @@ public class StructureBarrack : Structure, ISubscriber
     private Vector3 rallyPoint = Vector3.zero;
     private Transform rallyTr = null;
     private List<EUnitType> listUnit = null;
-
-    private MemoryPool[] arrMemoryPool = null;
 
     private float SpawnUnitProgressPercent = 0f;
 }

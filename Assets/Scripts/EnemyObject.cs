@@ -37,6 +37,11 @@ public class EnemyObject : SelectableObject
         //}
     }
 
+    protected override void RequestPath(Vector3 _startPos, Vector3 _endPos)
+    {
+        PF_PathRequestManager.EnemyRequestPath(_startPos, _endPos, OnPathFound);
+    }
+
     [SerializeField]
     private GameObject powerCorePrefab = null;
 

@@ -15,8 +15,4 @@ public class CommandHideAllInfo : Command
     }
 
     private DisplayHUDManager displayMng = null;
-    private CanvasUnitInfo canvasUnit = null;
-    private CanvasSpawnUnitInfo canvasSpawn = null;
-    private CanvasUpgradeInfo canvasUpgrade = null;
-    private CanvasConstructInfo canvasConstruct = null;
 }

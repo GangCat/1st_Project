@@ -162,6 +162,17 @@ public class InputManager : MonoBehaviour, IMinimapObserver
                 return;
             }
 
+            if (SelectableObjectManager.GetFirstSelectedObjectInList.GetObjectType().Equals(EObjectType.BARRACK))
+            {
+                if (isRallyPointClick)
+                    ClearCurFunc();
+            }
+            
+            if (SelectableObjectManager.GetFirstSelectedObjectInList.GetUnitType.Equals(EUnitType.NONE))
+            {
+                return;
+            }
+
             if (isAttackClick || isMoveClick || isPatrolClick || isRallyPointClick || isLaunchNuclearClick)
                 ClearCurFunc();
             else
@@ -207,7 +218,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver
                     ArrayBunkerCommand.Use(EBunkerCommand.OUT_ONE_UNIT);
                 else if (Input.GetKeyDown(arrStructureFuncHotkey[(int)EStructureFuncHotkey.OUT_ALL_UNIT]))
                     ArrayBunkerCommand.Use(EBunkerCommand.OUT_ALL_UNIT);
-                else if (Input.GetKeyDown(arrBuildFuncHotkey[(int)EBuildFuncHotkey.NUCLEAR]))
+                else if (Input.GetKeyDown(arrBuildFuncHotkey[(int)EBuildFuncHotkey.WALL]))
                     ArrayBunkerCommand.Use(EBunkerCommand.EXPAND_WALL);
                 break;
             case EObjectType.WALL:
@@ -258,7 +269,6 @@ public class InputManager : MonoBehaviour, IMinimapObserver
     
     private bool UnitDefaultHotkeyAction()
     {
-        /*
         if (Input.GetKeyDown(arrUnitFuncHotkey[(int)EUnitFuncHotkey.MOVE]))
             ArrayUnitFuncButtonCommand.Use(EUnitFuncButtonCommand.MOVE);
         else if (Input.GetKeyDown(arrUnitFuncHotkey[(int)EUnitFuncHotkey.STOP]))
@@ -271,9 +281,8 @@ public class InputManager : MonoBehaviour, IMinimapObserver
             ArrayUnitFuncButtonCommand.Use(EUnitFuncButtonCommand.ATTACK);
         else
             return false;
-        */
+
         return true;
-        
     }
     
 

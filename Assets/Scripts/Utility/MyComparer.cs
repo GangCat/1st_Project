@@ -3,11 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class MyComparer<T> : IMyComparer<T>
+public class MyComparer : IMyComparer
 {
-    //protected MyComparer();
-    public abstract int Compare(T x, T y);
+    public int Compare(int _x, int _y)
+    {
+        if (_x.Equals(_y)) return 0;
 
-    public static Comparer<T> Default { get; }
-
+        return _x < _y ? -1 : 1;
+    }
 }

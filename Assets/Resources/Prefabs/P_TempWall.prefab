@@ -70,6 +70,7 @@ MonoBehaviour:
   myGridX: 8
   myGridY: 2
   upgradeDelay: 5
+  demolishDelay: 4
   upgradeHpAmount: 30
 --- !u!114 &-6226364378777565952
 MonoBehaviour:
@@ -259,6 +260,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: P_TempStructureCollider (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 9141583549409404733, guid: c96893ccdda651d4bb6b1128b784bd0b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -338,6 +344,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: P_TempStructureCollider
       objectReference: {fileID: 0}
+    - target: {fileID: 9141583549409404733, guid: c96893ccdda651d4bb6b1128b784bd0b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -416,6 +427,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: P_TempStructureCollider (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 9141583549409404733, guid: c96893ccdda651d4bb6b1128b784bd0b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -599,6 +615,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: P_TempStructureCollider (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 9141583549409404733, guid: c96893ccdda651d4bb6b1128b784bd0b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

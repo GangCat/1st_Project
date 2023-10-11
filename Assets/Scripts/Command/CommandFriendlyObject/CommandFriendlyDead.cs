@@ -13,8 +13,9 @@ public class CommandFriendlyDead : Command
 
     public override void Execute(params object[] _objects)
     {
-        structureMng.DeactivateUnit((GameObject)_objects[0], (EUnitType)_objects[1], (int)_objects[2]);
-        selMng.RemoveUnitAtList((FriendlyObject)_objects[3]);
+        selMng.DeactivateUnit((GameObject)_objects[0], (EUnitType)_objects[1], (FriendlyObject)_objects[2]);
+        //structureMng.DeactivateUnit((GameObject)_objects[0], (EUnitType)_objects[1], (int)_objects[2]);
+        //selMng.RemoveUnitAtList((FriendlyObject)_objects[3]);
         popMng.UnitDead((EUnitType)_objects[1]);
     }
 

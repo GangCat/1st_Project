@@ -175,8 +175,6 @@ public class PF_Grid : MonoBehaviour
         return grid[_gridX, _gridY];
     }
 
-
-
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireCube(transform.position, new Vector3(gridWorldSize.x, 1f, gridWorldSize.y));
@@ -189,6 +187,13 @@ public class PF_Grid : MonoBehaviour
                     Gizmos.color = Color.red;
                     Gizmos.DrawCube(node.worldPos, new Vector3(nodeRadius * 2, 0.1f, nodeRadius * 2));
                 }
+                else
+                {
+                    Color color = Color.white;
+                    color.a = 0.3f;
+                    Gizmos.color = color;
+                    Gizmos.DrawCube(node.worldPos, new Vector3(nodeRadius * 2, 0.1f, nodeRadius * 2));
+                }    
             }
         }
     }

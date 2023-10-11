@@ -4,6 +4,27 @@ using UnityEngine;
 
 public class SelectableObjectManager : MonoBehaviour, IPublisher
 {
+    public void Init(VoidSelectObjectTypeDelegate _selectObjectCallback, PF_Grid _grid)
+    {
+        listSelectedFriendlyObject.Clear();
+        tempListSelectableObject.Clear();
+        selectObjectCallback = _selectObjectCallback;
+        grid = _grid;
+        RegisterBroker();
+
+        unitInfoContainer = new UnitInfoContainer();
+        listFriendlyUnitInfo = new List<SFriendlyUnitInfo>(12);
+        arrMemoryPool = new MemoryPool[arrUnitPrefab.Length];
+
+        for (int i = 0; i < listFriendlyUnitInfo.Capacity; ++i)
+            listFriendlyUnitInfo.Add(new SFriendlyUnitInfo());
+        for (int i = 0; i < arrUnitPrefab.Length; ++i)
+            arrMemoryPool[i] = new MemoryPool(arrUnitPrefab[i], 5, transform);
+
+        ArrayHUDCommand.Use(EHUDCommand.INIT_DISPLAY_GROUP_INFO, listFriendlyUnitInfo);
+        ArrayHUDCommand.Use(EHUDCommand.INIT_DISPLAY_SINGLE_INFO, unitInfoContainer);
+    }
+
     public delegate void VoidSelectObjectTypeDelegate(EObjectType _objectType);
     public bool IsFriendlyUnit => isFriendlyUnitInList;
     public static bool IsListEmpty => listSelectedFriendlyObject.Count < 1;
@@ -16,34 +37,18 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
     public static Dictionary<int, PF_Node> DicNodeUnderFriendlyUnit => dicNodeUnderFriendlyUnit;
     public static Dictionary<int, PF_Node> DicNodeUnderEnemyUnit => dicNodeUnderEnemyUnit;
 
-    public void Init(VoidSelectObjectTypeDelegate _selectObjectCallback, PF_Grid _grid)
-    {
-        listSelectedFriendlyObject.Clear();
-        tempListSelectableObject.Clear();
-        selectObjectCallback = _selectObjectCallback;
-        grid = _grid;
-        RegisterBroker();
-
-        unitInfoContainer = new UnitInfoContainer();
-        listFriendlyUnitInfo = new List<SFriendlyUnitInfo>(12);
-
-        for(int i = 0; i < listFriendlyUnitInfo.Capacity; ++i)
-            listFriendlyUnitInfo.Add(new SFriendlyUnitInfo());
-
-        ArrayHUDCommand.Use(EHUDCommand.INIT_DISPLAY_GROUP_INFO, listFriendlyUnitInfo);
-        ArrayHUDCommand.Use(EHUDCommand.INIT_DISPLAY_SINGLE_INFO, unitInfoContainer);
-    }
-
-    public static int InitNodeFriendly(Vector3 _pos)
+    public static void InitNodeFriendly(Vector3 _pos, out int _idx)
     {
         dicNodeUnderFriendlyUnit.Add(dicFriendlyIdx, grid.GetNodeFromWorldPoint(_pos));
-        return dicFriendlyIdx++;
+        _idx = dicFriendlyIdx;
+        ++dicFriendlyIdx;
     }
 
-    public static int InitNodeEnemy(Vector3 _pos)
+    public static void InitNodeEnemy(Vector3 _pos, out int _idx)
     {
         dicNodeUnderEnemyUnit.Add(dicEnemyIdx, grid.GetNodeFromWorldPoint(_pos));
-        return dicEnemyIdx++;
+        _idx = dicEnemyIdx;
+        ++dicEnemyIdx;
     }
 
     public static void UpdateFriendlyNodeWalkable(Vector3 _pos, int _idx)
@@ -152,10 +157,28 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
             return false;
     }
 
-    public void SpawnUnit(EUnitType _unitType)
+    public void RequestSpawnUnit(EUnitType _unitType)
     {
         if (listSelectedFriendlyObject[0].GetObjectType().Equals(EObjectType.BARRACK))
-            listSelectedFriendlyObject[0].GetComponent<StructureBarrack>().SpawnUnit(_unitType);
+            listSelectedFriendlyObject[0].GetComponent<StructureBarrack>().StartSpawnUnit(_unitType);
+    }
+
+    public void SpawnUnit(EUnitType _unitType, Vector3 _spawnPos, Vector3 _rallyPoint, Transform _rallyTr = null)
+    {
+        FriendlyObject tempObj = arrMemoryPool[(int)_unitType].ActivatePoolItem(_spawnPos, 5, transform).GetComponent<FriendlyObject>();
+        tempObj.Position = ResetPosition(tempObj.Position);
+        tempObj.Init();
+
+        if (_rallyTr != null)
+            tempObj.FollowTarget(_rallyTr);
+        else if (!_rallyPoint.Equals(_spawnPos))
+            tempObj.MoveByPos(_rallyPoint);
+    }
+
+    public void DeactivateUnit(GameObject _removeGo, EUnitType _unitType, FriendlyObject _fObj)
+    {
+        arrMemoryPool[(int)_unitType].DeactivatePoolItem(_removeGo);
+        RemoveUnitAtList(_fObj);
     }
 
     public void SetRallyPoint(Vector3 _pos)
@@ -196,6 +219,12 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
         foreach (FriendlyObject obj in listSelectedFriendlyObject)
             obj.unSelect();
 
+        for (int i = 0; i < tempListSelectableObject.Count; ++i)
+        {
+            tempListSelectableObject[i].IsTempSelect = false;
+            tempListSelectableObject[i].DestroyCircle();
+        }
+
         listSelectedFriendlyObject.Clear();
         ArrayHUDCommand.Use(EHUDCommand.HIDE_ALL_INFO);
         SelectableObject tempObj = null;
@@ -207,7 +236,6 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
         {
             if (obj == null) continue;
             obj.DestroyCircle();
-            obj.IsTempSelect = false;
 
             if (listSelectedFriendlyObject.Count > 11) break;
 
@@ -504,7 +532,8 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
 
     public void MoveUnitByPicking(Vector3 _targetPos, bool isAttackMove = false)
     {
-        if (IsListEmpty) return;
+        if (IsListEmpty) 
+            return;
 
         if (isAttackMove)
         {
@@ -655,6 +684,9 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
         PushMessageToBroker(EMessageType.UPGRADE_MELEE_HP);
     }
 
+    [Header("-Melee/Ranged")]
+    [SerializeField]
+    private GameObject[] arrUnitPrefab = null;
 
     [SerializeField]
     private float rangeGroupLimitDist = 5f;
@@ -684,4 +716,6 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
 
     private static UnitInfoContainer unitInfoContainer = null;
     private static List<SFriendlyUnitInfo> listFriendlyUnitInfo = null;
+
+    private MemoryPool[] arrMemoryPool = null;
 }
