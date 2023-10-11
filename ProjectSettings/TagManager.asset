@@ -15,7 +15,7 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - decal
   - Water
   - UI
   - StageFloor
@@ -35,7 +35,7 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - ViewArea
   - 
   - 
   - 

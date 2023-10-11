@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 781cc897cf8675041a751163b51f97dd, type: 3}
-  m_Name: HDRenderPipelineGlobalSettings
+  m_Name: HDRenderPipelineGlobalSettings 1
   m_EditorClassIdentifier: 
   m_DefaultVolumeProfile: {fileID: 11400000, guid: 14b392ee213d25a48b1feddbd9f5a9be,
     type: 2}
-  m_LookDevVolumeProfile: {fileID: 11400000, guid: 4594f4a3fb14247e192bcca6dc23c8ed,
+  m_LookDevVolumeProfile: {fileID: 11400000, guid: 04bd29a8aceb661489058fb40c7ea235,
     type: 2}
   m_RenderingPathDefaultCameraFrameSettings:
     bitDatas:
-      data1: 72198122247117645
-      data2: 4539628474586857496
+      data1: 140666587840333
+      data2: 13763000512783810584
     lodBias: 1
     lodBiasMode: 0
     lodBiasQualityLevel: 0
@@ -34,7 +34,7 @@ MonoBehaviour:
   m_RenderingPathDefaultBakedOrCustomReflectionFrameSettings:
     bitDatas:
       data1: 135310754214733
-      data2: 4539628428684460056
+      data2: 13763000499898974232
     lodBias: 1
     lodBiasMode: 0
     lodBiasQualityLevel: 0
@@ -87,15 +87,13 @@ MonoBehaviour:
   decalLayerName7: Decal Layer 7
   lensAttenuationMode: 0
   colorGradingSpace: 0
-  m_ObsoleteDiffusionProfileSettingsList:
-  - {fileID: 11400000, guid: 48e911a1e337b44e2b85dbc65b47a594, type: 2}
-  - {fileID: 11400000, guid: 879ffae44eefa4412bb327928f1a96dd, type: 2}
+  m_ObsoleteDiffusionProfileSettingsList: []
   rendererListCulling: 0
   DLSSProjectId: 000000
   useDLSSCustomProjectId: 0
   supportProbeVolumes: 0
   supportRuntimeDebugDisplay: 0
-  autoRegisterDiffusionProfiles: 0
+  autoRegisterDiffusionProfiles: 1
   apvScenesData:
     serializedBounds: []
     serializedHasVolumes: []
