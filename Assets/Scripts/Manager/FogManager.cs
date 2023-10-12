@@ -6,13 +6,10 @@ using UnityEngine.UI;
 
 public class FogManager : MonoBehaviour
 {
-    private void Start()
+    public void Init()
     {
         curFogTexture = GenerateTexture(fogRenderTexture);
         backBufftexture = GenerateTexture(fogRenderTexture);
-
-        Shader.SetGlobalVectorArray("_UnitPositions", myArray);
-
 
         newFogRenderTexture = new RenderTexture(fogRenderTexture.width, fogRenderTexture.height, 0, RenderTextureFormat.ARGB32);
         newFogRenderTexture.enableRandomWrite = true;
@@ -70,27 +67,17 @@ public class FogManager : MonoBehaviour
     [SerializeField]
     private RenderTexture fogRenderTexture = null;
     [SerializeField]
-    private RenderTexture backBuffRenderTexture = null;
-    [SerializeField]
     private Image fogImage = null;
     [SerializeField]
     private Image bufferImage = null;
     [SerializeField]
-    private Vector4[] myArray = null;
-    [SerializeField]
-    private Texture2D tex = null;
-    [SerializeField]
     private ComputeShader fogComputeShader = null;
-    [SerializeField]
-    private Material fogMat = null;
-    [SerializeField]
-    private Material mapMat = null;
     [SerializeField]
     private GameObject fogGo = null;
     [SerializeField]
     private GameObject mapGo = null;
     [SerializeField]
-    private TempCamera mainCam = null;
+    private CameraMovement mainCam = null;
 
     private Texture2D curFogTexture = null;
     private Texture2D backBufftexture = null;

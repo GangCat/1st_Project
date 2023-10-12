@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
         currencyMng = FindFirstObjectByType<CurrencyManager>();
         populationMng = FindFirstObjectByType<PopulationManager>();
         heroMng = FindFirstObjectByType<HeroUnitManager>();
+        fogMng = FindFirstObjectByType<FogManager>();
 
         mainBaseTr = FindFirstObjectByType<StructureMainBase>().transform;
     }
@@ -64,6 +65,7 @@ public class GameManager : MonoBehaviour
         populationMng.Init();
 
         heroMng.Init(FindFirstObjectByType<UnitHero>());
+        fogMng.Init();
         InitMainBase();
     }
 
@@ -176,6 +178,7 @@ public class GameManager : MonoBehaviour
     private CurrencyManager currencyMng = null;
     private PopulationManager populationMng = null;
     private HeroUnitManager heroMng = null;
+    private FogManager fogMng = null;
 
     private PF_Grid grid = null;
     private Transform mainBaseTr = null;
