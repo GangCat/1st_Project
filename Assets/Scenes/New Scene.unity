@@ -182,7 +182,7 @@ MeshRenderer:
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7dcf0bc3428ed7e45afcdd6b172e4485, type: 2}
+  - {fileID: 239378781582670930, guid: 582063725d9bb2143ace30d8117f9c30, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -258,22 +258,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   updateFogDelay: 0.1
   fogRenderTexture: {fileID: 8400000, guid: d88331e32e36f53499ae655d4655cc7b, type: 2}
-  backBuffRenderTexture: {fileID: 8400000, guid: bf9e0e63aaf32524f99d1adb27991959,
-    type: 2}
   fogImage: {fileID: 598490127}
   bufferImage: {fileID: 1948573224}
-  myArray:
-  - {x: 0, y: 0, z: 0, w: 0}
-  - {x: 1, y: 1, z: 1, w: 0}
-  - {x: 2, y: 2, z: 2, w: 0}
-  - {x: 3, y: 3, z: 3, w: 0}
-  tex: {fileID: 2800000, guid: bed1fd847deda1f47971073d37efafcc, type: 3}
   fogComputeShader: {fileID: 7200000, guid: aad4de65650e43446b38106a596cfc80, type: 3}
-  fogMat: {fileID: 2100000, guid: 66400244fbc84734388b80dd84f97b28, type: 2}
-  mapMat: {fileID: 2100000, guid: e978970213bbdbd4cb24f7176c93e40c, type: 2}
   fogGo: {fileID: 278597030}
   mapGo: {fileID: 1717315729}
-  mainCam: {fileID: 2122606389}
+  mainCam: {fileID: 0}
 --- !u!4 &39533314
 Transform:
   m_ObjectHideFlags: 0
@@ -523,7 +513,7 @@ MeshRenderer:
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7dcf0bc3428ed7e45afcdd6b172e4485, type: 2}
+  - {fileID: 239378781582670930, guid: 582063725d9bb2143ace30d8117f9c30, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1215,7 +1205,7 @@ MeshRenderer:
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7dcf0bc3428ed7e45afcdd6b172e4485, type: 2}
+  - {fileID: 239378781582670930, guid: 582063725d9bb2143ace30d8117f9c30, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1320,7 +1310,7 @@ MeshRenderer:
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7dcf0bc3428ed7e45afcdd6b172e4485, type: 2}
+  - {fileID: 239378781582670930, guid: 582063725d9bb2143ace30d8117f9c30, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1425,7 +1415,7 @@ MeshRenderer:
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7dcf0bc3428ed7e45afcdd6b172e4485, type: 2}
+  - {fileID: 239378781582670930, guid: 582063725d9bb2143ace30d8117f9c30, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1686,7 +1676,7 @@ MeshRenderer:
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7dcf0bc3428ed7e45afcdd6b172e4485, type: 2}
+  - {fileID: 239378781582670930, guid: 582063725d9bb2143ace30d8117f9c30, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1791,7 +1781,7 @@ MeshRenderer:
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7dcf0bc3428ed7e45afcdd6b172e4485, type: 2}
+  - {fileID: 239378781582670930, guid: 582063725d9bb2143ace30d8117f9c30, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2107,7 +2097,7 @@ MeshRenderer:
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7dcf0bc3428ed7e45afcdd6b172e4485, type: 2}
+  - {fileID: 239378781582670930, guid: 582063725d9bb2143ace30d8117f9c30, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2240,7 +2230,6 @@ GameObject:
   - component: {fileID: 2122606387}
   - component: {fileID: 2122606386}
   - component: {fileID: 2122606385}
-  - component: {fileID: 2122606389}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -2454,27 +2443,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 70, y: 45, z: 0}
---- !u!114 &2122606389
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2122606384}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7313c9d37518d2247a4c49181baa766d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerTr: {fileID: 1581604401}
-  camOffset: {x: -26.8, y: 60, z: -17.4}
-  fogCamPos: {x: 0, y: 60, z: 0}
-  fogCamRot: {x: 0.70710677, y: 0, z: 0, w: 0.70710677}
-  fogCamSize: 64
-  fogRenderTexture: {fileID: 8400000, guid: d88331e32e36f53499ae655d4655cc7b, type: 2}
-  visibleLayer:
-    serializedVersion: 2
-    m_Bits: 8388608
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
