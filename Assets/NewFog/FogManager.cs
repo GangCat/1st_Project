@@ -32,6 +32,7 @@ public class FogManager : MonoBehaviour
         mainCam.RenderFog();
 
         Graphics.CopyTexture(fogRenderTexture, newFogRenderTexture);
+
         int threadGroupsX = Mathf.CeilToInt(newFogRenderTexture.width / 8f);
         int threadGroupsY = Mathf.CeilToInt(newFogRenderTexture.height / 8f);
         fogComputeShader.Dispatch(0, threadGroupsX, threadGroupsY, 1);
