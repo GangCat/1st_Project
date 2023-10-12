@@ -13,7 +13,7 @@ public class CommandStructureCancle : Command
     public override void Execute(params object[] _objects)
     {
         inputMng.CancleRallypoint();
-        SelectableObjectManager.GetFirstSelectedObjectInList.GetComponent<Structure>().CancleCurAction();
+        SelectableObjectManager.GetFirstSelectedObjectInList().GetComponent<Structure>().CancleCurAction();
     }
 
     private CurrencyManager curMng = null;

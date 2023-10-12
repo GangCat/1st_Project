@@ -116,16 +116,12 @@ MonoBehaviour:
   DLSSProjectId: 000000
   useDLSSCustomProjectId: 0
   supportProbeVolumes: 0
-  supportRuntimeDebugDisplay: 0
   autoRegisterDiffusionProfiles: 0
   apvScenesData:
     m_ObsoleteSerializedBakingSets: []
     serializedBounds: []
     serializedHasVolumes: []
     bakingSets: []
-    serializedProfiles: []
-    serializedBakeSettings: []
-    serializedBakingSets: []
     m_LightingScenario: Default
   m_Version: 8
   m_ShaderVariantLogLevel: 0

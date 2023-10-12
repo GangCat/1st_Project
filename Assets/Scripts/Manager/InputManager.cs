@@ -180,13 +180,13 @@ public class InputManager : MonoBehaviour, IMinimapObserver
                 return;
             }
 
-            if (SelectableObjectManager.GetFirstSelectedObjectInList.GetObjectType().Equals(EObjectType.BARRACK))
+            if (SelectableObjectManager.GetFirstSelectedObjectInList().GetObjectType().Equals(EObjectType.BARRACK))
             {
                 if (isRallyPointClick)
                     ClearCurFunc();
             }
             
-            if (SelectableObjectManager.GetFirstSelectedObjectInList.GetUnitType.Equals(EUnitType.NONE))
+            if (SelectableObjectManager.GetFirstSelectedObjectInList().GetUnitType.Equals(EUnitType.NONE))
             {
                 return;
             }
@@ -202,7 +202,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver
     {
         if (SelectableObjectManager.IsListEmpty) return;
 
-        EObjectType objType = SelectableObjectManager.GetFirstSelectedObjectInList.GetObjectType();
+        EObjectType objType = SelectableObjectManager.GetFirstSelectedObjectInList().GetObjectType();
         switch (objType)
         {
             case EObjectType.UNIT_01:
@@ -447,7 +447,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver
 
             if (isCheckDoubleClick)
             {
-                if (hit.transform.Equals(SelectableObjectManager.GetFirstSelectedObjectInList.transform))
+                if (hit.transform.Equals(SelectableObjectManager.GetFirstSelectedObjectInList().transform))
                 {
                     Debug.Log("double Click");
                     // 여기서 카메라 커맨드로 박스캐스트나 오버랩 박스로 화면내의 selectable다 찾아내고

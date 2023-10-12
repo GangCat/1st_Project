@@ -11,7 +11,7 @@ public class CommandUpgradeUnit : Command
 
     public override void Execute(params object[] _objects)
     {
-        StructureBarrack tempBarrack = SelectableObjectManager.GetFirstSelectedObjectInList.GetComponent<StructureBarrack>();
+        StructureBarrack tempBarrack = SelectableObjectManager.GetFirstSelectedObjectInList().GetComponent<StructureBarrack>();
         if (tempBarrack.IsProcessingSpawnUnit) return;
 
         EUnitUpgradeType upgradeType = (EUnitUpgradeType)_objects[0];

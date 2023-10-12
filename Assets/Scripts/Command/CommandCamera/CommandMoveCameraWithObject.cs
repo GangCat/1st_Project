@@ -11,7 +11,7 @@ public class CommandMoveCameraWithObject : Command
 
     public override void Execute(params object[] _objects)
     {
-        cameraMove.MoveCameraWithObject(SelectableObjectManager.GetFirstSelectedObjectInList.GetPos);
+        cameraMove.MoveCameraWithObject(SelectableObjectManager.GetFirstSelectedObjectInList().GetPos);
     }
 
     private CameraMovement cameraMove = null;

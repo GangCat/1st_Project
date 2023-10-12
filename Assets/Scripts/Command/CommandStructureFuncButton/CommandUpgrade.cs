@@ -13,7 +13,7 @@ public class CommandUpgrade : Command
     public override void Execute(params object[] _objects)
     {
         
-        Structure tempStructure = SelectableObjectManager.GetFirstSelectedObjectInList.GetComponent<Structure>();
+        Structure tempStructure = SelectableObjectManager.GetFirstSelectedObjectInList().GetComponent<Structure>();
         EObjectType structureObjType = tempStructure.GetComponent<FriendlyObject>().GetObjectType();
         if(structureObjType.Equals(EObjectType.BARRACK))
         {
