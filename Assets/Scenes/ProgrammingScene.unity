@@ -8351,7 +8351,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   volumeAnchorOverride: {fileID: 0}
-  antialiasing: 0
+  antialiasing: 1
   SMAAQuality: 2
   dithering: 0
   stopNaNs: 0
@@ -18100,15 +18100,15 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2018547504}
     m_Modifications:
-    - target: {fileID: 3259663480990585806, guid: b1841c0cd9c4e6d439fd42a2caeb4d6b,
+    - target: {fileID: 5404226326101981739, guid: b1841c0cd9c4e6d439fd42a2caeb4d6b,
         type: 3}
-      propertyPath: sceneViewId
-      value: 1
+      propertyPath: m_LocalScale.x
+      value: 15
       objectReference: {fileID: 0}
-    - target: {fileID: 5209549203731370052, guid: b1841c0cd9c4e6d439fd42a2caeb4d6b,
+    - target: {fileID: 5404226326101981739, guid: b1841c0cd9c4e6d439fd42a2caeb4d6b,
         type: 3}
-      propertyPath: maxHp
-      value: 100
+      propertyPath: m_LocalScale.z
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 6917241794151303350, guid: b1841c0cd9c4e6d439fd42a2caeb4d6b,
         type: 3}
@@ -18165,36 +18165,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7179781643778605711, guid: b1841c0cd9c4e6d439fd42a2caeb4d6b,
-        type: 3}
-      propertyPath: unitType
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7179781643778605711, guid: b1841c0cd9c4e6d439fd42a2caeb4d6b,
-        type: 3}
-      propertyPath: stopDelay
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7179781643778605711, guid: b1841c0cd9c4e6d439fd42a2caeb4d6b,
-        type: 3}
-      propertyPath: objectType
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7330500162855589593, guid: b1841c0cd9c4e6d439fd42a2caeb4d6b,
-        type: 3}
-      propertyPath: unitState.attRate
-      value: 0.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 7330500162855589593, guid: b1841c0cd9c4e6d439fd42a2caeb4d6b,
-        type: 3}
-      propertyPath: unitState.objectType
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8697071937884524652, guid: b1841c0cd9c4e6d439fd42a2caeb4d6b,
-        type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: 448740631d429ae4daaf75b26ba6a784, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -22435,7 +22405,7 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 55951.613
+  m_Intensity: 2
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -22479,7 +22449,7 @@ Light:
   m_AreaSize: {x: 0.5, y: 0.5}
   m_BounceIntensity: 1
   m_ColorTemperature: 7361
-  m_UseColorTemperature: 1
+  m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: -3.9417158e-38}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
@@ -22512,13 +22482,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a68c43fe1f2a47cfa234b5eeaa98012, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Intensity: 55951.613
+  m_Intensity: 2
   m_EnableSpotReflector: 1
   m_LuxAtDistance: 1
   m_InnerSpotPercent: 0
   m_SpotIESCutoffPercent: 100
   m_LightDimmer: 1
-  m_VolumetricDimmer: 1
+  m_VolumetricDimmer: 0.9
   m_LightUnit: 2
   m_FadeDistance: 10000
   m_VolumetricFadeDistance: 10000
@@ -22821,11 +22791,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4801781719797432397, guid: 84ef0facb01956b449c682e9f37929e0,
-        type: 3}
-      propertyPath: objectType
-      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8162044424758329862, guid: 84ef0facb01956b449c682e9f37929e0,
         type: 3}
