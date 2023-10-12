@@ -29,6 +29,9 @@ public struct SUnitState
     public float attRate;
     public float attDmg;
 
+    public EObjectType objectType;
+    
+
     public GameObject TurretMissile;
     public Transform missileSpawnTr;
 }
@@ -49,7 +52,7 @@ public struct SFriendlyUnitInfo
 }
 
 [System.Serializable]
-public enum EObjectType { NONE = -1, UNIT, UNIT_HERO, MAIN_BASE, TURRET, BUNKER, WALL, BARRACK, NUCLEAR, ENEMY_UNIT, ENEMY_STRUCTURE, PROCESSING_CONSTRUCT_STRUCTURE, LENGTH }
+public enum EObjectType { NONE = -1, UNIT_01, UNIT_02, UNIT_HERO, MAIN_BASE, TURRET, BUNKER, WALL, BARRACK, NUCLEAR, ENEMY_UNIT, ENEMY_STRUCTURE, PROCESSING_CONSTRUCT_STRUCTURE, LENGTH }
 public enum EState { NONE = -1, IDLE, MOVE, STOP, HOLD, ATTACK, TURRET_ATTACK, LENGTH }
 public enum EUnitType { NONE = -1, MELEE, RANGED, HERO, LENGTH }
 public enum EUnitUpgradeType { NONE = -1, RANGED_UNIT_DMG, RANGED_UNIT_HP, MELEE_UNIT_DMG, MELEE_UNIT_HP, LENGTH }
@@ -81,3 +84,5 @@ public enum EMessageType { NONE = -1, UPGRADE_RANGED_DMG, UPGRADE_RANGED_HP, UPG
 
 public enum EUpgradeETCType { NONE = -1, CURRENT_MAX_POPULATION, ENERGY_SUPPLY, LENGTH }
 public enum EUpgradeType { NONE = -1, ENERGY, POPULATION, STRUCTURE, RANGED_DMG, RANGED_HP, MELEE_DMG, MELEE_HP, LENGTH }
+
+// public enum EAudioHero1 { NONE = -1, SHOT, MOVE, LENGTH }

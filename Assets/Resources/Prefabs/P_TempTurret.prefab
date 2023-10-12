@@ -303,6 +303,7 @@ MonoBehaviour:
   myGridX: 4
   myGridY: 4
   upgradeDelay: 3
+  demolishDelay: 4
   turretHeadTr: {fileID: 3077076975496337010}
   upgradeDmgAmount: 5
   upgradeRangeAmount: 3
@@ -327,6 +328,7 @@ MonoBehaviour:
     moveSpeed: 0
     attRate: 3
     attDmg: 5
+    objectType: 4
     TurretMissile: {fileID: 3865807368766108358, guid: 6b29ddb4969f467459c9090eacc547a5,
       type: 3}
     missileSpawnTr: {fileID: 8014809672233857094}
@@ -342,7 +344,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6eca46bfe7e9fb4cbc5c505397e1931, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectType: 3
+  objectType: 4
   selectDisplayCircle: {fileID: 52691291055329485, guid: d02d8a447130d5d4bbc9d60ffde1d811,
     type: 3}
   chaseStartRange: 0

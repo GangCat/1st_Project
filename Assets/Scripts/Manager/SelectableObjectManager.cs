@@ -241,7 +241,8 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
 
             switch (obj.GetObjectType())
             {
-                case EObjectType.UNIT:
+                case EObjectType.UNIT_01:
+                case EObjectType.UNIT_02:
                 case EObjectType.UNIT_HERO:
                     if (!isFriendlyUnitInList)
                     {

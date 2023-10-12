@@ -113,8 +113,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb507dc23adf3a24ab9f5abbf56ea7d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectType: 7
-  isControllable: 0
+  objectType: 9
+  selectDisplayCircle: {fileID: 0}
+  chaseStartRange: 0
+  chaseFinishRange: 0
+  attackRange: 0
+  stopDelay: 2
+  followOffset: 3
+  overlapLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &4815547369824481657
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -131,15 +139,13 @@ MonoBehaviour:
     myTr: {fileID: 0}
     targetTr: {fileID: 0}
     targetPos: {x: 0, y: 0, z: 0}
-    nodeIdx: 0
+    isWaitForNewPath: 0
     moveSpeed: 2
-    traceStartRange: 3
-    traceEndRange: 5
-    attRange: 2
     attRate: 3
     attDmg: 1
-    isHold: 0
-    isAttackMove: 0
+    objectType: 9
+    TurretMissile: {fileID: 0}
+    missileSpawnTr: {fileID: 0}
 --- !u!1 &3256322658277572286
 GameObject:
   m_ObjectHideFlags: 0

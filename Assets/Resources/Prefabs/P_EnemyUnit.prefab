@@ -13,8 +13,6 @@ GameObject:
   - component: {fileID: 8204235503644602067}
   - component: {fileID: 4815547369824481657}
   - component: {fileID: 4548737042386696750}
-  - component: {fileID: -7597559225585069738}
-  - component: {fileID: 2632642936934636510}
   m_Layer: 7
   m_Name: P_EnemyUnit
   m_TagString: EnemyUnit
@@ -93,8 +91,9 @@ MonoBehaviour:
     targetPos: {x: 0, y: 0, z: 0}
     isWaitForNewPath: 0
     moveSpeed: 3
-    attRate: 3
+    attRate: 0.7
     attDmg: 1
+    objectType: 9
     TurretMissile: {fileID: 0}
     missileSpawnTr: {fileID: 0}
 --- !u!114 &4548737042386696750
@@ -109,7 +108,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bfe62406890e574f973e96c726a010b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectType: 8
+  objectType: 9
   selectDisplayCircle: {fileID: 52691291055329485, guid: 58ef200a9ea84df48a81a49db5dc2f39,
     type: 3}
   chaseStartRange: 5
@@ -122,45 +121,6 @@ MonoBehaviour:
     m_Bits: 16512
   powerCorePrefab: {fileID: 5884904722928855986, guid: 1a643c881652e6d4098d4f2d254e4038,
     type: 3}
---- !u!114 &-7597559225585069738
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 186232715040071189}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  Synchronization: 3
-  OwnershipTransfer: 0
-  observableSearch: 2
-  ObservedComponents:
-  - {fileID: 2632642936934636510}
-  sceneViewId: 0
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
---- !u!114 &2632642936934636510
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 186232715040071189}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
-  m_UseLocal: 1
 --- !u!1 &3256322658277572286
 GameObject:
   m_ObjectHideFlags: 0

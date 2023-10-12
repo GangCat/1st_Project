@@ -17,10 +17,13 @@ public class CommandBuildConfirm : Command
         {
             inputMng.IsBuildOperation = false;
             curMng.BuildStructure(buildMng.CurStructureType());
+    
+            AudioManager.instance.PlayAudio_Build(objectType);
         }
     }
 
     private StructureManager buildMng = null;
     private InputManager inputMng = null;
     private CurrencyManager curMng = null;
+    private EObjectType objectType;
 }

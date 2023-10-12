@@ -28,6 +28,8 @@ public class InputManager : MonoBehaviour, IMinimapObserver
 
     public void OnClickMoveButton()
     {
+        AudioManager.instance.PlayAudio_UI(objectType); // CLICK Audio
+        
         if (isMoveClick) return;
         ClearCurFunc();
         pickPosDisplayGo = Instantiate(pickPosPrefab, transform);
@@ -37,6 +39,8 @@ public class InputManager : MonoBehaviour, IMinimapObserver
 
     public void OnClickAttackButton()
     {
+        AudioManager.instance.PlayAudio_UI(objectType); // CLICK Audio
+        
         if (isAttackClick) return;
         ClearCurFunc();
         pickPosDisplayGo = Instantiate(pickPosPrefab, transform);
@@ -46,6 +50,8 @@ public class InputManager : MonoBehaviour, IMinimapObserver
 
     public void OnClickPatrolButton()
     {
+        AudioManager.instance.PlayAudio_UI(objectType); // CLICK Audio
+        
         if (isPatrolClick) return;
         ClearCurFunc();
         pickPosDisplayGo = Instantiate(pickPosPrefab, transform);
@@ -55,6 +61,8 @@ public class InputManager : MonoBehaviour, IMinimapObserver
 
     public void OnClickRallyPointButton()
     {
+        AudioManager.instance.PlayAudio_UI(objectType); // CLICK Audio
+        
         if (isRallyPointClick) return;
         ClearCurFunc();
         pickPosDisplayGo = Instantiate(pickPosPrefab, transform);
@@ -64,6 +72,8 @@ public class InputManager : MonoBehaviour, IMinimapObserver
 
     public void OnClickLaunchNuclearButton()
     {
+        AudioManager.instance.PlayAudio_UI(objectType); // CLICK Audio
+        
         if (isLaunchNuclearClick) return;
         ClearCurFunc();
         pickPosDisplayGo = Instantiate(pickPosPrefab, transform);
@@ -139,13 +149,21 @@ public class InputManager : MonoBehaviour, IMinimapObserver
                 return;
             }
             else if (isAttackClick)
+            {
                 AttackMoveWithMouseClick();
+            }
             else if (isMoveClick)
+            {
                 MoveWithMouseClick();
+            }
             else if (isPatrolClick)
+            {
                 PatrolWithMouseClick();
+            }
             else if (isRallyPointClick)
+            {
                 SetRallyPoint();
+            }
             else if (isLaunchNuclearClick)
                 LaunchNuclear();
             else
@@ -187,7 +205,11 @@ public class InputManager : MonoBehaviour, IMinimapObserver
         EObjectType objType = SelectableObjectManager.GetFirstSelectedObjectInList.GetObjectType();
         switch (objType)
         {
-            case EObjectType.UNIT:
+            case EObjectType.UNIT_01:
+                if (UnitDefaultHotkeyAction())
+                    break;
+                break;
+            case EObjectType.UNIT_02:
                 if (UnitDefaultHotkeyAction())
                     break;
                 break;
@@ -347,7 +369,9 @@ public class InputManager : MonoBehaviour, IMinimapObserver
         Vector3 pickPos = Vector3.zero;
         RaycastHit hit;
         if (Functions.Picking(selectableLayer, out hit))
+        {
             ArrayUnitActionCommand.Use(EUnitActionCommand.FOLLOW_OBJECT, hit.transform);
+        }
         else if (Functions.Picking("StageFloor", floorLayer, ref pickPos))
         {
             GameObject pickPosDisplayGo = Instantiate(pickPosPrefab, pickPos, Quaternion.identity, transform);
@@ -533,6 +557,8 @@ public class InputManager : MonoBehaviour, IMinimapObserver
     private Vector3 dragEndPos = Vector3.zero;
 
     private SelectArea selectArea = null;
+    
+    private EObjectType objectType;
 
     private enum EUnitFuncHotkey { NONE = -1, MOVE, STOP, HOLD, PATROL, ATTACK, LAUNCH_NUCLEAR, LENGTH }
     private enum EBuildFuncHotkey { NONE = -1, TURRET, BUNKER, BARRACK, NUCLEAR, WALL, LENGTH }

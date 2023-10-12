@@ -79,7 +79,7 @@ public class FriendlyObject : SelectableObject, ISubscriber
         {
             StopAllCoroutines();
 
-            if (objectType.Equals(EObjectType.UNIT))
+            if (objectType.Equals(EObjectType.UNIT_01) || objectType.Equals(EObjectType.UNIT_02))
             {
                 ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.DEAD, gameObject, unitType, this);
                 Broker.UnSubscribe(this, EPublisherType.SELECTABLE_MANAGER);

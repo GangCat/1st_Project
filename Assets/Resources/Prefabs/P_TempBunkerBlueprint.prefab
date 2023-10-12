@@ -64,6 +64,7 @@ MonoBehaviour:
   myGridX: 2
   myGridY: 2
   upgradeDelay: 0
+  demolishDelay: 4
   buffRatio: 0.5
   height: 5
   capacity: 1
@@ -81,7 +82,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6eca46bfe7e9fb4cbc5c505397e1931, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectType: 4
+  objectType: 5
+  selectDisplayCircle: {fileID: 0}
   chaseStartRange: 0
   chaseFinishRange: 0
   attackRange: 0
@@ -152,7 +154,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: 4e2df4024bef01c48900bcc214c37324,
         type: 3}
-      propertyPath: m_Materials.Array.data[0]
+      propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 54ee677ea9a331c4ba6fa43d25eb82d3, type: 2}
     - target: {fileID: 919132149155446097, guid: 4e2df4024bef01c48900bcc214c37324,

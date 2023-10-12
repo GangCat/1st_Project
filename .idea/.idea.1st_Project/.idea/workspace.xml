@@ -5,102 +5,96 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8b33c29f-1ced-47a6-96e0-2e9883714488" name="변경" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/CameraMovement.cs.orig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/CameraMovement.cs.orig.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandBarrack/CommandCancleSpawnUnit.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandBuild/ArrayMainbaseCommand.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandHUD/CommandHUDConstruct/CommandDisplayDemolishInfo.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandHUD/CommandHUDConstruct/CommandDisplayDemolishInfo.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandHUD/CommandHUDConstruct/CommandUpdateDemolishStructure.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandHUD/CommandHUDConstruct/CommandUpdateDemolishStructure.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandHUD/CommandHUDConstruct/CommandUpdateDemolishTime.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandHUD/CommandHUDConstruct/CommandUpdateDemolishTime.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandHUD/CommandHUDSpawnNuclear.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandHUD/CommandHUDSpawnNuclear/ArrayHUDSpawnNuclearCommand.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandHUD/CommandHUDSpawnNuclear/ArrayHUDSpawnNuclearCommand.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandHUD/CommandHUDSpawnNuclear/CommandDisplaySpawnNuclearInfo.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandHUD/CommandHUDSpawnNuclear/CommandDisplaySpawnNuclearInfo.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandHUD/CommandHUDSpawnNuclear/CommandUpdateSpawnNuclearTime.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandHUD/CommandHUDSpawnNuclear/CommandUpdateSpawnNuclearTime.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandStructureFuncButton/CommandDemolishComplete.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandStructureFuncButton/CommandDemolition.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandStructureFuncButton/CommandDisplayStructureCancleButton.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandStructureFuncButton/CommandDisplayStructureCancleButton.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandStructureFuncButton/CommandHideStructureCancleButton.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandStructureFuncButton/CommandHideStructureCancleButton.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandStructureFuncButton/CommandStructureCancle.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandStructureFuncButton/CommandStructureCancle.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandUnitFuncButton/ArrayUnitFuncButtonCommand.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandUnitFuncButton/CommandDisplayUnitCancleButton.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandUnitFuncButton/CommandDisplayUnitCancleButton.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandUnitFuncButton/CommandHideUnitCancleButton.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandUnitFuncButton/CommandHideUnitCancleButton.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandUnitFuncButton/CommandUnitCancle.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/UI/CanvasDemolishInfo.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/UI/CanvasDemolishInfo.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/UI/CanvasSpawnNuclearInfo.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/UI/CanvasSpawnNuclearInfo.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/UI/CanvasStructureCancleFunc.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Rocket.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Rocket/SPACECRAFT_Rocket_01_Muffled_Passby_SS1_mono.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Rocket/SPACECRAFT_Rocket_01_Muffled_Passby_SS1_mono.wav.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Rocket/SPACECRAFT_Rocket_01_Muffled_Passby_SS2_mono.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Rocket/SPACECRAFT_Rocket_01_Muffled_Passby_SS2_mono.wav.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Rocket/SPACECRAFT_Rocket_01_Muffled_Passby_SS3_mono.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Rocket/SPACECRAFT_Rocket_01_Muffled_Passby_SS3_mono.wav.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Rocket/SPACECRAFT_Rocket_02_Resonant_Roar_Passby_SS1_mono.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Rocket/SPACECRAFT_Rocket_02_Resonant_Roar_Passby_SS1_mono.wav.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Rocket/SPACECRAFT_Rocket_02_Resonant_Roar_Passby_SS2_mono.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Rocket/SPACECRAFT_Rocket_02_Resonant_Roar_Passby_SS2_mono.wav.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Rocket/SPACECRAFT_Rocket_02_Resonant_Roar_Passby_SS3_mono.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Rocket/SPACECRAFT_Rocket_02_Resonant_Roar_Passby_SS3_mono.wav.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Rocket/SPACECRAFT_Rocket_03_Strong_Burn_Passby_SS1_mono.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Rocket/SPACECRAFT_Rocket_03_Strong_Burn_Passby_SS1_mono.wav.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Rocket/SPACECRAFT_Rocket_03_Strong_Burn_Passby_SS2_mono.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Rocket/SPACECRAFT_Rocket_03_Strong_Burn_Passby_SS2_mono.wav.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Rocket/SPACECRAFT_Rocket_03_Strong_Burn_Passby_SS3_mono.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Rocket/SPACECRAFT_Rocket_03_Strong_Burn_Passby_SS3_mono.wav.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Rocket/SPACECRAFT_Rocket_04_Smooth_Burn_Passby_SS1_mono.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Rocket/SPACECRAFT_Rocket_04_Smooth_Burn_Passby_SS1_mono.wav.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Rocket/SPACECRAFT_Rocket_04_Smooth_Burn_Passby_SS2_mono.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Rocket/SPACECRAFT_Rocket_04_Smooth_Burn_Passby_SS2_mono.wav.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Rocket/SPACECRAFT_Rocket_04_Smooth_Burn_Passby_SS3_mono.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Rocket/SPACECRAFT_Rocket_04_Smooth_Burn_Passby_SS3_mono.wav.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Rocket/SPACECRAFT_Rocket_05_Powerful_Burn_Passby_SS1_mono.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Rocket/SPACECRAFT_Rocket_05_Powerful_Burn_Passby_SS1_mono.wav.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Rocket/SPACECRAFT_Rocket_05_Powerful_Burn_Passby_SS2_mono.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Rocket/SPACECRAFT_Rocket_05_Powerful_Burn_Passby_SS2_mono.wav.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Rocket/SPACECRAFT_Rocket_05_Powerful_Burn_Passby_SS3_mono.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Rocket/SPACECRAFT_Rocket_05_Powerful_Burn_Passby_SS3_mono.wav.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Textures/T_MinimapRect_Alpha_1%.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Textures/T_MinimapRect_Alpha_1%.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Textures/T_MinimapRect_Alpha_2%.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Textures/T_MinimapRect_Alpha_2%.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Textures/T_MinimapRect_Alpha_3%.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Textures/T_MinimapRect_Alpha_3%.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Audio/AudioPlayer_Turret.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Audio/AudioPlayer_Turret.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.1st_Project/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.1st_Project/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.1st_Project/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.1st_Project/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Prefabs/P_EnemyUnit.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/P_EnemyUnit.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Prefabs/P_EnemyUnitBackup.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/P_EnemyUnitBackup.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Prefabs/P_FriendlyRangedUnit.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/P_FriendlyRangedUnit.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Prefabs/P_FriendlyRocketUnit.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/P_FriendlyRocketUnit.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Prefabs/P_MissileTurret.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/P_MissileTurret.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Prefabs/P_Player.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/P_Player.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Prefabs/P_TempBarrack.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/P_TempBarrack.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Prefabs/P_TempBarrackBlueprint.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/P_TempBarrackBlueprint.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Prefabs/P_TempBunker.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/P_TempBunker.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Prefabs/P_TempBunkerBlueprint.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/P_TempBunkerBlueprint.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Prefabs/P_TempHBeam.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/P_TempHBeam.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Prefabs/P_TempMainBase.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/P_TempMainBase.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Prefabs/P_TempNuclear.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/P_TempNuclear.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Prefabs/P_TempNuclearBlueprint.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/P_TempNuclearBlueprint.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Prefabs/P_TempTurret.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/P_TempTurret.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Prefabs/P_TempTurretBluePrint.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/P_TempTurretBluePrint.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Prefabs/P_TempWall.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/P_TempWall.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Prefabs/P_TempWallBlueprint.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/P_TempWallBlueprint.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Textures/T_MinimapRect_Alpha.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Textures/T_MinimapRect_Alpha.png.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/ProgrammingScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/ProgrammingScene.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/ProgrammingScene.unity.orig" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/ProgrammingScene.unity.orig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/CameraMovement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/CameraMovement.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Command/CommandBuild/ArrayBuildCommand.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Command/CommandBuild/ArrayBuildCommand.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandBuild/ArrayMainbaseCommand.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Command/CommandButtonCancle.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandBarrack/CommandCancleSpawnUnit.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Command/CommandButtonCancle.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandUnitFuncButton/CommandUnitCancle.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Command/CommandFuncButton.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandUnitFuncButton.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Command/CommandFuncButton/ArrayFuncButtonCommand.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Command/CommandFuncButton/ArrayFuncButtonCommand.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandUnitFuncButton/ArrayUnitFuncButtonCommand.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Command/CommandFuncButton/CommandButtonAttack.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandUnitFuncButton/CommandButtonAttack.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Command/CommandFuncButton/CommandButtonAttack.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandUnitFuncButton/CommandButtonAttack.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Command/CommandFuncButton/CommandButtonHold.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandUnitFuncButton/CommandButtonHold.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Command/CommandFuncButton/CommandButtonHold.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandUnitFuncButton/CommandButtonHold.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Command/CommandFuncButton/CommandButtonLaunchNuclear.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandUnitFuncButton/CommandButtonLaunchNuclear.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Command/CommandFuncButton/CommandButtonLaunchNuclear.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandUnitFuncButton/CommandButtonLaunchNuclear.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Command/CommandFuncButton/CommandButtonMove.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandUnitFuncButton/CommandButtonMove.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Command/CommandFuncButton/CommandButtonMove.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandUnitFuncButton/CommandButtonMove.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Command/CommandFuncButton/CommandButtonPatrol.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandUnitFuncButton/CommandButtonPatrol.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Command/CommandFuncButton/CommandButtonPatrol.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandUnitFuncButton/CommandButtonPatrol.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Command/CommandFuncButton/CommandButtonStop.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandUnitFuncButton/CommandButtonStop.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Command/CommandFuncButton/CommandButtonStop.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandUnitFuncButton/CommandButtonStop.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Command/CommandHUD/CommandHideAllInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandHUD/CommandHideAllInfo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Command/CommandStructureButton.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandStructureFuncButton.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Command/CommandStructureButton/ArrayStructureButtonCommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandStructureFuncButton/ArrayStructureFuncButtonCommand.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Command/CommandStructureButton/ArrayStructureButtonCommand.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandStructureFuncButton/ArrayStructureFuncButtonCommand.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Command/CommandStructureButton/CommandDemolition.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandStructureFuncButton/CommandDemolishComplete.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Command/CommandStructureButton/CommandDemolition.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandStructureFuncButton/CommandDemolition.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Command/CommandStructureButton/CommandUpgrade.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandStructureFuncButton/CommandUpgrade.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Command/CommandStructureButton/CommandUpgrade.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandStructureFuncButton/CommandUpgrade.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Audio/EnemyAudioPlayer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Audio/EnemyAudioPlayer.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Audio/FriendlyAudioPlayer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Audio/FriendlyAudioPlayer.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Audio/HeroAudioPlayer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Audio/HeroAudioPlayer.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Command/CommandBuild/CommandBuildConfirm.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandBuild/CommandBuildConfirm.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Command/CommandBuild/CommandBuildStructure.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandBuild/CommandBuildStructure.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/FriendlyObject.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/FriendlyObject.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Manager/DisplayHUDManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Manager/DisplayHUDManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Manager/AudioManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Manager/AudioManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Manager/AudioManager.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Manager/AudioManager.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Manager/FuncButtonManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Manager/FuncButtonManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Manager/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Manager/GameManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Manager/InputManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Manager/InputManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Manager/SelectableObjectManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Manager/SelectableObjectManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Manager/StructureManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Manager/StructureManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Manager/UIManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Manager/UIManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Structure/Structure.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Structure/Structure.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Structure/StructureBarrack.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Structure/StructureBarrack.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Structure/StructureBunker.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Structure/StructureBunker.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Structure/StructureMainBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Structure/StructureMainBase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Structure/StructureNuclear.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Structure/StructureNuclear.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Structure/StructureTurret.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Structure/StructureTurret.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/CanvasCancleFunc.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/CanvasCancleFunc.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/CanvasStructureCancleFunc.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/CanvasConstructInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/CanvasConstructInfo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/CanvasFunc.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/CanvasFunc.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/CanvasHeroFunc.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/CanvasHeroFunc.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/CanvasMainBaseFunc.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/CanvasMainBaseFunc.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/CanvasStructureBaseFunc.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/CanvasStructureBaseFunc.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/CanvasUnitBaseFunc.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/CanvasUnitBaseFunc.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/State/StateTurretAttack.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/State/StateTurretAttack.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/State/UnitState/StateAttack.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/State/UnitState/StateAttack.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/State/UnitState/StateMove.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/State/UnitState/StateMove.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/SingleUnitInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/SingleUnitInfo.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Utility/Defines.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Utility/Defines.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Settings/HDRPDefaultResources/HDRenderPipelineGlobalSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Settings/HDRPDefaultResources/HDRenderPipelineGlobalSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Packages/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Packages/packages-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/packages-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UserSettings/Layouts/CurrentMaximizeLayout.dwlt" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/Layouts/CurrentMaximizeLayout.dwlt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UserSettings/Layouts/CurrentMaximizeLayout.dwlt.orig" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/Layouts/CurrentMaximizeLayout.dwlt.orig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UserSettings/Layouts/default-2022.dwlt" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/Layouts/default-2022.dwlt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UserSettings/Layouts/default-2022.dwlt.orig" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/Layouts/default-2022.dwlt.orig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserSettings/Layouts/default-2023.dwlt" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/Layouts/default-2023.dwlt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -111,7 +105,22 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/7560b3fd96a94ceb8541209b2fe74c2119de00/f2/725c4b9b/LayoutDataStore.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Audio/AudioPlayer_Enemy.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Audio/AudioPlayer_Turret.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Audio/AudioPlayer_UI.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Manager/HeroUnitManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/UI/MinimapCameraBorder.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/UI/MinimapCameraIndicator.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/UI/MinimapCameraViewport.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.high-definition@15.0.6/Runtime/Material/Lit/Lit.shader" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.high-definition@15.0.6/Runtime/RenderPipeline/HDRenderPipeline.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
@@ -136,7 +145,7 @@
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.fonts.default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.environmentSetup&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
   &quot;keyToStringList&quot;: {
@@ -149,7 +158,7 @@
 }</component>
   <component name="RunManager" selected="Unity 에디터에 연결.Unity 에디터에 연결">
     <configuration name="유닛 테스트(배치 모드)" type="RunUnityExe" factoryName="Unity Executable">
-      <option name="EXE_PATH" value="C:\Program Files\Unity 2022.3.8f1\Editor\Unity.exe" />
+      <option name="EXE_PATH" value="C:\Program Files\Unity\Hub\Editor\2023.1.16f1\Editor\Unity.exe" />
       <option name="PROGRAM_PARAMETERS" value="-runTests -batchmode -projectPath E:\YBO\_Project_E5_\1st_Project -testResults Logs/results.xml -testPlatform EditMode -debugCodeOptimization" />
       <option name="WORKING_DIRECTORY" value="E:\YBO\_Project_E5_\1st_Project" />
       <option name="PASS_PARENT_ENVS" value="1" />
@@ -165,7 +174,7 @@
       <method v="2" />
     </configuration>
     <configuration name="Unity 시작" type="RunUnityExe" factoryName="Unity Executable">
-      <option name="EXE_PATH" value="C:\Program Files\Unity 2022.3.8f1\Editor\Unity.exe" />
+      <option name="EXE_PATH" value="C:\Program Files\Unity\Hub\Editor\2023.1.16f1\Editor\Unity.exe" />
       <option name="PROGRAM_PARAMETERS" value="-projectPath E:\YBO\_Project_E5_\1st_Project -debugCodeOptimization" />
       <option name="WORKING_DIRECTORY" value="E:\YBO\_Project_E5_\1st_Project" />
       <option name="PASS_PARENT_ENVS" value="1" />
@@ -216,6 +225,18 @@
       <workItem from="1696897657804" duration="12000" />
       <workItem from="1696897777626" duration="131000" />
       <workItem from="1696898002285" duration="267000" />
+      <workItem from="1696916235481" duration="12882000" />
+      <workItem from="1696935751518" duration="613000" />
+      <workItem from="1696951105003" duration="8423000" />
+      <workItem from="1696985432897" duration="1614000" />
+      <workItem from="1696997641876" duration="4085000" />
+      <workItem from="1697070976316" duration="596000" />
+      <workItem from="1697071919114" duration="6452000" />
+      <workItem from="1697081254363" duration="4253000" />
+      <workItem from="1697091825067" duration="3576000" />
+      <workItem from="1697095480640" duration="108000" />
+      <workItem from="1697097592370" duration="77000" />
+      <workItem from="1697098798914" duration="730000" />
     </task>
     <servers />
   </component>
