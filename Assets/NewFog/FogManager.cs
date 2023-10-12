@@ -25,23 +25,22 @@ public class FogManager : MonoBehaviour
         fogComputeShader.SetTexture(0, "backBuffRenderTexture", newBackBuffRenderTexture);
         
         UpdateFogTexture();
-
-
-        // fogRenderTexture 속성을 fogComputeShader에 전달
-
-        //UpdateFogTexture();
     }
 
     private void UpdateFogTexture()
     {
+        mainCam.RenderFog();
+
         Graphics.CopyTexture(fogRenderTexture, newFogRenderTexture);
         int threadGroupsX = Mathf.CeilToInt(newFogRenderTexture.width / 8f);
         int threadGroupsY = Mathf.CeilToInt(newFogRenderTexture.height / 8f);
         fogComputeShader.Dispatch(0, threadGroupsX, threadGroupsY, 1);
-        //Graphics.Blit(fogRenderTexture, backBuffRenderTexture);
 
         Graphics.CopyTexture(newFogRenderTexture, curFogTexture);
         Graphics.CopyTexture(newBackBuffRenderTexture, backBufftexture);
+
+        fogGo.GetComponent<MeshRenderer>().material.SetTexture("_BackBufferTexture", backBufftexture);
+        mapGo.GetComponent<MeshRenderer>().material.SetTexture("_FogTexture", curFogTexture);
 
         Sprite spriteFog = Sprite.Create(curFogTexture, new Rect(0, 0, curFogTexture.width, curFogTexture.height), new Vector2(0.5f, 0.5f));
         spriteFog.name = "Fog";
@@ -51,27 +50,8 @@ public class FogManager : MonoBehaviour
         spriteBuffer.name = "Buffer";
         bufferImage.sprite = spriteBuffer;
 
-
-
-        //Sprite sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f));
-        //sprite.name = "P";
-        //fogImage.sprite = sprite;
-
         Invoke("UpdateFogTexture", updateFogDelay);
     }
-
-    //private IEnumerator UpdateFogCoroutine()
-    //{
-    //    while (true)
-    //    {
-    //        fogGenMaterial.SetTexture("_MainTex", tex);
-    //        yield return null;
-    //        Sprite sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f));
-    //        sprite.name = "P";
-    //        fogImage.sprite = sprite;
-    //        yield return new WaitForSeconds(updateFogDelay);
-    //    }
-    //}
 
     private Texture2D GenerateTexture(RenderTexture _texture)
     {
@@ -91,8 +71,6 @@ public class FogManager : MonoBehaviour
     [SerializeField]
     private RenderTexture backBuffRenderTexture = null;
     [SerializeField]
-    private Material fogGenMaterial = null;
-    [SerializeField]
     private Image fogImage = null;
     [SerializeField]
     private Image bufferImage = null;
@@ -101,7 +79,17 @@ public class FogManager : MonoBehaviour
     [SerializeField]
     private Texture2D tex = null;
     [SerializeField]
-    private ComputeShader fogComputeShader;
+    private ComputeShader fogComputeShader = null;
+    [SerializeField]
+    private Material fogMat = null;
+    [SerializeField]
+    private Material mapMat = null;
+    [SerializeField]
+    private GameObject fogGo = null;
+    [SerializeField]
+    private GameObject mapGo = null;
+    [SerializeField]
+    private TempCamera mainCam = null;
 
     private Texture2D curFogTexture = null;
     private Texture2D backBufftexture = null;
