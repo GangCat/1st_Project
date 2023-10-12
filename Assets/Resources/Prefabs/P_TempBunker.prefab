@@ -67,6 +67,7 @@ MonoBehaviour:
   myGridX: 2
   myGridY: 2
   upgradeDelay: 3
+  demolishDelay: 4
   buffRatio: 1
   height: 5
   capacity: 1
@@ -84,7 +85,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6eca46bfe7e9fb4cbc5c505397e1931, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectType: 4
+  objectType: 5
   selectDisplayCircle: {fileID: 52691291055329485, guid: d02d8a447130d5d4bbc9d60ffde1d811,
     type: 3}
   chaseStartRange: 0

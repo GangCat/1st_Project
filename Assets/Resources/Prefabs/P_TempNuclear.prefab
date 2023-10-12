@@ -88,7 +88,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6eca46bfe7e9fb4cbc5c505397e1931, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectType: 7
+  objectType: 8
   selectDisplayCircle: {fileID: 52691291055329485, guid: d02d8a447130d5d4bbc9d60ffde1d811,
     type: 3}
   chaseStartRange: 0
@@ -116,6 +116,7 @@ MonoBehaviour:
   myGridX: 4
   myGridY: 4
   upgradeDelay: 0
+  demolishDelay: 4
   nuclearProduceDelay: 10
   nuclearSpawnPos: {x: 0.75, y: 2.5, z: 0.75}
 --- !u!1001 &109404280035626104

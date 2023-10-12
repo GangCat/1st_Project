@@ -28,9 +28,9 @@ public class StateAttack : IState
         {
             elapsedTime = 0f;
             // 공격 애니메이션 출력
-            
-            // 공격 Audio 재생
-            AudioManager.instance.PlayAttackAudio(objectType);
+
+            Debug.Log("Unit Attack!!");
+            AudioManager.instance.PlayAudio_Attack(objectType);     // 공격 Audio
             
             targetTr.GetComponent<IDamageable>().GetDmg(attDmg);
         }

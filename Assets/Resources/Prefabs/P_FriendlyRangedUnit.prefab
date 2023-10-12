@@ -95,6 +95,7 @@ MonoBehaviour:
     moveSpeed: 5
     attRate: 2
     attDmg: 2
+    objectType: 1
     TurretMissile: {fileID: 0}
     missileSpawnTr: {fileID: 0}
 --- !u!114 &2341253079211249543
@@ -109,7 +110,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6eca46bfe7e9fb4cbc5c505397e1931, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectType: 0
+  objectType: 1
   selectDisplayCircle: {fileID: 52691291055329485, guid: d02d8a447130d5d4bbc9d60ffde1d811,
     type: 3}
   chaseStartRange: 6
@@ -369,7 +370,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -230758222943892604, guid: de2ca9206df77c642b0af8751ef85e21,
         type: 3}
-      propertyPath: m_Materials.Array.data[0]
+      propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 3449c039e1e71ee4fad11acaf4820aae, type: 2}
     - target: {fileID: 919132149155446097, guid: de2ca9206df77c642b0af8751ef85e21,

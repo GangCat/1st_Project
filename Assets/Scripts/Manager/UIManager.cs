@@ -32,9 +32,9 @@ public class UIManager : MonoBehaviour
         displayHUDMng.UpdateCore(_curCore);
     }
 
-    public void UpdateCurPopulation(uint _curPoulation)
+    public void UpdateCurPopulation(uint _curPopulation)
     {
-        displayHUDMng.UpdateCurPopulation(_curPoulation);
+        displayHUDMng.UpdateCurPopulation(_curPopulation);
     }
 
     public void UpdateCurMaxPopulation(uint _curMaxPopulation)

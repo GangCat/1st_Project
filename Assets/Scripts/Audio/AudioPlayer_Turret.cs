@@ -6,6 +6,8 @@ public class AudioPlayer_Turret : MonoBehaviour
 {
     private void Awake()
     {
+        if (AudioManager.instance == null) return;
+        
         instance = this;
         Init();
     }
@@ -13,12 +15,13 @@ public class AudioPlayer_Turret : MonoBehaviour
     private void Init()
     {
         audioPlayers = new AudioSource[audioChannels];
+        var volumes = AudioManager.instance.Volumes;
 
         for (int i = 0; i < audioPlayers.Length; ++i)
         {
             audioPlayers[i] = this.gameObject.AddComponent<AudioSource>();
             audioPlayers[i].playOnAwake = false;
-            audioPlayers[i].volume = audioVolume;
+            audioPlayers[i].volume = volumes.Effect;
         }
 
     }
@@ -31,15 +34,17 @@ public class AudioPlayer_Turret : MonoBehaviour
 
             channelIndex = loopIndex;
             audioPlayers[loopIndex].clip = audioClips[(int)_audioType];
+            Debug.Log("Turret AudioPlayers.Play Start");
             audioPlayers[loopIndex].Play();
+            Debug.Log("Turret AudioPlayers.Play Stop");
             break;
         }
     }
     
     
-    [Header("#UIAudio")]
+    [Header("#TurretAudio")]
     [SerializeField] private AudioClip[] audioClips;
-    [SerializeField] private float audioVolume;
+    // [SerializeField] private float audioVolume;
     [SerializeField] private int audioChannels; 
     private AudioSource[] audioPlayers;
 

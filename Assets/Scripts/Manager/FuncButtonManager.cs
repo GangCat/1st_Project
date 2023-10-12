@@ -51,7 +51,10 @@ public class FuncButtonManager : MonoBehaviour
 
         switch (_selectObjectType)
         {
-            case EObjectType.UNIT:
+            case EObjectType.UNIT_01:
+                canvasUnitBaseFunc.SetActive(true);
+                break;
+            case EObjectType.UNIT_02:
                 canvasUnitBaseFunc.SetActive(true);
                 break;
             case EObjectType.UNIT_HERO:
@@ -95,7 +98,10 @@ public class FuncButtonManager : MonoBehaviour
 
         switch (curActiveBtnFunc)
         {
-            case EObjectType.UNIT:
+            case EObjectType.UNIT_01:
+                canvasUnitBaseFunc.SetActive(false);
+                break;
+            case EObjectType.UNIT_02:
                 canvasUnitBaseFunc.SetActive(false);
                 break;
             case EObjectType.UNIT_HERO:

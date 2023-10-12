@@ -39,7 +39,7 @@ public class SingleUnitInfo : MonoBehaviour
         imageProgressbar.UpdateHp();
 
         if (container.unitType.Equals(EUnitType.NONE))
-            imageModel.ChangeSprite(arrOtherSprite[(int)container.objectType - 2]);
+            imageModel.ChangeSprite(arrOtherSprite[(int)container.objectType - 3]);
         else
             imageModel.ChangeSprite(arrFriendlyUnitSprite[(int)container.unitType]);
     }
