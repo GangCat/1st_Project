@@ -21955,7 +21955,7 @@ MonoBehaviour:
   energySupplyAmount: 300
   curEnergy: 30000
   maxEnergy: 100000
-  energySupplyRate: 10
+  energySupplyRate: 2
   curCore: 1000
   maxCore: 100000
   buildBarrack: 150

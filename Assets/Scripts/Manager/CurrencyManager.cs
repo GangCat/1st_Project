@@ -14,14 +14,22 @@ public class CurrencyManager : MonoBehaviour, IPublisher, IPauseObserver
 
     private IEnumerator SupplyEnergyCoroutine()
     {
+        float energySupplyDelay = 0f;
+
         while (true)
         {
             while (isPause)
                 yield return null;
 
-            yield return new WaitForSeconds(energySupplyRate);
-            curEnergy = Functions.ClampMaxWithUInt(curEnergy + energySupplyAmount, maxEnergy);
-            UpdateEnergy();
+            if (energySupplyDelay >= energySupplyRate)
+            {
+                curEnergy = Functions.ClampMaxWithUInt(curEnergy + energySupplyAmount, maxEnergy);
+                UpdateEnergy();
+                energySupplyDelay = 0f;
+            }
+
+            yield return new WaitForSeconds(1f);
+            energySupplyDelay += 1f;
         }
     }
 
