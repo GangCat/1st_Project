@@ -2532,8 +2532,8 @@ MonoBehaviour:
   innerCircleRad: 0
   mapSpawnCnt: 3
   smallWaveDelay_sec: 2
-  bigWaveDelay_sec: 200
-  totalBigWaveCnt: 3
+  bigWaveDelay_sec: 10
+  totalBigWaveCnt: 1
   arrWaveStartPoint:
   - {fileID: 1810121891}
   - {fileID: 1616876876}

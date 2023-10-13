@@ -26,7 +26,7 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
         float bigWaveTimeDelay = 0f;
         float smallWaveTimeDelay = 0f;
 
-        while (totalBigWaveCnt > bigWaveCnt)
+        while (bigWaveCnt < totalBigWaveCnt)
         {
             while (bigWaveTimeDelay <= bigWaveDelay_sec)
             {
@@ -48,6 +48,13 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
             }
 
             ++bigWaveCnt;
+
+            if (bigWaveCnt.Equals(totalBigWaveCnt))
+            {
+                FinalWaveStart();
+                yield break;
+            }
+
             for (int i = 0; i < bigWaveCnt; ++i)
             {
                 SpawnWaveEnemy(arrWaveStartPoint[i].GetPos, bigWaveCnt * 100);
@@ -57,6 +64,17 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
             }
         }
 
+    }
+
+    private void FinalWaveStart()
+    {
+        ArrayHUDCommand.Use(EHUDCommand.UPDATE_WAVE_TIME, 0f);
+        for (int i = 0; i < totalBigWaveCnt; ++i)
+            SpawnWaveEnemy(arrWaveStartPoint[i].GetPos, totalBigWaveCnt * 100);
+
+        EnemyObject[] arrAllMapEnemy = mapEnemyHolder.GetComponentsInChildren<EnemyObject>();
+        for (int i = 0; i < arrAllMapEnemy.Length; ++i)
+            arrAllMapEnemy[i].MoveAttack(mainBasePos);
     }
 
     public void SpawnWaveEnemy(Vector3 _targetPos, int _count)
