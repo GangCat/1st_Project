@@ -15426,8 +15426,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   imageUpgradeProgressbar: {fileID: 98094119}
   arrSpriteUpgrade:
-  - {fileID: 21300000, guid: 4fe7f5a8964531d4f8ef4543f2346a8a, type: 3}
   - {fileID: 21300000, guid: b97fc593902852a4495f49c1d8f34241, type: 3}
+  - {fileID: 21300000, guid: 4fe7f5a8964531d4f8ef4543f2346a8a, type: 3}
   - {fileID: 21300000, guid: 85e4300642deeb4439acf52cb520713c, type: 3}
   - {fileID: 21300000, guid: 0624d3923288e7e4d86e10e8cdee13f5, type: 3}
   - {fileID: 21300000, guid: 361303f8433e7e94c801308cc094e3db, type: 3}
