@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MissileTurret : MonoBehaviour
+public class MissileTurret : MonoBehaviour, IPauseObserver
 {
     public void Init(Vector3 _spawnPos)
     {
+        ArrayPauseCommand.Use(EPauseCOmmand.REGIST, this);
         StartCoroutine(LaunchMissileCoroutine(_spawnPos));
     }
 
@@ -29,6 +30,9 @@ public class MissileTurret : MonoBehaviour
 
         while (true)
         {
+            while (isPause)
+                yield return null;
+
             // 포물선 운동 계산
             xPos = initialVelocity.x * time;
             yPos = initialVelocity.y * time - 0.5f * gravity * time * time;
@@ -51,6 +55,7 @@ public class MissileTurret : MonoBehaviour
             }
             yield return null;
         }
+        ArrayPauseCommand.Use(EPauseCOmmand.REMOVE, this);
         Destroy(gameObject);
     }
 
@@ -66,6 +71,11 @@ public class MissileTurret : MonoBehaviour
         }
     }
 
+    public void CheckPause(bool _isPause)
+    {
+        isPause = _isPause;
+    }
+
     [SerializeField]
     private float initialSpeed = 10f;
     [SerializeField]
@@ -74,4 +84,6 @@ public class MissileTurret : MonoBehaviour
     private float attackRange = 5f;
     [SerializeField]
     private float attackDmg = 10f;
+
+    private bool isPause = false;
 }

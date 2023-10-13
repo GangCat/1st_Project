@@ -99,10 +99,12 @@ public class FriendlyObject : SelectableObject, ISubscriber
             {
                 SelectableObjectManager.ResetHeroUnitNode(transform.position);
                 ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.DEAD_HERO, this);
+                return;
             }
             else
                 ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.DESTROY, gameObject);
 
+            ArrayPauseCommand.Use(EPauseCOmmand.REMOVE, this);
         }
         else if (isSelect)
         {

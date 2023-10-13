@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MissileNuclear : MonoBehaviour
+public class MissileNuclear : MonoBehaviour, IPauseObserver
 {
     public void SetActive(bool _isActive)
     {
@@ -21,6 +21,7 @@ public class MissileNuclear : MonoBehaviour
 
     public void Launch(Vector3 _destPos)
     {
+        ArrayPauseCommand.Use(EPauseCOmmand.REGIST, this);
         StartCoroutine("LaunchCoroutine", _destPos);
         //Debug.Log(_destPos + "Launch");
         //SetActive(false);
@@ -30,6 +31,9 @@ public class MissileNuclear : MonoBehaviour
     {
         while (transform.position.y < 30f)
         {
+            while (isPause)
+                yield return null;
+
             transform.position += Vector3.up * launchSpeed * Time.deltaTime;
             yield return null;
         }
@@ -38,6 +42,9 @@ public class MissileNuclear : MonoBehaviour
         transform.rotation = Quaternion.Euler(new Vector3(180f, 0f, 0f));
         while(transform.position.y > 0)
         {
+            while (isPause)
+                yield return null;
+
             transform.position -= Vector3.up * launchSpeed * Time.deltaTime;
             yield return null;
         }
@@ -46,11 +53,19 @@ public class MissileNuclear : MonoBehaviour
         for(int i = 0; i < arrCol.Length; ++i)
             arrCol[i].gameObject.GetComponent<SelectableObject>().GetDmg(150);
 
+        ArrayPauseCommand.Use(EPauseCOmmand.REMOVE, this);
         SetActive(false);
+    }
+
+    public void CheckPause(bool _isPause)
+    {
+        isPause = _isPause;
     }
 
     [SerializeField]
     private float attackRange = 0f;
     [SerializeField]
     private float launchSpeed = 0f;
+
+    private bool isPause = false;
 }
