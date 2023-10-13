@@ -119,6 +119,10 @@ public class CameraMovement : MonoBehaviour
         mainCamera.cullingMask = visibleLayer;
         mainCamera.Render();
 
+        mainCamera.targetTexture = mapRenderTexture;
+        mainCamera.cullingMask = mapLayer;
+        mainCamera.Render();
+
         transform.position = prevPos;
         transform.rotation = oriQuaternion;
         mainCamera.targetTexture = null;
@@ -156,7 +160,11 @@ public class CameraMovement : MonoBehaviour
     [SerializeField]
     private RenderTexture fogRenderTexture = null;
     [SerializeField]
+    private RenderTexture mapRenderTexture = null;
+    [SerializeField]
     private LayerMask visibleLayer;
+    [SerializeField]
+    private LayerMask mapLayer;
 
     private float targetZoom = 0f;
     private float currentZoomVelocity = 0f;
