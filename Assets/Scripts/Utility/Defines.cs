@@ -24,6 +24,8 @@ public struct SUnitState
     public Vector3 targetPos;
     [HideInInspector]
     public bool isWaitForNewPath;
+    [HideInInspector]
+    public bool isPause;
 
     public float moveSpeed;
     public float attRate;

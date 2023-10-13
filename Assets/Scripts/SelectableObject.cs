@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType
+public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPauseObserver
 {
     protected enum EMoveState { NONE = -1, NORMAL, ATTACK, PATROL, CHASE, FOLLOW, FOLLOW_ENEMY }
     public virtual void Init()
     {
+        ArrayPauseCommand.Use(EPauseCOmmand.REGIST, this);
         SelectableObjectManager.InitNodeEnemy(transform.position, out nodeIdx);
         stateMachine = GetComponent<StateMachine>();
         statusHp = GetComponent<StatusHp>();
@@ -586,6 +587,11 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType
         PF_PathRequestManager.FriendlyRequestPath(_startPos, _endPos, OnPathFound);
     }
 
+    public void CheckPause(bool _isPause)
+    {
+        if(stateMachine != null)
+            stateMachine.SetIsPause(_isPause);
+    }
 
     [Header("-Unit Attribute")]
     [SerializeField]

@@ -38,6 +38,11 @@ public class StateMachine : MonoBehaviour
     public float AttRate => unitState.attRate;
     public float AttDmg => unitState.attDmg;
 
+    public void SetIsPause(bool _isPause)
+    {
+        unitState.isPause = _isPause;
+    }
+
     public void SetMyTr(Transform _myTr)
     {
         unitState.myTr = _myTr;

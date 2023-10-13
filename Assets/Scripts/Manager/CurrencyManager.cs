@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CurrencyManager : MonoBehaviour, IPublisher
+public class CurrencyManager : MonoBehaviour, IPublisher, IPauseObserver
 {
     public void Init()
     {
+        ArrayPauseCommand.Use(EPauseCOmmand.REGIST, this);
         ArrayCurrencyCommand.Use(ECurrencyCommand.UPDATE_ENERGY_HUD, curEnergy);
         ArrayCurrencyCommand.Use(ECurrencyCommand.UPDATE_CORE_HUD, curCore);
         StartCoroutine("SupplyEnergyCoroutine");
@@ -15,6 +16,9 @@ public class CurrencyManager : MonoBehaviour, IPublisher
     {
         while (true)
         {
+            while (isPause)
+                yield return null;
+
             yield return new WaitForSeconds(energySupplyRate);
             curEnergy = Functions.ClampMaxWithUInt(curEnergy + energySupplyAmount, maxEnergy);
             UpdateEnergy();
@@ -256,6 +260,11 @@ public class CurrencyManager : MonoBehaviour, IPublisher
         }
     }
 
+    public void CheckPause(bool _isPause)
+    {
+        isPause = _isPause;
+    }
+
     [SerializeField]
     private uint energySupplyAmount = 0;
     [SerializeField]
@@ -312,4 +321,6 @@ public class CurrencyManager : MonoBehaviour, IPublisher
     private uint upgradeEnergySupply = 100;
     [SerializeField]
     private uint upgradeMaxPopulation = 100;
+
+    private bool isPause = false;
 }

@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class InputManager : MonoBehaviour, IMinimapObserver
+public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
 {
     public void Init()
     {
+        ArrayPauseCommand.Use(EPauseCOmmand.REGIST, this);
         selectArea = GetComponentInChildren<SelectArea>();
         selectArea.Init();
     }
@@ -118,6 +119,8 @@ public class InputManager : MonoBehaviour, IMinimapObserver
 
     private void Update()
     {
+        if (isPause) return;
+
         elapsedTime += Time.deltaTime;
         if (isCheckDoubleClick)
         {
@@ -325,6 +328,8 @@ public class InputManager : MonoBehaviour, IMinimapObserver
 
     private void LateUpdate()
     {
+        if (isPause) return;
+
         ZoomCamera();
         MoveCamera();
     }
@@ -519,6 +524,11 @@ public class InputManager : MonoBehaviour, IMinimapObserver
         ArrayCameraMoveCommand.Use(ECameraCommand.WARP_WITH_POS, _pos);
     }
 
+    public void CheckPause(bool _isPause)
+    {
+        isPause = _isPause;
+    }
+
     [SerializeField]
     private GameObject pickPosPrefab = null;
     [SerializeField]
@@ -550,6 +560,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver
     private bool isRallyPointClick = false;
     private bool isLaunchNuclearClick = false;
     private bool isCheckDoubleClick = false;
+    private bool isPause = false;
 
     private GameObject pickPosDisplayGo = null;
 
