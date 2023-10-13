@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class GameManager : MonoBehaviour, IPauseSubject
 {
     private void Awake()
     {
@@ -139,6 +139,10 @@ public class GameManager : MonoBehaviour
         ArrayUnitActionCommand.Add(EUnitActionCommand.MOVE_ATTACK, new CommandUnitMoveAttack(selectMng));
         ArrayUnitActionCommand.Add(EUnitActionCommand.FOLLOW_OBJECT, new CommandUnitFollowObject(selectMng));
         ArrayUnitActionCommand.Add(EUnitActionCommand.PATROL, new CommandUnitPatrol(selectMng));
+
+        ArrayPauseCommand.Add(EPauseCOmmand.REGIST, new CommandRegistPauseObserver(this));
+        ArrayPauseCommand.Add(EPauseCOmmand.REMOVE, new CommandRemovePauseObserver(this));
+        ArrayPauseCommand.Add(EPauseCOmmand.TOGGLE_PAUSE, new CommandPauseToggle(this));
     }
 
     private void RegistObserver()
@@ -160,6 +164,22 @@ public class GameManager : MonoBehaviour
         uiMng.ShowFuncButton(_selectObjectType);
     }
 
+    public void RegisterPauseObserver(IPauseObserver _observer)
+    {
+        pauseObserverList.Add(_observer);
+    }
+
+    public void RemovePauseObserver(IPauseObserver _observer)
+    {
+        pauseObserverList.Remove(_observer);
+    }
+
+    public void TogglePause()
+    {
+        isPause = !isPause;
+        for (int i = 0; i < pauseObserverList.Count; ++i)
+            pauseObserverList[i].CheckPause(isPause);
+    }
 
     [SerializeField]
     private float worldSizeX = 100f; // 미니맵에 표시할 월드의 가로길이
@@ -182,4 +202,7 @@ public class GameManager : MonoBehaviour
 
     private PF_Grid grid = null;
     private Transform mainBaseTr = null;
+
+    private List<IPauseObserver> pauseObserverList = new List<IPauseObserver>();
+    private bool isPause = false;
 }

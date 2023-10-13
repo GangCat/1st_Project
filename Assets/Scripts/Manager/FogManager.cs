@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class FogManager : MonoBehaviour
+public class FogManager : MonoBehaviour, IPauseObserver
 {
     public void Init()
     {
+        ArrayPauseCommand.Use(EPauseCOmmand.REGIST, this);
         curFogTexture = GenerateTexture(fogRenderTexture);
         backBufftexture = GenerateTexture(fogRenderTexture);
 
@@ -26,6 +27,12 @@ public class FogManager : MonoBehaviour
 
     private void UpdateFogTexture()
     {
+        if (isPause)
+        {
+            Invoke("UpdateFogTexture", updateFogDelay);
+            return;
+        }
+
         // fogRenderTexture 갱신
         mainCam.RenderFog();
         // 쉐이더의 전역배열에 유닛의 위치, 건물의 위치를 배열로 보냄.
@@ -49,12 +56,15 @@ public class FogManager : MonoBehaviour
         combineGo.GetComponent<MeshRenderer>().material.SetTexture("_MapTexture", mapRenderTexture);
 
         // 디버깅을 위해 이미지로 변환해 표시
+        if (isDebugMode)
+        {
         Sprite spriteFog = Sprite.Create(curFogTexture, new Rect(0, 0, curFogTexture.width, curFogTexture.height), new Vector2(0.5f, 0.5f));
         spriteFog.name = "Fog";
         fogImage.sprite = spriteFog;
         Sprite spriteBuffer = Sprite.Create(backBufftexture, new Rect(0, 0, backBufftexture.width, backBufftexture.height), new Vector2(0.5f, 0.5f));
         spriteBuffer.name = "Buffer";
         bufferImage.sprite = spriteBuffer;
+        }
 
         // 반복
         Invoke("UpdateFogTexture", updateFogDelay);
@@ -69,6 +79,11 @@ public class FogManager : MonoBehaviour
         newTexture.Apply();
         RenderTexture.active = null;
         return newTexture;
+    }
+
+    public void CheckPause(bool _isPause)
+    {
+        isPause = _isPause;
     }
 
     [SerializeField]
@@ -87,10 +102,13 @@ public class FogManager : MonoBehaviour
     private GameObject combineGo = null;
     [SerializeField]
     private CameraMovement mainCam = null;
+    [SerializeField]
+    private bool isDebugMode = false;
 
     private Texture2D curFogTexture = null;
     private Texture2D backBufftexture = null;
 
     private RenderTexture newFogRenderTexture = null;
     private RenderTexture newBackBuffRenderTexture = null;
+    private bool isPause = false;
 }

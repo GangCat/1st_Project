@@ -128,7 +128,7 @@ public class CameraMovement : MonoBehaviour
         mainCamera.targetTexture = null;
         mainCamera.cullingMask = oriCullingLayer;
         mainCamera.orthographicSize = curSize;
-        mainCamera.Render();
+        //mainCamera.Render();
     }
 
     [SerializeField]

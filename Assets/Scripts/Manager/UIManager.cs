@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
@@ -10,6 +11,13 @@ public class UIManager : MonoBehaviour
         displayHUDMng = GetComponentInChildren<DisplayHUDManager>();
         funcBtnMng.Init();
         displayHUDMng.Init();
+        imagePauseBack.Init();
+
+        tempPauseButton.onClick.AddListener(
+            () =>
+            {
+                ArrayPauseCommand.Use(EPauseCOmmand.TOGGLE_PAUSE);
+            });
     }
 
     public void HeroDead()
@@ -44,4 +52,9 @@ public class UIManager : MonoBehaviour
 
     private FuncButtonManager funcBtnMng = null;
     private DisplayHUDManager displayHUDMng = null;
+
+    [SerializeField]
+    private Button tempPauseButton = null;
+    [SerializeField]
+    private ImagePauseBackground imagePauseBack = null;
 }

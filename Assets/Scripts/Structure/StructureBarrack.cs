@@ -129,6 +129,9 @@ public class StructureBarrack : Structure, ISubscriber
 
         while (SpawnUnitProgressPercent < 1)
         {
+            while (isPause)
+                yield return null;
+
             if (myObj.IsSelect)
                 ArrayHUDSpawnUnitCommand.Use(EHUDSpawnUnitCommand.UPDATE_SPAWN_UNIT_TIME, SpawnUnitProgressPercent);
             yield return new WaitForSeconds(0.5f);
@@ -209,6 +212,9 @@ public class StructureBarrack : Structure, ISubscriber
         progressPercent = elapsedTime / upgradeDelay;
         while (elapsedTime < upgradeDelay)
         {
+            while (isPause)
+                yield return null;
+
             if (myObj.IsSelect)
                 ArrayHUDUpgradeCommand.Use(EHUDUpgradeCommand.UPDATE_UPGRADE_TIME, progressPercent);
             yield return new WaitForSeconds(0.5f);

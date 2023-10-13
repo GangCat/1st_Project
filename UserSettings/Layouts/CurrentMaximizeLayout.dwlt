@@ -26,7 +26,7 @@ MonoBehaviour:
   m_MinSize: {x: 400, y: 100}
   m_MaxSize: {x: 32384, y: 16192}
   vertical: 0
-  controlID: 26
+  controlID: 10677
 --- !u!114 &2
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -78,7 +78,7 @@ MonoBehaviour:
   m_UseMipMap: 0
   m_VSyncEnabled: 0
   m_Gizmos: 0
-  m_Stats: 0
+  m_Stats: 1
   m_SelectedSizes: 03000000000000000000000000000000000000000000000000000000000000000000000000000000
   m_ZoomArea:
     m_HRangeLocked: 0
@@ -97,7 +97,7 @@ MonoBehaviour:
     m_HSlider: 0
     m_VSlider: 0
     m_IgnoreScrollWheelUntilClicked: 0
-    m_EnableMouseInput: 1
+    m_EnableMouseInput: 0
     m_EnableSliderZoomHorizontal: 0
     m_EnableSliderZoomVertical: 0
     m_UniformScale: 1
@@ -152,7 +152,7 @@ MonoBehaviour:
   m_MinSize: {x: 100, y: 100}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
-  controlID: 27
+  controlID: 10678
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -172,8 +172,8 @@ MonoBehaviour:
     y: 0
     width: 1168
     height: 444
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 201, y: 221}
+  m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 5}
   m_Panes:
   - {fileID: 5}
@@ -631,9 +631,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -76.435295, y: 35.987747, z: -63.88376}
+    m_Target: {x: -13.086982, y: 106.80341, z: -29.432344}
     speed: 2
-    m_Value: {x: -76.435295, y: 35.987747, z: -63.88376}
+    m_Value: {x: -13.086982, y: 106.80341, z: -29.432344}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -679,13 +679,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: -0.36867496, y: -0.34077618, z: 0.14750297, w: -0.8522534}
+    m_Target: {x: -0.50345606, y: -0.18561515, z: 0.11182062, w: -0.8364908}
     speed: 2
-    m_Value: {x: -0.36864868, y: -0.3407519, z: 0.14749245, w: -0.85219264}
+    m_Value: {x: -0.5034204, y: -0.18560201, z: 0.1118127, w: -0.83643156}
   m_Size:
-    m_Target: 10.618381
+    m_Target: 12.124355
     speed: 2
-    m_Value: 10.618381
+    m_Value: 12.124355
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -1399,8 +1399,8 @@ MonoBehaviour:
     \"abfeb083ffcd49ceb78ef9b09268c610\",\n    \"m_Group\": {\n        \"m_Id\":
     \"\"\n    },\n    \"m_Name\": \"Sample Texture 2D\",\n    \"m_DrawState\": {\n       
     \"m_Expanded\": true,\n        \"m_Position\": {\n            \"serializedVersion\":
-    \"2\",\n            \"x\": -1478.0,\n            \"y\": 459.0,\n            \"width\":
-    183.0001220703125,\n            \"height\": 251.0\n        }\n    },\n    \"m_Slots\":
+    \"2\",\n            \"x\": -1777.9998779296875,\n            \"y\": 510.0,\n           
+    \"width\": 183.0,\n            \"height\": 251.0\n        }\n    },\n    \"m_Slots\":
     [\n        {\n            \"m_Id\": \"7b3dc116a9214d6bad3ea90938fc9823\"\n       
     },\n        {\n            \"m_Id\": \"83048b37a96545768a3f6e8ee6d08b09\"\n       
     },\n        {\n            \"m_Id\": \"ca26ceeedf8f4a1a893789c3cdc019c3\"\n       
@@ -1689,8 +1689,8 @@ MonoBehaviour:
     y: 444
     width: 1168
     height: 503
-  m_MinSize: {x: 201, y: 221}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 2}
   m_Panes:
   - {fileID: 2}
@@ -1715,8 +1715,8 @@ MonoBehaviour:
     y: 0
     width: 312
     height: 947
-  m_MinSize: {x: 202, y: 221}
-  m_MaxSize: {x: 4002, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 9}
   m_Panes:
   - {fileID: 9}
@@ -1764,7 +1764,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 1efbffff
+      m_ExpandedIDs: 2afbfeff1efbffff1c7f0000ac8000006e8100008c840000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1938,7 +1938,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scripts
+    - Assets/Scripts/Manager
     m_Globs: []
     m_ProductIds: 
     m_AnyWithAssetOrigin: 0
@@ -1948,15 +1948,15 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/Scripts
+  - Assets/Scripts/Manager
   m_LastFoldersGridSize: 16
   m_LastProjectPath: D:\UnityFile\1st_Project
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 6a8f0000
-    m_LastClickedID: 36714
+    m_SelectedIDs: ac8f0000
+    m_LastClickedID: 36780
     m_ExpandedIDs: 000000003c8f00003e8f0000408f0000428f0000448f0000468f00006a8f0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
