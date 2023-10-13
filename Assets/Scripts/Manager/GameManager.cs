@@ -142,7 +142,7 @@ public class GameManager : MonoBehaviour, IPauseSubject
 
         ArrayPauseCommand.Add(EPauseCOmmand.REGIST, new CommandRegistPauseObserver(this));
         ArrayPauseCommand.Add(EPauseCOmmand.REMOVE, new CommandRemovePauseObserver(this));
-        ArrayPauseCommand.Add(EPauseCOmmand.TOGGLE_PAUSE, new CommandPauseToggle(this));
+        ArrayPauseCommand.Add(EPauseCOmmand.TOGGLE_PAUSE, new CommandPauseToggle(this, inputMng, structureMng));
     }
 
     private void RegistObserver()

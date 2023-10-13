@@ -122,7 +122,7 @@ public class Structure : MonoBehaviour, IPauseObserver
 
         float elapsedTime = 0f;
         progressPercent = elapsedTime / upgradeDelay;
-        while (progressPercent < 1)
+        while (progressPercent <= 1)
         {
             while (isPause)
                 yield return null;
@@ -192,7 +192,7 @@ public class Structure : MonoBehaviour, IPauseObserver
     {
         float elapsedTime = 0f;
         progressPercent = elapsedTime / _buildDelay;
-        while (progressPercent < 1)
+        while (progressPercent <= 1)
         {
             while (isPause)
                 yield return null;
@@ -232,7 +232,7 @@ public class Structure : MonoBehaviour, IPauseObserver
         float elapsedTime = 0f;
         progressPercent = elapsedTime / demolishDelay;
 
-        while (progressPercent < 1f)
+        while (progressPercent <= 1f)
         {
             while (isPause)
                 yield return null;

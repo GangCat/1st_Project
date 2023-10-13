@@ -4,10 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class ImageMinimap : MonoBehaviour, IPointerClickHandler, IMinimapSubject
+public class ImageMinimap : MonoBehaviour, IPointerClickHandler, IMinimapSubject, IPauseObserver
 {
     public void Init()
     {
+        ArrayPauseCommand.Use(EPauseCOmmand.REGIST,this);
         imageMinimap = GetComponent<Image>();
         tex2d = new Texture2D(256, 256);
         //tex2d.name = "Set Pixel";
@@ -50,6 +51,9 @@ public class ImageMinimap : MonoBehaviour, IPointerClickHandler, IMinimapSubject
     {
         while (true)
         {
+            while (isPause)
+                yield return null;
+
             UpdateTexture(ref tex2d);
             imageMinimap.sprite = Sprite.Create(tex2d, texRect, pivotVec);
             
@@ -68,8 +72,6 @@ public class ImageMinimap : MonoBehaviour, IPointerClickHandler, IMinimapSubject
         tempFriendlyNodeList.Clear();
         tempEnemyNodeList.Clear();
 
-        PF_Node tempNode = null;
-
         foreach (PF_Node node in SelectableObjectManager.DicNodeUnderFriendlyUnit.Values)
         {
             tempFriendlyNodeList.Add(node);
@@ -81,6 +83,8 @@ public class ImageMinimap : MonoBehaviour, IPointerClickHandler, IMinimapSubject
             tempEnemyNodeList.Add(node);
             tex2d.SetPixel(node.gridX, node.gridY, Color.red);
         }
+
+        PF_Node tempNode = null;
 
         for (int i = 0; i < listStructureNode.Count; ++i)
         {
@@ -131,8 +135,12 @@ public class ImageMinimap : MonoBehaviour, IPointerClickHandler, IMinimapSubject
     {
         listObserver.Remove(_observer);
     }
-    
-    
+
+    public void CheckPause(bool _isPause)
+    {
+        isPause = _isPause;
+    }
+
     private Image imageMinimap = null;
     private Texture2D tex2d = null;
     private Rect texRect;
@@ -147,5 +155,7 @@ public class ImageMinimap : MonoBehaviour, IPointerClickHandler, IMinimapSubject
 
     private float worldSizeX = 0f; // 미니맵에 표시할 월드의 가로길이
     private float worldSizeY = 0f; // 미니맵에 표시할 월드의 세로길이
+
+    private bool isPause = false;
     
 }

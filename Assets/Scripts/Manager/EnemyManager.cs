@@ -28,13 +28,13 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
 
         while (totalBigWaveCnt > bigWaveCnt)
         {
-            while (bigWaveTimeDelay < bigWaveDelay_sec)
+            while (bigWaveTimeDelay <= bigWaveDelay_sec)
             {
                 while (isPause)
                     yield return null;
 
                 ArrayHUDCommand.Use(EHUDCommand.UPDATE_WAVE_TIME, bigWaveDelay_sec - bigWaveTimeDelay);
-                if (smallWaveCnt < 2 && smallWaveTimeDelay > smallWaveDelay_sec)
+                if (smallWaveCnt < 2 && smallWaveTimeDelay >= smallWaveDelay_sec)
                 {
                     SpawnWaveEnemy(arrWaveStartPoint[bigWaveCnt].GetPos, 20 + bigWaveCnt * 10);
                     smallWaveTimeDelay = 0f;
