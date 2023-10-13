@@ -5574,7 +5574,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxPopulation: 100
-  curMaxPopulation: 7
+  curMaxPopulation: 20
   curPopulation: 0
   unitPopulation: 010000000200000003000000
 --- !u!1 &492267355
@@ -25190,6 +25190,7 @@ CanvasRenderer:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 1966285866}
   - {fileID: 934388678}
   - {fileID: 1446206864}
   - {fileID: 1909831832}
@@ -25202,10 +25203,9 @@ SceneRoots:
   - {fileID: 1858891527}
   - {fileID: 484815136}
   - {fileID: 2018547504}
-  - {fileID: 1966285866}
-  - {fileID: 1103840266}
-  - {fileID: 518477694}
-  - {fileID: 2062932715}
   - {fileID: 437803122}
   - {fileID: 459616662}
   - {fileID: 1256384916}
+  - {fileID: 2062932715}
+  - {fileID: 1103840266}
+  - {fileID: 518477694}

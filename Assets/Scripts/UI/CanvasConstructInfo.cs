@@ -37,7 +37,7 @@ public class CanvasConstructInfo : MonoBehaviour
 
     public void UpdateUnit(EObjectType _type)
     {
-        imageUnit.ChangeSprite(arrSpriteObject[(int)_type - 2]);
+        imageUnit.ChangeSprite(arrSpriteObject[(int)_type - 3]);
         textInfoStructureName.UpdateText(Enum.GetName(typeof(EObjectType), _type));
     }
 
