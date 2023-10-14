@@ -7,8 +7,53 @@ public class StructureWall : Structure
     public override void Init(int _structureIdx)
     {
         base.Init(_structureIdx);
+        arrDoorNode = new PF_Node[8];
         upgradeHpCmd = new CommandUpgradeStructureHP(GetComponent<StatusHp>());
     }
+
+    protected override void BuildComplete()
+    {
+        base.BuildComplete();
+
+        curNode = grid.GetNodeFromWorldPoint(transform.position);
+        int gridX = curNode.gridX;
+        int gridY = curNode.gridY;
+        int idx = 0;
+        int arrIdx = 0;
+        if (myGridX > myGridY)
+        {
+            while (arrIdx < 8)
+            {
+                int xIdx = idx % myGridX;
+
+                if (xIdx > 1 && xIdx < 6)
+                {
+                    arrDoorNode[arrIdx] = grid.GetNodeWithGrid(xIdx * factorGridX + gridX, (idx / myGridX) * factorGridY + gridY);
+                    ++arrIdx;
+                }
+
+                ++idx;
+            }
+        }
+        else
+        {
+            while (arrIdx < 8)
+            {
+                int yIdx = idx % myGridY;
+
+                if (yIdx > 1 && yIdx < 6)
+                {
+                    arrDoorNode[arrIdx] = grid.GetNodeWithGrid((idx / myGridY) * factorGridX + gridX, yIdx * factorGridY + gridY);
+                    ++arrIdx;
+                }
+                ++idx;
+            }
+        }
+
+        for(int i = 0;i < arrDoorNode.Length; ++i)
+            grid.UpdateNodeWalkable(arrDoorNode[i], true);
+    }
+
     protected override void UpgradeComplete()
     {
         base.UpgradeComplete();
@@ -28,7 +73,7 @@ public class StructureWall : Structure
         {
             while (idx < myGridX * myGridY)
             {
-                listNode.Add(grid.GetNodeWithGrid((idx % myGridX) * factorGridX + gridX, (idx / myGridX) * factorGridY + gridY));
+                listNode.Add(grid.GetNodeWithGrid(idx % myGridX * factorGridX + gridX, (idx / myGridX) * factorGridY + gridY));
                 grid.UpdateNodeWalkable(listNode[idx], _walkable);
 
                 ++idx;
@@ -38,7 +83,7 @@ public class StructureWall : Structure
         {
             while (idx < myGridX * myGridY)
             {
-                listNode.Add(grid.GetNodeWithGrid((idx % myGridX) * factorGridX + gridX, (idx / myGridX) * factorGridY + gridY));
+                listNode.Add(grid.GetNodeWithGrid((idx / myGridY) * factorGridX + gridX, idx % myGridY * factorGridY + gridY));
                 grid.UpdateNodeWalkable(listNode[idx], _walkable);
 
                 ++idx;
@@ -100,4 +145,5 @@ public class StructureWall : Structure
     private float upgradeHpAmount = 0f;
 
     private CommandUpgradeStructureHP upgradeHpCmd = null;
+    private PF_Node[] arrDoorNode = null;
 }

@@ -17787,7 +17787,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40c08009765cc0346823b520eabe2da5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  displayUnwalkableNodeGizmos: 0
+  displayNodeGizmos: 0
+  displayUnwalkableNodeGizmos: 1
   unWalkableMask:
     serializedVersion: 2
     m_Bits: 1536

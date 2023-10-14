@@ -187,18 +187,26 @@ public class PF_Grid : MonoBehaviour
                     Gizmos.color = Color.red;
                     Gizmos.DrawCube(node.worldPos, new Vector3(nodeRadius * 2, 0.1f, nodeRadius * 2));
                 }
-                else
+            }
+        }
+
+        if(grid != null && displayNodeGizmos)
+        {
+            foreach (PF_Node node in grid)
+            {
+                if (node.walkable)
                 {
                     Color color = Color.white;
                     color.a = 0.3f;
                     Gizmos.color = color;
                     Gizmos.DrawCube(node.worldPos, new Vector3(nodeRadius * 2, 0.1f, nodeRadius * 2));
-                }    
+                }
             }
         }
     }
 
-
+    [SerializeField]
+    private bool displayNodeGizmos = false;
     [SerializeField]
     private bool displayUnwalkableNodeGizmos = false;
     [SerializeField]
