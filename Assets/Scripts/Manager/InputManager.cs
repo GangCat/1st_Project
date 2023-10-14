@@ -183,16 +183,22 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
                 return;
             }
 
+            if (SelectableObjectManager.GetFirstSelectedObjectInList() == null)
+            {
+                return;
+            }
+
+            if (SelectableObjectManager.GetFirstSelectedObjectInList().GetObjectType().Equals(EObjectType.ENEMY_UNIT))
+            {
+                return;
+            }
+
             if (SelectableObjectManager.GetFirstSelectedObjectInList().GetObjectType().Equals(EObjectType.BARRACK))
             {
                 if (isRallyPointClick)
                     ClearCurFunc();
             }
 
-            if (SelectableObjectManager.GetFirstSelectedObjectInList().GetUnitType.Equals(EUnitType.NONE))
-            {
-                return;
-            }
 
             if (isAttackClick || isMoveClick || isPatrolClick || isRallyPointClick || isLaunchNuclearClick)
                 ClearCurFunc();
