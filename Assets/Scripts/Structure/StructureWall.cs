@@ -52,6 +52,15 @@ public class StructureWall : Structure
 
         for(int i = 0;i < arrDoorNode.Length; ++i)
             grid.UpdateNodeWalkable(arrDoorNode[i], true);
+
+
+        animDoorR.SetTrigger("IsUnitEnter");
+        Invoke("CloseTest", 1f);
+    }
+
+    private void CloseTest()
+    {
+        animDoorR.SetTrigger("IsUnitExit");
     }
 
     protected override void UpgradeComplete()
@@ -143,6 +152,8 @@ public class StructureWall : Structure
 
     [SerializeField]
     private float upgradeHpAmount = 0f;
+    [SerializeField]
+    private Animator animDoorR = null;
 
     private CommandUpgradeStructureHP upgradeHpCmd = null;
     private PF_Node[] arrDoorNode = null;
