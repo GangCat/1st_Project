@@ -8,6 +8,7 @@ public class PF_Node : IHeapItem<PF_Node>
 
     public Vector3 worldPos;
     public bool walkable;
+    public bool buildable;
     public int gridX;
     public int gridY;
 
@@ -24,13 +25,14 @@ public class PF_Node : IHeapItem<PF_Node>
     public PF_Node parentNode;
     private int heapIdx;
 
-    public PF_Node(bool _walkable, Vector3 _worldPos, int _gridX, int _gridY)
+    public PF_Node(bool _walkable, Vector3 _worldPos, int _gridX, int _gridY, bool _buildable = false)
     {
         walkable = _walkable;
+        buildable = _buildable;
         worldPos = _worldPos;
         gridX = _gridX;
         gridY = _gridY;
-    }
+     }
 
     public int CompareTo(PF_Node _nodeToCompare)
     {

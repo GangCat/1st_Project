@@ -260,11 +260,13 @@ public class Structure : MonoBehaviour, IPauseObserver
 
     protected virtual IEnumerator CheckBuildableCoroutine()
     {
+
         while (true)
         {
             yield return null;
 
             isBuildable = true;
+
 
             curNode = grid.GetNodeFromWorldPoint(transform.position);
             int gridX = curNode.gridX;
@@ -279,6 +281,7 @@ public class Structure : MonoBehaviour, IPauseObserver
                 }
                 ++idx;
             }
+
             SetColor();
         }
     }
