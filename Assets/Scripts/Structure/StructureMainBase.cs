@@ -11,6 +11,7 @@ public class StructureMainBase : Structure
 
     public override void Init(int _structureIdx)
     {
+        ArrayPauseCommand.Use(EPauseCOmmand.REGIST, this);
         upgradeHpCmd = new CommandUpgradeStructureHP(GetComponent<StatusHp>());
         myObj = GetComponent<FriendlyObject>();
         myObj.Init();
@@ -100,6 +101,9 @@ public class StructureMainBase : Structure
         progressPercent = elapsedTime / upgradePopulationDelay;
         while(progressPercent < 1)
         {
+            while (isPause)
+                yield return null;
+
             if (myObj.IsSelect)
                 ArrayHUDUpgradeCommand.Use(EHUDUpgradeCommand.UPDATE_UPGRADE_TIME, progressPercent);
             // ui ㅠ표시
@@ -132,6 +136,9 @@ public class StructureMainBase : Structure
         progressPercent = elapsedTime / upgradeEnergySupplyDelay;
         while (progressPercent < 1)
         {
+            while (isPause)
+                yield return null;
+
             if (myObj.IsSelect)
                 ArrayHUDUpgradeCommand.Use(EHUDUpgradeCommand.UPDATE_UPGRADE_TIME, progressPercent);
             // ui ㅠ표시

@@ -11,7 +11,7 @@ public class CommandUpgradeEnergySupply : Command
 
     public override void Execute(params object[] _objects)
     {
-        StructureMainBase main = SelectableObjectManager.GetFirstSelectedObjectInList.GetComponent<StructureMainBase>();
+        StructureMainBase main = SelectableObjectManager.GetFirstSelectedObjectInList().GetComponent<StructureMainBase>();
 
         if (curMng.CanUpgradeETC(EUpgradeETCType.ENERGY_SUPPLY) && !main.IsProcessingUpgrade)
         {

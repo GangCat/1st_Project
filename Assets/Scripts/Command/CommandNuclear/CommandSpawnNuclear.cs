@@ -11,7 +11,7 @@ public class CommandSpawnNuclear : Command
 
     public override void Execute(params object[] _objects)
     {
-        structureMng.SpawnNuclear(SelectableObjectManager.GetFirstSelectedObjectInList.GetComponent<Structure>().StructureIdx);
+        structureMng.SpawnNuclear(SelectableObjectManager.GetFirstSelectedObjectInList().GetComponent<Structure>().StructureIdx);
     }
 
     private StructureManager structureMng = null;

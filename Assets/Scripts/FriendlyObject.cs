@@ -6,6 +6,7 @@ public class FriendlyObject : SelectableObject, ISubscriber
 {
     public override void Init()
     {
+        ArrayPauseCommand.Use(EPauseCOmmand.REGIST, this);
         SelectableObjectManager.InitNodeFriendly(transform.position, out nodeIdx);
         stateMachine = GetComponent<StateMachine>();
         statusHp = GetComponent<StatusHp>();
@@ -98,10 +99,12 @@ public class FriendlyObject : SelectableObject, ISubscriber
             {
                 SelectableObjectManager.ResetHeroUnitNode(transform.position);
                 ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.DEAD_HERO, this);
+                return;
             }
             else
                 ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.DESTROY, gameObject);
 
+            ArrayPauseCommand.Use(EPauseCOmmand.REMOVE, this);
         }
         else if (isSelect)
         {

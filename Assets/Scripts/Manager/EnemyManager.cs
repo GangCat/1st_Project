@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyManager : MonoBehaviour
+public class EnemyManager : MonoBehaviour, IPauseObserver
 {
     public void Init(PF_Grid _grid, Vector3 _mainBasePos)
     {
+        ArrayPauseCommand.Use(EPauseCOmmand.REGIST, this);
         grid = _grid;
         mainBasePos = _mainBasePos;
 
@@ -22,34 +23,58 @@ public class EnemyManager : MonoBehaviour
     private IEnumerator WaveControll()
     {
         int bigWaveCnt = 0;
-        float bigWaveTime = Time.time + bigWaveDelay_sec;
-        float smallWaveTime = Time.time + smallWaveDelay_sec;
+        float bigWaveTimeDelay = 0f;
+        float smallWaveTimeDelay = 0f;
 
-        while (totalBigWaveCnt > bigWaveCnt)
+        while (bigWaveCnt < totalBigWaveCnt)
         {
-            while (bigWaveTime > Time.time)
+            while (bigWaveTimeDelay <= bigWaveDelay_sec)
             {
-                ArrayHUDCommand.Use(EHUDCommand.UPDATE_WAVE_TIME, bigWaveTime - Time.time);
-                if (smallWaveCnt < 2 && smallWaveTime < Time.time)
+                while (isPause)
+                    yield return null;
+
+                ArrayHUDCommand.Use(EHUDCommand.UPDATE_WAVE_TIME, bigWaveDelay_sec - bigWaveTimeDelay);
+                if (smallWaveCnt < 2 && smallWaveTimeDelay >= smallWaveDelay_sec)
                 {
                     SpawnWaveEnemy(arrWaveStartPoint[bigWaveCnt].GetPos, 20 + bigWaveCnt * 10);
-                    smallWaveTime = Time.time + smallWaveDelay_sec;
-                        
+                    smallWaveTimeDelay = 0f;
+
                     ++smallWaveCnt;
                 }
 
                 yield return new WaitForSeconds(1f);
+                bigWaveTimeDelay += 1f;
+                smallWaveTimeDelay += 1f;
             }
 
             ++bigWaveCnt;
+
+            if (bigWaveCnt.Equals(totalBigWaveCnt))
+            {
+                FinalWaveStart();
+                yield break;
+            }
+
             for (int i = 0; i < bigWaveCnt; ++i)
             {
                 SpawnWaveEnemy(arrWaveStartPoint[i].GetPos, bigWaveCnt * 100);
-                bigWaveTime = Time.time + bigWaveDelay_sec;
-                smallWaveTime = Time.time + smallWaveDelay_sec;
+                bigWaveTimeDelay = 0f;
+                smallWaveTimeDelay = 0f;
                 smallWaveCnt = 0;
             }
         }
+
+    }
+
+    private void FinalWaveStart()
+    {
+        ArrayHUDCommand.Use(EHUDCommand.UPDATE_WAVE_TIME, 0f);
+        for (int i = 0; i < totalBigWaveCnt; ++i)
+            SpawnWaveEnemy(arrWaveStartPoint[i].GetPos, totalBigWaveCnt * 100);
+
+        EnemyObject[] arrAllMapEnemy = mapEnemyHolder.GetComponentsInChildren<EnemyObject>();
+        for (int i = 0; i < arrAllMapEnemy.Length; ++i)
+            arrAllMapEnemy[i].MoveAttack(mainBasePos);
     }
 
     public void SpawnWaveEnemy(Vector3 _targetPos, int _count)
@@ -122,6 +147,10 @@ public class EnemyManager : MonoBehaviour
         }
     }
 
+    public void CheckPause(bool _isPause)
+    {
+        isPause = _isPause;
+    }
 
     [SerializeField]
     private GameObject enemyPrefab = null;
@@ -159,6 +188,7 @@ public class EnemyManager : MonoBehaviour
     private int smallWaveCnt = 0;
 
     private bool isBigWaveTurn = false;
+    private bool isPause = false;
 
     private PF_Grid grid = null;
 }

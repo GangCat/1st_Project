@@ -11,7 +11,7 @@ public class CommandDemolition : Command
 
     public override void Execute(params object[] _objects)
     {
-        SelectableObjectManager.GetFirstSelectedObjectInList.GetComponent<Structure>().Demolish();
+        SelectableObjectManager.GetFirstSelectedObjectInList().GetComponent<Structure>().Demolish();
     }
 
     private CurrencyManager curMng = null;

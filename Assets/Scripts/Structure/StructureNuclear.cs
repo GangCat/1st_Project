@@ -65,6 +65,9 @@ public class StructureNuclear : Structure
         progressPercent = elapsedTime / nuclearProduceDelay;
         while (progressPercent < 1)
         {
+            while (isPause)
+                yield return null;
+
             if (myObj.IsSelect)
                 ArrayHUDSpawnNuclearCommand.Use(EHUDSpawnNuclearCommand.UPDATE_SPAWN_NUCLEAR_TIME, progressPercent);
             // ui Ç¥½Ã

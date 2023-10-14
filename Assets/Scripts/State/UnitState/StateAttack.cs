@@ -18,6 +18,7 @@ public class StateAttack : IState
     {
         if (targetTr == null) return;
         if (targetTr.gameObject.activeSelf == false) return;
+        if (_structState.isPause) return;
      
         dir = targetTr.position - myTr.position;
         dir.y = 0f;

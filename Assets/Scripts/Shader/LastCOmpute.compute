@@ -1,0 +1,18 @@
+#pragma kernel UpdateFogTexture
+
+RWTexture2D<float4> fogRenderTexture; 
+RWTexture2D<float4> backBuffRenderTexture;
+
+[numthreads(8, 8, 1)]
+void UpdateFogTexture(uint3 id : SV_DispatchThreadID)
+{
+    float4 fogPixel = fogRenderTexture[id.xy]; 
+    float4 backBuffPixel = backBuffRenderTexture[id.xy];
+    float newAlpha = max(fogPixel.a, backBuffPixel.a);
+    backBuffRenderTexture[id.xy] = float4(1, 1, 1, newAlpha);
+    
+    //if (dot(fogPixel.a, float(1)) == 1)
+    //{
+    //    backBuffRenderTexture[id.xy] = float4(1, 1, 1, 1);
+    //}
+}

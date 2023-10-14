@@ -70,6 +70,8 @@ MonoBehaviour:
   myGridX: 2
   myGridY: 2
   upgradeDelay: 0
+  demolishDelay: 4
+  modelGo: {fileID: 7315214676662184248}
 --- !u!1 &7315214676662184248
 GameObject:
   m_ObjectHideFlags: 0

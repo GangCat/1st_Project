@@ -8,6 +8,9 @@ public class CameraMovement : MonoBehaviour
     {
         mainCamera = GetComponent<Camera>();
         targetZoom = mainCamera.orthographicSize;
+
+        oriCullingLayer = mainCamera.cullingMask;
+        oriQuaternion = transform.rotation;
     }
 
     public void WarpCameraWithPos(Vector3 _pos)
@@ -104,8 +107,30 @@ public class CameraMovement : MonoBehaviour
         return new Vector3(unrotatedX, _targetPos.y, unrotatedZ);
     }
 
-    
-    
+    public void RenderFog()
+    {
+        curSize = mainCamera.orthographicSize;
+        prevPos = transform.position;
+
+        transform.position = fogCamPos;
+        transform.rotation = fogCamRot;
+        mainCamera.orthographicSize = fogCamSize;
+        mainCamera.targetTexture = fogRenderTexture;
+        mainCamera.cullingMask = visibleLayer;
+        mainCamera.Render();
+
+        mainCamera.targetTexture = mapRenderTexture;
+        mainCamera.cullingMask = mapLayer;
+        mainCamera.Render();
+
+        transform.position = prevPos;
+        transform.rotation = oriQuaternion;
+        mainCamera.targetTexture = null;
+        mainCamera.cullingMask = oriCullingLayer;
+        mainCamera.orthographicSize = curSize;
+        //mainCamera.Render();
+    }
+
     [SerializeField]
     private Vector3 cameraOffset = Vector3.zero;
     [SerializeField]
@@ -122,9 +147,24 @@ public class CameraMovement : MonoBehaviour
     private float screenOffsetX = 20f;
     [SerializeField]
     private float screenOffsetY = 10f;
-    
     [SerializeField]
     private float minX, maxX, minZ, maxZ;  // 카메라 이동 제한 최대 좌표
+
+    [Header("-Fog Of Warr Attribute")]
+    [SerializeField]
+    private Vector3 fogCamPos = Vector3.zero;
+    [SerializeField]
+    private Quaternion fogCamRot;
+    [SerializeField]
+    private float fogCamSize = 0f;
+    [SerializeField]
+    private RenderTexture fogRenderTexture = null;
+    [SerializeField]
+    private RenderTexture mapRenderTexture = null;
+    [SerializeField]
+    private LayerMask visibleLayer;
+    [SerializeField]
+    private LayerMask mapLayer;
 
     private float targetZoom = 0f;
     private float currentZoomVelocity = 0f;
@@ -132,5 +172,10 @@ public class CameraMovement : MonoBehaviour
     private Vector3 screenMovePos = Vector3.zero;
 
     private Camera mainCamera = null;
+
+    private LayerMask oriCullingLayer;
+    private Vector3 prevPos = Vector3.zero;
+    private float curSize = 0f;
+    private Quaternion oriQuaternion;
 
 }

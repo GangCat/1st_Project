@@ -197,7 +197,6 @@ public class StructureManager : MonoBehaviour
             StopBuildCoroutine();
 
             Structure newStructure = Instantiate(arrStructurePrefab[(int)curStructureType], curStructure.transform.position, curStructure.transform.rotation).GetComponent<Structure>();
-            Destroy(curStructure.gameObject);
             newStructure.Init(grid);
             newStructure.Init(structureIdx);
             dicStructure.Add(structureIdx, newStructure);
@@ -207,6 +206,7 @@ public class StructureManager : MonoBehaviour
                 newStructure.SetGrid(curStructure.GridX, curStructure.GridY);
                 newStructure.SetFactor(curStructure.FactorX, curStructure.FactorY);
             }
+            Destroy(curStructure.gameObject);
             newStructure.transform.parent = transform;
             newStructure.BuildStart(buildDelay[(int)curStructureType]);
             isBlueprint = false;

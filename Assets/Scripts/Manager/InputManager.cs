@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class InputManager : MonoBehaviour, IMinimapObserver
+public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
 {
     public void Init()
     {
+        ArrayPauseCommand.Use(EPauseCOmmand.REGIST, this);
         selectArea = GetComponentInChildren<SelectArea>();
         selectArea.Init();
     }
@@ -29,7 +30,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver
     public void OnClickMoveButton()
     {
         AudioManager.instance.PlayAudio_UI(objectType); // CLICK Audio
-        
+
         if (isMoveClick) return;
         ClearCurFunc();
         pickPosDisplayGo = Instantiate(pickPosPrefab, transform);
@@ -40,7 +41,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver
     public void OnClickAttackButton()
     {
         AudioManager.instance.PlayAudio_UI(objectType); // CLICK Audio
-        
+
         if (isAttackClick) return;
         ClearCurFunc();
         pickPosDisplayGo = Instantiate(pickPosPrefab, transform);
@@ -51,7 +52,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver
     public void OnClickPatrolButton()
     {
         AudioManager.instance.PlayAudio_UI(objectType); // CLICK Audio
-        
+
         if (isPatrolClick) return;
         ClearCurFunc();
         pickPosDisplayGo = Instantiate(pickPosPrefab, transform);
@@ -62,7 +63,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver
     public void OnClickRallyPointButton()
     {
         AudioManager.instance.PlayAudio_UI(objectType); // CLICK Audio
-        
+
         if (isRallyPointClick) return;
         ClearCurFunc();
         pickPosDisplayGo = Instantiate(pickPosPrefab, transform);
@@ -73,7 +74,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver
     public void OnClickLaunchNuclearButton()
     {
         AudioManager.instance.PlayAudio_UI(objectType); // CLICK Audio
-        
+
         if (isLaunchNuclearClick) return;
         ClearCurFunc();
         pickPosDisplayGo = Instantiate(pickPosPrefab, transform);
@@ -118,6 +119,8 @@ public class InputManager : MonoBehaviour, IMinimapObserver
 
     private void Update()
     {
+        if (isPause) return;
+
         elapsedTime += Time.deltaTime;
         if (isCheckDoubleClick)
         {
@@ -180,16 +183,22 @@ public class InputManager : MonoBehaviour, IMinimapObserver
                 return;
             }
 
-            if (SelectableObjectManager.GetFirstSelectedObjectInList.GetObjectType().Equals(EObjectType.BARRACK))
+            if (SelectableObjectManager.GetFirstSelectedObjectInList() == null)
+            {
+                return;
+            }
+
+            if (SelectableObjectManager.GetFirstSelectedObjectInList().GetObjectType().Equals(EObjectType.ENEMY_UNIT))
+            {
+                return;
+            }
+
+            if (SelectableObjectManager.GetFirstSelectedObjectInList().GetObjectType().Equals(EObjectType.BARRACK))
             {
                 if (isRallyPointClick)
                     ClearCurFunc();
             }
-            
-            if (SelectableObjectManager.GetFirstSelectedObjectInList.GetUnitType.Equals(EUnitType.NONE))
-            {
-                return;
-            }
+
 
             if (isAttackClick || isMoveClick || isPatrolClick || isRallyPointClick || isLaunchNuclearClick)
                 ClearCurFunc();
@@ -198,11 +207,17 @@ public class InputManager : MonoBehaviour, IMinimapObserver
         }
     }
 
+    private void LateUpdate()
+    {
+        ZoomCamera();
+        MoveCamera();
+    }
+
     private void CheckIsHotkey()
     {
         if (SelectableObjectManager.IsListEmpty) return;
 
-        EObjectType objType = SelectableObjectManager.GetFirstSelectedObjectInList.GetObjectType();
+        EObjectType objType = SelectableObjectManager.GetFirstSelectedObjectInList().GetObjectType();
         switch (objType)
         {
             case EObjectType.UNIT_01:
@@ -288,7 +303,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver
         return true;
     }
 
-    
+
     private bool UnitDefaultHotkeyAction()
     {
         if (Input.GetKeyDown(arrUnitFuncHotkey[(int)EUnitFuncHotkey.MOVE]))
@@ -306,7 +321,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver
 
         return true;
     }
-    
+
 
     private bool MainbaseBuildHotkeyAction()
     {
@@ -323,11 +338,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver
         return true;
     }
 
-    private void LateUpdate()
-    {
-        ZoomCamera();
-        MoveCamera();
-    }
+
 
     private void SetRallyPoint()
     {
@@ -447,7 +458,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver
 
             if (isCheckDoubleClick)
             {
-                if (hit.transform.Equals(SelectableObjectManager.GetFirstSelectedObjectInList.transform))
+                if (hit.transform.Equals(SelectableObjectManager.GetFirstSelectedObjectInList().transform))
                 {
                     Debug.Log("double Click");
                     // 여기서 카메라 커맨드로 박스캐스트나 오버랩 박스로 화면내의 selectable다 찾아내고
@@ -497,7 +508,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver
     {
         if (Input.GetKey(KeyCode.Space))
         {
-            if(!SelectableObjectManager.IsListEmpty)
+            if (!SelectableObjectManager.IsListEmpty)
                 ArrayCameraMoveCommand.Use(ECameraCommand.MOVE_WITH_OBJECT);
         }
         else if (Input.GetAxisRaw("Horizontal Arrow").Equals(0) && Input.GetAxisRaw("Vertical Arrow").Equals(0))
@@ -517,6 +528,11 @@ public class InputManager : MonoBehaviour, IMinimapObserver
     public void GetCameraTargetPos(Vector3 _pos)
     {
         ArrayCameraMoveCommand.Use(ECameraCommand.WARP_WITH_POS, _pos);
+    }
+
+    public void CheckPause(bool _isPause)
+    {
+        isPause = _isPause;
     }
 
     [SerializeField]
@@ -550,6 +566,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver
     private bool isRallyPointClick = false;
     private bool isLaunchNuclearClick = false;
     private bool isCheckDoubleClick = false;
+    private bool isPause = false;
 
     private GameObject pickPosDisplayGo = null;
 
@@ -557,7 +574,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver
     private Vector3 dragEndPos = Vector3.zero;
 
     private SelectArea selectArea = null;
-    
+
     private EObjectType objectType;
 
     private enum EUnitFuncHotkey { NONE = -1, MOVE, STOP, HOLD, PATROL, ATTACK, LAUNCH_NUCLEAR, LENGTH }

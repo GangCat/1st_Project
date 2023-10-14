@@ -12,7 +12,7 @@ public class CommandExpandWall : Command
 
     public override void Execute(params object[] _value)
     {
-        FriendlyObject bunkerObj = SelectableObjectManager.GetFirstSelectedObjectInList;
+        FriendlyObject bunkerObj = SelectableObjectManager.GetFirstSelectedObjectInList();
         buildMng.ShowBluepirnt(bunkerObj.transform);
         inputMng.IsBuildOperation = true;
     }

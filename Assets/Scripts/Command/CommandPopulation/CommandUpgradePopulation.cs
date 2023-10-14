@@ -12,7 +12,7 @@ public class CommandUpgradePopulation : Command
 
     public override void Execute(params object[] _objects)
     {
-        StructureMainBase main = SelectableObjectManager.GetFirstSelectedObjectInList.GetComponent<StructureMainBase>();
+        StructureMainBase main = SelectableObjectManager.GetFirstSelectedObjectInList().GetComponent<StructureMainBase>();
 
         if (curMng.CanUpgradeETC(EUpgradeETCType.CURRENT_MAX_POPULATION) && popMng.CanUpgradePopulation() && !main.IsProcessingUpgrade)
         {

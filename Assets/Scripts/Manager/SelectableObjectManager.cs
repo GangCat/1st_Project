@@ -28,7 +28,6 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
     public delegate void VoidSelectObjectTypeDelegate(EObjectType _objectType);
     public bool IsFriendlyUnit => isFriendlyUnitInList;
     public static bool IsListEmpty => listSelectedFriendlyObject.Count < 1;
-    public static FriendlyObject GetFirstSelectedObjectInList => listSelectedFriendlyObject[0];
     public static int LevelRangedUnitDmgUpgrade => levelRangedUnitDmgUpgrade;
     public static int LevelRangedUnitHpUpgrade => levelRangedUnitHpUpgrade;
     public static int LevelMeleeUnitHpUpgrade => levelMeleeUnitHpUpgrade;
@@ -36,6 +35,14 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
     public static float DelayUnitUpgrade => delayUnitUpgrade;
     public static Dictionary<int, PF_Node> DicNodeUnderFriendlyUnit => dicNodeUnderFriendlyUnit;
     public static Dictionary<int, PF_Node> DicNodeUnderEnemyUnit => dicNodeUnderEnemyUnit;
+
+    public static FriendlyObject GetFirstSelectedObjectInList()
+    {
+        if (listSelectedFriendlyObject.Count > 0)
+            return listSelectedFriendlyObject[0];
+        else
+            return null;
+    }
 
     public static void InitNodeFriendly(Vector3 _pos, out int _idx)
     {

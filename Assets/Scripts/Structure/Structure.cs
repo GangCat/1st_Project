@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Structure : MonoBehaviour
+public class Structure : MonoBehaviour, IPauseObserver
 {
     public virtual void Init(PF_Grid _grid)
     {
@@ -25,6 +25,8 @@ public class Structure : MonoBehaviour
         upgradeLevel = 1;
         ShowHBeam();
         HideModel();
+
+        ArrayPauseCommand.Use(EPauseCOmmand.REGIST, this);
     }
 
     public virtual void Init() { }
@@ -120,8 +122,10 @@ public class Structure : MonoBehaviour
 
         float elapsedTime = 0f;
         progressPercent = elapsedTime / upgradeDelay;
-        while (progressPercent < 1)
+        while (progressPercent <= 1)
         {
+            while (isPause)
+                yield return null;
             // ui 표시
             if (myObj.IsSelect)
                 ArrayHUDUpgradeCommand.Use(EHUDUpgradeCommand.UPDATE_UPGRADE_TIME, elapsedTime / upgradeDelay);
@@ -188,8 +192,11 @@ public class Structure : MonoBehaviour
     {
         float elapsedTime = 0f;
         progressPercent = elapsedTime / _buildDelay;
-        while (progressPercent < 1)
+        while (progressPercent <= 1)
         {
+            while (isPause)
+                yield return null;
+
             if (myObj.IsSelect)
                 ArrayHUDConstructCommand.Use(EHUDConstructCommand.UPDATE_CONSTRUCT_TIME, progressPercent);
             yield return new WaitForSeconds(0.5f);
@@ -225,8 +232,11 @@ public class Structure : MonoBehaviour
         float elapsedTime = 0f;
         progressPercent = elapsedTime / demolishDelay;
 
-        while (progressPercent < 1f)
+        while (progressPercent <= 1f)
         {
+            while (isPause)
+                yield return null;
+
             if (myObj.IsSelect)
                 ArrayHUDConstructCommand.Use(EHUDConstructCommand.UPDATE_DEMOLISH_TIME, progressPercent);
             // ui 표시
@@ -290,14 +300,19 @@ public class Structure : MonoBehaviour
             arrCollider[i].HideHBeam();
     }
 
-    private void HideModel()
+    protected virtual void HideModel()
     {
-        GetComponentInChildren<MeshRenderer>().enabled = false;
+        modelGo.SetActive(false);
     }
 
-    private void ShowModel()
+    protected virtual void ShowModel()
     {
-        GetComponentInChildren<MeshRenderer>().enabled = true;
+        modelGo.SetActive(true);
+    }
+
+    public void CheckPause(bool _isPause)
+    {
+        isPause = _isPause;
     }
 
     [SerializeField]
@@ -308,6 +323,8 @@ public class Structure : MonoBehaviour
     protected float upgradeDelay = 0f;
     [SerializeField]
     protected float demolishDelay = 4f;
+    [SerializeField]
+    protected GameObject modelGo = null;
 
     protected PF_Grid grid = null;
     protected PF_Node curNode = null;
@@ -328,4 +345,6 @@ public class Structure : MonoBehaviour
     protected bool isProcessingConstruct = false;
     protected EUpgradeType curUpgradeType = EUpgradeType.NONE;
     protected FriendlyObject myObj = null;
+
+    protected bool isPause = false;
 }

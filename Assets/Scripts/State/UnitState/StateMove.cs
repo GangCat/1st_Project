@@ -11,9 +11,10 @@ public class StateMove : IState
 
     public void Update(ref SUnitState _structState)
     {
-        if (_structState.isWaitForNewPath)
-            return;
-        
+        if (_structState.isWaitForNewPath) return;
+        if (_structState.isPause) return;
+
+
         myTr.rotation = Quaternion.LookRotation(_structState.targetPos - myTr.position);
 
         Vector3 moveVec = _structState.targetPos - myTr.position;
