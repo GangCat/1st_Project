@@ -30,7 +30,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
     public void OnClickMoveButton()
     {
         AudioManager.instance.PlayAudio_UI(objectType); // CLICK Audio
-        
+
         if (isMoveClick) return;
         ClearCurFunc();
         pickPosDisplayGo = Instantiate(pickPosPrefab, transform);
@@ -41,7 +41,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
     public void OnClickAttackButton()
     {
         AudioManager.instance.PlayAudio_UI(objectType); // CLICK Audio
-        
+
         if (isAttackClick) return;
         ClearCurFunc();
         pickPosDisplayGo = Instantiate(pickPosPrefab, transform);
@@ -52,7 +52,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
     public void OnClickPatrolButton()
     {
         AudioManager.instance.PlayAudio_UI(objectType); // CLICK Audio
-        
+
         if (isPatrolClick) return;
         ClearCurFunc();
         pickPosDisplayGo = Instantiate(pickPosPrefab, transform);
@@ -63,7 +63,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
     public void OnClickRallyPointButton()
     {
         AudioManager.instance.PlayAudio_UI(objectType); // CLICK Audio
-        
+
         if (isRallyPointClick) return;
         ClearCurFunc();
         pickPosDisplayGo = Instantiate(pickPosPrefab, transform);
@@ -74,7 +74,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
     public void OnClickLaunchNuclearButton()
     {
         AudioManager.instance.PlayAudio_UI(objectType); // CLICK Audio
-        
+
         if (isLaunchNuclearClick) return;
         ClearCurFunc();
         pickPosDisplayGo = Instantiate(pickPosPrefab, transform);
@@ -188,7 +188,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
                 if (isRallyPointClick)
                     ClearCurFunc();
             }
-            
+
             if (SelectableObjectManager.GetFirstSelectedObjectInList().GetUnitType.Equals(EUnitType.NONE))
             {
                 return;
@@ -199,6 +199,12 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
             else
                 MoveWithMouseClick();
         }
+    }
+
+    private void LateUpdate()
+    {
+        ZoomCamera();
+        MoveCamera();
     }
 
     private void CheckIsHotkey()
@@ -291,7 +297,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
         return true;
     }
 
-    
+
     private bool UnitDefaultHotkeyAction()
     {
         if (Input.GetKeyDown(arrUnitFuncHotkey[(int)EUnitFuncHotkey.MOVE]))
@@ -309,7 +315,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
 
         return true;
     }
-    
+
 
     private bool MainbaseBuildHotkeyAction()
     {
@@ -326,13 +332,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
         return true;
     }
 
-    private void LateUpdate()
-    {
-        if (isPause) return;
 
-        ZoomCamera();
-        MoveCamera();
-    }
 
     private void SetRallyPoint()
     {
@@ -502,7 +502,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
     {
         if (Input.GetKey(KeyCode.Space))
         {
-            if(!SelectableObjectManager.IsListEmpty)
+            if (!SelectableObjectManager.IsListEmpty)
                 ArrayCameraMoveCommand.Use(ECameraCommand.MOVE_WITH_OBJECT);
         }
         else if (Input.GetAxisRaw("Horizontal Arrow").Equals(0) && Input.GetAxisRaw("Vertical Arrow").Equals(0))
@@ -568,7 +568,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
     private Vector3 dragEndPos = Vector3.zero;
 
     private SelectArea selectArea = null;
-    
+
     private EObjectType objectType;
 
     private enum EUnitFuncHotkey { NONE = -1, MOVE, STOP, HOLD, PATROL, ATTACK, LAUNCH_NUCLEAR, LENGTH }

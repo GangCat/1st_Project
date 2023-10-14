@@ -7,7 +7,6 @@ public class StructureWall : Structure
     public override void Init(int _structureIdx)
     {
         base.Init(_structureIdx);
-        arrDoorNode = new PF_Node[8];
         upgradeHpCmd = new CommandUpgradeStructureHP(GetComponent<StatusHp>());
     }
 
@@ -19,17 +18,17 @@ public class StructureWall : Structure
         int gridX = curNode.gridX;
         int gridY = curNode.gridY;
         int idx = 0;
-        int arrIdx = 0;
+        int doorNodeCnt = 0;
         if (myGridX > myGridY)
         {
-            while (arrIdx < 8)
+            while (doorNodeCnt < 8)
             {
                 int xIdx = idx % myGridX;
 
                 if (xIdx > 1 && xIdx < 6)
                 {
-                    arrDoorNode[arrIdx] = grid.GetNodeWithGrid(xIdx * factorGridX + gridX, (idx / myGridX) * factorGridY + gridY);
-                    ++arrIdx;
+                    grid.UpdateNodeWalkable(grid.GetNodeWithGrid(xIdx * factorGridX + gridX, (idx / myGridX) * factorGridY + gridY), true);
+                    ++doorNodeCnt;
                 }
 
                 ++idx;
@@ -37,21 +36,18 @@ public class StructureWall : Structure
         }
         else
         {
-            while (arrIdx < 8)
+            while (doorNodeCnt < 8)
             {
                 int yIdx = idx % myGridY;
 
                 if (yIdx > 1 && yIdx < 6)
                 {
-                    arrDoorNode[arrIdx] = grid.GetNodeWithGrid((idx / myGridY) * factorGridX + gridX, yIdx * factorGridY + gridY);
-                    ++arrIdx;
+                    grid.UpdateNodeWalkable(grid.GetNodeWithGrid((idx / myGridY) * factorGridX + gridX, yIdx * factorGridY + gridY), true);
+                    ++doorNodeCnt;
                 }
                 ++idx;
             }
         }
-
-        for(int i = 0;i < arrDoorNode.Length; ++i)
-            grid.UpdateNodeWalkable(arrDoorNode[i], true);
 
         GetComponentInChildren<DoorTrigger>().Init(OpenDoor, CloseDoor);
     }
@@ -163,5 +159,4 @@ public class StructureWall : Structure
     private Animator animDoorL = null;
 
     private CommandUpgradeStructureHP upgradeHpCmd = null;
-    private PF_Node[] arrDoorNode = null;
 }

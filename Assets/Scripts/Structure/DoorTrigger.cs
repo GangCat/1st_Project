@@ -51,23 +51,6 @@ public class DoorTrigger : MonoBehaviour
         }
     }
 
-
-    //private void OnTriggerEnter(Collider _other)
-    //{
-    //    if (_other.CompareTag("FriendlyUnit"))
-    //    {
-    //        openDoorCallback?.Invoke();
-    //    }
-    //}
-
-    //private void OnTriggerExit(Collider _other)
-    //{
-    //    if (_other.CompareTag("FriendlyUnit"))
-    //    {
-    //        closeDoorCallback?.Invoke();
-    //    }
-    //}
-
     private VoidVoidDelegate openDoorCallback = null;
     private VoidVoidDelegate closeDoorCallback = null;
 
