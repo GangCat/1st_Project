@@ -2531,8 +2531,8 @@ MonoBehaviour:
   outerCircleRad: 5
   innerCircleRad: 0
   mapSpawnCnt: 3
-  smallWaveDelay_sec: 2
-  bigWaveDelay_sec: 10
+  smallWaveDelay_sec: 100
+  bigWaveDelay_sec: 230
   totalBigWaveCnt: 1
   arrWaveStartPoint:
   - {fileID: 1810121891}
@@ -17788,7 +17788,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   displayNodeGizmos: 0
-  displayUnwalkableNodeGizmos: 1
+  displayUnwalkableNodeGizmos: 0
   unWalkableMask:
     serializedVersion: 2
     m_Bits: 1536

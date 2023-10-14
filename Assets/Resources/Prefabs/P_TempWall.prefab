@@ -45,6 +45,7 @@ GameObject:
   - component: {fileID: 8761542107927518666}
   - component: {fileID: 482778671152018949}
   - component: {fileID: 1772114764221932863}
+  - component: {fileID: 3716428819046469442}
   m_Layer: 0
   m_Name: OpenDoorTrigger
   m_TagString: Untagged
@@ -115,6 +116,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!114 &3716428819046469442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2745800598891319991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f89bc7fa95f3b14791dcc8b645c25d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8162044424758329862
 GameObject:
   m_ObjectHideFlags: 0
@@ -148,13 +161,13 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 8761542107927518666}
   - {fileID: 717210180379204946}
   - {fileID: 606378713941415351}
   - {fileID: 1550069867256362163}
   - {fileID: 1998583927588454397}
   - {fileID: 7211230015220481806}
   - {fileID: 8458740011398564644}
-  - {fileID: 8761542107927518666}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7534801930405887633

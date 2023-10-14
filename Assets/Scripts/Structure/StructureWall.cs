@@ -53,16 +53,19 @@ public class StructureWall : Structure
         for(int i = 0;i < arrDoorNode.Length; ++i)
             grid.UpdateNodeWalkable(arrDoorNode[i], true);
 
-
-        animDoorR.SetTrigger("IsUnitEnter");
-        animDoorL.SetTrigger("IsUnitEnter");
-        Invoke("CloseTest", 1f);
+        GetComponentInChildren<DoorTrigger>().Init(OpenDoor, CloseDoor);
     }
 
-    private void CloseTest()
+    public void OpenDoor()
     {
-        animDoorR.SetTrigger("IsUnitExit");
-        animDoorL.SetTrigger("IsUnitExit");
+        animDoorR.SetBool("IsUnitEnter", true);
+        animDoorL.SetBool("IsUnitEnter", true);
+    }
+
+    public void CloseDoor()
+    {
+        animDoorR.SetBool("IsUnitEnter", false);
+        animDoorL.SetBool("IsUnitEnter", false);
     }
 
     protected override void UpgradeComplete()
