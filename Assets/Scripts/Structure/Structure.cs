@@ -300,14 +300,14 @@ public class Structure : MonoBehaviour, IPauseObserver
             arrCollider[i].HideHBeam();
     }
 
-    private void HideModel()
+    protected virtual void HideModel()
     {
-        GetComponentInChildren<MeshRenderer>().enabled = false;
+        modelGo.SetActive(false);
     }
 
-    private void ShowModel()
+    protected virtual void ShowModel()
     {
-        GetComponentInChildren<MeshRenderer>().enabled = true;
+        modelGo.SetActive(true);
     }
 
     public void CheckPause(bool _isPause)
@@ -323,6 +323,8 @@ public class Structure : MonoBehaviour, IPauseObserver
     protected float upgradeDelay = 0f;
     [SerializeField]
     protected float demolishDelay = 4f;
+    [SerializeField]
+    protected GameObject modelGo = null;
 
     protected PF_Grid grid = null;
     protected PF_Node curNode = null;
