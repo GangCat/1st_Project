@@ -55,12 +55,14 @@ public class StructureWall : Structure
 
 
         animDoorR.SetTrigger("IsUnitEnter");
+        animDoorL.SetTrigger("IsUnitEnter");
         Invoke("CloseTest", 1f);
     }
 
     private void CloseTest()
     {
         animDoorR.SetTrigger("IsUnitExit");
+        animDoorL.SetTrigger("IsUnitExit");
     }
 
     protected override void UpgradeComplete()
@@ -154,6 +156,8 @@ public class StructureWall : Structure
     private float upgradeHpAmount = 0f;
     [SerializeField]
     private Animator animDoorR = null;
+    [SerializeField]
+    private Animator animDoorL = null;
 
     private CommandUpgradeStructureHP upgradeHpCmd = null;
     private PF_Node[] arrDoorNode = null;

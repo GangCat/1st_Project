@@ -190,6 +190,7 @@ MonoBehaviour:
   modelGo: {fileID: 2356921470974060995}
   upgradeHpAmount: 30
   animDoorR: {fileID: 3975299110561805413}
+  animDoorL: {fileID: 3028001880643906501}
 --- !u!114 &-6226364378777565952
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -749,7 +750,11 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 18097e88d6c0f9d4da732fba1d752828,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3028001880643906501}
   m_SourcePrefab: {fileID: 100100000, guid: 18097e88d6c0f9d4da732fba1d752828, type: 3}
 --- !u!4 &5984543403532099857 stripped
 Transform:
@@ -757,6 +762,34 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 6091092081446307578}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &6360927826236963755 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 18097e88d6c0f9d4da732fba1d752828,
+    type: 3}
+  m_PrefabInstance: {fileID: 6091092081446307578}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &3028001880643906501
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6360927826236963755}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c89c4f1875122c44f82d30561d1eab47, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &6881976462428491591
 PrefabInstance:
   m_ObjectHideFlags: 0
