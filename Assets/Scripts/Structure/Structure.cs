@@ -49,12 +49,14 @@ public class Structure : MonoBehaviour, IPauseObserver
         {
             StopCoroutine("UpgradeCoroutine");
             isProcessingUpgrade = false;
+            ArrayRefundCurrencyCommand.Use(ERefuncCurrencyCommand.UPGRADE_STRUCTURE, myObj.GetObjectType(), upgradeLevel);
             curUpgradeType = EUpgradeType.NONE;
         }
         else if (isProcessingConstruct)
         {
             StopCoroutine("BuildStructureCoroutine");
             isProcessingConstruct = false;
+            ArrayRefundCurrencyCommand.Use(ERefuncCurrencyCommand.BUILD_STRUCTURE, myObj.GetObjectType());
             ArrayStructureFuncButtonCommand.Use(EStructureButtonCommand.DEMOLISH_COMPLETE, myStructureIdx);
             DestroyStructure();
         }
@@ -107,9 +109,13 @@ public class Structure : MonoBehaviour, IPauseObserver
     {
         if (!isProcessingUpgrade && upgradeLevel < StructureManager.UpgradeLimit)
         {
+            Debug.Log("structure" + upgradeLevel);
+            Debug.Log("Limit" + StructureManager.UpgradeLimit);
             StartCoroutine("UpgradeCoroutine");
             return true;
         }
+        Debug.Log("structure" + upgradeLevel);
+        Debug.Log("Limit" + StructureManager.UpgradeLimit);
         return false;
     }
 
@@ -122,7 +128,7 @@ public class Structure : MonoBehaviour, IPauseObserver
 
         float elapsedTime = 0f;
         progressPercent = elapsedTime / upgradeDelay;
-        while (progressPercent <= 1)
+        while (progressPercent < 1)
         {
             while (isPause)
                 yield return null;

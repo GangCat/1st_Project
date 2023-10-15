@@ -31,6 +31,11 @@ public class StructureManager : MonoBehaviour
         return curStructureObjType;
     }
 
+    public bool CanBuildNuclear()
+    {
+        return upgradeLimit >= 3;
+    }
+
     public void ShowBluepirnt(EObjectType _structureType)
     {
         if (isBlueprint)

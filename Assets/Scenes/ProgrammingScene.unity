@@ -2520,10 +2520,10 @@ MonoBehaviour:
   - {fileID: 355415215}
   outerCircleRad: 5
   innerCircleRad: 0
-  mapSpawnCnt: 3
-  smallWaveDelay_sec: 100
-  bigWaveDelay_sec: 230
-  totalBigWaveCnt: 1
+  mapSpawnCnt: 15
+  smallWaveDelay_sec: 120
+  bigWaveDelay_sec: 400
+  totalBigWaveCnt: 3
   arrWaveStartPoint:
   - {fileID: 1810121891}
   - {fileID: 1616876876}
@@ -11195,8 +11195,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -14943,7 +14943,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 714546e8290a4c64abb998424a6dc564, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  updateFogDelay: 1
+  updateFogDelay: 0.5
   fogRenderTexture: {fileID: 8400000, guid: d88331e32e36f53499ae655d4655cc7b, type: 2}
   mapRenderTexture: {fileID: 8400000, guid: e69557bcfc9c8e4458f82443774c1444, type: 2}
   fogImage: {fileID: 264638034}
@@ -19058,6 +19058,7 @@ MonoBehaviour:
   arrBarrackFuncHotkey: 6d0000006c0000007200000061000000730000006400000066000000
   arrStructureFuncHotkey: 67000000640000006e0000006f000000750000006500000070000000
   cancleKey: 27
+  mainbaseSelectKey: 96
 --- !u!4 &1606740354
 Transform:
   m_ObjectHideFlags: 0
@@ -21945,10 +21946,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf1e6cedf8382d7478941fe8b83b5658, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  energySupplyAmount: 300
+  energySupplyAmount: 10
   curEnergy: 30000
   maxEnergy: 100000
-  energySupplyRate: 2
+  energySupplyRate: 10
   curCore: 1000
   maxCore: 100000
   buildBarrack: 150
@@ -21958,6 +21959,7 @@ MonoBehaviour:
   buildNuclear: 50
   spawnMeleeUnit: 70
   spawnRangedUnit: 50
+  spawnNuclear: 1000
   upgradeUnitHp: 50
   upgradeUnitDmg: 50
   upgradeMainBase: 200

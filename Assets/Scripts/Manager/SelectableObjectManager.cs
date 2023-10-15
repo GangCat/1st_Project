@@ -540,8 +540,9 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
 
     public void MoveUnitByPicking(Vector3 _targetPos, bool isAttackMove = false)
     {
-        if (IsListEmpty) 
-            return;
+        if (IsListEmpty) return;
+        if (isFriendlyStructureInList) return;
+        if (isEnemyObjectInList) return;
 
         if (isAttackMove)
         {
@@ -582,6 +583,9 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
 
     private void CalcNewFormation(Vector3 _targetPos, bool _isPatrol = false)
     {
+        if (isFriendlyStructureInList) return;
+        if (isEnemyObjectInList) return;
+
         int unitCnt = listSelectedFriendlyObject.Count;
         int col = Mathf.Clamp(unitCnt, 1, 5);
 
@@ -645,6 +649,9 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
 
     public void MoveUnitByPicking(Transform _targetTr)
     {
+        if (isFriendlyStructureInList) return;
+        if (isEnemyObjectInList) return;
+
         if (_targetTr.GetComponent<IGetObjectType>().GetObjectType().Equals(EObjectType.BUNKER))
         {
             curBunker = _targetTr.GetComponent<StructureBunker>();
