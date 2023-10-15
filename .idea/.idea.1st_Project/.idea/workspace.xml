@@ -5,95 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8b33c29f-1ced-47a6-96e0-2e9883714488" name="변경" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Rocket.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Rocket/SPACECRAFT_Rocket_01_Muffled_Passby_SS1_mono.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Rocket/SPACECRAFT_Rocket_01_Muffled_Passby_SS1_mono.wav.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Rocket/SPACECRAFT_Rocket_01_Muffled_Passby_SS2_mono.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Rocket/SPACECRAFT_Rocket_01_Muffled_Passby_SS2_mono.wav.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Rocket/SPACECRAFT_Rocket_01_Muffled_Passby_SS3_mono.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Rocket/SPACECRAFT_Rocket_01_Muffled_Passby_SS3_mono.wav.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Rocket/SPACECRAFT_Rocket_02_Resonant_Roar_Passby_SS1_mono.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Rocket/SPACECRAFT_Rocket_02_Resonant_Roar_Passby_SS1_mono.wav.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Rocket/SPACECRAFT_Rocket_02_Resonant_Roar_Passby_SS2_mono.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Rocket/SPACECRAFT_Rocket_02_Resonant_Roar_Passby_SS2_mono.wav.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Rocket/SPACECRAFT_Rocket_02_Resonant_Roar_Passby_SS3_mono.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Rocket/SPACECRAFT_Rocket_02_Resonant_Roar_Passby_SS3_mono.wav.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Rocket/SPACECRAFT_Rocket_03_Strong_Burn_Passby_SS1_mono.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Rocket/SPACECRAFT_Rocket_03_Strong_Burn_Passby_SS1_mono.wav.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Rocket/SPACECRAFT_Rocket_03_Strong_Burn_Passby_SS2_mono.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Rocket/SPACECRAFT_Rocket_03_Strong_Burn_Passby_SS2_mono.wav.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Rocket/SPACECRAFT_Rocket_03_Strong_Burn_Passby_SS3_mono.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Rocket/SPACECRAFT_Rocket_03_Strong_Burn_Passby_SS3_mono.wav.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Rocket/SPACECRAFT_Rocket_04_Smooth_Burn_Passby_SS1_mono.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Rocket/SPACECRAFT_Rocket_04_Smooth_Burn_Passby_SS1_mono.wav.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Rocket/SPACECRAFT_Rocket_04_Smooth_Burn_Passby_SS2_mono.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Rocket/SPACECRAFT_Rocket_04_Smooth_Burn_Passby_SS2_mono.wav.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Rocket/SPACECRAFT_Rocket_04_Smooth_Burn_Passby_SS3_mono.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Rocket/SPACECRAFT_Rocket_04_Smooth_Burn_Passby_SS3_mono.wav.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Rocket/SPACECRAFT_Rocket_05_Powerful_Burn_Passby_SS1_mono.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Rocket/SPACECRAFT_Rocket_05_Powerful_Burn_Passby_SS1_mono.wav.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Rocket/SPACECRAFT_Rocket_05_Powerful_Burn_Passby_SS2_mono.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Rocket/SPACECRAFT_Rocket_05_Powerful_Burn_Passby_SS2_mono.wav.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Rocket/SPACECRAFT_Rocket_05_Powerful_Burn_Passby_SS3_mono.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Audio/SFX/Rocket/SPACECRAFT_Rocket_05_Powerful_Burn_Passby_SS3_mono.wav.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Textures/T_MinimapRect_Alpha_1%.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Textures/T_MinimapRect_Alpha_1%.png.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Textures/T_MinimapRect_Alpha_2%.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Textures/T_MinimapRect_Alpha_2%.png.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Textures/T_MinimapRect_Alpha_3%.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Textures/T_MinimapRect_Alpha_3%.png.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Audio/AudioPlayer_Turret.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Audio/AudioPlayer_Turret.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.1st_Project/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.1st_Project/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.1st_Project/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.1st_Project/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Prefabs/P_EnemyUnit.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/P_EnemyUnit.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Prefabs/P_EnemyUnitBackup.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/P_EnemyUnitBackup.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Prefabs/P_FriendlyRangedUnit.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/P_FriendlyRangedUnit.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Prefabs/P_FriendlyRocketUnit.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/P_FriendlyRocketUnit.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Prefabs/P_MissileTurret.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/P_MissileTurret.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Prefabs/P_Player.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/P_Player.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Prefabs/P_TempBarrack.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/P_TempBarrack.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Prefabs/P_TempBarrackBlueprint.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/P_TempBarrackBlueprint.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Prefabs/P_TempBunker.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/P_TempBunker.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Prefabs/P_TempBunkerBlueprint.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/P_TempBunkerBlueprint.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Prefabs/P_TempHBeam.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/P_TempHBeam.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Prefabs/P_TempMainBase.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/P_TempMainBase.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Prefabs/P_TempNuclear.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/P_TempNuclear.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Prefabs/P_TempNuclearBlueprint.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/P_TempNuclearBlueprint.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Prefabs/P_TempTurret.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/P_TempTurret.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Prefabs/P_TempTurretBluePrint.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/P_TempTurretBluePrint.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Prefabs/P_TempWall.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/P_TempWall.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Prefabs/P_TempWallBlueprint.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/P_TempWallBlueprint.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Textures/T_MinimapRect_Alpha.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Textures/T_MinimapRect_Alpha.png.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/ProgrammingScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/ProgrammingScene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/ProgrammingScene.unity.orig" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/ProgrammingScene.unity.orig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Audio/EnemyAudioPlayer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Audio/EnemyAudioPlayer.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Audio/FriendlyAudioPlayer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Audio/FriendlyAudioPlayer.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Audio/HeroAudioPlayer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Audio/HeroAudioPlayer.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Command/CommandBuild/CommandBuildConfirm.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandBuild/CommandBuildConfirm.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Command/CommandBuild/CommandBuildStructure.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Command/CommandBuild/CommandBuildStructure.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/FriendlyObject.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/FriendlyObject.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Manager/AudioManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Manager/AudioManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Manager/AudioManager.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Manager/AudioManager.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Manager/FuncButtonManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Manager/FuncButtonManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Manager/InputManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Manager/InputManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Manager/SelectableObjectManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Manager/SelectableObjectManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Manager/UIManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Manager/UIManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/State/StateTurretAttack.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/State/StateTurretAttack.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/State/UnitState/StateAttack.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/State/UnitState/StateAttack.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/State/UnitState/StateMove.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/State/UnitState/StateMove.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/SingleUnitInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/SingleUnitInfo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Utility/Defines.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Utility/Defines.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Settings/HDRPDefaultResources/HDRenderPipelineGlobalSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Settings/HDRPDefaultResources/HDRenderPipelineGlobalSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/ProgrammingSceneMainMenu.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/ProgrammingSceneMainMenu.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Packages/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/manifest.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Packages/packages-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/packages-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UserSettings/Layouts/CurrentMaximizeLayout.dwlt" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/Layouts/CurrentMaximizeLayout.dwlt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UserSettings/Layouts/CurrentMaximizeLayout.dwlt.orig" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/Layouts/CurrentMaximizeLayout.dwlt.orig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UserSettings/Layouts/default-2022.dwlt.orig" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/Layouts/default-2022.dwlt.orig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UserSettings/Layouts/default-2023.dwlt" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/Layouts/default-2023.dwlt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -150,9 +68,9 @@
   },
   &quot;keyToStringList&quot;: {
     &quot;rider.external.source.directories&quot;: [
-      &quot;C:\\Users\\user\\AppData\\Roaming\\JetBrains\\Rider2023.2\\resharper-host\\DecompilerCache&quot;,
-      &quot;C:\\Users\\user\\AppData\\Roaming\\JetBrains\\Rider2023.2\\resharper-host\\SourcesCache&quot;,
-      &quot;C:\\Users\\user\\AppData\\Local\\Symbols\\src&quot;
+      &quot;C:\\Users\\Administrator\\AppData\\Roaming\\JetBrains\\Rider2023.2\\resharper-host\\DecompilerCache&quot;,
+      &quot;C:\\Users\\Administrator\\AppData\\Roaming\\JetBrains\\Rider2023.2\\resharper-host\\SourcesCache&quot;,
+      &quot;C:\\Users\\Administrator\\AppData\\Local\\Symbols\\src&quot;
     ]
   }
 }</component>
@@ -237,6 +155,8 @@
       <workItem from="1697095480640" duration="108000" />
       <workItem from="1697097592370" duration="77000" />
       <workItem from="1697098798914" duration="730000" />
+      <workItem from="1697293525286" duration="597000" />
+      <workItem from="1697378607448" duration="670000" />
     </task>
     <servers />
   </component>
