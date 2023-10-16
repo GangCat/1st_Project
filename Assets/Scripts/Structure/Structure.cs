@@ -220,6 +220,10 @@ public class Structure : MonoBehaviour, IPauseObserver
         ShowModel();
         if (myObj.IsSelect)
             ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
+        
+        // Build Complete Audio Play
+        audioType = EAudioType_Adjutant.CONST_COMPLETE;
+        AudioManager.instance.PlayAudio_Adjutant(audioType);
     }
 
     public virtual void Demolish()
@@ -262,6 +266,10 @@ public class Structure : MonoBehaviour, IPauseObserver
         fObj.unSelect();
         ArraySelectCommand.Use(ESelectCommand.REMOVE_FROM_LIST, fObj);
         Destroy(gameObject);
+        
+        // Build cancel Audio Play
+        audioType = EAudioType_Adjutant.CONST_CANCEL;
+        AudioManager.instance.PlayAudio_Adjutant(audioType);
     }
 
     protected virtual IEnumerator CheckBuildableCoroutine()
@@ -356,4 +364,6 @@ public class Structure : MonoBehaviour, IPauseObserver
     protected FriendlyObject myObj = null;
 
     protected bool isPause = false;
+    
+    private EAudioType_Adjutant audioType;
 }
