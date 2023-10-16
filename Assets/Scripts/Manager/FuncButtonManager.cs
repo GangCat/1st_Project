@@ -10,17 +10,13 @@ public class FuncButtonManager : MonoBehaviour
         canvasStructureBaseFunc = GetComponentInChildren<CanvasStructureBaseFunc>();
         canvasBuildFunc = GetComponentInChildren<CanvasBuildFunc>();
         canvasBarrackFunc = GetComponentInChildren<CanvasBarrackFunc>();
-        canvasBarrackUpgradeFunc = GetComponentInChildren<CanvasBarrackUpgradeFunc>();
         canvasTurretFunc = GetComponentInChildren<CanvasTurretFunc>();
-        //canvasBunkerFunc = GetComponentInChildren<CanvasBunkerFunc>();
 
         canvasUnitBaseFunc.Init();
         canvasStructureBaseFunc.Init();
         canvasBuildFunc.Init();
         canvasBarrackFunc.Init();
-        canvasBarrackUpgradeFunc.Init();
         canvasTurretFunc.Init();
-        //canvasBunkerFunc.Init();
 
         ArrayUnitFuncButtonCommand.Add(EUnitFuncButtonCommand.DISPLAY_CANCLE_BUTTON, new CommandDisplayUnitCancleButton(canvasUnitBaseFunc));
         ArrayUnitFuncButtonCommand.Add(EUnitFuncButtonCommand.HIDE_CANCLE_BUTTON, new CommandHideUnitCancleButton(canvasUnitBaseFunc));
@@ -29,16 +25,6 @@ public class FuncButtonManager : MonoBehaviour
         ArrayStructureFuncButtonCommand.Add(EStructureButtonCommand.HIDE_CANCLE_BUTTON, new CommandHideStructureCancleButton(canvasStructureBaseFunc));
 
         ArrayChangeHotkeyCommand.Add(EChangeHotkeyCommand.CONFIRM_UNIT_FUNC_BUTTON, new CommandConfirmChangeUnitFuncHotkey(canvasUnitBaseFunc));
-    }
-
-    public void SetBarrackButtonUninteractable()
-    {
-        canvasBarrackFunc.SetAllButtonUninteractable();
-    }
-
-    public void SetBarrackButtonInteractable()
-    {
-        canvasBarrackFunc.SetAllButtonInteractable();
     }
 
     public void ShowFuncButton(EObjectType _selectObjectType)
@@ -70,7 +56,6 @@ public class FuncButtonManager : MonoBehaviour
                 canvasStructureBaseFunc.DisplayCanvas();
                 canvasStructureBaseFunc.DisplayBunkerFunc();
                 canvasBuildFunc.DisplayBuildWallFunc();
-                //canvasBunkerFunc.DisplayCanvas();
                 break;
             case EObjectType.WALL:
                 canvasStructureBaseFunc.DisplayCanvas();
@@ -78,7 +63,6 @@ public class FuncButtonManager : MonoBehaviour
             case EObjectType.BARRACK:
                 canvasStructureBaseFunc.DisplayCanvas();
                 canvasBarrackFunc.DisplayCanvas();
-                canvasBarrackUpgradeFunc.DisplayCanvas();
                 break;
             case EObjectType.NUCLEAR:
                 canvasStructureBaseFunc.DisplayCanvas();
@@ -120,7 +104,6 @@ public class FuncButtonManager : MonoBehaviour
                 canvasStructureBaseFunc.HideCanvas();
                 canvasStructureBaseFunc.HideBunkerFunc();
                 canvasBuildFunc.HideBuildWallFunc();
-                //canvasBunkerFunc.HideCanvas();
                 break;
             case EObjectType.WALL:
                 canvasStructureBaseFunc.HideCanvas();
@@ -128,7 +111,6 @@ public class FuncButtonManager : MonoBehaviour
             case EObjectType.BARRACK:
                 canvasStructureBaseFunc.HideCanvas();
                 canvasBarrackFunc.HideCanvas();
-                canvasBarrackUpgradeFunc.HideCanvas();
                 break;
             case EObjectType.NUCLEAR:
                 canvasStructureBaseFunc.HideCanvas();
@@ -143,9 +125,7 @@ public class FuncButtonManager : MonoBehaviour
     private CanvasStructureBaseFunc canvasStructureBaseFunc = null;
     private CanvasBuildFunc canvasBuildFunc = null;
     private CanvasBarrackFunc canvasBarrackFunc = null;
-    private CanvasBarrackUpgradeFunc canvasBarrackUpgradeFunc = null;
     private CanvasTurretFunc canvasTurretFunc = null;
-    //private CanvasBunkerFunc canvasBunkerFunc = null;
 
     private EObjectType curActiveBtnFunc = EObjectType.NONE;
 }

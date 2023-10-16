@@ -7,46 +7,41 @@ public class CanvasBarrackFunc : CanvasFunc
 {
     public void Init()
     {
-        btnSpawnMeleeUnit.onClick.AddListener(
-            () =>
-            {
-                ArrayBarrackCommand.Use(EBarrackCommand.SPAWN_UNIT, EUnitType.MELEE);
-            });
+        arrBarrackFuncBtn = new FuncButtonBase[(int)EBarrackFuncKey.LENGTH];
 
-        btnSpawnRangedUnit.onClick.AddListener(
-            () =>
-            {
-                ArrayBarrackCommand.Use(EBarrackCommand.SPAWN_UNIT, EUnitType.RANGED);
-            });
+        arrBarrackFuncBtn[0] = buttonSpawnMeleeUnit;
+        arrBarrackFuncBtn[1] = buttonSpawnRangedUnit;
+        arrBarrackFuncBtn[2] = buttonSetRallyPoint;
+        arrBarrackFuncBtn[3] = buttonUpgradeRangedUnitDmg;
+        arrBarrackFuncBtn[4] = buttonUpgradeRangedUnitHp;
+        arrBarrackFuncBtn[5] = buttonUpgradeMeleeUnitDmg;
+        arrBarrackFuncBtn[6] = buttonUpgradeMeleeUnitHp;
 
-        btnRallyPoint.onClick.AddListener(
-            () =>
-            {
-                ArrayBarrackCommand.Use(EBarrackCommand.RALLYPOINT);
-            });
+        for(int i = 0; i < arrBarrackFuncBtn.Length; ++i)
+            arrBarrackFuncBtn[i].Init();
 
         gameObject.SetActive(false);
     }
 
-    public void SetAllButtonUninteractable()
+    public void ChangeHotkey(int _funcKeyIdx, KeyCode _hotkey)
     {
-        btnSpawnMeleeUnit.interactable = false;
-        btnSpawnRangedUnit.interactable = false;
-        btnRallyPoint.interactable = false;
+        arrBarrackFuncBtn[_funcKeyIdx].SetHotkey(_hotkey);
     }
 
-    public void SetAllButtonInteractable()
-    {
-        btnSpawnMeleeUnit.interactable = true;
-        btnSpawnRangedUnit.interactable = true;
-        btnRallyPoint.interactable = true;
-    }
+    [SerializeField]
+    private ButtonSpawnMeleeUnit buttonSpawnMeleeUnit = null;
+    [SerializeField]
+    private ButtonSpawnRangedUnit buttonSpawnRangedUnit = null;
+    [SerializeField]
+    private ButtonSetRallyPoint buttonSetRallyPoint = null;
+    [SerializeField]
+    private ButtonUpgradeMeleeUnitDmg buttonUpgradeMeleeUnitDmg = null;
+    [SerializeField]
+    private ButtonUpgradeMeleeUnitHp buttonUpgradeMeleeUnitHp = null;
+    [SerializeField]
+    private ButtonUpgradeRangedUnitDmg buttonUpgradeRangedUnitDmg = null;
+    [SerializeField]
+    private ButtonUpgradeRangedUnitHp buttonUpgradeRangedUnitHp = null;
 
-
-    [SerializeField]
-    private Button btnSpawnMeleeUnit = null;
-    [SerializeField]
-    private Button btnSpawnRangedUnit = null;
-    [SerializeField]
-    private Button btnRallyPoint = null;
+    private FuncButtonBase[] arrBarrackFuncBtn = null;
 }

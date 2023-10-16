@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CanvasBuildFunc : CanvasFunc, ISubscriber
+public class CanvasBuildFunc : CanvasFunc
 {
     public void Init()
     {
@@ -23,6 +23,11 @@ public class CanvasBuildFunc : CanvasFunc, ISubscriber
         arrBuildFuncBtn[4].SetActive(false);
 
         gameObject.SetActive(false);
+    }
+
+    public void ChangeHotkey(int _funcKeyIdx, KeyCode _hotkey)
+    {
+        arrBuildFuncBtn[_funcKeyIdx].SetHotkey(_hotkey);
     }
 
     public void DisplayBuildWallFunc()
@@ -45,15 +50,6 @@ public class CanvasBuildFunc : CanvasFunc, ISubscriber
         SetActive(false);
     }
 
-    public void Subscribe()
-    {
-        Broker.Subscribe(this, EPublisherType.ENERGY_UPDATE);
-    }
-
-    public void ReceiveMessage(EMessageType _message)
-    {
-
-    }
 
     [SerializeField]
     private ButtonBuildBarrack btnBuildBarrack = null;
