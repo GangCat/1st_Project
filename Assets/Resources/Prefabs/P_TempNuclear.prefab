@@ -111,6 +111,9 @@ MonoBehaviour:
   objectType: 8
   selectDisplayCircle: {fileID: 52691291055329485, guid: d02d8a447130d5d4bbc9d60ffde1d811,
     type: 3}
+  objectDisplayName: "\uD575 \uAC1C\uBC1C\uAE30\uC9C0"
+  objectDescription: "\uB300\uB7C9 \uD559\uC0B4\uC5D0 \uB9E4\uC6B0 \uD6A8\uACFC\uC801\uC778
+    \uD575\uC744 \uC0DD\uC0B0\uD558\uB294 \uAC74\uBB3C\uC774\uB2E4.\n"
   chaseStartRange: 0
   chaseFinishRange: 0
   attackRange: 0

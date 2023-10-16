@@ -2091,10 +2091,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bab2bd95e019a3345a99c3ea2649bd50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  funcName: 
-  funcHotkey: 
-  cost: 
-  currencyType: -1
+  funcName: BuildTurret
+  funcHotkey: T
+  cost: 150
+  currencyType: 0
 --- !u!1 &182692395
 GameObject:
   m_ObjectHideFlags: 0
@@ -4915,10 +4915,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48efd5900cf22d044ac299e4f19b540a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  funcName: 
-  funcHotkey: 
-  cost: 
-  currencyType: -1
+  funcName: BuildNuclear
+  funcHotkey: N
+  cost: 50
+  currencyType: 0
 --- !u!1 &357900390
 GameObject:
   m_ObjectHideFlags: 0
@@ -6892,10 +6892,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0b8dc30b70e3b142af4eb4baad944ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  funcName: 
-  funcHotkey: 
-  cost: 
-  currencyType: -1
+  funcName: BuildWall
+  funcHotkey: W
+  cost: 50
+  currencyType: 0
 --- !u!1 &501204204
 GameObject:
   m_ObjectHideFlags: 0
@@ -13600,9 +13600,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   funcName: UpgradeStructure
-  funcHotkey: 
+  funcHotkey: U
   cost: 
-  currencyType: -1
+  currencyType: 1
 --- !u!1 &937069859
 GameObject:
   m_ObjectHideFlags: 0
@@ -15038,10 +15038,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80bfc6fcb6f43c54b929efd9e4706eee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  funcName: 
-  funcHotkey: 
-  cost: 
-  currencyType: -1
+  funcName: BuildBunker
+  funcHotkey: U
+  cost: 100
+  currencyType: 0
 --- !u!1 &1024485005
 GameObject:
   m_ObjectHideFlags: 0
@@ -16024,10 +16024,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2aeaf71f63434d847bb2e3387858755a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  funcName: 
-  funcHotkey: 
-  cost: 
-  currencyType: -1
+  funcName: BuildBarrack
+  funcHotkey: B
+  cost: 150
+  currencyType: 0
 --- !u!1 &1094798396
 GameObject:
   m_ObjectHideFlags: 0
@@ -20209,8 +20209,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71beda2a0db88cc4b9fe62087bc85f00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  funcName: 
-  funcHotkey: 
+  funcName: Cancle
+  funcHotkey: ESC
   cost: 
   currencyType: -1
 --- !u!1 &1349572391
@@ -21944,7 +21944,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   funcName: SpawnRangedUnit
   funcHotkey: 
-  cost: 
+  cost: 50
   currencyType: 0
 --- !u!1 &1452608515
 GameObject:
@@ -23249,10 +23249,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 102cc0ac6ccb7944b99a3fe5df2ebb58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  funcName: 
+  funcName: SpawnNuclear
   funcHotkey: 
-  cost: 
-  currencyType: -1
+  cost: 1000
+  currencyType: 0
 --- !u!1 &1583906703
 GameObject:
   m_ObjectHideFlags: 0
@@ -23388,7 +23388,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   funcName: UpgradeEnergySupply
-  funcHotkey: 
+  funcHotkey: E
   cost: 
   currencyType: 1
 --- !u!1 &1603257216
@@ -27898,7 +27898,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   funcName: SpawnMeleeUnit
   funcHotkey: 
-  cost: 
+  cost: 70
   currencyType: 0
 --- !u!1 &1994896041
 GameObject:

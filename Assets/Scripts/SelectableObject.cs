@@ -598,6 +598,11 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
     protected EObjectType objectType = EObjectType.NONE;
     [SerializeField]
     protected GameObject selectDisplayCircle = null;
+    [SerializeField]
+    protected string objectDisplayName = null;
+    [TextArea]
+    [SerializeField]
+    protected string objectDescription = null;
 
 
     [Header("-Unit Control Values")]

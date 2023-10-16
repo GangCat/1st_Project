@@ -38,32 +38,11 @@ public struct SUnitState
     public Transform missileSpawnTr;
 }
 
-public struct SUnitInfo
-{
-    public EObjectType objectType;
-    public int maxHp;
-    public float attDmg;
-    public float attRate;
-    public float attRange;
-}
-
 public struct SFriendlyUnitInfo
 {
     public EUnitType unitType;
     public float curHpPercent;
 }
-
-public struct SHotkey
-{
-    public KeyCode[] arrUnitFuncHotkey;
-    public KeyCode[] arrBuildFuncHotkey;
-    public KeyCode[] arrBarrackFuncHotkey;
-    public KeyCode[] arrStructureFuncHotkey;
-    public KeyCode cancleKey;
-    public KeyCode mainbaseSelectKey;
-    public KeyCode debugModeKey;
-}
-
 
 [System.Serializable]
 public enum EObjectType { NONE = -1, UNIT_01, UNIT_02, UNIT_HERO, MAIN_BASE, TURRET, BUNKER, WALL, BARRACK, NUCLEAR, ENEMY_UNIT, ENEMY_STRUCTURE, PROCESSING_CONSTRUCT_STRUCTURE, LENGTH }
