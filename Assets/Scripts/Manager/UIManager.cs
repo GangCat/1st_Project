@@ -9,14 +9,15 @@ public class UIManager : MonoBehaviour
     {
         funcBtnMng = GetComponentInChildren<FuncButtonManager>();
         displayHUDMng = GetComponentInChildren<DisplayHUDManager>();
+        displayMenuMng = GetComponentInChildren<DisplayMenuManager>();
         funcBtnMng.Init();
         displayHUDMng.Init();
-        imagePauseBack.Init();
+        displayMenuMng.Init();
 
-        tempPauseButton.onClick.AddListener(
+        tempChangeHotkeyBtn.onClick.AddListener(
             () =>
             {
-                ArrayPauseCommand.Use(EPauseCOmmand.TOGGLE_PAUSE);
+                ArrayChangeHotkeyCommand.Use(EChangeHotkeyCommand.SELECT_MAINBASE_HOTKEY, EUnitFuncHotkey.MOVE);
             });
     }
 
@@ -52,9 +53,7 @@ public class UIManager : MonoBehaviour
 
     private FuncButtonManager funcBtnMng = null;
     private DisplayHUDManager displayHUDMng = null;
-
+    private DisplayMenuManager displayMenuMng = null;
     [SerializeField]
-    private Button tempPauseButton = null;
-    [SerializeField]
-    private ImagePauseBackground imagePauseBack = null;
+    private Button tempChangeHotkeyBtn = null;
 }

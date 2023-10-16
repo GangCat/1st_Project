@@ -8,7 +8,7 @@ public class FogManager : MonoBehaviour, IPauseObserver
 {
     public void Init()
     {
-        ArrayPauseCommand.Use(EPauseCOmmand.REGIST, this);
+        ArrayPauseCommand.Use(EPauseCommand.REGIST, this);
         curFogTexture = GenerateTexture(fogRenderTexture);
         backBufftexture = GenerateTexture(fogRenderTexture);
 
@@ -23,6 +23,11 @@ public class FogManager : MonoBehaviour, IPauseObserver
         fogComputeShader.SetTexture(0, "backBuffRenderTexture", newBackBuffRenderTexture);
         
         UpdateFogTexture();
+    }
+
+    public void IsDebugMode(bool _isDebugMode)
+    {
+        isDebugMode = _isDebugMode;
     }
 
     private void UpdateFogTexture()

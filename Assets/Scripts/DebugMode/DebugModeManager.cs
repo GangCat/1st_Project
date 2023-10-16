@@ -4,16 +4,24 @@ using UnityEngine;
 
 public class DebugModeManager : MonoBehaviour
 {
-    private void Awake()
+    public void Init()
     {
         canvasDebug = GetComponentInChildren<CanvasDebugMode>();
         canvasDebug.Init();
+        SetActive(false);
     }
 
-    public static void DisplayCurState(Vector3 _screenPos, EState _curState)
+    public bool isActive => gameObject.activeSelf;
+    
+    public void SetActive(bool _isActive)
+    {
+        gameObject.SetActive(_isActive);
+    }
+
+    public void DisplayCurState(Vector3 _screenPos, EState _curState)
     {
         canvasDebug.DisplayCurState(_screenPos, _curState);
     }
 
-    private static CanvasDebugMode canvasDebug = null;
+    private CanvasDebugMode canvasDebug = null;
 }

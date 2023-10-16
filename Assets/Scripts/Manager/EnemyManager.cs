@@ -6,7 +6,7 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
 {
     public void Init(PF_Grid _grid, Vector3 _mainBasePos)
     {
-        ArrayPauseCommand.Use(EPauseCOmmand.REGIST, this);
+        ArrayPauseCommand.Use(EPauseCommand.REGIST, this);
         grid = _grid;
         mainBasePos = _mainBasePos;
 

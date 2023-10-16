@@ -26,7 +26,7 @@ public class Structure : MonoBehaviour, IPauseObserver
         ShowHBeam();
         HideModel();
 
-        ArrayPauseCommand.Use(EPauseCOmmand.REGIST, this);
+        ArrayPauseCommand.Use(EPauseCommand.REGIST, this);
     }
 
     public virtual void Init() { }

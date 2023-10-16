@@ -31,7 +31,7 @@ public class EnemyObject : SelectableObject
             if (Random.Range(0.0f, 100.0f) < 30f)
                 Instantiate(powerCorePrefab, transform.position, Quaternion.identity);
 
-            ArrayPauseCommand.Use(EPauseCOmmand.REMOVE, this);
+            ArrayPauseCommand.Use(EPauseCommand.REMOVE, this);
         }
         //else if (isSelect)
         //{

@@ -6,7 +6,7 @@ public class CurrencyManager : MonoBehaviour, IPublisher, IPauseObserver
 {
     public void Init()
     {
-        ArrayPauseCommand.Use(EPauseCOmmand.REGIST, this);
+        ArrayPauseCommand.Use(EPauseCommand.REGIST, this);
         ArrayCurrencyCommand.Use(ECurrencyCommand.UPDATE_ENERGY_HUD, curEnergy);
         ArrayCurrencyCommand.Use(ECurrencyCommand.UPDATE_CORE_HUD, curCore);
         StartCoroutine("SupplyEnergyCoroutine");

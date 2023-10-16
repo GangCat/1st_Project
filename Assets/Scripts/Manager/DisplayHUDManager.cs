@@ -18,6 +18,7 @@ public class DisplayHUDManager : MonoBehaviour
         canvasConstructInfo = GetComponentInChildren<CanvasConstructInfo>();
         canvasDemolishInfo = GetComponentInChildren<CanvasDemolishInfo>();
         canvasNuclearInfo = GetComponentInChildren<CanvasSpawnNuclearInfo>();
+        canvasMenu = GetComponentInChildren<CanvasMenu>();
 
         canvasMinimap.Init();
         canvasWaveInfo.Init();
@@ -28,6 +29,7 @@ public class DisplayHUDManager : MonoBehaviour
         canvasConstructInfo.Init();
         canvasDemolishInfo.Init();
         canvasNuclearInfo.Init();
+        canvasMenu.Init();
 
         ArrayHUDCommand.Add(EHUDCommand.INIT_WAVE_TIME, new CommandInitWaveTime(canvasWaveInfo));
         ArrayHUDCommand.Add(EHUDCommand.UPDATE_WAVE_TIME, new CommandUpdateWaveTime(canvasWaveInfo));
@@ -106,4 +108,5 @@ public class DisplayHUDManager : MonoBehaviour
     private CanvasConstructInfo canvasConstructInfo = null;
     private CanvasDemolishInfo canvasDemolishInfo = null;
     private CanvasSpawnNuclearInfo canvasNuclearInfo = null;
+    private CanvasMenu canvasMenu = null;
 }

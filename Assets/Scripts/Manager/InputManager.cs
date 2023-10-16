@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,12 +6,20 @@ using UnityEngine.EventSystems;
 
 public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
 {
-    public void Init(SelectableObject _mainbaseObj)
+    public void MainInit()
     {
-        ArrayPauseCommand.Use(EPauseCOmmand.REGIST, this);
+        DontDestroyOnLoad(gameObject);
+        isMainMenu = true;
+    }
+
+    public void Init(SelectableObject _mainbaseObj, VoidVoidDelegate _onDebugModeCallback)
+    {
+        ArrayPauseCommand.Use(EPauseCommand.REGIST, this);
         selectArea = GetComponentInChildren<SelectArea>();
         selectArea.Init();
         mainbaseObejct = _mainbaseObj;
+        onDebugModeCallback = _onDebugModeCallback;
+        isMainMenu = false;
     }
     public bool IsBuildOperation
     {
@@ -122,6 +131,19 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
     {
         if (isPause) return;
 
+        if (isDetectingChangeKey)
+        {
+            if (isMainMenu)
+                DetectChangeKey();
+            else
+            {
+                isDetectingChangeKey = false;
+                return;
+            }
+        }
+
+
+
         elapsedTime += Time.deltaTime;
         if (isCheckDoubleClick)
         {
@@ -216,13 +238,17 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
 
     private void CheckIsHotkey()
     {
-        if(Input.GetKeyDown(mainbaseSelectKey))
+        if (Input.GetKeyDown(arrOtherFuncHotkey[(int)EOtherFuncHotkey.SELECT_MAINBASE]))
         {
             ArraySelectCommand.Use(ESelectCommand.SELECT_START);
             ArraySelectCommand.Use(ESelectCommand.TEMP_SELECT, mainbaseObejct);
             ArraySelectCommand.Use(ESelectCommand.SELECT_FINISH);
             return;
         }
+
+        if (Input.GetKeyDown(debugModeKey))
+            onDebugModeCallback?.Invoke();
+
 
         if (SelectableObjectManager.IsListEmpty) return;
 
@@ -541,6 +567,115 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
         isPause = _isPause;
     }
 
+    public void ChangeUnitHotkey(EUnitFuncHotkey _targetHotkey)
+    {
+        isDetectingChangeKey = true;
+        SetCurChangeHotKey(arrUnitFuncHotkey, _targetHotkey);
+    }
+
+    public void ChangeBuildHotkey(EBuildFuncHotkey _targetHotkey)
+    {
+        isDetectingChangeKey = true;
+        SetCurChangeHotKey(arrBuildFuncHotkey, _targetHotkey);
+    }
+
+    public void ChangeBarrackHotkey(EBarrackFuncHotkey _targetHotkey)
+    {
+        isDetectingChangeKey = true;
+        SetCurChangeHotKey(arrBarrackFuncHotkey, _targetHotkey);
+    }
+
+    public void ChangeStructureFuncHotkey(EStructureFuncHotkey _targetHotkey)
+    {
+        isDetectingChangeKey = true;
+        SetCurChangeHotKey(arrStructureFuncHotkey, _targetHotkey);
+    }
+
+    public void ChangeOtherFuncHotkey(EOtherFuncHotkey _targetHotkey)
+    {
+        isDetectingChangeKey = true;
+        SetCurChangeHotKey(arrStructureFuncHotkey, _targetHotkey);
+    }
+
+    private void SetCurChangeHotKey<T>(KeyCode[] _curChangeHotKey, T _unitHotkeyIdx) where T : Enum
+    {
+        curChangeKeyCode = _curChangeHotKey;
+        curChangeKeyIdx = Convert.ToInt32(_unitHotkeyIdx);
+    }
+
+    private void DetectChangeKey()
+    {
+        if (Input.anyKey)
+        {
+            KeyCode curKey = FindInputKey();
+            if (CheckIsChangable(curKey))
+            {
+                curChangeKeyCode[curChangeKeyIdx] = curKey;
+            }
+            curChangeKeyCode = null;
+            curChangeKeyIdx = -1;
+
+            isDetectingChangeKey = false;
+        }
+    }
+
+    private KeyCode FindInputKey()
+    {
+        foreach (KeyCode keyCode in System.Enum.GetValues(typeof(KeyCode)))
+        {
+            // 해당 키가 눌렸는지 확인합니다.
+            if (Input.GetKeyDown(keyCode))
+            {
+                return keyCode;
+            }
+        }
+        return KeyCode.None;
+    }
+
+    private bool CheckIsChangable(KeyCode _changeKey)
+    {
+        if (_changeKey.Equals(KeyCode.None))
+            return false;
+
+        for(int i = 0; i < arrUnitFuncHotkey.Length; ++i)
+        {
+            if (_changeKey.Equals(arrUnitFuncHotkey[i]))
+                return false;
+        }
+
+        for(int i = 0; i < arrBuildFuncHotkey.Length; ++i)
+        {
+            if (_changeKey.Equals(arrBuildFuncHotkey[i]))
+                return false;
+        }
+
+        for(int i = 0; i < arrBarrackFuncHotkey.Length; ++i)
+        {
+            if (_changeKey.Equals(arrBarrackFuncHotkey[i]))
+                return false;
+        }
+
+        for(int i = 0; i < arrStructureFuncHotkey.Length; ++i)
+        {
+            if (_changeKey.Equals(arrStructureFuncHotkey[i]))
+                return false;
+        }
+
+        for(int i = 0; i < arrOtherFuncHotkey.Length; ++i)
+        {
+            if (_changeKey.Equals(arrOtherFuncHotkey[i]))
+                return false;
+        }
+
+        if (_changeKey.Equals(cancleKey))
+            return false;
+
+        if (_changeKey.Equals(debugModeKey))
+            return false;
+
+        return true;
+    }
+
     [SerializeField]
     private GameObject pickPosPrefab = null;
     [SerializeField]
@@ -560,9 +695,11 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
     [SerializeField]
     private KeyCode[] arrStructureFuncHotkey = null;
     [SerializeField]
+    private KeyCode[] arrOtherFuncHotkey = null;
+    [SerializeField]
     private KeyCode cancleKey = KeyCode.Escape;
     [SerializeField]
-    private KeyCode mainbaseSelectKey = KeyCode.BackQuote;
+    private KeyCode debugModeKey = KeyCode.F12;
 
     private float elapsedTime = 0f;
     private float leftClickElapsedTime = 0f;
@@ -585,9 +722,13 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
 
     private EObjectType objectType = EObjectType.NONE;
     private SelectableObject mainbaseObejct = null;
+    private VoidVoidDelegate onDebugModeCallback = null;
 
-    private enum EUnitFuncHotkey { NONE = -1, MOVE, STOP, HOLD, PATROL, ATTACK, LAUNCH_NUCLEAR, LENGTH }
-    private enum EBuildFuncHotkey { NONE = -1, TURRET, BUNKER, BARRACK, NUCLEAR, WALL, LENGTH }
-    private enum EBarrackFuncHotkey { NONE = -1, SPAWN_MELEE, SPAWN_RANGED, SET_RALLYPOINT, UPGRADE_RANGED_DMG, UPGRADE_RANGED_HP, UPGRADE_MELEE_DMG, UPGRADE_MELEE_HP, LENGTH }
-    private enum EStructureFuncHotkey { NONE = -1, UPGRADE, DEMOLISH, SPAWN_NUCLEAR, OUT_ONE_UNIT, OUT_ALL_UNIT, UPGRADE_ENERGY_SUPPLY, UPGRADE_POPULATION_MAX, LENGTH }
+    [SerializeField]
+    private bool isMainMenu = false;
+    [SerializeField]
+    private bool isDetectingChangeKey = false;
+
+    private KeyCode[] curChangeKeyCode = null;
+    private int curChangeKeyIdx = -1;
 }

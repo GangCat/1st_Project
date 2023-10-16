@@ -11,7 +11,7 @@ public class StructureMainBase : Structure
 
     public override void Init(int _structureIdx)
     {
-        ArrayPauseCommand.Use(EPauseCOmmand.REGIST, this);
+        ArrayPauseCommand.Use(EPauseCommand.REGIST, this);
         upgradeHpCmd = new CommandUpgradeStructureHP(GetComponent<StatusHp>());
         myObj = GetComponent<FriendlyObject>();
         myObj.Init();

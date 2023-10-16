@@ -21,7 +21,7 @@ public class MissileNuclear : MonoBehaviour, IPauseObserver
 
     public void Launch(Vector3 _destPos)
     {
-        ArrayPauseCommand.Use(EPauseCOmmand.REGIST, this);
+        ArrayPauseCommand.Use(EPauseCommand.REGIST, this);
         StartCoroutine("LaunchCoroutine", _destPos);
         //Debug.Log(_destPos + "Launch");
         //SetActive(false);
@@ -53,7 +53,7 @@ public class MissileNuclear : MonoBehaviour, IPauseObserver
         for(int i = 0; i < arrCol.Length; ++i)
             arrCol[i].gameObject.GetComponent<SelectableObject>().GetDmg(150);
 
-        ArrayPauseCommand.Use(EPauseCOmmand.REMOVE, this);
+        ArrayPauseCommand.Use(EPauseCommand.REMOVE, this);
         SetActive(false);
     }
 

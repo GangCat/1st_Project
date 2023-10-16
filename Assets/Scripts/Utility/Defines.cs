@@ -53,6 +53,18 @@ public struct SFriendlyUnitInfo
     public float curHpPercent;
 }
 
+public struct SHotkey
+{
+    public KeyCode[] arrUnitFuncHotkey;
+    public KeyCode[] arrBuildFuncHotkey;
+    public KeyCode[] arrBarrackFuncHotkey;
+    public KeyCode[] arrStructureFuncHotkey;
+    public KeyCode cancleKey;
+    public KeyCode mainbaseSelectKey;
+    public KeyCode debugModeKey;
+}
+
+
 [System.Serializable]
 public enum EObjectType { NONE = -1, UNIT_01, UNIT_02, UNIT_HERO, MAIN_BASE, TURRET, BUNKER, WALL, BARRACK, NUCLEAR, ENEMY_UNIT, ENEMY_STRUCTURE, PROCESSING_CONSTRUCT_STRUCTURE, LENGTH }
 public enum EState { NONE = -1, IDLE, MOVE, STOP, HOLD, ATTACK, TURRET_ATTACK, LENGTH }
@@ -80,11 +92,20 @@ public enum EUICommand { NONE = -1, UPDATE_INFO_UI, LENGTH }
 public enum ECameraCommand { NONE = -1, WARP_WITH_POS, MOVE_WITH_KEY, MOVE_WITH_MOUSE, MOVE_WITH_OBJECT, ZOOM, LENGTH }
 public enum ESelectCommand { NONE = -1, TEMP_SELECT, TEMP_UNSELECT, SELECT_START, SELECT_FINISH, REMOVE_FROM_LIST, LENGTH }
 public enum EUnitActionCommand { NONE = -1, MOVE_WITH_POS, MOVE_ATTACK, FOLLOW_OBJECT, PATROL, LENGTH }
-public enum EPauseCOmmand { NONE = -1, REGIST, REMOVE, TOGGLE_PAUSE, LENGTH }
+public enum EPauseCommand { NONE = -1, REGIST, REMOVE, TOGGLE_PAUSE, LENGTH }
 public enum ERefuncCurrencyCommand { NONE = -1, BUILD_STRUCTURE, UPGRADE_STRUCTURE, UPGRADE_UNIT, SPAWN_UNIT, UPGRADE_ENERGY, UPGRADE_POPULATION, SPAWN_NUCLEAR, LENGTH }
+public enum EDebugModeCommand { NONE = -1, MOVE_STATE_INDICATOR, LENGTH }
+public enum EMenuCommand { NONE = -1, DISPLAY_MENU, HIDE_MENU, LENGTH }
+public enum EChangeHotkeyCommand { NONE = -1, SELECT_MAINBASE_HOTKEY, LENGTH }
 
 public enum EPublisherType { NONE = -1, SELECTABLE_MANAGER, ENERGY_UPDATE, CORE_UPDATE, POPULATION_MANAGER, LENGTH }
 public enum EMessageType { NONE = -1, UPGRADE_RANGED_DMG, UPGRADE_RANGED_HP, UPGRADE_MELEE_DMG, UPGRADE_MELEE_HP, START_SPAWN, STOP_SPAWN, LENGTH }
+
+public enum EUnitFuncHotkey { NONE = -1, MOVE, STOP, HOLD, PATROL, ATTACK, LAUNCH_NUCLEAR, LENGTH }
+public enum EBuildFuncHotkey { NONE = -1, TURRET, BUNKER, BARRACK, NUCLEAR, WALL, LENGTH }
+public enum EBarrackFuncHotkey { NONE = -1, SPAWN_MELEE, SPAWN_RANGED, SET_RALLYPOINT, UPGRADE_RANGED_DMG, UPGRADE_RANGED_HP, UPGRADE_MELEE_DMG, UPGRADE_MELEE_HP, LENGTH }
+public enum EStructureFuncHotkey { NONE = -1, UPGRADE, DEMOLISH, SPAWN_NUCLEAR, OUT_ONE_UNIT, OUT_ALL_UNIT, UPGRADE_ENERGY_SUPPLY, UPGRADE_POPULATION_MAX, LENGTH }
+public enum EOtherFuncHotkey { NONE = -1, SELECT_MAINBASE, LENGTH }
 
 public enum EUpgradeETCType { NONE = -1, CURRENT_MAX_POPULATION, ENERGY_SUPPLY, LENGTH }
 public enum EUpgradeType { NONE = -1, ENERGY, POPULATION, STRUCTURE, RANGED_DMG, RANGED_HP, MELEE_DMG, MELEE_HP, LENGTH }

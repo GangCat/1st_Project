@@ -1,24 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.VirtualTexturing;
+using static UnityEngine.Rendering.LineRendering;
 
 public class GameManager : MonoBehaviour, IPauseSubject
 {
     private void Awake()
     {
+        DontDestroyOnLoad(gameObject);
+
+        if (isInGame)
+        {
+            selectMng = FindFirstObjectByType<SelectableObjectManager>();
+            structureMng = FindFirstObjectByType<StructureManager>();
+            pathMng = FindFirstObjectByType<PF_PathRequestManager>();
+            enemyMng = FindFirstObjectByType<EnemyManager>();
+            currencyMng = FindFirstObjectByType<CurrencyManager>();
+            populationMng = FindFirstObjectByType<PopulationManager>();
+            heroMng = FindFirstObjectByType<HeroUnitManager>();
+            fogMng = FindFirstObjectByType<FogManager>();
+            debugMng = FindFirstObjectByType<DebugModeManager>();
+
+            mainBaseTr = FindFirstObjectByType<StructureMainBase>().transform;
+        }
+
         inputMng = FindFirstObjectByType<InputManager>();
         cameraMng = FindFirstObjectByType<CameraManager>();
-        selectMng = FindFirstObjectByType<SelectableObjectManager>();
         uiMng = FindFirstObjectByType<UIManager>();
-        structureMng = FindFirstObjectByType<StructureManager>();
-        pathMng = FindFirstObjectByType<PF_PathRequestManager>();
-        enemyMng = FindFirstObjectByType<EnemyManager>();
-        currencyMng = FindFirstObjectByType<CurrencyManager>();
-        populationMng = FindFirstObjectByType<PopulationManager>();
-        heroMng = FindFirstObjectByType<HeroUnitManager>();
-        fogMng = FindFirstObjectByType<FogManager>();
-
-        mainBaseTr = FindFirstObjectByType<StructureMainBase>().transform;
+        
     }
 
     private void Start()
@@ -52,21 +62,32 @@ public class GameManager : MonoBehaviour, IPauseSubject
 
     private void InitManagers()
     {
-        pathMng.Init(worldSizeX, worldSizeY);
-        grid = pathMng.GetComponent<PF_Grid>();
-        inputMng.Init(mainBaseTr.GetComponent<SelectableObject>());
         cameraMng.Init();
-        structureMng.Init(grid, FindFirstObjectByType<StructureMainBase>());
-
         uiMng.Init();
-        selectMng.Init(UnitSelect, grid);
-        enemyMng.Init(grid, mainBaseTr.position);
-        currencyMng.Init();
-        populationMng.Init();
 
-        heroMng.Init(FindFirstObjectByType<UnitHero>());
-        fogMng.Init();
-        InitMainBase();
+        if (isInGame)
+        {
+            inputMng.Init(mainBaseTr.GetComponent<SelectableObject>(), TriggerDebugMode);
+
+            pathMng.Init(worldSizeX, worldSizeY);
+            grid = pathMng.GetComponent<PF_Grid>();
+            structureMng.Init(grid, FindFirstObjectByType<StructureMainBase>());
+
+            selectMng.Init(UnitSelect, grid);
+            enemyMng.Init(grid, mainBaseTr.position);
+            currencyMng.Init();
+            populationMng.Init();
+
+            fogMng.Init();
+            debugMng.Init();
+            heroMng.Init(FindFirstObjectByType<UnitHero>());
+            InitMainBase();
+        }
+
+        if (isMainMenu)
+        {
+            inputMng.MainInit();
+        }
     }
 
     private void InitCommandList()
@@ -82,7 +103,6 @@ public class GameManager : MonoBehaviour, IPauseSubject
         ArrayMainbaseCommand.Add(EMainbaseCommnad.CANCLE, new CommandBuildCancle(structureMng, inputMng));
         ArrayMainbaseCommand.Add(EMainbaseCommnad.CONFIRM, new CommandBuildConfirm(structureMng, inputMng, currencyMng));
         ArrayMainbaseCommand.Add(EMainbaseCommnad.BUILD_STRUCTURE, new CommandBuildStructure(structureMng, inputMng, currencyMng));
-        
 
         ArrayBarrackCommand.Add(EBarrackCommand.RALLYPOINT, new CommandRallypoint(inputMng));
         ArrayBarrackCommand.Add(EBarrackCommand.SPAWN_UNIT, new CommandSpawnUnit(selectMng, currencyMng));
@@ -140,9 +160,9 @@ public class GameManager : MonoBehaviour, IPauseSubject
         ArrayUnitActionCommand.Add(EUnitActionCommand.FOLLOW_OBJECT, new CommandUnitFollowObject(selectMng));
         ArrayUnitActionCommand.Add(EUnitActionCommand.PATROL, new CommandUnitPatrol(selectMng));
 
-        ArrayPauseCommand.Add(EPauseCOmmand.REGIST, new CommandRegistPauseObserver(this));
-        ArrayPauseCommand.Add(EPauseCOmmand.REMOVE, new CommandRemovePauseObserver(this));
-        ArrayPauseCommand.Add(EPauseCOmmand.TOGGLE_PAUSE, new CommandPauseToggle(this, inputMng, structureMng));
+        ArrayPauseCommand.Add(EPauseCommand.REGIST, new CommandRegistPauseObserver(this));
+        ArrayPauseCommand.Add(EPauseCommand.REMOVE, new CommandRemovePauseObserver(this));
+        ArrayPauseCommand.Add(EPauseCommand.TOGGLE_PAUSE, new CommandPauseToggle(this, inputMng, structureMng));
 
         ArrayRefundCurrencyCommand.Add(ERefuncCurrencyCommand.BUILD_STRUCTURE, new CommandRefundBuildStructure(currencyMng));
         ArrayRefundCurrencyCommand.Add(ERefuncCurrencyCommand.UPGRADE_STRUCTURE, new CommandRefundUpgradeStructure(currencyMng));
@@ -151,6 +171,18 @@ public class GameManager : MonoBehaviour, IPauseSubject
         ArrayRefundCurrencyCommand.Add(ERefuncCurrencyCommand.UPGRADE_ENERGY, new CommandRefundUpgradeEnergySupply(currencyMng));
         ArrayRefundCurrencyCommand.Add(ERefuncCurrencyCommand.UPGRADE_POPULATION, new CommandRefundUpgradePopulation(currencyMng));
         ArrayRefundCurrencyCommand.Add(ERefuncCurrencyCommand.SPAWN_NUCLEAR, new CommandRefundSpawnNuclear(currencyMng));
+
+        ArrayDebugModeCommand.Add(EDebugModeCommand.MOVE_STATE_INDICATOR, new CommandMoveCurStateIndicator(debugMng));
+
+        ArrayChangeHotkeyCommand.Add(EChangeHotkeyCommand.SELECT_MAINBASE_HOTKEY, new CommandChangeSelectMainbaseHotkey(inputMng));
+    }
+
+    private void TriggerDebugMode()
+    {
+        isDebugMode = !isDebugMode;
+        debugMng.SetActive(isDebugMode);
+        fogMng.IsDebugMode(isDebugMode);
+        heroMng.DebugMode(isDebugMode);
     }
 
     private void RegistObserver()
@@ -207,10 +239,17 @@ public class GameManager : MonoBehaviour, IPauseSubject
     private PopulationManager populationMng = null;
     private HeroUnitManager heroMng = null;
     private FogManager fogMng = null;
+    private DebugModeManager debugMng = null;
 
     private PF_Grid grid = null;
     private Transform mainBaseTr = null;
 
     private List<IPauseObserver> pauseObserverList = new List<IPauseObserver>();
     private bool isPause = false;
+    private bool isDebugMode = false;
+
+    [SerializeField]
+    private bool isMainMenu = false;
+    [SerializeField]
+    private bool isInGame = false;
 }
