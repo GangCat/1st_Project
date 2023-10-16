@@ -10,13 +10,13 @@ public class FuncButtonManager : MonoBehaviour
         canvasStructureBaseFunc = GetComponentInChildren<CanvasStructureBaseFunc>();
         canvasBuildFunc = GetComponentInChildren<CanvasBuildFunc>();
         canvasBarrackFunc = GetComponentInChildren<CanvasBarrackFunc>();
-        canvasTurretFunc = GetComponentInChildren<CanvasTurretFunc>();
 
         canvasUnitBaseFunc.Init();
         canvasStructureBaseFunc.Init();
         canvasBuildFunc.Init();
         canvasBarrackFunc.Init();
-        canvasTurretFunc.Init();
+
+        ArrayHUDCommand.Add(EHUDCommand.UPDATE_TOOLTIP_UPGRADE_COST, new CommandUpdateTooltipUpgradeCost(canvasStructureBaseFunc));
 
         ArrayUnitFuncButtonCommand.Add(EUnitFuncButtonCommand.DISPLAY_CANCLE_BUTTON, new CommandDisplayUnitCancleButton(canvasUnitBaseFunc));
         ArrayUnitFuncButtonCommand.Add(EUnitFuncButtonCommand.HIDE_CANCLE_BUTTON, new CommandHideUnitCancleButton(canvasUnitBaseFunc));
@@ -50,7 +50,6 @@ public class FuncButtonManager : MonoBehaviour
                 break;
             case EObjectType.TURRET:
                 canvasStructureBaseFunc.DisplayCanvas();
-                canvasTurretFunc.DisplayCanvas();
                 break;
             case EObjectType.BUNKER:
                 canvasStructureBaseFunc.DisplayCanvas();
@@ -98,7 +97,6 @@ public class FuncButtonManager : MonoBehaviour
                 break;
             case EObjectType.TURRET:
                 canvasStructureBaseFunc.HideCanvas();
-                canvasTurretFunc.HideCanvas();
                 break;
             case EObjectType.BUNKER:
                 canvasStructureBaseFunc.HideCanvas();
@@ -125,7 +123,6 @@ public class FuncButtonManager : MonoBehaviour
     private CanvasStructureBaseFunc canvasStructureBaseFunc = null;
     private CanvasBuildFunc canvasBuildFunc = null;
     private CanvasBarrackFunc canvasBarrackFunc = null;
-    private CanvasTurretFunc canvasTurretFunc = null;
 
     private EObjectType curActiveBtnFunc = EObjectType.NONE;
 }

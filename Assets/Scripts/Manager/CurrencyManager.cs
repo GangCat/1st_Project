@@ -12,6 +12,55 @@ public class CurrencyManager : MonoBehaviour, IPublisher, IPauseObserver
         StartCoroutine("SupplyEnergyCoroutine");
     }
 
+    public static uint UpgradeCost(EObjectType _type)
+    {
+        switch (_type)
+        {
+            case EObjectType.MAIN_BASE:
+                return upgradeMainBaseCost;
+            case EObjectType.TURRET:
+                return upgradeTurretCost;
+            case EObjectType.BUNKER:
+                return upgradeBunkerCost;
+            case EObjectType.WALL:
+                return upgradeWallCost;
+            case EObjectType.BARRACK:
+                return upgradeBarrackCost;
+            default:
+                return 0;
+        }
+    }
+
+    public static uint UpgradeUnitCost(EUnitUpgradeType _type)
+    {
+        switch (_type)
+        {
+            case EUnitUpgradeType.RANGED_UNIT_DMG:
+                return upgradeUnitDmgCost * (uint)SelectableObjectManager.LevelRangedUnitDmgUpgrade;
+            case EUnitUpgradeType.RANGED_UNIT_HP:
+                return upgradeUnitHpCost * (uint)SelectableObjectManager.LevelRangedUnitHpUpgrade;
+            case EUnitUpgradeType.MELEE_UNIT_DMG:
+                return upgradeUnitDmgCost * (uint)SelectableObjectManager.LevelRangedUnitDmgUpgrade;
+            case EUnitUpgradeType.MELEE_UNIT_HP:
+                return upgradeUnitHpCost * (uint)SelectableObjectManager.LevelRangedUnitHpUpgrade;
+            default:
+                return 0;
+        }
+    }
+
+    public static uint UpgradeETCCost(EUpgradeETCType _type)
+    {
+        switch (_type)
+        {
+            case EUpgradeETCType.CURRENT_MAX_POPULATION:
+                return upgradeMaxPopulation;
+            case EUpgradeETCType.ENERGY_SUPPLY:
+                return upgradeEnergySupply;
+            default:
+                return 0;
+        }
+    }
+
     private IEnumerator SupplyEnergyCoroutine()
     {
         float energySupplyDelay = 0f;
@@ -182,15 +231,15 @@ public class CurrencyManager : MonoBehaviour, IPublisher, IPauseObserver
         switch (_objType)
         {
             case EObjectType.MAIN_BASE:
-                return IsCoreEnough(upgradeMainBase * (uint)_level);
+                return IsCoreEnough(upgradeMainBaseCost * (uint)_level);
             case EObjectType.TURRET:
-                return IsCoreEnough(upgradeTurret * (uint)_level);
+                return IsCoreEnough(upgradeTurretCost * (uint)_level);
             case EObjectType.BUNKER:
-                return IsCoreEnough(upgradeBunker * (uint)_level);
+                return IsCoreEnough(upgradeBunkerCost * (uint)_level);
             case EObjectType.WALL:
-                return IsCoreEnough(upgradeWall * (uint)_level);
+                return IsCoreEnough(upgradeWallCost * (uint)_level);
             case EObjectType.BARRACK:
-                return IsCoreEnough(upgradeBarrack * (uint)_level);
+                return IsCoreEnough(upgradeBarrackCost * (uint)_level);
             default:
                 return false;
         }
@@ -201,19 +250,19 @@ public class CurrencyManager : MonoBehaviour, IPublisher, IPauseObserver
         switch (_objType)
         {
             case EObjectType.MAIN_BASE:
-                DecreaseCore(upgradeMainBase * (uint)_level);
+                DecreaseCore(upgradeMainBaseCost * (uint)_level);
                 break;
             case EObjectType.TURRET:
-                DecreaseCore(upgradeTurret * (uint)_level);
+                DecreaseCore(upgradeTurretCost * (uint)_level);
                 break;
             case EObjectType.BUNKER:
-                DecreaseCore(upgradeBunker * (uint)_level);
+                DecreaseCore(upgradeBunkerCost * (uint)_level);
                 break;
             case EObjectType.WALL:
-                DecreaseCore(upgradeWall * (uint)_level);
+                DecreaseCore(upgradeWallCost * (uint)_level);
                 break;
             case EObjectType.BARRACK:
-                DecreaseCore(upgradeBarrack * (uint)_level);
+                DecreaseCore(upgradeBarrackCost * (uint)_level);
                 break;
             default:
                 break;
@@ -225,19 +274,19 @@ public class CurrencyManager : MonoBehaviour, IPublisher, IPauseObserver
         switch (_objType)
         {
             case EObjectType.MAIN_BASE:
-                IncreaseCore(upgradeMainBase * (uint)_level);
+                IncreaseCore(upgradeMainBaseCost * (uint)_level);
                 break;
             case EObjectType.TURRET:
-                IncreaseCore(upgradeTurret * (uint)_level);
+                IncreaseCore(upgradeTurretCost * (uint)_level);
                 break;
             case EObjectType.BUNKER:
-                IncreaseCore(upgradeBunker * (uint)_level);
+                IncreaseCore(upgradeBunkerCost * (uint)_level);
                 break;
             case EObjectType.WALL:
-                IncreaseCore(upgradeWall * (uint)_level);
+                IncreaseCore(upgradeWallCost * (uint)_level);
                 break;
             case EObjectType.BARRACK:
-                IncreaseCore(upgradeBarrack * (uint)_level);
+                IncreaseCore(upgradeBarrackCost * (uint)_level);
                 break;
             default:
                 break;
@@ -251,13 +300,13 @@ public class CurrencyManager : MonoBehaviour, IPublisher, IPauseObserver
         switch (_upgradeType)
         {
             case EUnitUpgradeType.RANGED_UNIT_DMG:
-                return IsCoreEnough(upgradeUnitDmg * (uint)SelectableObjectManager.LevelRangedUnitDmgUpgrade);
+                return IsCoreEnough(upgradeUnitDmgCost * (uint)SelectableObjectManager.LevelRangedUnitDmgUpgrade);
             case EUnitUpgradeType.RANGED_UNIT_HP:
-                return IsCoreEnough(upgradeUnitHp * (uint)SelectableObjectManager.LevelRangedUnitHpUpgrade);
+                return IsCoreEnough(upgradeUnitHpCost * (uint)SelectableObjectManager.LevelRangedUnitHpUpgrade);
             case EUnitUpgradeType.MELEE_UNIT_DMG:
-                return IsCoreEnough(upgradeUnitDmg * (uint)SelectableObjectManager.LevelMeleeUnitDmgUpgrade);
+                return IsCoreEnough(upgradeUnitDmgCost * (uint)SelectableObjectManager.LevelMeleeUnitDmgUpgrade);
             case EUnitUpgradeType.MELEE_UNIT_HP:
-                return IsCoreEnough(upgradeUnitHp * (uint)SelectableObjectManager.LevelMeleeUnitHpUpgrade);
+                return IsCoreEnough(upgradeUnitHpCost * (uint)SelectableObjectManager.LevelMeleeUnitHpUpgrade);
             default:
                 return false;
         }
@@ -268,16 +317,16 @@ public class CurrencyManager : MonoBehaviour, IPublisher, IPauseObserver
         switch (_upgradeType)
         {
             case EUnitUpgradeType.RANGED_UNIT_DMG:
-                DecreaseCore(upgradeUnitDmg * (uint)SelectableObjectManager.LevelRangedUnitDmgUpgrade);
+                DecreaseCore(upgradeUnitDmgCost * (uint)SelectableObjectManager.LevelRangedUnitDmgUpgrade);
                 break;
             case EUnitUpgradeType.RANGED_UNIT_HP:
-                DecreaseCore(upgradeUnitDmg * (uint)SelectableObjectManager.LevelRangedUnitHpUpgrade);
+                DecreaseCore(upgradeUnitDmgCost * (uint)SelectableObjectManager.LevelRangedUnitHpUpgrade);
                 break;
             case EUnitUpgradeType.MELEE_UNIT_DMG:
-                DecreaseCore(upgradeUnitDmg * (uint)SelectableObjectManager.LevelMeleeUnitDmgUpgrade);
+                DecreaseCore(upgradeUnitDmgCost * (uint)SelectableObjectManager.LevelMeleeUnitDmgUpgrade);
                 break;
             case EUnitUpgradeType.MELEE_UNIT_HP:
-                DecreaseCore(upgradeUnitDmg * (uint)SelectableObjectManager.LevelMeleeUnitHpUpgrade);
+                DecreaseCore(upgradeUnitDmgCost * (uint)SelectableObjectManager.LevelMeleeUnitHpUpgrade);
                 break;
             default:
                 break;
@@ -289,16 +338,16 @@ public class CurrencyManager : MonoBehaviour, IPublisher, IPauseObserver
         switch (_upgradeType)
         {
             case EUnitUpgradeType.RANGED_UNIT_DMG:
-                IncreaseCore(upgradeUnitDmg * (uint)SelectableObjectManager.LevelRangedUnitDmgUpgrade);
+                IncreaseCore(upgradeUnitDmgCost * (uint)SelectableObjectManager.LevelRangedUnitDmgUpgrade);
                 break;
             case EUnitUpgradeType.RANGED_UNIT_HP:
-                IncreaseCore(upgradeUnitDmg * (uint)SelectableObjectManager.LevelRangedUnitHpUpgrade);
+                IncreaseCore(upgradeUnitDmgCost * (uint)SelectableObjectManager.LevelRangedUnitHpUpgrade);
                 break;
             case EUnitUpgradeType.MELEE_UNIT_DMG:
-                IncreaseCore(upgradeUnitDmg * (uint)SelectableObjectManager.LevelMeleeUnitDmgUpgrade);
+                IncreaseCore(upgradeUnitDmgCost * (uint)SelectableObjectManager.LevelMeleeUnitDmgUpgrade);
                 break;
             case EUnitUpgradeType.MELEE_UNIT_HP:
-                IncreaseCore(upgradeUnitDmg * (uint)SelectableObjectManager.LevelMeleeUnitHpUpgrade);
+                IncreaseCore(upgradeUnitDmgCost * (uint)SelectableObjectManager.LevelMeleeUnitHpUpgrade);
                 break;
             default:
                 break;
@@ -456,27 +505,27 @@ public class CurrencyManager : MonoBehaviour, IPublisher, IPauseObserver
     [Header("-Core")]
     [Header("-Upgrade Unit Cost")]
     [SerializeField]
-    private uint upgradeUnitHp = 50;
+    private static uint upgradeUnitHpCost = 50;
     [SerializeField]
-    private uint upgradeUnitDmg = 50;
+    private static uint upgradeUnitDmgCost = 50;
 
     [Header("-Upgrade Structure Cost")]
     [SerializeField]
-    private uint upgradeMainBase = 200;
+    private static uint upgradeMainBaseCost = 200;
     [SerializeField]
-    private uint upgradeBarrack = 100;
+    private static uint upgradeBarrackCost = 100;
     [SerializeField]
-    private uint upgradeBunker = 70;
+    private static uint upgradeBunkerCost = 70;
     [SerializeField]
-    private uint upgradeWall = 30;
+    private static uint upgradeWallCost = 30;
     [SerializeField]
-    private uint upgradeTurret = 100;
+    private static uint upgradeTurretCost = 100;
 
     [Header("-Upgrade ETC Cost")]
     [SerializeField]
-    private uint upgradeEnergySupply = 100;
+    private static uint upgradeEnergySupply = 100;
     [SerializeField]
-    private uint upgradeMaxPopulation = 100;
+    private static uint upgradeMaxPopulation = 100;
 
     private bool isPause = false;
     

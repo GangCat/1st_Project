@@ -48,7 +48,7 @@ public class StructureNuclear : Structure
         }
 
         if (myObj.IsSelect)
-            ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
+            UpdateInfo();
     }
 
     public void SpawnNuclear(VoidNuclearDelegate _spwnCompleteCallback)

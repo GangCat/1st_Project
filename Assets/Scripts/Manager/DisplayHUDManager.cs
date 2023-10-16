@@ -6,9 +6,9 @@ public class DisplayHUDManager : MonoBehaviour
 {
     public void Init()
     {
-        canvasEnergy = GetComponentInChildren<CanvasDisplayEnergy>();
-        canvasCore = GetComponentInChildren<CanvasDisplayCore>();
-        canvasPopulation = GetComponentInChildren<CanvasDisplayPopulation>();
+        //canvasEnergy = GetComponentInChildren<CanvasDisplayEnergy>();
+        //canvasCore = GetComponentInChildren<CanvasDisplayCore>();
+        //canvasPopulation = GetComponentInChildren<CanvasDisplayPopulation>();
         canvasMinimap = GetComponentInChildren<CanvasMinimap>();
         canvasWaveInfo = GetComponentInChildren<CanvasWaveInfo>();
         canvasUnitInfo = GetComponentInChildren<CanvasUnitInfo>();
@@ -80,29 +80,29 @@ public class DisplayHUDManager : MonoBehaviour
         canvaHeroRessurection.SetActive(true);
     }
 
-    public void UpdateEnergy(uint _curEnergy)
-    {
-        canvasEnergy.UpdateEnergy(_curEnergy);
-    }
+    //public void UpdateEnergy(uint _curEnergy)
+    //{
+    //    canvasEnergy.UpdateEnergy(_curEnergy);
+    //}
 
-    public void UpdateCore(uint _curCore)
-    {
-        canvasCore.UpdateCore(_curCore);
-    }
+    //public void UpdateCore(uint _curCore)
+    //{
+    //    canvasCore.UpdateCore(_curCore);
+    //}
 
-    public void UpdateCurPopulation(uint _curPopulation)
-    {
-        canvasPopulation.UpdateCurPopulation(_curPopulation);
-    }
+    //public void UpdateCurPopulation(uint _curPopulation)
+    //{
+    //    canvasPopulation.UpdateCurPopulation(_curPopulation);
+    //}
 
-    public void UpdateCurMaxPopulation(uint _curMaxPopulation)
-    {
-        canvasPopulation.UpdateCurMaxPopulation(_curMaxPopulation);
-    }
+    //public void UpdateCurMaxPopulation(uint _curMaxPopulation)
+    //{
+    //    canvasPopulation.UpdateCurMaxPopulation(_curMaxPopulation);
+    //}
 
-    private CanvasDisplayEnergy canvasEnergy = null;
-    private CanvasDisplayCore canvasCore = null;
-    private CanvasDisplayPopulation canvasPopulation = null;
+    //private CanvasDisplayEnergy canvasEnergy = null;
+    //private CanvasDisplayCore canvasCore = null;
+    //private CanvasDisplayPopulation canvasPopulation = null;
     private CanvasMinimap canvasMinimap = null;
     private CanvasWaveInfo canvasWaveInfo = null;
     private CanvasUnitInfo canvasUnitInfo = null;

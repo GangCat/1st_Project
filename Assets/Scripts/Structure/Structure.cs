@@ -68,7 +68,9 @@ public class Structure : MonoBehaviour, IPauseObserver
 
 
         if (myObj.IsSelect)
-            ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
+        {
+            UpdateInfo();
+        }
     }
 
     public void UpdateConstructInfo()
@@ -146,8 +148,10 @@ public class Structure : MonoBehaviour, IPauseObserver
     protected virtual void UpgradeComplete()
     {
         curUpgradeType = EUpgradeType.NONE;
-        if(myObj.IsSelect)
-            ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
+        if (myObj.IsSelect)
+        {
+            UpdateInfo();
+        }
         ++upgradeLevel;
     }
 
@@ -219,7 +223,7 @@ public class Structure : MonoBehaviour, IPauseObserver
         HideHBeam();
         ShowModel();
         if (myObj.IsSelect)
-            ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
+            UpdateInfo();
         
         // Build Complete Audio Play
         audioType = EAudioType_Adjutant.CONST_COMPLETE;
@@ -270,6 +274,12 @@ public class Structure : MonoBehaviour, IPauseObserver
         // Build cancel Audio Play
         audioType = EAudioType_Adjutant.CONST_CANCEL;
         AudioManager.instance.PlayAudio_Adjutant(audioType);
+    }
+
+    protected virtual void UpdateInfo()
+    {
+        ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
+        ArrayHUDCommand.Use(EHUDCommand.UPDATE_TOOLTIP_UPGRADE_COST, (int)CurrencyManager.UpgradeCost(myObj.GetObjectType()) * upgradeLevel);
     }
 
     protected virtual IEnumerator CheckBuildableCoroutine()

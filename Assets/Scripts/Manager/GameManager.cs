@@ -86,6 +86,8 @@ public class GameManager : MonoBehaviour, IPauseSubject
         {
             inputMng.MainInit();
         }
+
+
     }
 
     private void InitCommandList()

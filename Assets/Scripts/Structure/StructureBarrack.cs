@@ -61,7 +61,9 @@ public class StructureBarrack : Structure, ISubscriber
         }
 
         if (myObj.IsSelect)
-            ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
+        {
+            UpdateInfo();
+        }
     }
 
     public void UpdateSpawnInfo()
@@ -254,7 +256,7 @@ public class StructureBarrack : Structure, ISubscriber
         unitUpgradeType = EUnitUpgradeType.NONE;
 
         if (myObj.IsSelect)
-            ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
+            UpdateInfo();
     }
 
     public void Subscribe()
