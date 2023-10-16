@@ -19,6 +19,7 @@ public class DisplayHUDManager : MonoBehaviour
         canvasDemolishInfo = GetComponentInChildren<CanvasDemolishInfo>();
         canvasNuclearInfo = GetComponentInChildren<CanvasSpawnNuclearInfo>();
         canvasMenu = GetComponentInChildren<CanvasMenu>();
+        canvasTooltip = GetComponentInChildren<CanvasTooltip>();
 
         canvasMinimap.Init();
         canvasWaveInfo.Init();
@@ -30,6 +31,7 @@ public class DisplayHUDManager : MonoBehaviour
         canvasDemolishInfo.Init();
         canvasNuclearInfo.Init();
         canvasMenu.Init();
+        canvasTooltip.Init();
 
         ArrayHUDCommand.Add(EHUDCommand.INIT_WAVE_TIME, new CommandInitWaveTime(canvasWaveInfo));
         ArrayHUDCommand.Add(EHUDCommand.UPDATE_WAVE_TIME, new CommandUpdateWaveTime(canvasWaveInfo));
@@ -42,6 +44,8 @@ public class DisplayHUDManager : MonoBehaviour
         ArrayHUDCommand.Add(EHUDCommand.HERO_RESURRECTION_UPDATE, new CommandHeroRessurectionUpdate(canvaHeroRessurection));
         ArrayHUDCommand.Add(EHUDCommand.HERO_RESSURECTION_FINISH, new CommandHeroRessurectionFinish(canvaHeroRessurection));
         ArrayHUDCommand.Add(EHUDCommand.HIDE_ALL_INFO, new CommandHideAllInfo(this));
+        ArrayHUDCommand.Add(EHUDCommand.DISPLAY_TOOLTIP, new CommandDisplayTooltip(canvasTooltip));
+        ArrayHUDCommand.Add(EHUDCommand.HIDE_TOOLTIP, new CommandHideTooltip(canvasTooltip));
 
         ArrayHUDUpgradeCommand.Add(EHUDUpgradeCommand.DISPLAY_UPGRADE_INFO, new CommandDisplayUpgradeInfo(canvasUpgradeInfo));
         ArrayHUDUpgradeCommand.Add(EHUDUpgradeCommand.UPDATE_UPGRADE_TIME, new CommandUpdateUpgradeTime(canvasUpgradeInfo));
@@ -109,4 +113,5 @@ public class DisplayHUDManager : MonoBehaviour
     private CanvasDemolishInfo canvasDemolishInfo = null;
     private CanvasSpawnNuclearInfo canvasNuclearInfo = null;
     private CanvasMenu canvasMenu = null;
+    private CanvasTooltip canvasTooltip = null;
 }

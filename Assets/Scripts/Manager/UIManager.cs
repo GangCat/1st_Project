@@ -17,7 +17,7 @@ public class UIManager : MonoBehaviour
         tempChangeHotkeyBtn.onClick.AddListener(
             () =>
             {
-                ArrayChangeHotkeyCommand.Use(EChangeHotkeyCommand.SELECT_MAINBASE_HOTKEY, EUnitFuncHotkey.MOVE);
+                ArrayChangeHotkeyCommand.Use(EChangeHotkeyCommand.SELECT_UNIT_FUNC_BUTTON, EUnitFuncKey.MOVE);
             });
     }
 

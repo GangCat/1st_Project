@@ -7,46 +7,14 @@ public class CanvasUnitBaseFunc : CanvasFunc
 {
     public void Init()
     {
-        btnMove.onClick.AddListener(
-            ()=>
-            {
-                ArrayUnitFuncButtonCommand.Use(EUnitFuncButtonCommand.MOVE);
-            });
-
-        btnStop.onClick.AddListener(
-            () =>
-            {
-                ArrayUnitFuncButtonCommand.Use(EUnitFuncButtonCommand.STOP);
-            });
-
-        btnHold.onClick.AddListener(
-            () =>
-            {
-                ArrayUnitFuncButtonCommand.Use(EUnitFuncButtonCommand.HOLD);
-            });
-
-        btnPatrol.onClick.AddListener(
-            () =>
-            {
-                ArrayUnitFuncButtonCommand.Use(EUnitFuncButtonCommand.PATROL);
-            });
-
-        btnAttack.onClick.AddListener(
-            () =>
-            {
-                ArrayUnitFuncButtonCommand.Use(EUnitFuncButtonCommand.ATTACK);
-            });
-
-        btnCancle.onClick.AddListener(
-            () =>
-            {
-                ArrayUnitFuncButtonCommand.Use(EUnitFuncButtonCommand.CANCLE);
-            });
+        arrUnitFuncBtn = GetComponentsInChildren<FuncButtonBase>();
+        foreach (FuncButtonBase btn in arrUnitFuncBtn)
+            btn.Init();
 
         gameObject.SetActive(false);
     }
 
-    public override void SetActive(bool _isActive)
+    protected override void SetActive(bool _isActive)
     {
         HideCancleButton();
         base.SetActive(_isActive);
@@ -54,24 +22,29 @@ public class CanvasUnitBaseFunc : CanvasFunc
 
     public void DisplayCancleButton()
     {
-        btnCancle.gameObject.SetActive(true);
+        arrUnitFuncBtn[(int)EUnitFuncKey.CANCLE].SetActive(true);
     }
 
     public void HideCancleButton()
     {
-        btnCancle.gameObject.SetActive(false);
+        arrUnitFuncBtn[(int)EUnitFuncKey.CANCLE].SetActive(false);
     }
 
-    [SerializeField]
-    private Button btnMove = null;
-    [SerializeField]
-    private Button btnStop = null;
-    [SerializeField]
-    private Button btnHold = null;
-    [SerializeField]
-    private Button btnPatrol = null;
-    [SerializeField]
-    private Button btnAttack = null;
-    [SerializeField]
-    private Button btnCancle = null;
+    public void DisplayLaunchNuclearButton()
+    {
+        arrUnitFuncBtn[(int)EUnitFuncKey.LAUNCH_NUCLEAR].SetActive(true);
+    }
+
+    public void HideLaunchNuclearButton()
+    {
+        arrUnitFuncBtn[(int)EUnitFuncKey.LAUNCH_NUCLEAR].SetActive(false);
+    }
+
+    public void ChangeHotkey(EUnitFuncKey _funcHotkey, KeyCode _hotkey)
+    {
+        arrUnitFuncBtn[(int)_funcHotkey].SetHotkey(_hotkey);
+    }
+
+    private FuncButtonBase[] arrUnitFuncBtn = null;
+
 }

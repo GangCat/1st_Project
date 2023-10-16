@@ -174,7 +174,7 @@ public class GameManager : MonoBehaviour, IPauseSubject
 
         ArrayDebugModeCommand.Add(EDebugModeCommand.MOVE_STATE_INDICATOR, new CommandMoveCurStateIndicator(debugMng));
 
-        ArrayChangeHotkeyCommand.Add(EChangeHotkeyCommand.SELECT_MAINBASE_HOTKEY, new CommandChangeSelectMainbaseHotkey(inputMng));
+        ArrayChangeHotkeyCommand.Add(EChangeHotkeyCommand.SELECT_UNIT_FUNC_BUTTON, new CommandChangeUnitFuncHotkey(inputMng));
     }
 
     private void TriggerDebugMode()

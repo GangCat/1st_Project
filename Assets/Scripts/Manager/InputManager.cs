@@ -238,7 +238,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
 
     private void CheckIsHotkey()
     {
-        if (Input.GetKeyDown(arrOtherFuncHotkey[(int)EOtherFuncHotkey.SELECT_MAINBASE]))
+        if (Input.GetKeyDown(arrOtherFuncHotkey[(int)EOtherFuncKey.SELECT_MAINBASE]))
         {
             ArraySelectCommand.Use(ESelectCommand.SELECT_START);
             ArraySelectCommand.Use(ESelectCommand.TEMP_SELECT, mainbaseObejct);
@@ -263,7 +263,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
             case EObjectType.UNIT_HERO:
                 if (UnitDefaultHotkeyAction())
                     break;
-                if (Input.GetKeyDown(arrUnitFuncHotkey[(int)EUnitFuncHotkey.LAUNCH_NUCLEAR]))
+                if (Input.GetKeyDown(arrUnitFuncHotkey[(int)EUnitFuncKey.LAUNCH_NUCLEAR]))
                     ArrayUnitFuncButtonCommand.Use(EUnitFuncButtonCommand.LAUNCH_NUCLEAR);
                 break;
             case EObjectType.MAIN_BASE:
@@ -271,9 +271,9 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
                     break;
                 if (MainbaseBuildHotkeyAction())
                     break;
-                if (Input.GetKeyDown(arrStructureFuncHotkey[(int)EStructureFuncHotkey.UPGRADE_ENERGY_SUPPLY]))
+                if (Input.GetKeyDown(arrStructureFuncHotkey[(int)EStructureFuncKey.UPGRADE_ENERGY_SUPPLY]))
                     ArrayCurrencyCommand.Use(ECurrencyCommand.UPGRADE_ENERGY_SUPPLY);
-                else if (Input.GetKeyDown(arrStructureFuncHotkey[(int)EStructureFuncHotkey.UPGRADE_POPULATION_MAX]))
+                else if (Input.GetKeyDown(arrStructureFuncHotkey[(int)EStructureFuncKey.UPGRADE_POPULATION_MAX]))
                     ArrayPopulationCommand.Use(EPopulationCommand.UPGRADE_MAX_POPULATION);
 
                 break;
@@ -283,11 +283,11 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
             case EObjectType.BUNKER:
                 if (StructureDefaultHotkeyAction())
                     break;
-                if (Input.GetKeyDown(arrStructureFuncHotkey[(int)EStructureFuncHotkey.OUT_ONE_UNIT]))
+                if (Input.GetKeyDown(arrStructureFuncHotkey[(int)EStructureFuncKey.OUT_ONE_UNIT]))
                     ArrayBunkerCommand.Use(EBunkerCommand.OUT_ONE_UNIT);
-                else if (Input.GetKeyDown(arrStructureFuncHotkey[(int)EStructureFuncHotkey.OUT_ALL_UNIT]))
+                else if (Input.GetKeyDown(arrStructureFuncHotkey[(int)EStructureFuncKey.OUT_ALL_UNIT]))
                     ArrayBunkerCommand.Use(EBunkerCommand.OUT_ALL_UNIT);
-                else if (Input.GetKeyDown(arrBuildFuncHotkey[(int)EBuildFuncHotkey.WALL]))
+                else if (Input.GetKeyDown(arrBuildFuncHotkey[(int)EBuildFuncKey.WALL]))
                     ArrayBunkerCommand.Use(EBunkerCommand.EXPAND_WALL);
                 break;
             case EObjectType.WALL:
@@ -296,25 +296,25 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
             case EObjectType.BARRACK:
                 if (StructureDefaultHotkeyAction())
                     break;
-                if (Input.GetKeyDown(arrBarrackFuncHotkey[(int)EBarrackFuncHotkey.SPAWN_MELEE]))
+                if (Input.GetKeyDown(arrBarrackFuncHotkey[(int)EBarrackFuncKey.SPAWN_MELEE]))
                     ArrayBarrackCommand.Use(EBarrackCommand.SPAWN_UNIT, EUnitType.MELEE);
-                else if (Input.GetKeyDown(arrBarrackFuncHotkey[(int)EBarrackFuncHotkey.SPAWN_RANGED]))
+                else if (Input.GetKeyDown(arrBarrackFuncHotkey[(int)EBarrackFuncKey.SPAWN_RANGED]))
                     ArrayBarrackCommand.Use(EBarrackCommand.SPAWN_UNIT, EUnitType.RANGED);
-                else if (Input.GetKeyDown(arrBarrackFuncHotkey[(int)EBarrackFuncHotkey.SET_RALLYPOINT]))
+                else if (Input.GetKeyDown(arrBarrackFuncHotkey[(int)EBarrackFuncKey.SET_RALLYPOINT]))
                     ArrayBarrackCommand.Use(EBarrackCommand.RALLYPOINT);
-                else if (Input.GetKeyDown(arrBarrackFuncHotkey[(int)EBarrackFuncHotkey.UPGRADE_RANGED_DMG]))
+                else if (Input.GetKeyDown(arrBarrackFuncHotkey[(int)EBarrackFuncKey.UPGRADE_RANGED_DMG]))
                     ArrayBarrackCommand.Use(EBarrackCommand.UPGRADE_UNIT, EUnitUpgradeType.RANGED_UNIT_DMG);
-                else if (Input.GetKeyDown(arrBarrackFuncHotkey[(int)EBarrackFuncHotkey.UPGRADE_RANGED_HP]))
+                else if (Input.GetKeyDown(arrBarrackFuncHotkey[(int)EBarrackFuncKey.UPGRADE_RANGED_HP]))
                     ArrayBarrackCommand.Use(EBarrackCommand.UPGRADE_UNIT, EUnitUpgradeType.RANGED_UNIT_HP);
-                else if (Input.GetKeyDown(arrBarrackFuncHotkey[(int)EBarrackFuncHotkey.UPGRADE_MELEE_DMG]))
+                else if (Input.GetKeyDown(arrBarrackFuncHotkey[(int)EBarrackFuncKey.UPGRADE_MELEE_DMG]))
                     ArrayBarrackCommand.Use(EBarrackCommand.UPGRADE_UNIT, EUnitUpgradeType.MELEE_UNIT_DMG);
-                else if (Input.GetKeyDown(arrBarrackFuncHotkey[(int)EBarrackFuncHotkey.UPGRADE_MELEE_HP]))
+                else if (Input.GetKeyDown(arrBarrackFuncHotkey[(int)EBarrackFuncKey.UPGRADE_MELEE_HP]))
                     ArrayBarrackCommand.Use(EBarrackCommand.UPGRADE_UNIT, EUnitUpgradeType.MELEE_UNIT_HP);
                 break;
             case EObjectType.NUCLEAR:
                 if (StructureDefaultHotkeyAction())
                     break;
-                if (Input.GetKeyDown(arrStructureFuncHotkey[(int)EStructureFuncHotkey.SPAWN_NUCLEAR]))
+                if (Input.GetKeyDown(arrStructureFuncHotkey[(int)EStructureFuncKey.SPAWN_NUCLEAR]))
                     ArrayNuclearCommand.Use(ENuclearCommand.SPAWN_NUCLEAR);
                 break;
             default:
@@ -324,9 +324,9 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
 
     private bool StructureDefaultHotkeyAction()
     {
-        if (Input.GetKeyDown(arrStructureFuncHotkey[(int)EStructureFuncHotkey.DEMOLISH]))
+        if (Input.GetKeyDown(arrStructureFuncHotkey[(int)EStructureFuncKey.DEMOLISH]))
             ArrayStructureFuncButtonCommand.Use(EStructureButtonCommand.DEMOLISH);
-        else if (Input.GetKeyDown(arrStructureFuncHotkey[(int)EStructureFuncHotkey.UPGRADE]))
+        else if (Input.GetKeyDown(arrStructureFuncHotkey[(int)EStructureFuncKey.UPGRADE]))
             ArrayStructureFuncButtonCommand.Use(EStructureButtonCommand.UPGRADE);
         else if (Input.GetKeyDown(cancleKey))
             ArrayStructureFuncButtonCommand.Use(EStructureButtonCommand.CANCLE_CURRENT_FUNCTION);
@@ -338,15 +338,15 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
 
     private bool UnitDefaultHotkeyAction()
     {
-        if (Input.GetKeyDown(arrUnitFuncHotkey[(int)EUnitFuncHotkey.MOVE]))
+        if (Input.GetKeyDown(arrUnitFuncHotkey[(int)EUnitFuncKey.MOVE]))
             ArrayUnitFuncButtonCommand.Use(EUnitFuncButtonCommand.MOVE);
-        else if (Input.GetKeyDown(arrUnitFuncHotkey[(int)EUnitFuncHotkey.STOP]))
+        else if (Input.GetKeyDown(arrUnitFuncHotkey[(int)EUnitFuncKey.STOP]))
             ArrayUnitFuncButtonCommand.Use(EUnitFuncButtonCommand.STOP);
-        else if (Input.GetKeyDown(arrUnitFuncHotkey[(int)EUnitFuncHotkey.HOLD]))
+        else if (Input.GetKeyDown(arrUnitFuncHotkey[(int)EUnitFuncKey.HOLD]))
             ArrayUnitFuncButtonCommand.Use(EUnitFuncButtonCommand.HOLD);
-        else if (Input.GetKeyDown(arrUnitFuncHotkey[(int)EUnitFuncHotkey.PATROL]))
+        else if (Input.GetKeyDown(arrUnitFuncHotkey[(int)EUnitFuncKey.PATROL]))
             ArrayUnitFuncButtonCommand.Use(EUnitFuncButtonCommand.PATROL);
-        else if (Input.GetKeyDown(arrUnitFuncHotkey[(int)EUnitFuncHotkey.ATTACK]))
+        else if (Input.GetKeyDown(arrUnitFuncHotkey[(int)EUnitFuncKey.ATTACK]))
             ArrayUnitFuncButtonCommand.Use(EUnitFuncButtonCommand.ATTACK);
         else
             return false;
@@ -357,13 +357,13 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
 
     private bool MainbaseBuildHotkeyAction()
     {
-        if (Input.GetKeyDown(arrBuildFuncHotkey[(int)EBuildFuncHotkey.TURRET]))
+        if (Input.GetKeyDown(arrBuildFuncHotkey[(int)EBuildFuncKey.TURRET]))
             ArrayMainbaseCommand.Use(EMainbaseCommnad.BUILD_STRUCTURE, EObjectType.TURRET);
-        else if (Input.GetKeyDown(arrBuildFuncHotkey[(int)EBuildFuncHotkey.BUNKER]))
+        else if (Input.GetKeyDown(arrBuildFuncHotkey[(int)EBuildFuncKey.BUNKER]))
             ArrayMainbaseCommand.Use(EMainbaseCommnad.BUILD_STRUCTURE, EObjectType.BUNKER);
-        else if (Input.GetKeyDown(arrBuildFuncHotkey[(int)EBuildFuncHotkey.BARRACK]))
+        else if (Input.GetKeyDown(arrBuildFuncHotkey[(int)EBuildFuncKey.BARRACK]))
             ArrayMainbaseCommand.Use(EMainbaseCommnad.BUILD_STRUCTURE, EObjectType.BARRACK);
-        else if (Input.GetKeyDown(arrBuildFuncHotkey[(int)EBuildFuncHotkey.NUCLEAR]))
+        else if (Input.GetKeyDown(arrBuildFuncHotkey[(int)EBuildFuncKey.NUCLEAR]))
             ArrayMainbaseCommand.Use(EMainbaseCommnad.BUILD_STRUCTURE, EObjectType.NUCLEAR);
         else
             return false;
@@ -567,31 +567,31 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
         isPause = _isPause;
     }
 
-    public void ChangeUnitHotkey(EUnitFuncHotkey _targetHotkey)
+    public void ChangeUnitHotkey(EUnitFuncKey _targetHotkey)
     {
         isDetectingChangeKey = true;
         SetCurChangeHotKey(arrUnitFuncHotkey, _targetHotkey);
     }
 
-    public void ChangeBuildHotkey(EBuildFuncHotkey _targetHotkey)
+    public void ChangeBuildHotkey(EBuildFuncKey _targetHotkey)
     {
         isDetectingChangeKey = true;
         SetCurChangeHotKey(arrBuildFuncHotkey, _targetHotkey);
     }
 
-    public void ChangeBarrackHotkey(EBarrackFuncHotkey _targetHotkey)
+    public void ChangeBarrackHotkey(EBarrackFuncKey _targetHotkey)
     {
         isDetectingChangeKey = true;
         SetCurChangeHotKey(arrBarrackFuncHotkey, _targetHotkey);
     }
 
-    public void ChangeStructureFuncHotkey(EStructureFuncHotkey _targetHotkey)
+    public void ChangeStructureFuncHotkey(EStructureFuncKey _targetHotkey)
     {
         isDetectingChangeKey = true;
         SetCurChangeHotKey(arrStructureFuncHotkey, _targetHotkey);
     }
 
-    public void ChangeOtherFuncHotkey(EOtherFuncHotkey _targetHotkey)
+    public void ChangeOtherFuncHotkey(EOtherFuncKey _targetHotkey)
     {
         isDetectingChangeKey = true;
         SetCurChangeHotKey(arrStructureFuncHotkey, _targetHotkey);
@@ -611,6 +611,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
             if (CheckIsChangable(curKey))
             {
                 curChangeKeyCode[curChangeKeyIdx] = curKey;
+                ArrayChangeHotkeyCommand.Use(EChangeHotkeyCommand.CONFIRM_UNIT_FUNC_BUTTON, (EUnitFuncKey)curChangeKeyIdx, curKey);
             }
             curChangeKeyCode = null;
             curChangeKeyIdx = -1;
