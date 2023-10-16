@@ -21,6 +21,11 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
         for (int i = 0; i < arrUnitPrefab.Length; ++i)
             arrMemoryPool[i] = new MemoryPool(arrUnitPrefab[i], 5, transform);
 
+        arrCrowd = new List<FriendlyObject>[9];
+        for(int i = 0; i < arrCrowd.Length; ++i)
+            arrCrowd[i] = new List<FriendlyObject>();
+
+
         ArrayHUDCommand.Use(EHUDCommand.INIT_DISPLAY_GROUP_INFO, listFriendlyUnitInfo);
         ArrayHUDCommand.Use(EHUDCommand.INIT_DISPLAY_SINGLE_INFO, unitInfoContainer);
     }
@@ -108,6 +113,11 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
             return grid.GetAccessibleNodeWithoutTargetNode(unitNode).worldPos;
 
         return unitNode.worldPos;
+    }
+
+    public void SetListCrowd(int _arrIdx)
+    {
+        arrCrowd[_arrIdx].AddRange(listSelectedFriendlyObject.ToArray());
     }
 
     public void SelectStart()
@@ -733,4 +743,6 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
     private static List<SFriendlyUnitInfo> listFriendlyUnitInfo = null;
 
     private MemoryPool[] arrMemoryPool = null;
+
+    private List<FriendlyObject>[] arrCrowd = null;
 }
