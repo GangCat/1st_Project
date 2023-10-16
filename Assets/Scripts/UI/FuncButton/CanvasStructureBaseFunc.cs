@@ -29,9 +29,9 @@ public class CanvasStructureBaseFunc : CanvasFunc
         gameObject.SetActive(false);
     }
 
-    public void ChangeHotkey(EStructureFuncKey _funcHotkey, KeyCode _hotkey)
+    public void ChangeHotkey(int _funcKeyIdx, KeyCode _hotkey)
     {
-        arrStructureFuncBtn[(int)_funcHotkey].SetHotkey(_hotkey);
+        arrStructureFuncBtn[_funcKeyIdx].SetHotkey(_hotkey);
     }
 
     public override void DisplayCanvas()

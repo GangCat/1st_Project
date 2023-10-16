@@ -40,9 +40,9 @@ public class CanvasUnitBaseFunc : CanvasFunc
         arrUnitFuncBtn[(int)EUnitFuncKey.LAUNCH_NUCLEAR].SetActive(false);
     }
 
-    public void ChangeHotkey(EUnitFuncKey _funcHotkey, KeyCode _hotkey)
+    public void ChangeHotkey(int _funcKeyIdx, KeyCode _hotkey)
     {
-        arrUnitFuncBtn[(int)_funcHotkey].SetHotkey(_hotkey);
+        arrUnitFuncBtn[_funcKeyIdx].SetHotkey(_hotkey);
     }
 
     private FuncButtonBase[] arrUnitFuncBtn = null;

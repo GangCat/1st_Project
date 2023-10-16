@@ -10,7 +10,7 @@ public class CommandConfirmChangeUnitFuncHotkey : Command
     }
     public override void Execute(params object[] _objects)
     {
-        canvasUnitFunc.ChangeHotkey((EUnitFuncKey)_objects[0], (KeyCode)_objects[1]);
+        canvasUnitFunc.ChangeHotkey((int)_objects[0], (KeyCode)_objects[1]);
     }
 
     private CanvasUnitBaseFunc canvasUnitFunc = null;

@@ -26,7 +26,7 @@ MonoBehaviour:
   m_MinSize: {x: 400, y: 100}
   m_MaxSize: {x: 32384, y: 16192}
   vertical: 0
-  controlID: 32648
+  controlID: 33640
 --- !u!114 &2
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -97,7 +97,7 @@ MonoBehaviour:
     m_HSlider: 0
     m_VSlider: 0
     m_IgnoreScrollWheelUntilClicked: 0
-    m_EnableMouseInput: 0
+    m_EnableMouseInput: 1
     m_EnableSliderZoomHorizontal: 0
     m_EnableSliderZoomVertical: 0
     m_UniformScale: 1
@@ -152,7 +152,7 @@ MonoBehaviour:
   m_MinSize: {x: 100, y: 100}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
-  controlID: 32649
+  controlID: 33641
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -172,8 +172,8 @@ MonoBehaviour:
     y: 0
     width: 631
     height: 487
-  m_MinSize: {x: 201, y: 221}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 5}
   m_Panes:
   - {fileID: 5}
@@ -821,8 +821,8 @@ MonoBehaviour:
     y: 487
     width: 631
     height: 460
-  m_MinSize: {x: 101, y: 121}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 100, y: 100}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 2}
   m_Panes:
   - {fileID: 2}
@@ -894,8 +894,8 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 240}
-      m_SelectedIDs: 66d30000
-      m_LastClickedID: 54118
+      m_SelectedIDs: c8d80000
+      m_LastClickedID: 55496
       m_ExpandedIDs: c234feff28aafefffe9cffffde9effff12fbfffff4ffffff987e0000328100008c81000092810000188200006c840000ce84000066d300003ad40000d4d600002ed7000034d7000046d70000bad7000032d8000052d80000c2d80000c8d80000a8d900000eda000070da00008ada0000b8da0000e2da0000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
@@ -1070,7 +1070,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scripts/Manager
+    - Assets/Scripts/UI/FuncButton
     m_Globs: []
     m_ProductIds: 
     m_AnyWithAssetOrigin: 0
@@ -1080,16 +1080,16 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/Scripts/Manager
+  - Assets/Scripts/UI/FuncButton
   m_LastFoldersGridSize: 16
   m_LastProjectPath: C:\Users\SAMSUNG\Desktop\NewFolder\Unity\1st Project
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: beae0000
-    m_LastClickedID: 44734
-    m_ExpandedIDs: 000000008a9100008c9100008e91000090910000a2910000d0ae0000
+    m_SelectedIDs: d6ae0000
+    m_LastClickedID: 44758
+    m_ExpandedIDs: 000000008a9100008c9100008e91000090910000a291000086ae0000d0ae0000d6ae0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1142,8 +1142,8 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 66d30000
-    m_LastClickedInstanceID: 54118
+    m_SelectedInstanceIDs: c8d80000
+    m_LastClickedInstanceID: 55496
     m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c62300008aea0000887a00003036000050c60000f8a2000000000000ceb90100e84e0200f24e020004620200ce7302005a7d0200647d0200a2370100fe6d0100348e0000c2850000b67f0000d87e00001a80000044880000
     m_RenameOverlay:

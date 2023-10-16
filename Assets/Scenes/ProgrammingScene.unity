@@ -2040,7 +2040,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 180168040}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d13c9ca4746e7a4a9f74822a236f732, type: 3}
+  m_Script: {fileID: 11500000, guid: bab2bd95e019a3345a99c3ea2649bd50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   funcName: 
@@ -3060,6 +3060,7 @@ RectTransform:
   - {fileID: 472311193}
   - {fileID: 1583906704}
   - {fileID: 735414006}
+  - {fileID: 1348180056}
   m_Father: {fileID: 1603398401}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -3149,6 +3150,7 @@ MonoBehaviour:
   buttonOutAllUnit: {fileID: 472311197}
   buttonUpgradeEnergySupply: {fileID: 1583906708}
   buttonUpgradePopulation: {fileID: 735414010}
+  buttonStructureCancle: {fileID: 1348180060}
 --- !u!1 &253995510
 GameObject:
   m_ObjectHideFlags: 0
@@ -4862,7 +4864,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 357329358}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d13c9ca4746e7a4a9f74822a236f732, type: 3}
+  m_Script: {fileID: 11500000, guid: 48efd5900cf22d044ac299e4f19b540a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   funcName: 
@@ -6741,7 +6743,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1238778119}
-  m_Father: {fileID: 1204843067}
+  m_Father: {fileID: 1267363969}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
@@ -6839,7 +6841,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 492267355}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d13c9ca4746e7a4a9f74822a236f732, type: 3}
+  m_Script: {fileID: 11500000, guid: f0b8dc30b70e3b142af4eb4baad944ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   funcName: 
@@ -15252,7 +15254,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1020517950}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d13c9ca4746e7a4a9f74822a236f732, type: 3}
+  m_Script: {fileID: 11500000, guid: 80bfc6fcb6f43c54b929efd9e4706eee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   funcName: 
@@ -16241,7 +16243,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1085169901}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d13c9ca4746e7a4a9f74822a236f732, type: 3}
+  m_Script: {fileID: 11500000, guid: 2aeaf71f63434d847bb2e3387858755a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   funcName: 
@@ -17528,7 +17530,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1204843067
 RectTransform:
   m_ObjectHideFlags: 0
@@ -17540,8 +17542,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 492267356}
+  m_Children: []
   m_Father: {fileID: 1603398401}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -19083,7 +19084,7 @@ GameObject:
   - component: {fileID: 1267363970}
   - component: {fileID: 1267363973}
   m_Layer: 0
-  m_Name: Canvas_MainBaseFunc
+  m_Name: Canvas_BuildFunc
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -19105,6 +19106,7 @@ RectTransform:
   - {fileID: 1020517951}
   - {fileID: 1085169902}
   - {fileID: 357329359}
+  - {fileID: 492267356}
   m_Father: {fileID: 1603398401}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -19184,15 +19186,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1267363968}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 285ba6ee2ef6f164fa2ae0f10e589100, type: 3}
+  m_Script: {fileID: 11500000, guid: 085e5e1130275f548971d74074973182, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  btnBuildTurret: {fileID: 180168042}
-  btnBuildBunker: {fileID: 1020517952}
-  btnBuildBarrack: {fileID: 1085169903}
-  btnBuildNuclear: {fileID: 357329360}
-  btnUpgradeEnergySup: {fileID: 1583906705}
-  btnUpgradeMaxPop: {fileID: 735414007}
+  btnBuildBarrack: {fileID: 1085169906}
+  btnBuildBunker: {fileID: 1020517955}
+  btnBuildNuclear: {fileID: 357329363}
+  btnBuildTurret: {fileID: 180168045}
+  btnBuildWall: {fileID: 492267360}
 --- !u!1 &1268396445
 GameObject:
   m_ObjectHideFlags: 0
@@ -20425,6 +20426,7 @@ GameObject:
   - component: {fileID: 1348180059}
   - component: {fileID: 1348180058}
   - component: {fileID: 1348180057}
+  - component: {fileID: 1348180060}
   m_Layer: 5
   m_Name: Button_StructureCancle_12
   m_TagString: Untagged
@@ -20445,7 +20447,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 851140289}
-  m_Father: {fileID: 1701275361}
+  m_Father: {fileID: 252676714}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
@@ -20534,6 +20536,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1348180055}
   m_CullTransparentMesh: 1
+--- !u!114 &1348180060
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1348180055}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71beda2a0db88cc4b9fe62087bc85f00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  funcName: 
+  funcHotkey: 
+  cost: 
+  currencyType: -1
 --- !u!1 &1349572391
 GameObject:
   m_ObjectHideFlags: 0
@@ -21577,7 +21595,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1386885106
 RectTransform:
   m_ObjectHideFlags: 0
@@ -25132,7 +25150,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1701275361
 RectTransform:
   m_ObjectHideFlags: 0
@@ -25144,8 +25162,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1348180056}
+  m_Children: []
   m_Father: {fileID: 1603398401}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}

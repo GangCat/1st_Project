@@ -611,7 +611,15 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
             if (CheckIsChangable(curKey))
             {
                 curChangeKeyCode[curChangeKeyIdx] = curKey;
-                ArrayChangeHotkeyCommand.Use(EChangeHotkeyCommand.CONFIRM_UNIT_FUNC_BUTTON, (EUnitFuncKey)curChangeKeyIdx, curKey);
+                if (curChangeKeyCode.Equals(arrUnitFuncHotkey))
+                    ArrayChangeHotkeyCommand.Use(EChangeHotkeyCommand.CONFIRM_UNIT_FUNC_BUTTON, curChangeKeyIdx, curKey);
+                else if (curChangeKeyCode.Equals(arrStructureFuncHotkey))
+                    ArrayChangeHotkeyCommand.Use(EChangeHotkeyCommand.CONFIRM_STRUCTURE_FUNC_BUTTON, curChangeKeyIdx, curKey);
+                else if (curChangeKeyCode.Equals(arrBuildFuncHotkey))
+                    ArrayChangeHotkeyCommand.Use(EChangeHotkeyCommand.CONFIRM_BUILD_FUNC_BUTTON, curChangeKeyIdx, curKey);
+                else if (curChangeKeyCode.Equals(arrBarrackFuncHotkey))
+                    ArrayChangeHotkeyCommand.Use(EChangeHotkeyCommand.CONFIRM_BARRACK_FUNC_BUTTON, curChangeKeyIdx, curKey);
+                    
             }
             curChangeKeyCode = null;
             curChangeKeyIdx = -1;
