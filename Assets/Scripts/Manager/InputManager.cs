@@ -228,6 +228,8 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
             else
                 MoveWithMouseClick();
         }
+
+        CrowdHotkeyAction(Input.GetKey(arrCrowdFuncHotkey[0]));
     }
 
     private void LateUpdate()
@@ -319,6 +321,30 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
                 break;
             default:
                 break;
+        }
+
+
+    }
+
+    private void CrowdHotkeyAction(bool _isCrowdCommandReady)
+    {
+        for (int i = (int)ECrowdFuncKey.NUM1; i <= (int)ECrowdFuncKey.NUM9; ++i)
+        {
+            if (Input.GetKeyDown(arrCrowdFuncHotkey[i]))
+            {
+                if (_isCrowdCommandReady)
+                {
+                    ArraySelectCommand.Use(ESelectCommand.SET_LIST_TO_CROWD, i);
+                    Debug.Log("SetIdx: " + i);
+                    return;
+                }
+                else
+                {
+                    ArraySelectCommand.Use(ESelectCommand.LOAD_CROWD_WITH_IDX, i);
+                    Debug.Log("LoadIdx: " + i);
+                    return;
+                }
+            }
         }
     }
 
@@ -619,7 +645,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
                     ArrayChangeHotkeyCommand.Use(EChangeHotkeyCommand.CONFIRM_BUILD_FUNC_BUTTON, curChangeKeyIdx, curKey);
                 else if (curChangeKeyCode.Equals(arrBarrackFuncHotkey))
                     ArrayChangeHotkeyCommand.Use(EChangeHotkeyCommand.CONFIRM_BARRACK_FUNC_BUTTON, curChangeKeyIdx, curKey);
-                    
+
             }
             curChangeKeyCode = null;
             curChangeKeyIdx = -1;
@@ -646,31 +672,37 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
         if (_changeKey.Equals(KeyCode.None))
             return false;
 
-        for(int i = 0; i < arrUnitFuncHotkey.Length; ++i)
+        for (int i = 0; i < arrUnitFuncHotkey.Length; ++i)
         {
             if (_changeKey.Equals(arrUnitFuncHotkey[i]))
                 return false;
         }
 
-        for(int i = 0; i < arrBuildFuncHotkey.Length; ++i)
+        for (int i = 0; i < arrBuildFuncHotkey.Length; ++i)
         {
             if (_changeKey.Equals(arrBuildFuncHotkey[i]))
                 return false;
         }
 
-        for(int i = 0; i < arrBarrackFuncHotkey.Length; ++i)
+        for (int i = 0; i < arrBarrackFuncHotkey.Length; ++i)
         {
             if (_changeKey.Equals(arrBarrackFuncHotkey[i]))
                 return false;
         }
 
-        for(int i = 0; i < arrStructureFuncHotkey.Length; ++i)
+        for (int i = 0; i < arrStructureFuncHotkey.Length; ++i)
         {
             if (_changeKey.Equals(arrStructureFuncHotkey[i]))
                 return false;
         }
 
-        for(int i = 0; i < arrOtherFuncHotkey.Length; ++i)
+        for (int i = 0; i < arrCrowdFuncHotkey.Length; ++i)
+        {
+            if (_changeKey.Equals(arrCrowdFuncHotkey[i]))
+                return false;
+        }
+
+        for (int i = 0; i < arrOtherFuncHotkey.Length; ++i)
         {
             if (_changeKey.Equals(arrOtherFuncHotkey[i]))
                 return false;
@@ -703,6 +735,8 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
     private KeyCode[] arrBarrackFuncHotkey = null;
     [SerializeField]
     private KeyCode[] arrStructureFuncHotkey = null;
+    [SerializeField]
+    private KeyCode[] arrCrowdFuncHotkey = null;
     [SerializeField]
     private KeyCode[] arrOtherFuncHotkey = null;
     [SerializeField]

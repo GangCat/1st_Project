@@ -375,5 +375,5 @@ public class Structure : MonoBehaviour, IPauseObserver
 
     protected bool isPause = false;
     
-    private EAudioType_Adjutant audioType;
+    protected EAudioType_Adjutant audioType;
 }

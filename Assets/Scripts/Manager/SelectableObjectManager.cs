@@ -115,9 +115,23 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
         return unitNode.worldPos;
     }
 
-    public void SetListCrowd(int _arrIdx)
+    public void SetListToCrowd(int _arrIdx)
     {
+        if (isEnemyObjectInList || listSelectedFriendlyObject.Count < 1) return;
+        arrCrowd[_arrIdx].Clear();
         arrCrowd[_arrIdx].AddRange(listSelectedFriendlyObject.ToArray());
+    }
+
+    public void LoadCrowdWithIdx(int _arrIdx)
+    {
+        tempListSelectableObject.AddRange(arrCrowd[_arrIdx].ToArray());
+        if (tempListSelectableObject.Count < 1)
+        {
+            listSelectedFriendlyObject.Clear();
+            UpdateInfo();
+        }
+        else
+            SelectFinish();
     }
 
     public void SelectStart()

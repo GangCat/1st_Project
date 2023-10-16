@@ -119,6 +119,4 @@ public class StructureNuclear : Structure
     private MissileNuclear myNuclear = null;
     private bool hasNuclear = false;
     private bool isProcessingSpawnNuclear = false;
-    
-    private EAudioType_Adjutant audioType;
 }
