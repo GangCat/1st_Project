@@ -89,6 +89,10 @@ public class StructureNuclear : Structure
         myNuclear.SetActive(true);
         myNuclear.ResetRotate();
         _spwnCompleteCallback?.Invoke(this);
+        
+        // Nuclear Ready Audio
+        audioType = EAudioType_Adjutant.NUCLEAR_READY;
+        AudioManager.instance.PlayAudio_Adjutant(audioType);
     }
 
     public void LaunchNuclear(Vector3 _destPos)
@@ -97,6 +101,10 @@ public class StructureNuclear : Structure
         hasNuclear = false;
         if (myObj.IsSelect)
             ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
+        
+        // Nuclear Ready Audio
+        audioType = EAudioType_Adjutant.NUCLEAR_LAUNCH;
+        AudioManager.instance.PlayAudio_Adjutant(audioType);
     }
 
 
@@ -108,4 +116,6 @@ public class StructureNuclear : Structure
     private MissileNuclear myNuclear = null;
     private bool hasNuclear = false;
     private bool isProcessingSpawnNuclear = false;
+    
+    private EAudioType_Adjutant audioType;
 }

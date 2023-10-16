@@ -70,6 +70,52 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    public void PlayAudio_Adjutant(EAudioType_Adjutant _audioType)
+    {
+        int Idx = UnityEngine.Random.Range(0, 3); // Generates 0, 1, 2, or 3
+
+        switch (_audioType)
+        {
+            case EAudioType_Adjutant.UNDERATTACK:
+                AudioPlayer_Adjutant.EAudioType_Adjutant audioTypeAdjutant = 
+                    (AudioPlayer_Adjutant.EAudioType_Adjutant)((int)AudioPlayer_Adjutant.EAudioType_Adjutant.UNDERATTACK_01 + Idx);
+                AudioPlayer_Adjutant.instance.PlayAudio(audioTypeAdjutant);
+                break;
+            case EAudioType_Adjutant.ENERGY:
+                AudioPlayer_Adjutant.instance.PlayAudio(AudioPlayer_Adjutant.EAudioType_Adjutant.ENERGY);
+                break;
+            case EAudioType_Adjutant.CORE:
+                AudioPlayer_Adjutant.instance.PlayAudio(AudioPlayer_Adjutant.EAudioType_Adjutant.CORE);
+                break;
+            case EAudioType_Adjutant.RESEARCH:
+                AudioPlayer_Adjutant.instance.PlayAudio(AudioPlayer_Adjutant.EAudioType_Adjutant.RESEARCH);
+                break;
+            case EAudioType_Adjutant.UPGRADE:
+                AudioPlayer_Adjutant.instance.PlayAudio(AudioPlayer_Adjutant.EAudioType_Adjutant.UPGRADE);
+                break;
+            case EAudioType_Adjutant.CONST_COMPLETE:
+                AudioPlayer_Adjutant.instance.PlayAudio(AudioPlayer_Adjutant.EAudioType_Adjutant.CONST_COMPLETE);
+                break;
+            case EAudioType_Adjutant.CONST_CANCEL:
+                AudioPlayer_Adjutant.instance.PlayAudio(AudioPlayer_Adjutant.EAudioType_Adjutant.CONST_CANCEL);
+                break;
+            case EAudioType_Adjutant.PAUSE:
+                AudioPlayer_Adjutant.instance.PlayAudio(AudioPlayer_Adjutant.EAudioType_Adjutant.PAUSE);
+                break;
+            case EAudioType_Adjutant.RESUME:
+                AudioPlayer_Adjutant.instance.PlayAudio(AudioPlayer_Adjutant.EAudioType_Adjutant.RESUME);
+                break;
+            case EAudioType_Adjutant.NUCLEAR_READY:
+                AudioPlayer_Adjutant.instance.PlayAudio(AudioPlayer_Adjutant.EAudioType_Adjutant.NUCLEAR_READY);
+                break;
+            case EAudioType_Adjutant.NUCLEAR_LAUNCH:
+                AudioPlayer_Adjutant.instance.PlayAudio(AudioPlayer_Adjutant.EAudioType_Adjutant.NUCLEAR_LAUNCH);
+                break;
+            default:
+                break;
+        }
+    }
+    
     
     public void PlayAudio_Build(EObjectType _objectType)
     {

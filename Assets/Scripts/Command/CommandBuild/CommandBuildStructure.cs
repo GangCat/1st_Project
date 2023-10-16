@@ -24,4 +24,5 @@ public class CommandBuildStructure : Command
     private InputManager inputMng = null;
     private CurrencyManager curMng = null;
     
+    
 }

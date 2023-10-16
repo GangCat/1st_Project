@@ -65,7 +65,7 @@ public class GameManager : MonoBehaviour, IPauseSubject
         populationMng.Init();
 
         heroMng.Init(FindFirstObjectByType<UnitHero>());
-        fogMng.Init();
+        // fogMng.Init();
         InitMainBase();
     }
 
