@@ -5,11 +5,12 @@ using UnityEngine.EventSystems;
 
 public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
 {
-    public void Init()
+    public void Init(SelectableObject _mainbaseObj)
     {
         ArrayPauseCommand.Use(EPauseCOmmand.REGIST, this);
         selectArea = GetComponentInChildren<SelectArea>();
         selectArea.Init();
+        mainbaseObejct = _mainbaseObj;
     }
     public bool IsBuildOperation
     {
@@ -215,15 +216,20 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
 
     private void CheckIsHotkey()
     {
+        if(Input.GetKeyDown(mainbaseSelectKey))
+        {
+            ArraySelectCommand.Use(ESelectCommand.SELECT_START);
+            ArraySelectCommand.Use(ESelectCommand.TEMP_SELECT, mainbaseObejct);
+            ArraySelectCommand.Use(ESelectCommand.SELECT_FINISH);
+            return;
+        }
+
         if (SelectableObjectManager.IsListEmpty) return;
 
         EObjectType objType = SelectableObjectManager.GetFirstSelectedObjectInList().GetObjectType();
         switch (objType)
         {
             case EObjectType.UNIT_01:
-                if (UnitDefaultHotkeyAction())
-                    break;
-                break;
             case EObjectType.UNIT_02:
                 if (UnitDefaultHotkeyAction())
                     break;
@@ -555,6 +561,8 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
     private KeyCode[] arrStructureFuncHotkey = null;
     [SerializeField]
     private KeyCode cancleKey = KeyCode.Escape;
+    [SerializeField]
+    private KeyCode mainbaseSelectKey = KeyCode.BackQuote;
 
     private float elapsedTime = 0f;
     private float leftClickElapsedTime = 0f;
@@ -575,7 +583,8 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
 
     private SelectArea selectArea = null;
 
-    private EObjectType objectType;
+    private EObjectType objectType = EObjectType.NONE;
+    private SelectableObject mainbaseObejct = null;
 
     private enum EUnitFuncHotkey { NONE = -1, MOVE, STOP, HOLD, PATROL, ATTACK, LAUNCH_NUCLEAR, LENGTH }
     private enum EBuildFuncHotkey { NONE = -1, TURRET, BUNKER, BARRACK, NUCLEAR, WALL, LENGTH }

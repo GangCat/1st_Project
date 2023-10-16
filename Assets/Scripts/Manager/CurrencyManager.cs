@@ -33,21 +33,27 @@ public class CurrencyManager : MonoBehaviour, IPublisher, IPauseObserver
         }
     }
 
-    public void IncreaseCore(uint _increaseCore)
-    {
-        curCore = Functions.ClampMaxWithUInt(curCore + _increaseCore, maxCore);
-        UpdateCore();
-    }
-
     private void DecreaseEnergy(uint _decreaseEnergy)
     {
         curEnergy -= _decreaseEnergy;
         UpdateEnergy();
     }
 
+    private void IncreaseEnergy(uint _increaseEnergy)
+    {
+        curEnergy = Functions.ClampMaxWithUInt(maxEnergy, curEnergy + _increaseEnergy);
+        UpdateEnergy();
+    }
+
     private void DecreaseCore(uint _decreaseCore)
     {
         curCore -= _decreaseCore;
+        UpdateCore();
+    }
+
+    public void IncreaseCore(uint _increaseCore)
+    {
+        curCore = Functions.ClampMaxWithUInt(curCore + _increaseCore, maxCore);
         UpdateCore();
     }
 
@@ -88,6 +94,7 @@ public class CurrencyManager : MonoBehaviour, IPublisher, IPauseObserver
         Broker.AlertMessageToSub(_message, EPublisherType.ENERGY_UPDATE);
     }
 
+    #region BuildStructure
     public bool CanBuildStructure(EObjectType _objType)
     {
         switch (_objType)
@@ -131,6 +138,32 @@ public class CurrencyManager : MonoBehaviour, IPublisher, IPauseObserver
         }
     }
 
+    public void CancleBuildStructure(EObjectType _objType)
+    {
+        switch (_objType)
+        {
+            case EObjectType.TURRET:
+                IncreaseEnergy(buildTurret);
+                break;
+            case EObjectType.BUNKER:
+                IncreaseEnergy(buildBunker);
+                break;
+            case EObjectType.WALL:
+                IncreaseEnergy(buildWall);
+                break;
+            case EObjectType.BARRACK:
+                IncreaseEnergy(buildBarrack);
+                break;
+            case EObjectType.NUCLEAR:
+                IncreaseEnergy(buildNuclear);
+                break;
+            default:
+                break;
+        }
+    }
+    #endregion
+
+    #region UpgradeStructure
     public bool CanUpgradeSturcture(EObjectType _objType, int _level)
     {
         switch (_objType)
@@ -174,6 +207,32 @@ public class CurrencyManager : MonoBehaviour, IPublisher, IPauseObserver
         }
     }
 
+    public void CancleUpgradeStructure(EObjectType _objType, int _level)
+    {
+        switch (_objType)
+        {
+            case EObjectType.MAIN_BASE:
+                IncreaseCore(upgradeMainBase * (uint)_level);
+                break;
+            case EObjectType.TURRET:
+                IncreaseCore(upgradeTurret * (uint)_level);
+                break;
+            case EObjectType.BUNKER:
+                IncreaseCore(upgradeBunker * (uint)_level);
+                break;
+            case EObjectType.WALL:
+                IncreaseCore(upgradeWall * (uint)_level);
+                break;
+            case EObjectType.BARRACK:
+                IncreaseCore(upgradeBarrack * (uint)_level);
+                break;
+            default:
+                break;
+        }
+    }
+    #endregion
+
+    #region UpgradeUnit
     public bool CanUpgradeUnit(EUnitUpgradeType _upgradeType)
     {
         switch (_upgradeType)
@@ -212,6 +271,29 @@ public class CurrencyManager : MonoBehaviour, IPublisher, IPauseObserver
         }
     }
 
+    public void CancleUpgradeUnit(EUnitUpgradeType _upgradeType)
+    {
+        switch (_upgradeType)
+        {
+            case EUnitUpgradeType.RANGED_UNIT_DMG:
+                IncreaseCore(upgradeUnitDmg * (uint)SelectableObjectManager.LevelRangedUnitDmgUpgrade);
+                break;
+            case EUnitUpgradeType.RANGED_UNIT_HP:
+                IncreaseCore(upgradeUnitDmg * (uint)SelectableObjectManager.LevelRangedUnitHpUpgrade);
+                break;
+            case EUnitUpgradeType.MELEE_UNIT_DMG:
+                IncreaseCore(upgradeUnitDmg * (uint)SelectableObjectManager.LevelMeleeUnitDmgUpgrade);
+                break;
+            case EUnitUpgradeType.MELEE_UNIT_HP:
+                IncreaseCore(upgradeUnitDmg * (uint)SelectableObjectManager.LevelMeleeUnitHpUpgrade);
+                break;
+            default:
+                break;
+        }
+    }
+    #endregion
+
+    #region SpawnUnit
     public bool CanSpawnUnit(EUnitType _unitType)
     {
         switch (_unitType)
@@ -240,6 +322,23 @@ public class CurrencyManager : MonoBehaviour, IPublisher, IPauseObserver
         }
     }
 
+    public void CancleSpawnUnit(EUnitType _unitType)
+    {
+        switch (_unitType)
+        {
+            case EUnitType.MELEE:
+                IncreaseEnergy(spawnMeleeUnit);
+                break;
+            case EUnitType.RANGED:
+                IncreaseEnergy(spawnRangedUnit);
+                break;
+            default:
+                break;
+        }
+    }
+    #endregion
+
+    #region UpgradeETC
     public bool CanUpgradeETC(EUpgradeETCType _upgradeType)
     {
         switch (_upgradeType)
@@ -267,6 +366,40 @@ public class CurrencyManager : MonoBehaviour, IPublisher, IPauseObserver
                 break;
         }
     }
+
+    public void CancleUpgradeETC(EUpgradeETCType _upgradeType)
+    {
+        switch (_upgradeType)
+        {
+            case EUpgradeETCType.CURRENT_MAX_POPULATION:
+                IncreaseCore(upgradeMaxPopulation);
+                break;
+            case EUpgradeETCType.ENERGY_SUPPLY:
+                IncreaseCore(upgradeEnergySupply);
+                break;
+            default:
+                break;
+        }
+    }
+    #endregion
+
+    #region SpawnNuclear
+    public bool CanSpawnNuclear()
+    {
+        return curEnergy > spawnNuclear;
+    }
+
+    public void SpawnNuclear()
+    {
+        DecreaseEnergy(spawnNuclear);
+    }
+
+    public void CancleSpawnNuclear()
+    {
+        IncreaseEnergy(spawnNuclear);
+    }
+
+    #endregion
 
     public void CheckPause(bool _isPause)
     {
@@ -299,11 +432,13 @@ public class CurrencyManager : MonoBehaviour, IPublisher, IPauseObserver
     [SerializeField]
     private uint buildNuclear = 50;
 
-    [Header("-Spawn Unit Cost")]
+    [Header("-Spawn Cost")]
     [SerializeField]
     private uint spawnMeleeUnit = 70;
     [SerializeField]
     private uint spawnRangedUnit = 50;
+    [SerializeField]
+    private uint spawnNuclear = 1000;
 
     [Header("-Core")]
     [Header("-Upgrade Unit Cost")]

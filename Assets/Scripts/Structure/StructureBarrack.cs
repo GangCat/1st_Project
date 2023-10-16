@@ -26,12 +26,15 @@ public class StructureBarrack : Structure, ISubscriber
                 StopCoroutine("UpgradeUnitCoroutine");
                 isProcessingUpgrade = false;
                 isProcessingUpgradeUnit = false;
+                ArrayRefundCurrencyCommand.Use(ERefuncCurrencyCommand.UPGRADE_UNIT, unitUpgradeType);
+                unitUpgradeType = EUnitUpgradeType.NONE;
                 curUpgradeType = EUpgradeType.NONE;
             }
             else
             {
                 StopCoroutine("UpgradeCoroutine");
                 isProcessingUpgrade = false;
+                ArrayRefundCurrencyCommand.Use(ERefuncCurrencyCommand.UPGRADE_STRUCTURE, myObj.GetObjectType(), upgradeLevel);
                 curUpgradeType = EUpgradeType.NONE;
             }
         }
@@ -39,6 +42,7 @@ public class StructureBarrack : Structure, ISubscriber
         {
             StopCoroutine("BuildStructureCoroutine");
             isProcessingConstruct = false;
+            ArrayRefundCurrencyCommand.Use(ERefuncCurrencyCommand.BUILD_STRUCTURE, myObj.GetObjectType());
             ArrayStructureFuncButtonCommand.Use(EStructureButtonCommand.DEMOLISH_COMPLETE, myStructureIdx);
             DestroyStructure();
         }
@@ -50,6 +54,7 @@ public class StructureBarrack : Structure, ISubscriber
         else if (isProcessingSpawnUnit)
         {
             StopCoroutine("SpawnUnitCoroutine");
+            ArrayRefundCurrencyCommand.Use(ERefuncCurrencyCommand.SPAWN_UNIT, listUnit[0]);
             listUnit.RemoveAt(0);
             isProcessingSpawnUnit = false;
             RequestSpawnUnit();
@@ -179,6 +184,7 @@ public class StructureBarrack : Structure, ISubscriber
 
     public void UpgradeUnit(EUnitUpgradeType _upgradeType)
     {
+        unitUpgradeType = _upgradeType;
         switch (_upgradeType)
         {
             case EUnitUpgradeType.RANGED_UNIT_DMG:
@@ -245,6 +251,8 @@ public class StructureBarrack : Structure, ISubscriber
                 break;
         }
 
+        unitUpgradeType = EUnitUpgradeType.NONE;
+
         if (myObj.IsSelect)
             ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
     }
@@ -289,6 +297,7 @@ public class StructureBarrack : Structure, ISubscriber
     private Vector3 rallyPoint = Vector3.zero;
     private Transform rallyTr = null;
     private List<EUnitType> listUnit = null;
+    private EUnitUpgradeType unitUpgradeType = EUnitUpgradeType.NONE;
 
     private float SpawnUnitProgressPercent = 0f;
 }

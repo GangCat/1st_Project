@@ -27,9 +27,13 @@ public class StructureMainBase : Structure
     {
         if(!isProcessingUpgrade && upgradeLevel < 3)
         {
+            Debug.Log("structure" + upgradeLevel);
+            Debug.Log("Limit" + StructureManager.UpgradeLimit);
             StartCoroutine("UpgradeCoroutine");
             return true;
         }
+        Debug.Log("structure" + upgradeLevel);
+        Debug.Log("Limit" + StructureManager.UpgradeLimit);
         return false;
     }
 
@@ -51,6 +55,7 @@ public class StructureMainBase : Structure
                 isProcessingUpgrade = false;
                 isPopulationUpgrade = false;
                 StopCoroutine("UpgradePopulationCoroutine");
+                ArrayRefundCurrencyCommand.Use(ERefuncCurrencyCommand.UPGRADE_POPULATION);
                 curUpgradeType = EUpgradeType.NONE;
             }
             else if (isEnergySupplyUpgrade)
@@ -58,12 +63,14 @@ public class StructureMainBase : Structure
                 isProcessingUpgrade = false;
                 isEnergySupplyUpgrade = false;
                 StopCoroutine("UpgradeEnergySupplyCoroutine");
+                ArrayRefundCurrencyCommand.Use(ERefuncCurrencyCommand.UPGRADE_ENERGY);
                 curUpgradeType = EUpgradeType.NONE;
             }
             else
             {
                 StopCoroutine("UpgradeCoroutine");
                 isProcessingUpgrade = false;
+                ArrayRefundCurrencyCommand.Use(ERefuncCurrencyCommand.UPGRADE_STRUCTURE, myObj.GetObjectType(), upgradeLevel);
                 curUpgradeType = EUpgradeType.NONE;
             }
         }

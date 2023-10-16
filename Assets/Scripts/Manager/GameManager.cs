@@ -54,7 +54,7 @@ public class GameManager : MonoBehaviour, IPauseSubject
     {
         pathMng.Init(worldSizeX, worldSizeY);
         grid = pathMng.GetComponent<PF_Grid>();
-        inputMng.Init();
+        inputMng.Init(mainBaseTr.GetComponent<SelectableObject>());
         cameraMng.Init();
         structureMng.Init(grid, FindFirstObjectByType<StructureMainBase>());
 
@@ -109,7 +109,7 @@ public class GameManager : MonoBehaviour, IPauseSubject
         ArrayFriendlyObjectCommand.Add(EFriendlyObjectCommand.DEAD_HERO, new CommandFriendlyDeadHero(heroMng, uiMng, selectMng));
         ArrayFriendlyObjectCommand.Add(EFriendlyObjectCommand.COMPLETE_SPAWN_UNIT, new CommandCompleteSpawnUnit(selectMng));
 
-        ArrayNuclearCommand.Add(ENuclearCommand.SPAWN_NUCLEAR, new CommandSpawnNuclear(structureMng));
+        ArrayNuclearCommand.Add(ENuclearCommand.SPAWN_NUCLEAR, new CommandSpawnNuclear(structureMng, currencyMng));
         ArrayNuclearCommand.Add(ENuclearCommand.LAUNCH_NUCLEAR, new CommandLaunchNuclear(structureMng));
 
         ArrayStructureFuncButtonCommand.Add(EStructureButtonCommand.DEMOLISH, new CommandDemolition(currencyMng));
@@ -143,6 +143,14 @@ public class GameManager : MonoBehaviour, IPauseSubject
         ArrayPauseCommand.Add(EPauseCOmmand.REGIST, new CommandRegistPauseObserver(this));
         ArrayPauseCommand.Add(EPauseCOmmand.REMOVE, new CommandRemovePauseObserver(this));
         ArrayPauseCommand.Add(EPauseCOmmand.TOGGLE_PAUSE, new CommandPauseToggle(this, inputMng, structureMng));
+
+        ArrayRefundCurrencyCommand.Add(ERefuncCurrencyCommand.BUILD_STRUCTURE, new CommandRefundBuildStructure(currencyMng));
+        ArrayRefundCurrencyCommand.Add(ERefuncCurrencyCommand.UPGRADE_STRUCTURE, new CommandRefundUpgradeStructure(currencyMng));
+        ArrayRefundCurrencyCommand.Add(ERefuncCurrencyCommand.UPGRADE_UNIT, new CommandRefundUpgradeUnit(currencyMng));
+        ArrayRefundCurrencyCommand.Add(ERefuncCurrencyCommand.SPAWN_UNIT, new CommandRefundSpawnUnit(currencyMng));
+        ArrayRefundCurrencyCommand.Add(ERefuncCurrencyCommand.UPGRADE_ENERGY, new CommandRefundUpgradeEnergySupply(currencyMng));
+        ArrayRefundCurrencyCommand.Add(ERefuncCurrencyCommand.UPGRADE_POPULATION, new CommandRefundUpgradePopulation(currencyMng));
+        ArrayRefundCurrencyCommand.Add(ERefuncCurrencyCommand.SPAWN_NUCLEAR, new CommandRefundSpawnNuclear(currencyMng));
     }
 
     private void RegistObserver()
