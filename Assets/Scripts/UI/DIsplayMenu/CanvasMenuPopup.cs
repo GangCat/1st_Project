@@ -13,6 +13,7 @@ public class CanvasMenuPopup : MonoBehaviour
         btnPause.onClick.AddListener(
             () =>
             {
+                AudioManager.instance.PlayAudio_UI(objectType);
                 ArrayPauseCommand.Use(EPauseCommand.TOGGLE_PAUSE);
             });
 
@@ -20,6 +21,7 @@ public class CanvasMenuPopup : MonoBehaviour
         btnGameReturn.onClick.AddListener(
             () =>
             {
+                AudioManager.instance.PlayAudio_UI(objectType);
                 ArrayMenuCommand.Use(EMenuCommand.HIDE_MENU);
             });
     }
@@ -41,4 +43,6 @@ public class CanvasMenuPopup : MonoBehaviour
     private Button btnGameExit = null;
     [SerializeField]
     private Button btnGameReturn = null;
+    
+    private EObjectType objectType;
 }

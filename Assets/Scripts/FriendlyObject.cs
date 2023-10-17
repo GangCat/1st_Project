@@ -93,6 +93,9 @@ public class FriendlyObject : SelectableObject, ISubscriber
         if (statusHp.DecreaseHpAndCheckIsDead(_dmg))
         {
             StopAllCoroutines();
+            
+            // Unit Dead Audio
+            AudioManager.instance.PlayAudio_Destroy(objectType);
 
             if (objectType.Equals(EObjectType.UNIT_01) || objectType.Equals(EObjectType.UNIT_02))
             {
@@ -730,4 +733,6 @@ public class FriendlyObject : SelectableObject, ISubscriber
     private float oriAttRange = 0f;
     private bool isAttack = false;
     private bool isSelect = false;
+    
+    
 }

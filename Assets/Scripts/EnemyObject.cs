@@ -25,6 +25,10 @@ public class EnemyObject : SelectableObject
         if (statusHp.DecreaseHpAndCheckIsDead(_dmg))
         {
             StopAllCoroutines();
+            
+            // Enemy Dead Audio
+            AudioManager.instance.PlayAudio_Destroy(objectType);
+            
             SelectableObjectManager.ResetEnemyNodeWalkable(transform.position, nodeIdx);
             ArrayEnemyObjectCommand.Use((EEnemyObjectCommand)spawnType, gameObject, myIdx);
 

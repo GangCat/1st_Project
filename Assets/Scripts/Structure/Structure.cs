@@ -150,6 +150,8 @@ public class Structure : MonoBehaviour, IPauseObserver
         ++upgradeLevel;
         if (myObj.IsSelect)
             UpdateInfo();
+        
+        AudioManager.instance.PlayAudio_Advisor(EAudioType_Advisor.UPGRADE);
     }
 
     public virtual void UpdateNodeWalkable(bool _walkable)
@@ -223,8 +225,7 @@ public class Structure : MonoBehaviour, IPauseObserver
             UpdateInfo();
         
         // Build Complete Audio Play
-        audioType = EAudioType_Advisor.CONST_COMPLETE;
-        AudioManager.instance.PlayAudio_Advisor(audioType);
+        AudioManager.instance.PlayAudio_Advisor(EAudioType_Advisor.CONST_COMPLETE);
     }
 
     public virtual void Demolish()
@@ -269,7 +270,7 @@ public class Structure : MonoBehaviour, IPauseObserver
         Destroy(gameObject);
         
         // Build cancel Audio Play
-        // audioType = EAudioType_Adjutant.CONST_CANCEL;
+        
         AudioManager.instance.PlayAudio_Destroy(objectType);
     }
 

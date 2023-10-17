@@ -176,12 +176,65 @@ public class AudioManager : MonoBehaviour
         AudioPlayer_Struct.instance.PlayAudio(AudioPlayer_Struct.EAudioType_Struct.BUILD);
     }
     
-    public void PlayAudio_Destroy(EObjectType _objectType)
+    public void PlayAudio_Destroy2(EObjectType _objectType)
     {
         AudioPlayer_Struct.instance.PlayAudio(AudioPlayer_Struct.EAudioType_Struct.DESTROY);
     }
     
+    public void PlayAudio_Destroy(EObjectType _objectType)
+    {
+        switch (_objectType)
+        {
+            case EObjectType.UNIT_01:
+                AudioPlayer_Friendly_U01.instance.PlayAudio(AudioPlayer_Friendly_U01.EAudioType_Friendly_U01.DEAD);
+                break;
+            case EObjectType.UNIT_02:
+                AudioPlayer_Friendly_U02.instance.PlayAudio(AudioPlayer_Friendly_U02.EAudioType_Friendly_U02.DEAD);
+                break;
+            case EObjectType.UNIT_HERO:
+                AudioPlayer_Hero.instance.PlayAudio(AudioPlayer_Hero.EAudioType_Hero.DEAD);
+                break;
+            case EObjectType.ENEMY_UNIT:
+                AudioPlayer_Enemy.instance.PlayAudio(AudioPlayer_Enemy.EAudioType_Enemy.DEAD);
+                break;
+            case EObjectType.MAIN_BASE:
+                AudioPlayer_Struct.instance.PlayAudio(AudioPlayer_Struct.EAudioType_Struct.DESTROY);
+                break;
+            case EObjectType.NUCLEAR:
+                AudioPlayer_Struct.instance.PlayAudio(AudioPlayer_Struct.EAudioType_Struct.DESTROY);
+                break;
+            case EObjectType.TURRET:
+                AudioPlayer_Struct.instance.PlayAudio(AudioPlayer_Struct.EAudioType_Struct.DESTROY);
+                break;
+            case EObjectType.BARRACK:
+                AudioPlayer_Struct.instance.PlayAudio(AudioPlayer_Struct.EAudioType_Struct.DESTROY);
+                break;
+            case EObjectType.BUNKER:
+                AudioPlayer_Struct.instance.PlayAudio(AudioPlayer_Struct.EAudioType_Struct.DESTROY);
+                break;
+            case EObjectType.WALL:
+                AudioPlayer_Struct.instance.PlayAudio(AudioPlayer_Struct.EAudioType_Struct.DESTROY);
+                break;
+            default:
+                break;
+        }
+    }
     
+    public void PlayAudio_Misc(EAudioType_Misc _audioType)
+    {
+        int Idx = UnityEngine.Random.Range(0, 3); // Generates 0, 1, 2, or 3
+
+        switch (_audioType)
+        {
+            case EAudioType_Misc.NUCLEAR_EXPLOSION:
+                AudioPlayer_Misc.instance.PlayAudio(AudioPlayer_Misc.EAudioType_Misc.NUCLEAR_EXPLOSION);
+                break;
+            default:
+                break;
+        }
+    }
+    
+        
     public void PlayAudio_UI(EObjectType _objectType)
     {
         AudioPlayer_UI.instance.PlayAudio(AudioPlayer_UI.EAudioType_UI.CLICK);

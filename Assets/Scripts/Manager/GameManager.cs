@@ -212,17 +212,23 @@ public class GameManager : MonoBehaviour, IPauseSubject
 
     public void RegisterPauseObserver(IPauseObserver _observer)
     {
+        // AudioManager.instance.PlayAudio_Advisor(EAudioType_Advisor.PAUSE);
         pauseObserverList.Add(_observer);
     }
 
     public void RemovePauseObserver(IPauseObserver _observer)
     {
+        // AudioManager.instance.PlayAudio_Advisor(EAudioType_Advisor.RESUME);
         pauseObserverList.Remove(_observer);
     }
 
     public void TogglePause()
     {
         isPause = !isPause;
+        
+        if(isPause) AudioManager.instance.PlayAudio_Advisor(EAudioType_Advisor.PAUSE);
+        else AudioManager.instance.PlayAudio_Advisor(EAudioType_Advisor.RESUME);
+        
         for (int i = 0; i < pauseObserverList.Count; ++i)
             pauseObserverList[i].CheckPause(isPause);
     }
@@ -259,4 +265,5 @@ public class GameManager : MonoBehaviour, IPauseSubject
     private bool isMainMenu = false;
     [SerializeField]
     private bool isInGame = false;
+    
 }

@@ -15,4 +15,5 @@ public class CommandRegistPauseObserver : Command
     }
 
     private GameManager gameMng = null;
+
 }

@@ -126,6 +126,8 @@ public class StructureMainBase : Structure
         ArrayPopulationCommand.Use(EPopulationCommand.UPGRADE_POPULATION_COMPLETE);
         if(myObj.IsSelect)
             ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
+        
+        AudioManager.instance.PlayAudio_Advisor(EAudioType_Advisor.UPGRADE);
     }
 
     public void UpgradeEnergySupply()
@@ -161,6 +163,8 @@ public class StructureMainBase : Structure
         ArrayCurrencyCommand.Use(ECurrencyCommand.UPGRADE_ENERGY_SUPPLY_COMPLETE);
         if (myObj.IsSelect)
             ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
+        
+        AudioManager.instance.PlayAudio_Advisor(EAudioType_Advisor.UPGRADE);
     }
 
     [Header("-Upgrade Attribute")]

@@ -7,19 +7,17 @@ public class StructureTurret : Structure
     public override void Init(int _structureIdx)
     {
         base.Init(_structureIdx);
-        selectObj = GetComponent<FriendlyObject>();
-        selectObj.Init();
-        selectObj.SetMyTr(turretHeadTr);
+        myObj.SetMyTr(turretHeadTr);
         myStructureIdx = _structureIdx;
         upgradeHpCmd = new CommandUpgradeStructureHP(GetComponent<StatusHp>());
-        upgradeDmgCmd = new CommandUpgradeStructureAttDmg(selectObj);
-        upgradeRangeCmd = new CommandUpgradeStructureAttRange(selectObj);
+        upgradeDmgCmd = new CommandUpgradeStructureAttDmg(myObj);
+        upgradeRangeCmd = new CommandUpgradeStructureAttRange(myObj);
     }
 
     protected override void BuildComplete()
     {
         base.BuildComplete();
-        selectObj.Hold();
+        myObj.Hold();
     }
 
     protected override void UpgradeComplete()

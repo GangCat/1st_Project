@@ -49,5 +49,5 @@ public class AudioPlayer_Enemy : AudioPlayerBase
 
     private int channelIndex;
     
-    public enum EAudioType_Enemy { NONE = -1, SELECT_01, SELECT_02, SELECT_03, ATTACK, LENGTH } 
+    public enum EAudioType_Enemy { NONE = -1, SELECT_01, SELECT_02, SELECT_03, ATTACK, DEAD, LENGTH } 
 }

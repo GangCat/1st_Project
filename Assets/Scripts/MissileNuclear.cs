@@ -53,6 +53,9 @@ public class MissileNuclear : MonoBehaviour, IPauseObserver
         for(int i = 0; i < arrCol.Length; ++i)
             arrCol[i].gameObject.GetComponent<SelectableObject>().GetDmg(150);
 
+        // Nuclear Explosion Audio
+        AudioManager.instance.PlayAudio_Misc(EAudioType_Misc.NUCLEAR_EXPLOSION);
+        
         ArrayPauseCommand.Use(EPauseCommand.REMOVE, this);
         SetActive(false);
     }
@@ -68,4 +71,7 @@ public class MissileNuclear : MonoBehaviour, IPauseObserver
     private float launchSpeed = 0f;
 
     private bool isPause = false;
+
+    private EObjectType objectType;
+    private EAudioType_Misc audioType;
 }

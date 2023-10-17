@@ -630,9 +630,14 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
         if (IsListEmpty) return;
         if (isFriendlyStructureInList) return;
         if (isEnemyObjectInList) return;
+        
+        // Click Move Order Audio
+        AudioManager.instance.PlayAudio_Order(objectType);
 
         if (isAttackMove)
         {
+            AudioManager.instance.PlayAudio_Order(objectType);      // Click Order Audio
+            
             Vector3 centerPos = CalcFormationCenterPos(_targetPos.y);
             foreach (FriendlyObject obj in listSelectedFriendlyObject)
                 obj.MoveAttack(_targetPos + CalcPosInFormation(obj.Position, centerPos));
@@ -653,12 +658,14 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
 
     public void Stop()
     {
+        AudioManager.instance.PlayAudio_UI(objectType); // CLICK Audio
         foreach (FriendlyObject obj in listSelectedFriendlyObject)
             obj.Stop();
     }
 
     public void Hold()
     {
+        AudioManager.instance.PlayAudio_UI(objectType); // CLICK Audio
         foreach (FriendlyObject obj in listSelectedFriendlyObject)
             obj.Hold();
     }
@@ -736,8 +743,12 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
 
     public void MoveUnitByPicking(Transform _targetTr)
     {
+        if (IsListEmpty) return;
         if (isFriendlyStructureInList) return;
         if (isEnemyObjectInList) return;
+        
+        // Click Move Order Audio
+        AudioManager.instance.PlayAudio_Order(objectType);
 
         if (_targetTr.GetComponent<IGetObjectType>().GetObjectType().Equals(EObjectType.BUNKER))
         {
@@ -766,24 +777,28 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
     {
         ++levelRangedUnitDmgUpgrade;
         PushMessageToBroker(EMessageType.UPGRADE_RANGED_DMG);
+        AudioManager.instance.PlayAudio_Advisor(EAudioType_Advisor.UPGRADE);      // Advisor Audio
     }
 
     public void CompleteUpgradeRangedUnitHp()
     {
         ++levelRangedUnitHpUpgrade;
         PushMessageToBroker(EMessageType.UPGRADE_RANGED_HP);
+        AudioManager.instance.PlayAudio_Advisor(EAudioType_Advisor.UPGRADE);      // Advisor Audio
     }
 
     public void CompleteUpgradeMeleeUnitDmg()
     {
         ++levelMeleeUnitDmgUpgrade;
         PushMessageToBroker(EMessageType.UPGRADE_MELEE_DMG);
+        AudioManager.instance.PlayAudio_Advisor(EAudioType_Advisor.UPGRADE);      // Advisor Audio
     }
 
     public void CompleteUpgradeMeleeUnitHp()
     {
         ++levelMeleeUnitHpUpgrade;
         PushMessageToBroker(EMessageType.UPGRADE_MELEE_HP);
+        AudioManager.instance.PlayAudio_Advisor(EAudioType_Advisor.UPGRADE);      // Advisor Audio
     }
 
     [Header("-Melee/Ranged")]
@@ -824,4 +839,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
     private List<FriendlyObject>[] arrCrowd = null;
 
     private SelectableObject enemyCurSelected = null;
+    
+    private EObjectType objectType;
+    private EAudioType_Advisor audioType;
 }

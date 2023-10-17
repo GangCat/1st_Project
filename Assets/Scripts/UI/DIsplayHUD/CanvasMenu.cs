@@ -10,10 +10,13 @@ public class CanvasMenu : MonoBehaviour
         btnDisplayMenu.onClick.AddListener(
             () =>
             {
+                AudioManager.instance.PlayAudio_UI(objectType);
                 ArrayMenuCommand.Use(EMenuCommand.DISPLAY_MENU);
             });
     }
 
     [SerializeField]
     private Button btnDisplayMenu = null;
+    
+    private EObjectType objectType;
 }
