@@ -10,11 +10,13 @@ public class SingleUnitInfo : MonoBehaviour
         statInfo = GetComponentInChildren<StatusInfo>();
         textInfoUnitName = GetComponentInChildren<TextInfoUnitName>();
         textInfoUnitDescription = GetComponentInChildren<TextInfoUnitDescription>();
+        textStructureLevel = GetComponentInChildren<TextStructureLevel>();
         imageProgressbar = GetComponentInChildren<ImageProgressbarAutoController>();
         imageModel = GetComponentInChildren<ImageModel>();
 
         textInfoUnitName.Init();
         textInfoUnitDescription.Init();
+        textStructureLevel.Init();
         imageProgressbar.Init();
         imageModel.Init();
 
@@ -34,11 +36,19 @@ public class SingleUnitInfo : MonoBehaviour
         gameObject.SetActive(_isActive);
     }
 
-    public void DisplaySingleInfo(string _objectName, string _objectDescription)
+    public void DisplaySingleInfo(string _objectName, string _objectDescription, int _structureLevel = 0)
     {
         SetActive(true);
         textInfoUnitName.UpdateText(_objectName);
         textInfoUnitDescription.UpdateText(_objectDescription);
+        if (!_structureLevel.Equals(0))
+        {
+            textStructureLevel.SetActive(true);
+            textStructureLevel.UpdateText(_structureLevel.ToString());
+        }
+        else
+            textStructureLevel.SetActive(false);
+
         statInfo.DisplayInfo();
         imageProgressbar.UpdateHp();
 
@@ -62,6 +72,7 @@ public class SingleUnitInfo : MonoBehaviour
     private StatusInfo statInfo = null;
     private TextInfoUnitName textInfoUnitName = null;
     private TextInfoUnitDescription textInfoUnitDescription = null;
+    private TextStructureLevel textStructureLevel = null;
     private UnitInfoContainer container = null;
     private ImageProgressbarAutoController imageProgressbar = null;
     private ImageModel imageModel = null;

@@ -8,6 +8,7 @@ public class HeroUnitManager : MonoBehaviour
     {
         hero = _hero;
         hero.Init();
+        resurrectionPos = hero.transform.position;
 #if UNITY_EDITOR
         StartCoroutine("DisplayHeroStateCoroutine");
 #endif

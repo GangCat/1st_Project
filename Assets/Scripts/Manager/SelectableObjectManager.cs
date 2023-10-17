@@ -362,7 +362,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
                 else
                 {
                     InputOtherUnitInfo(tempObj);
-                    DisplaySingleUnitFunc();
+                    DisplaySingleUnitFunc(structureInList);
                 }
             }
             // 아군 건물이 핵 생산 건물일 경우
@@ -381,7 +381,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
                 {
                     selectObjectCallback?.Invoke(EObjectType.NUCLEAR);
                     InputOtherUnitInfo(tempObj);
-                    DisplaySingleUnitFunc();
+                    DisplaySingleUnitFunc(structureInList);
                 }
             }
             // 아무것도 하지 않는 상태의 건물일 경우
@@ -389,7 +389,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
             {
                 selectObjectCallback?.Invoke(tempObj.GetObjectType());
                 InputOtherUnitInfo(tempObj);
-                DisplaySingleUnitFunc();
+                DisplaySingleUnitFunc(structureInList);
             }
         }
         // 임시 리스트에 아군 유닛이 존재할 경우
@@ -473,7 +473,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
                     {
                         selectObjectCallback?.Invoke(listSelectedFriendlyObject[0].GetObjectType());
                         InputOtherUnitInfo(listSelectedFriendlyObject[0]);
-                        DisplaySingleUnitFunc();
+                        DisplaySingleUnitFunc(curStructure);
                     }
                 }
             }
@@ -505,10 +505,14 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
         }
     }
 
-    private void DisplaySingleUnitFunc()
+    private void DisplaySingleUnitFunc(Structure _structure = null)
     {
         SelectableObject tempObj = listSelectedFriendlyObject[0];
-        ArrayHUDCommand.Use(EHUDCommand.DISPLAY_SINGLE_INFO, tempObj.GetObjectName, tempObj.GetObjectDescription);
+
+        if(_structure == null)
+            ArrayHUDCommand.Use(EHUDCommand.DISPLAY_SINGLE_INFO, tempObj.GetObjectName, tempObj.GetObjectDescription);
+        else
+            ArrayHUDCommand.Use(EHUDCommand.DISPLAY_SINGLE_STRUCTURE_INFO, tempObj.GetObjectName, tempObj.GetObjectDescription, _structure.UpgradeLevel);
     }
 
     public static void UpdateHp(int _listIdx = -2)
