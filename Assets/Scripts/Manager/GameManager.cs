@@ -6,19 +6,28 @@ public class GameManager : MonoBehaviour, IPauseSubject
 {
     private void Awake()
     {
+        DontDestroyOnLoad(gameObject);
+
+        if (isInGame)
+        {
+            selectMng = FindFirstObjectByType<SelectableObjectManager>();
+            structureMng = FindFirstObjectByType<StructureManager>();
+            pathMng = FindFirstObjectByType<PF_PathRequestManager>();
+            enemyMng = FindFirstObjectByType<EnemyManager>();
+            currencyMng = FindFirstObjectByType<CurrencyManager>();
+            populationMng = FindFirstObjectByType<PopulationManager>();
+            heroMng = FindFirstObjectByType<HeroUnitManager>();
+            fogMng = FindFirstObjectByType<FogManager>();
+            debugMng = FindFirstObjectByType<DebugModeManager>();
+            audioMng = FindFirstObjectByType<AudioManager>();
+
+            mainBaseTr = FindFirstObjectByType<StructureMainBase>().transform;
+        }
+
         inputMng = FindFirstObjectByType<InputManager>();
         cameraMng = FindFirstObjectByType<CameraManager>();
-        selectMng = FindFirstObjectByType<SelectableObjectManager>();
         uiMng = FindFirstObjectByType<UIManager>();
-        structureMng = FindFirstObjectByType<StructureManager>();
-        pathMng = FindFirstObjectByType<PF_PathRequestManager>();
-        enemyMng = FindFirstObjectByType<EnemyManager>();
-        currencyMng = FindFirstObjectByType<CurrencyManager>();
-        populationMng = FindFirstObjectByType<PopulationManager>();
-        heroMng = FindFirstObjectByType<HeroUnitManager>();
-        fogMng = FindFirstObjectByType<FogManager>();
-
-        mainBaseTr = FindFirstObjectByType<StructureMainBase>().transform;
+        
     }
 
     private void Start()
@@ -52,21 +61,36 @@ public class GameManager : MonoBehaviour, IPauseSubject
 
     private void InitManagers()
     {
-        pathMng.Init(worldSizeX, worldSizeY);
-        grid = pathMng.GetComponent<PF_Grid>();
-        inputMng.Init();
         cameraMng.Init();
-        structureMng.Init(grid, FindFirstObjectByType<StructureMainBase>());
-
         uiMng.Init();
-        selectMng.Init(UnitSelect, grid);
-        enemyMng.Init(grid, mainBaseTr.position);
-        currencyMng.Init();
-        populationMng.Init();
+        audioMng.Init();
 
-        heroMng.Init(FindFirstObjectByType<UnitHero>());
-        // fogMng.Init();
-        InitMainBase();
+        if (isInGame)
+        {
+            inputMng.Init(mainBaseTr.GetComponent<SelectableObject>(), TriggerDebugMode);
+
+            pathMng.Init(worldSizeX, worldSizeY);
+            grid = pathMng.GetComponent<PF_Grid>();
+            structureMng.Init(grid, FindFirstObjectByType<StructureMainBase>());
+
+            selectMng.Init(UnitSelect, grid);
+            enemyMng.Init(grid, mainBaseTr.position);
+            currencyMng.Init();
+            populationMng.Init();
+
+            fogMng.Init();
+            debugMng.Init();
+            heroMng.Init(FindFirstObjectByType<UnitHero>());
+            InitMainBase();
+        }
+
+        if (isMainMenu)
+        {
+
+            inputMng.MainInit();
+        }
+
+
     }
 
     private void InitCommandList()
@@ -82,7 +106,6 @@ public class GameManager : MonoBehaviour, IPauseSubject
         ArrayMainbaseCommand.Add(EMainbaseCommnad.CANCLE, new CommandBuildCancle(structureMng, inputMng));
         ArrayMainbaseCommand.Add(EMainbaseCommnad.CONFIRM, new CommandBuildConfirm(structureMng, inputMng, currencyMng));
         ArrayMainbaseCommand.Add(EMainbaseCommnad.BUILD_STRUCTURE, new CommandBuildStructure(structureMng, inputMng, currencyMng));
-        
 
         ArrayBarrackCommand.Add(EBarrackCommand.RALLYPOINT, new CommandRallypoint(inputMng));
         ArrayBarrackCommand.Add(EBarrackCommand.SPAWN_UNIT, new CommandSpawnUnit(selectMng, currencyMng));
@@ -109,7 +132,7 @@ public class GameManager : MonoBehaviour, IPauseSubject
         ArrayFriendlyObjectCommand.Add(EFriendlyObjectCommand.DEAD_HERO, new CommandFriendlyDeadHero(heroMng, uiMng, selectMng));
         ArrayFriendlyObjectCommand.Add(EFriendlyObjectCommand.COMPLETE_SPAWN_UNIT, new CommandCompleteSpawnUnit(selectMng));
 
-        ArrayNuclearCommand.Add(ENuclearCommand.SPAWN_NUCLEAR, new CommandSpawnNuclear(structureMng));
+        ArrayNuclearCommand.Add(ENuclearCommand.SPAWN_NUCLEAR, new CommandSpawnNuclear(structureMng, currencyMng));
         ArrayNuclearCommand.Add(ENuclearCommand.LAUNCH_NUCLEAR, new CommandLaunchNuclear(structureMng));
 
         ArrayStructureFuncButtonCommand.Add(EStructureButtonCommand.DEMOLISH, new CommandDemolition(currencyMng));
@@ -134,15 +157,37 @@ public class GameManager : MonoBehaviour, IPauseSubject
         ArraySelectCommand.Add(ESelectCommand.SELECT_FINISH, new CommandSelectFinish(selectMng));
         ArraySelectCommand.Add(ESelectCommand.SELECT_START, new CommandSelectStart(selectMng));
         ArraySelectCommand.Add(ESelectCommand.REMOVE_FROM_LIST, new CommandRemoveFromList(selectMng));
+        ArraySelectCommand.Add(ESelectCommand.SET_LIST_TO_CROWD, new CommandSetListToCrowd(selectMng));
+        ArraySelectCommand.Add(ESelectCommand.LOAD_CROWD_WITH_IDX, new CommandLoadCrowdWithIdx(selectMng));
 
         ArrayUnitActionCommand.Add(EUnitActionCommand.MOVE_WITH_POS, new CommandUnitMoveWithPos(selectMng));
         ArrayUnitActionCommand.Add(EUnitActionCommand.MOVE_ATTACK, new CommandUnitMoveAttack(selectMng));
         ArrayUnitActionCommand.Add(EUnitActionCommand.FOLLOW_OBJECT, new CommandUnitFollowObject(selectMng));
         ArrayUnitActionCommand.Add(EUnitActionCommand.PATROL, new CommandUnitPatrol(selectMng));
 
-        ArrayPauseCommand.Add(EPauseCOmmand.REGIST, new CommandRegistPauseObserver(this));
-        ArrayPauseCommand.Add(EPauseCOmmand.REMOVE, new CommandRemovePauseObserver(this));
-        ArrayPauseCommand.Add(EPauseCOmmand.TOGGLE_PAUSE, new CommandPauseToggle(this, inputMng, structureMng));
+        ArrayPauseCommand.Add(EPauseCommand.REGIST, new CommandRegistPauseObserver(this));
+        ArrayPauseCommand.Add(EPauseCommand.REMOVE, new CommandRemovePauseObserver(this));
+        ArrayPauseCommand.Add(EPauseCommand.TOGGLE_PAUSE, new CommandPauseToggle(this, inputMng, structureMng));
+
+        ArrayRefundCurrencyCommand.Add(ERefuncCurrencyCommand.BUILD_STRUCTURE, new CommandRefundBuildStructure(currencyMng));
+        ArrayRefundCurrencyCommand.Add(ERefuncCurrencyCommand.UPGRADE_STRUCTURE, new CommandRefundUpgradeStructure(currencyMng));
+        ArrayRefundCurrencyCommand.Add(ERefuncCurrencyCommand.UPGRADE_UNIT, new CommandRefundUpgradeUnit(currencyMng));
+        ArrayRefundCurrencyCommand.Add(ERefuncCurrencyCommand.SPAWN_UNIT, new CommandRefundSpawnUnit(currencyMng));
+        ArrayRefundCurrencyCommand.Add(ERefuncCurrencyCommand.UPGRADE_ENERGY, new CommandRefundUpgradeEnergySupply(currencyMng));
+        ArrayRefundCurrencyCommand.Add(ERefuncCurrencyCommand.UPGRADE_POPULATION, new CommandRefundUpgradePopulation(currencyMng));
+        ArrayRefundCurrencyCommand.Add(ERefuncCurrencyCommand.SPAWN_NUCLEAR, new CommandRefundSpawnNuclear(currencyMng));
+
+        ArrayDebugModeCommand.Add(EDebugModeCommand.MOVE_STATE_INDICATOR, new CommandMoveCurStateIndicator(debugMng));
+
+        ArrayChangeHotkeyCommand.Add(EChangeHotkeyCommand.SELECT_UNIT_FUNC_BUTTON, new CommandChangeUnitFuncHotkey(inputMng));
+    }
+
+    private void TriggerDebugMode()
+    {
+        isDebugMode = !isDebugMode;
+        debugMng.SetActive(isDebugMode);
+        fogMng.IsDebugMode(isDebugMode);
+        heroMng.DebugMode(isDebugMode);
     }
 
     private void RegistObserver()
@@ -199,10 +244,18 @@ public class GameManager : MonoBehaviour, IPauseSubject
     private PopulationManager populationMng = null;
     private HeroUnitManager heroMng = null;
     private FogManager fogMng = null;
+    private DebugModeManager debugMng = null;
+    private AudioManager audioMng = null;
 
     private PF_Grid grid = null;
     private Transform mainBaseTr = null;
 
     private List<IPauseObserver> pauseObserverList = new List<IPauseObserver>();
     private bool isPause = false;
+    private bool isDebugMode = false;
+
+    [SerializeField]
+    private bool isMainMenu = false;
+    [SerializeField]
+    private bool isInGame = false;
 }

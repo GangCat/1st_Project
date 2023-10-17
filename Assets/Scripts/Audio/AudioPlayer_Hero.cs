@@ -2,17 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AudioPlayer_Hero : MonoBehaviour
+public class AudioPlayer_Hero : AudioPlayerBase
 {
-    
-    private void Awake()
+     public override void Init()
     {
         instance = this;
-        Init();
-    }
-
-    private void Init()
-    {
         audioPlayers = new AudioSource[audioChannels];
         AudioManager.AudioVolumes volumes = AudioManager.instance.Volumes;
 

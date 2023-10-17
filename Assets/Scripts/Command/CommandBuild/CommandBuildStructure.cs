@@ -4,23 +4,28 @@ using UnityEngine;
 
 public class CommandBuildStructure : Command
 {
-    public CommandBuildStructure(StructureManager _buildMng, InputManager _inputMng, CurrencyManager _curMng)
+    public CommandBuildStructure(StructureManager _structureMng, InputManager _inputMng, CurrencyManager _curMng)
     {
-        buildMng = _buildMng;
+        structureMng = _structureMng;
         inputMng = _inputMng;
         curMng = _curMng;
     }
 
     public override void Execute(params object[] _objects)
     {
-        if (curMng.CanBuildStructure((EObjectType)_objects[0]))
+        EObjectType tempObjType = (EObjectType)_objects[0];
+        if (curMng.CanBuildStructure(tempObjType))
         {
-            buildMng.ShowBluepirnt((EObjectType)_objects[0]);
+            if (tempObjType.Equals(EObjectType.NUCLEAR))
+                if (!structureMng.CanBuildNuclear())
+                    return;
+
+            structureMng.ShowBluepirnt(tempObjType);
             inputMng.IsBuildOperation = true;
         }
     }
 
-    private StructureManager buildMng = null;
+    private StructureManager structureMng = null;
     private InputManager inputMng = null;
     private CurrencyManager curMng = null;
     

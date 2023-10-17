@@ -6,7 +6,7 @@ public class FriendlyObject : SelectableObject, ISubscriber
 {
     public override void Init()
     {
-        ArrayPauseCommand.Use(EPauseCOmmand.REGIST, this);
+        ArrayPauseCommand.Use(EPauseCommand.REGIST, this);
         SelectableObjectManager.InitNodeFriendly(transform.position, out nodeIdx);
         stateMachine = GetComponent<StateMachine>();
         statusHp = GetComponent<StatusHp>();
@@ -104,7 +104,7 @@ public class FriendlyObject : SelectableObject, ISubscriber
             else
                 ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.DESTROY, gameObject);
 
-            ArrayPauseCommand.Use(EPauseCOmmand.REMOVE, this);
+            ArrayPauseCommand.Use(EPauseCommand.REMOVE, this);
         }
         else if (isSelect)
         {

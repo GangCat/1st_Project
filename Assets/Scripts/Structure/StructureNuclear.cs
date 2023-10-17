@@ -9,6 +9,7 @@ public class StructureNuclear : Structure
         base.Init(_structureIdx);
         myNuclear = GetComponentInChildren<MissileNuclear>();
         myNuclear.SetActive(false);
+        upgradeLevel = 3;
     }
 
     public void UpdateSpawnNuclearInfo()
@@ -30,6 +31,7 @@ public class StructureNuclear : Structure
         {
             StopCoroutine("BuildStructureCoroutine");
             isProcessingConstruct = false;
+            ArrayRefundCurrencyCommand.Use(ERefuncCurrencyCommand.BUILD_STRUCTURE, myObj.GetObjectType());
             ArrayStructureFuncButtonCommand.Use(EStructureButtonCommand.DEMOLISH_COMPLETE, myStructureIdx);
             DestroyStructure();
         }
@@ -40,12 +42,13 @@ public class StructureNuclear : Structure
         }
         else if (isProcessingSpawnNuclear)
         {
+            ArrayRefundCurrencyCommand.Use(ERefuncCurrencyCommand.SPAWN_NUCLEAR);
             StopCoroutine("SpawnNuclearCoroutine");
             isProcessingSpawnNuclear = false;
         }
 
         if (myObj.IsSelect)
-            ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
+            UpdateInfo();
     }
 
     public void SpawnNuclear(VoidNuclearDelegate _spwnCompleteCallback)
@@ -116,6 +119,4 @@ public class StructureNuclear : Structure
     private MissileNuclear myNuclear = null;
     private bool hasNuclear = false;
     private bool isProcessingSpawnNuclear = false;
-    
-    private EAudioType_Adjutant audioType;
 }

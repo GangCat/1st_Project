@@ -6,7 +6,7 @@ public class MissileTurret : MonoBehaviour, IPauseObserver
 {
     public void Init(Vector3 _spawnPos)
     {
-        ArrayPauseCommand.Use(EPauseCOmmand.REGIST, this);
+        ArrayPauseCommand.Use(EPauseCommand.REGIST, this);
         StartCoroutine(LaunchMissileCoroutine(_spawnPos));
     }
 
@@ -55,7 +55,7 @@ public class MissileTurret : MonoBehaviour, IPauseObserver
             }
             yield return null;
         }
-        ArrayPauseCommand.Use(EPauseCOmmand.REMOVE, this);
+        ArrayPauseCommand.Use(EPauseCommand.REMOVE, this);
         Destroy(gameObject);
     }
 

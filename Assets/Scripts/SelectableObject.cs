@@ -7,7 +7,7 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
     protected enum EMoveState { NONE = -1, NORMAL, ATTACK, PATROL, CHASE, FOLLOW, FOLLOW_ENEMY }
     public virtual void Init()
     {
-        ArrayPauseCommand.Use(EPauseCOmmand.REGIST, this);
+        ArrayPauseCommand.Use(EPauseCommand.REGIST, this);
         SelectableObjectManager.InitNodeEnemy(transform.position, out nodeIdx);
         stateMachine = GetComponent<StateMachine>();
         statusHp = GetComponent<StatusHp>();
@@ -598,6 +598,11 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
     protected EObjectType objectType = EObjectType.NONE;
     [SerializeField]
     protected GameObject selectDisplayCircle = null;
+    [SerializeField]
+    protected string objectDisplayName = null;
+    [TextArea]
+    [SerializeField]
+    protected string objectDescription = null;
 
 
     [Header("-Unit Control Values")]

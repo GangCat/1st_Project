@@ -12,6 +12,15 @@ public class HeroUnitManager : MonoBehaviour
         StartCoroutine("DisplayHeroStateCoroutine");
 #endif
     }
+
+    public void DebugMode(bool _isDebugMode)
+    {
+        if (_isDebugMode)
+            StartCoroutine("DisplayHeroStateCoroutine");
+        else
+            StopCoroutine("DisplayHeroStateCoroutine");
+    }
+
 #if UNITY_EDITOR
     public static void UpdateCurState(EState _state)
     {
@@ -23,7 +32,7 @@ public class HeroUnitManager : MonoBehaviour
         while (true)
         {
             Vector3 screenPos = Camera.main.WorldToScreenPoint(hero.transform.position);
-            DebugModeManager.DisplayCurState(screenPos, curState);
+            ArrayDebugModeCommand.Use(EDebugModeCommand.MOVE_STATE_INDICATOR, screenPos, curState);
 
             yield return null;
         }

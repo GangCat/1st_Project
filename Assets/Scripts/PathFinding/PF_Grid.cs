@@ -172,6 +172,7 @@ public class PF_Grid : MonoBehaviour
 
     public PF_Node GetNodeWithGrid(int _gridX, int _gridY)
     {
+        // 예외처리
         return grid[_gridX, _gridY];
     }
 

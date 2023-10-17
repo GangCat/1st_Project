@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class CommandHideStructureCancleButton : Command
 {
-    public CommandHideStructureCancleButton(CanvasStructureCancleFunc _canvasCancle)
+    public CommandHideStructureCancleButton(CanvasStructureBaseFunc _canvasStructure)
     {
-        canvasCancle = _canvasCancle;
+        canvasStructure = _canvasStructure;
     }
 
     public override void Execute(params object[] _objects)
     {
-        canvasCancle.HideCancleButton();
+        canvasStructure.HideCancleButton();
     }
 
-    private CanvasStructureCancleFunc canvasCancle = null;
+    private CanvasStructureBaseFunc canvasStructure = null;
 }

@@ -177,6 +177,7 @@ MonoBehaviour:
     targetTr: {fileID: 0}
     targetPos: {x: 0, y: 0, z: 0}
     isWaitForNewPath: 0
+    isPause: 0
     moveSpeed: 5
     attRate: 0.7
     attDmg: 2
@@ -198,6 +199,12 @@ MonoBehaviour:
   objectType: 2
   selectDisplayCircle: {fileID: 52691291055329485, guid: d02d8a447130d5d4bbc9d60ffde1d811,
     type: 3}
+  objectDisplayName: "\uC624\uD39C\uD558\uC774\uBA38"
+  objectDescription: "\uC9C0\uAD6C \uC774\uC678\uC758 \uC0C8\uB85C\uC6B4 \uC0DD\uC874\uAC00\uB2A5\uD55C
+    \uD589\uC131\uC744 \uCC3E\uAE30 \uC704\uD55C \uC778\uB958\uAD6C\uC6D0\uACC4\uD68D\uC758
+    \uD0D0\uC0AC\uB300 \uC911 \uD55C\uBA85.\n\uD604\uC7AC\uB294 \uBBF8\uC9C0\uC758
+    \uD589\uC131\uC5D0 \uBD88\uC2DC\uCC29\uD574 \uC0DD\uC874\uC744 \uC704\uD574 \uCD5C\uC120\uC744
+    \uB2E4\uD558\uACE0 \uC788\uB2E4."
   chaseStartRange: 5
   chaseFinishRange: 7
   attackRange: 4

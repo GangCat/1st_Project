@@ -6,10 +6,59 @@ public class CurrencyManager : MonoBehaviour, IPublisher, IPauseObserver
 {
     public void Init()
     {
-        ArrayPauseCommand.Use(EPauseCOmmand.REGIST, this);
+        ArrayPauseCommand.Use(EPauseCommand.REGIST, this);
         ArrayCurrencyCommand.Use(ECurrencyCommand.UPDATE_ENERGY_HUD, curEnergy);
         ArrayCurrencyCommand.Use(ECurrencyCommand.UPDATE_CORE_HUD, curCore);
         StartCoroutine("SupplyEnergyCoroutine");
+    }
+
+    public static uint UpgradeCost(EObjectType _type)
+    {
+        switch (_type)
+        {
+            case EObjectType.MAIN_BASE:
+                return upgradeMainBaseCost;
+            case EObjectType.TURRET:
+                return upgradeTurretCost;
+            case EObjectType.BUNKER:
+                return upgradeBunkerCost;
+            case EObjectType.WALL:
+                return upgradeWallCost;
+            case EObjectType.BARRACK:
+                return upgradeBarrackCost;
+            default:
+                return 0;
+        }
+    }
+
+    public static uint UpgradeUnitCost(EUnitUpgradeType _type)
+    {
+        switch (_type)
+        {
+            case EUnitUpgradeType.RANGED_UNIT_DMG:
+                return upgradeUnitDmgCost * (uint)SelectableObjectManager.LevelRangedUnitDmgUpgrade;
+            case EUnitUpgradeType.RANGED_UNIT_HP:
+                return upgradeUnitHpCost * (uint)SelectableObjectManager.LevelRangedUnitHpUpgrade;
+            case EUnitUpgradeType.MELEE_UNIT_DMG:
+                return upgradeUnitDmgCost * (uint)SelectableObjectManager.LevelRangedUnitDmgUpgrade;
+            case EUnitUpgradeType.MELEE_UNIT_HP:
+                return upgradeUnitHpCost * (uint)SelectableObjectManager.LevelRangedUnitHpUpgrade;
+            default:
+                return 0;
+        }
+    }
+
+    public static uint UpgradeETCCost(EUpgradeETCType _type)
+    {
+        switch (_type)
+        {
+            case EUpgradeETCType.CURRENT_MAX_POPULATION:
+                return upgradeMaxPopulation;
+            case EUpgradeETCType.ENERGY_SUPPLY:
+                return upgradeEnergySupply;
+            default:
+                return 0;
+        }
     }
 
     private IEnumerator SupplyEnergyCoroutine()
@@ -33,21 +82,27 @@ public class CurrencyManager : MonoBehaviour, IPublisher, IPauseObserver
         }
     }
 
-    public void IncreaseCore(uint _increaseCore)
-    {
-        curCore = Functions.ClampMaxWithUInt(curCore + _increaseCore, maxCore);
-        UpdateCore();
-    }
-
     private void DecreaseEnergy(uint _decreaseEnergy)
     {
         curEnergy -= _decreaseEnergy;
         UpdateEnergy();
     }
 
+    private void IncreaseEnergy(uint _increaseEnergy)
+    {
+        curEnergy = Functions.ClampMaxWithUInt(maxEnergy, curEnergy + _increaseEnergy);
+        UpdateEnergy();
+    }
+
     private void DecreaseCore(uint _decreaseCore)
     {
         curCore -= _decreaseCore;
+        UpdateCore();
+    }
+
+    public void IncreaseCore(uint _increaseCore)
+    {
+        curCore = Functions.ClampMaxWithUInt(curCore + _increaseCore, maxCore);
         UpdateCore();
     }
 
@@ -101,6 +156,7 @@ public class CurrencyManager : MonoBehaviour, IPublisher, IPauseObserver
         Broker.AlertMessageToSub(_message, EPublisherType.ENERGY_UPDATE);
     }
 
+    #region BuildStructure
     public bool CanBuildStructure(EObjectType _objType)
     {
         switch (_objType)
@@ -144,20 +200,46 @@ public class CurrencyManager : MonoBehaviour, IPublisher, IPauseObserver
         }
     }
 
+    public void CancleBuildStructure(EObjectType _objType)
+    {
+        switch (_objType)
+        {
+            case EObjectType.TURRET:
+                IncreaseEnergy(buildTurret);
+                break;
+            case EObjectType.BUNKER:
+                IncreaseEnergy(buildBunker);
+                break;
+            case EObjectType.WALL:
+                IncreaseEnergy(buildWall);
+                break;
+            case EObjectType.BARRACK:
+                IncreaseEnergy(buildBarrack);
+                break;
+            case EObjectType.NUCLEAR:
+                IncreaseEnergy(buildNuclear);
+                break;
+            default:
+                break;
+        }
+    }
+    #endregion
+
+    #region UpgradeStructure
     public bool CanUpgradeSturcture(EObjectType _objType, int _level)
     {
         switch (_objType)
         {
             case EObjectType.MAIN_BASE:
-                return IsCoreEnough(upgradeMainBase * (uint)_level);
+                return IsCoreEnough(upgradeMainBaseCost * (uint)_level);
             case EObjectType.TURRET:
-                return IsCoreEnough(upgradeTurret * (uint)_level);
+                return IsCoreEnough(upgradeTurretCost * (uint)_level);
             case EObjectType.BUNKER:
-                return IsCoreEnough(upgradeBunker * (uint)_level);
+                return IsCoreEnough(upgradeBunkerCost * (uint)_level);
             case EObjectType.WALL:
-                return IsCoreEnough(upgradeWall * (uint)_level);
+                return IsCoreEnough(upgradeWallCost * (uint)_level);
             case EObjectType.BARRACK:
-                return IsCoreEnough(upgradeBarrack * (uint)_level);
+                return IsCoreEnough(upgradeBarrackCost * (uint)_level);
             default:
                 return false;
         }
@@ -168,37 +250,63 @@ public class CurrencyManager : MonoBehaviour, IPublisher, IPauseObserver
         switch (_objType)
         {
             case EObjectType.MAIN_BASE:
-                DecreaseCore(upgradeMainBase * (uint)_level);
+                DecreaseCore(upgradeMainBaseCost * (uint)_level);
                 break;
             case EObjectType.TURRET:
-                DecreaseCore(upgradeTurret * (uint)_level);
+                DecreaseCore(upgradeTurretCost * (uint)_level);
                 break;
             case EObjectType.BUNKER:
-                DecreaseCore(upgradeBunker * (uint)_level);
+                DecreaseCore(upgradeBunkerCost * (uint)_level);
                 break;
             case EObjectType.WALL:
-                DecreaseCore(upgradeWall * (uint)_level);
+                DecreaseCore(upgradeWallCost * (uint)_level);
                 break;
             case EObjectType.BARRACK:
-                DecreaseCore(upgradeBarrack * (uint)_level);
+                DecreaseCore(upgradeBarrackCost * (uint)_level);
                 break;
             default:
                 break;
         }
     }
 
+    public void CancleUpgradeStructure(EObjectType _objType, int _level)
+    {
+        switch (_objType)
+        {
+            case EObjectType.MAIN_BASE:
+                IncreaseCore(upgradeMainBaseCost * (uint)_level);
+                break;
+            case EObjectType.TURRET:
+                IncreaseCore(upgradeTurretCost * (uint)_level);
+                break;
+            case EObjectType.BUNKER:
+                IncreaseCore(upgradeBunkerCost * (uint)_level);
+                break;
+            case EObjectType.WALL:
+                IncreaseCore(upgradeWallCost * (uint)_level);
+                break;
+            case EObjectType.BARRACK:
+                IncreaseCore(upgradeBarrackCost * (uint)_level);
+                break;
+            default:
+                break;
+        }
+    }
+    #endregion
+
+    #region UpgradeUnit
     public bool CanUpgradeUnit(EUnitUpgradeType _upgradeType)
     {
         switch (_upgradeType)
         {
             case EUnitUpgradeType.RANGED_UNIT_DMG:
-                return IsCoreEnough(upgradeUnitDmg * (uint)SelectableObjectManager.LevelRangedUnitDmgUpgrade);
+                return IsCoreEnough(upgradeUnitDmgCost * (uint)SelectableObjectManager.LevelRangedUnitDmgUpgrade);
             case EUnitUpgradeType.RANGED_UNIT_HP:
-                return IsCoreEnough(upgradeUnitHp * (uint)SelectableObjectManager.LevelRangedUnitHpUpgrade);
+                return IsCoreEnough(upgradeUnitHpCost * (uint)SelectableObjectManager.LevelRangedUnitHpUpgrade);
             case EUnitUpgradeType.MELEE_UNIT_DMG:
-                return IsCoreEnough(upgradeUnitDmg * (uint)SelectableObjectManager.LevelMeleeUnitDmgUpgrade);
+                return IsCoreEnough(upgradeUnitDmgCost * (uint)SelectableObjectManager.LevelMeleeUnitDmgUpgrade);
             case EUnitUpgradeType.MELEE_UNIT_HP:
-                return IsCoreEnough(upgradeUnitHp * (uint)SelectableObjectManager.LevelMeleeUnitHpUpgrade);
+                return IsCoreEnough(upgradeUnitHpCost * (uint)SelectableObjectManager.LevelMeleeUnitHpUpgrade);
             default:
                 return false;
         }
@@ -209,22 +317,45 @@ public class CurrencyManager : MonoBehaviour, IPublisher, IPauseObserver
         switch (_upgradeType)
         {
             case EUnitUpgradeType.RANGED_UNIT_DMG:
-                DecreaseCore(upgradeUnitDmg * (uint)SelectableObjectManager.LevelRangedUnitDmgUpgrade);
+                DecreaseCore(upgradeUnitDmgCost * (uint)SelectableObjectManager.LevelRangedUnitDmgUpgrade);
                 break;
             case EUnitUpgradeType.RANGED_UNIT_HP:
-                DecreaseCore(upgradeUnitDmg * (uint)SelectableObjectManager.LevelRangedUnitHpUpgrade);
+                DecreaseCore(upgradeUnitDmgCost * (uint)SelectableObjectManager.LevelRangedUnitHpUpgrade);
                 break;
             case EUnitUpgradeType.MELEE_UNIT_DMG:
-                DecreaseCore(upgradeUnitDmg * (uint)SelectableObjectManager.LevelMeleeUnitDmgUpgrade);
+                DecreaseCore(upgradeUnitDmgCost * (uint)SelectableObjectManager.LevelMeleeUnitDmgUpgrade);
                 break;
             case EUnitUpgradeType.MELEE_UNIT_HP:
-                DecreaseCore(upgradeUnitDmg * (uint)SelectableObjectManager.LevelMeleeUnitHpUpgrade);
+                DecreaseCore(upgradeUnitDmgCost * (uint)SelectableObjectManager.LevelMeleeUnitHpUpgrade);
                 break;
             default:
                 break;
         }
     }
 
+    public void CancleUpgradeUnit(EUnitUpgradeType _upgradeType)
+    {
+        switch (_upgradeType)
+        {
+            case EUnitUpgradeType.RANGED_UNIT_DMG:
+                IncreaseCore(upgradeUnitDmgCost * (uint)SelectableObjectManager.LevelRangedUnitDmgUpgrade);
+                break;
+            case EUnitUpgradeType.RANGED_UNIT_HP:
+                IncreaseCore(upgradeUnitDmgCost * (uint)SelectableObjectManager.LevelRangedUnitHpUpgrade);
+                break;
+            case EUnitUpgradeType.MELEE_UNIT_DMG:
+                IncreaseCore(upgradeUnitDmgCost * (uint)SelectableObjectManager.LevelMeleeUnitDmgUpgrade);
+                break;
+            case EUnitUpgradeType.MELEE_UNIT_HP:
+                IncreaseCore(upgradeUnitDmgCost * (uint)SelectableObjectManager.LevelMeleeUnitHpUpgrade);
+                break;
+            default:
+                break;
+        }
+    }
+    #endregion
+
+    #region SpawnUnit
     public bool CanSpawnUnit(EUnitType _unitType)
     {
         switch (_unitType)
@@ -253,6 +384,23 @@ public class CurrencyManager : MonoBehaviour, IPublisher, IPauseObserver
         }
     }
 
+    public void CancleSpawnUnit(EUnitType _unitType)
+    {
+        switch (_unitType)
+        {
+            case EUnitType.MELEE:
+                IncreaseEnergy(spawnMeleeUnit);
+                break;
+            case EUnitType.RANGED:
+                IncreaseEnergy(spawnRangedUnit);
+                break;
+            default:
+                break;
+        }
+    }
+    #endregion
+
+    #region UpgradeETC
     public bool CanUpgradeETC(EUpgradeETCType _upgradeType)
     {
         switch (_upgradeType)
@@ -280,6 +428,40 @@ public class CurrencyManager : MonoBehaviour, IPublisher, IPauseObserver
                 break;
         }
     }
+
+    public void CancleUpgradeETC(EUpgradeETCType _upgradeType)
+    {
+        switch (_upgradeType)
+        {
+            case EUpgradeETCType.CURRENT_MAX_POPULATION:
+                IncreaseCore(upgradeMaxPopulation);
+                break;
+            case EUpgradeETCType.ENERGY_SUPPLY:
+                IncreaseCore(upgradeEnergySupply);
+                break;
+            default:
+                break;
+        }
+    }
+    #endregion
+
+    #region SpawnNuclear
+    public bool CanSpawnNuclear()
+    {
+        return curEnergy > spawnNuclear;
+    }
+
+    public void SpawnNuclear()
+    {
+        DecreaseEnergy(spawnNuclear);
+    }
+
+    public void CancleSpawnNuclear()
+    {
+        IncreaseEnergy(spawnNuclear);
+    }
+
+    #endregion
 
     public void CheckPause(bool _isPause)
     {
@@ -312,36 +494,38 @@ public class CurrencyManager : MonoBehaviour, IPublisher, IPauseObserver
     [SerializeField]
     private uint buildNuclear = 50;
 
-    [Header("-Spawn Unit Cost")]
+    [Header("-Spawn Cost")]
     [SerializeField]
     private uint spawnMeleeUnit = 70;
     [SerializeField]
     private uint spawnRangedUnit = 50;
+    [SerializeField]
+    private uint spawnNuclear = 1000;
 
     [Header("-Core")]
     [Header("-Upgrade Unit Cost")]
     [SerializeField]
-    private uint upgradeUnitHp = 50;
+    private static uint upgradeUnitHpCost = 50;
     [SerializeField]
-    private uint upgradeUnitDmg = 50;
+    private static uint upgradeUnitDmgCost = 50;
 
     [Header("-Upgrade Structure Cost")]
     [SerializeField]
-    private uint upgradeMainBase = 200;
+    private static uint upgradeMainBaseCost = 200;
     [SerializeField]
-    private uint upgradeBarrack = 100;
+    private static uint upgradeBarrackCost = 100;
     [SerializeField]
-    private uint upgradeBunker = 70;
+    private static uint upgradeBunkerCost = 70;
     [SerializeField]
-    private uint upgradeWall = 30;
+    private static uint upgradeWallCost = 30;
     [SerializeField]
-    private uint upgradeTurret = 100;
+    private static uint upgradeTurretCost = 100;
 
     [Header("-Upgrade ETC Cost")]
     [SerializeField]
-    private uint upgradeEnergySupply = 100;
+    private static uint upgradeEnergySupply = 100;
     [SerializeField]
-    private uint upgradeMaxPopulation = 100;
+    private static uint upgradeMaxPopulation = 100;
 
     private bool isPause = false;
     

@@ -11,7 +11,7 @@ public class StructureMainBase : Structure
 
     public override void Init(int _structureIdx)
     {
-        ArrayPauseCommand.Use(EPauseCOmmand.REGIST, this);
+        ArrayPauseCommand.Use(EPauseCommand.REGIST, this);
         upgradeHpCmd = new CommandUpgradeStructureHP(GetComponent<StatusHp>());
         myObj = GetComponent<FriendlyObject>();
         myObj.Init();
@@ -27,9 +27,13 @@ public class StructureMainBase : Structure
     {
         if(!isProcessingUpgrade && upgradeLevel < 3)
         {
+            Debug.Log("structure" + upgradeLevel);
+            Debug.Log("Limit" + StructureManager.UpgradeLimit);
             StartCoroutine("UpgradeCoroutine");
             return true;
         }
+        Debug.Log("structure" + upgradeLevel);
+        Debug.Log("Limit" + StructureManager.UpgradeLimit);
         return false;
     }
 
@@ -51,6 +55,7 @@ public class StructureMainBase : Structure
                 isProcessingUpgrade = false;
                 isPopulationUpgrade = false;
                 StopCoroutine("UpgradePopulationCoroutine");
+                ArrayRefundCurrencyCommand.Use(ERefuncCurrencyCommand.UPGRADE_POPULATION);
                 curUpgradeType = EUpgradeType.NONE;
             }
             else if (isEnergySupplyUpgrade)
@@ -58,12 +63,14 @@ public class StructureMainBase : Structure
                 isProcessingUpgrade = false;
                 isEnergySupplyUpgrade = false;
                 StopCoroutine("UpgradeEnergySupplyCoroutine");
+                ArrayRefundCurrencyCommand.Use(ERefuncCurrencyCommand.UPGRADE_ENERGY);
                 curUpgradeType = EUpgradeType.NONE;
             }
             else
             {
                 StopCoroutine("UpgradeCoroutine");
                 isProcessingUpgrade = false;
+                ArrayRefundCurrencyCommand.Use(ERefuncCurrencyCommand.UPGRADE_STRUCTURE, myObj.GetObjectType(), upgradeLevel);
                 curUpgradeType = EUpgradeType.NONE;
             }
         }
@@ -81,7 +88,9 @@ public class StructureMainBase : Structure
         }
 
         if (myObj.IsSelect)
-            ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
+        {
+            UpdateInfo();
+        }
     }
 
     public void UpgradeMaxPopulation()

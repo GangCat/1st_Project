@@ -21,6 +21,11 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
         for (int i = 0; i < arrUnitPrefab.Length; ++i)
             arrMemoryPool[i] = new MemoryPool(arrUnitPrefab[i], 5, transform);
 
+        arrCrowd = new List<FriendlyObject>[9];
+        for(int i = 0; i < arrCrowd.Length; ++i)
+            arrCrowd[i] = new List<FriendlyObject>();
+
+
         ArrayHUDCommand.Use(EHUDCommand.INIT_DISPLAY_GROUP_INFO, listFriendlyUnitInfo);
         ArrayHUDCommand.Use(EHUDCommand.INIT_DISPLAY_SINGLE_INFO, unitInfoContainer);
     }
@@ -108,6 +113,25 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
             return grid.GetAccessibleNodeWithoutTargetNode(unitNode).worldPos;
 
         return unitNode.worldPos;
+    }
+
+    public void SetListToCrowd(int _arrIdx)
+    {
+        if (isEnemyObjectInList || listSelectedFriendlyObject.Count < 1) return;
+        arrCrowd[_arrIdx].Clear();
+        arrCrowd[_arrIdx].AddRange(listSelectedFriendlyObject.ToArray());
+    }
+
+    public void LoadCrowdWithIdx(int _arrIdx)
+    {
+        tempListSelectableObject.AddRange(arrCrowd[_arrIdx].ToArray());
+        if (tempListSelectableObject.Count < 1)
+        {
+            listSelectedFriendlyObject.Clear();
+            UpdateInfo();
+        }
+        else
+            SelectFinish();
     }
 
     public void SelectStart()
@@ -540,8 +564,9 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
 
     public void MoveUnitByPicking(Vector3 _targetPos, bool isAttackMove = false)
     {
-        if (IsListEmpty) 
-            return;
+        if (IsListEmpty) return;
+        if (isFriendlyStructureInList) return;
+        if (isEnemyObjectInList) return;
 
         if (isAttackMove)
         {
@@ -582,6 +607,9 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
 
     private void CalcNewFormation(Vector3 _targetPos, bool _isPatrol = false)
     {
+        if (isFriendlyStructureInList) return;
+        if (isEnemyObjectInList) return;
+
         int unitCnt = listSelectedFriendlyObject.Count;
         int col = Mathf.Clamp(unitCnt, 1, 5);
 
@@ -645,6 +673,9 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
 
     public void MoveUnitByPicking(Transform _targetTr)
     {
+        if (isFriendlyStructureInList) return;
+        if (isEnemyObjectInList) return;
+
         if (_targetTr.GetComponent<IGetObjectType>().GetObjectType().Equals(EObjectType.BUNKER))
         {
             curBunker = _targetTr.GetComponent<StructureBunker>();
@@ -726,4 +757,6 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
     private static List<SFriendlyUnitInfo> listFriendlyUnitInfo = null;
 
     private MemoryPool[] arrMemoryPool = null;
+
+    private List<FriendlyObject>[] arrCrowd = null;
 }

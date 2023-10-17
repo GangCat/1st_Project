@@ -26,7 +26,7 @@ public class Structure : MonoBehaviour, IPauseObserver
         ShowHBeam();
         HideModel();
 
-        ArrayPauseCommand.Use(EPauseCOmmand.REGIST, this);
+        ArrayPauseCommand.Use(EPauseCommand.REGIST, this);
     }
 
     public virtual void Init() { }
@@ -49,12 +49,14 @@ public class Structure : MonoBehaviour, IPauseObserver
         {
             StopCoroutine("UpgradeCoroutine");
             isProcessingUpgrade = false;
+            ArrayRefundCurrencyCommand.Use(ERefuncCurrencyCommand.UPGRADE_STRUCTURE, myObj.GetObjectType(), upgradeLevel);
             curUpgradeType = EUpgradeType.NONE;
         }
         else if (isProcessingConstruct)
         {
             StopCoroutine("BuildStructureCoroutine");
             isProcessingConstruct = false;
+            ArrayRefundCurrencyCommand.Use(ERefuncCurrencyCommand.BUILD_STRUCTURE, myObj.GetObjectType());
             ArrayStructureFuncButtonCommand.Use(EStructureButtonCommand.DEMOLISH_COMPLETE, myStructureIdx);
             DestroyStructure();
         }
@@ -66,7 +68,9 @@ public class Structure : MonoBehaviour, IPauseObserver
 
 
         if (myObj.IsSelect)
-            ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
+        {
+            UpdateInfo();
+        }
     }
 
     public void UpdateConstructInfo()
@@ -107,9 +111,13 @@ public class Structure : MonoBehaviour, IPauseObserver
     {
         if (!isProcessingUpgrade && upgradeLevel < StructureManager.UpgradeLimit)
         {
+            Debug.Log("structure" + upgradeLevel);
+            Debug.Log("Limit" + StructureManager.UpgradeLimit);
             StartCoroutine("UpgradeCoroutine");
             return true;
         }
+        Debug.Log("structure" + upgradeLevel);
+        Debug.Log("Limit" + StructureManager.UpgradeLimit);
         return false;
     }
 
@@ -122,7 +130,7 @@ public class Structure : MonoBehaviour, IPauseObserver
 
         float elapsedTime = 0f;
         progressPercent = elapsedTime / upgradeDelay;
-        while (progressPercent <= 1)
+        while (progressPercent < 1)
         {
             while (isPause)
                 yield return null;
@@ -140,8 +148,10 @@ public class Structure : MonoBehaviour, IPauseObserver
     protected virtual void UpgradeComplete()
     {
         curUpgradeType = EUpgradeType.NONE;
-        if(myObj.IsSelect)
-            ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
+        if (myObj.IsSelect)
+        {
+            UpdateInfo();
+        }
         ++upgradeLevel;
     }
 
@@ -213,7 +223,7 @@ public class Structure : MonoBehaviour, IPauseObserver
         HideHBeam();
         ShowModel();
         if (myObj.IsSelect)
-            ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
+            UpdateInfo();
         
         // Build Complete Audio Play
         audioType = EAudioType_Adjutant.CONST_COMPLETE;
@@ -266,13 +276,21 @@ public class Structure : MonoBehaviour, IPauseObserver
         AudioManager.instance.PlayAudio_Adjutant(audioType);
     }
 
+    protected virtual void UpdateInfo()
+    {
+        ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
+        ArrayHUDCommand.Use(EHUDCommand.UPDATE_TOOLTIP_UPGRADE_COST, (int)CurrencyManager.UpgradeCost(myObj.GetObjectType()) * upgradeLevel);
+    }
+
     protected virtual IEnumerator CheckBuildableCoroutine()
     {
+
         while (true)
         {
             yield return null;
 
             isBuildable = true;
+
 
             curNode = grid.GetNodeFromWorldPoint(transform.position);
             int gridX = curNode.gridX;
@@ -287,6 +305,7 @@ public class Structure : MonoBehaviour, IPauseObserver
                 }
                 ++idx;
             }
+
             SetColor();
         }
     }
@@ -356,5 +375,5 @@ public class Structure : MonoBehaviour, IPauseObserver
 
     protected bool isPause = false;
     
-    private EAudioType_Adjutant audioType;
+    protected EAudioType_Adjutant audioType;
 }

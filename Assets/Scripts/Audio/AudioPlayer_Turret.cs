@@ -2,18 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AudioPlayer_Turret : MonoBehaviour
+public class AudioPlayer_Turret : AudioPlayerBase
 {
-    private void Awake()
+    public override void Init()
     {
-        if (AudioManager.instance == null) return;
-        
         instance = this;
-        Init();
-    }
-
-    private void Init()
-    {
         audioPlayers = new AudioSource[audioChannels];
         var volumes = AudioManager.instance.Volumes;
 

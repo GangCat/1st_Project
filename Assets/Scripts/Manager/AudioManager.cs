@@ -2,13 +2,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
-using UnityEngine.Rendering.HighDefinition;
 
 public class AudioManager : MonoBehaviour
 {
-   
-    private void Awake()
+    public void Init()
     {
         // ΩÃ±€≈Ê ∆–≈œ √ ±‚»≠
         if (instance == null)
@@ -21,6 +18,9 @@ public class AudioManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        foreach (AudioPlayerBase APB in GetComponentsInChildren<AudioPlayerBase>())
+            APB.Init();
     }
 
 
