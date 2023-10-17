@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour, IPauseSubject
             heroMng = FindFirstObjectByType<HeroUnitManager>();
             fogMng = FindFirstObjectByType<FogManager>();
             debugMng = FindFirstObjectByType<DebugModeManager>();
+            audioMng = FindFirstObjectByType<AudioManager>();
 
             mainBaseTr = FindFirstObjectByType<StructureMainBase>().transform;
         }
@@ -62,6 +63,7 @@ public class GameManager : MonoBehaviour, IPauseSubject
     {
         cameraMng.Init();
         uiMng.Init();
+        audioMng.Init();
 
         if (isInGame)
         {
@@ -84,6 +86,7 @@ public class GameManager : MonoBehaviour, IPauseSubject
 
         if (isMainMenu)
         {
+
             inputMng.MainInit();
         }
 
@@ -242,6 +245,7 @@ public class GameManager : MonoBehaviour, IPauseSubject
     private HeroUnitManager heroMng = null;
     private FogManager fogMng = null;
     private DebugModeManager debugMng = null;
+    private AudioManager audioMng = null;
 
     private PF_Grid grid = null;
     private Transform mainBaseTr = null;

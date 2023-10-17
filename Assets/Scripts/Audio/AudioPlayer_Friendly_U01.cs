@@ -2,32 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AudioPlayer_Friendly_U01 : MonoBehaviour
+public class AudioPlayer_Friendly_U01 : AudioPlayerBase
 {
-    
-    private void Awake()
+    public override void Init()
     {
         instance = this;
-        Init();
-    }
-
-    private void Init()
-    {
-        /*
-        // 배경음 플레이어 초기화
-        GameObject bgmObject = new GameObject("BgmPlayer");
-        bgmObject.transform.parent = transform;             // AudioManager 자식으로 등록
-        bgmPlayer = bgmObject.AddComponent<AudioSource>();  // bgmPlayer 초기화
-        bgmPlayer.playOnAwake = false;                      // 배경음악 자동재생 false
-        bgmPlayer.loop = true;
-        bgmPlayer.volume = bgmVolume;
-        bgmPlayer.clip = bgmClip;
-        */
-
-
-        // 효과음 플레이어 초기화
-        // GameObject sfxObject = new GameObject("FriendlySfxPlayer");
-        // sfxObject.transform.parent = transform;             // AudioManager 자식으로 등록
         audioPlayers = new AudioSource[audioChannels];
         AudioManager.AudioVolumes volumes = AudioManager.instance.Volumes;
 

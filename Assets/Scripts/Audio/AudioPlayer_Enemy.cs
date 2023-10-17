@@ -3,18 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.HighDefinition;
 
-public class AudioPlayer_Enemy : MonoBehaviour
+public class AudioPlayer_Enemy : AudioPlayerBase
 {
-    
-    private void Awake()
+    public override void Init()
     {
         instance = this;
-        Init();
-    }
-
-    private void Init()
-    {
-
         // 효과음 플레이어 초기화
         // GameObject sfxObject = new GameObject("EnemySfxPlayer");
         // sfxObject.transform.parent = transform;             // AudioManager 자식으로 등록
