@@ -314,7 +314,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
             tempObj.DisplayCircle();
             selectObjectCallback?.Invoke(tempObj.GetObjectType());
             InputOtherUnitInfo(tempObj);
-            ArrayHUDCommand.Use(EHUDCommand.DISPLAY_SINGLE_INFO);
+            DisplaySingleUnitFunc();
         }
         // 임시 리스트에 아군 건물만 있을 경우
         else if (isFriendlyStructureInList)
@@ -362,7 +362,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
                 else
                 {
                     InputOtherUnitInfo(tempObj);
-                    ArrayHUDCommand.Use(EHUDCommand.DISPLAY_SINGLE_INFO);
+                    DisplaySingleUnitFunc();
                 }
             }
             // 아군 건물이 핵 생산 건물일 경우
@@ -381,7 +381,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
                 {
                     selectObjectCallback?.Invoke(EObjectType.NUCLEAR);
                     InputOtherUnitInfo(tempObj);
-                    ArrayHUDCommand.Use(EHUDCommand.DISPLAY_SINGLE_INFO);
+                    DisplaySingleUnitFunc();
                 }
             }
             // 아무것도 하지 않는 상태의 건물일 경우
@@ -389,7 +389,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
             {
                 selectObjectCallback?.Invoke(tempObj.GetObjectType());
                 InputOtherUnitInfo(tempObj);
-                ArrayHUDCommand.Use(EHUDCommand.DISPLAY_SINGLE_INFO);
+                DisplaySingleUnitFunc();
             }
         }
         // 임시 리스트에 아군 유닛이 존재할 경우
@@ -402,7 +402,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
             if (listSelectedFriendlyObject.Count < 2)
             {
                 InputOtherUnitInfo(listSelectedFriendlyObject[0]);
-                ArrayHUDCommand.Use(EHUDCommand.DISPLAY_SINGLE_INFO);
+                DisplaySingleUnitFunc();
             }
             else
             {
@@ -473,7 +473,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
                     {
                         selectObjectCallback?.Invoke(listSelectedFriendlyObject[0].GetObjectType());
                         InputOtherUnitInfo(listSelectedFriendlyObject[0]);
-                        ArrayHUDCommand.Use(EHUDCommand.DISPLAY_SINGLE_INFO);
+                        DisplaySingleUnitFunc();
                     }
                 }
             }
@@ -484,7 +484,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
                 if (listSelectedFriendlyObject.Count < 2)
                 {
                     InputOtherUnitInfo(listSelectedFriendlyObject[0]);
-                    ArrayHUDCommand.Use(EHUDCommand.DISPLAY_SINGLE_INFO);
+                    DisplaySingleUnitFunc();
                 }
                 // 리스트에 유닛이 다수 존재할 경우
                 else
@@ -503,6 +503,12 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
             ArrayHUDCommand.Use(EHUDCommand.HIDE_UNIT_INFO);
             selectObjectCallback?.Invoke(EObjectType.NONE);
         }
+    }
+
+    private void DisplaySingleUnitFunc()
+    {
+        SelectableObject tempObj = listSelectedFriendlyObject[0];
+        ArrayHUDCommand.Use(EHUDCommand.DISPLAY_SINGLE_INFO, tempObj.GetObjectName, tempObj.GetObjectDescription);
     }
 
     public static void UpdateHp(int _listIdx = -2)

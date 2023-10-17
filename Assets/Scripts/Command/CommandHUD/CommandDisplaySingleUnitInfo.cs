@@ -4,17 +4,14 @@ using UnityEngine;
 
 public class CommandDisplaySingleUnitInfo : Command
 {
-    public CommandDisplaySingleUnitInfo(CanvasUnitInfo _canvasInfo, CanvasSpawnUnitInfo _canvasSpawn)
+    public CommandDisplaySingleUnitInfo(CanvasUnitInfo _canvasInfo)
     {
         canvasInfo = _canvasInfo;
-        //canvasSpawn = _canvasSpawn;
     }
     public override void Execute(params object[] _objects)
     {
-        //canvasSpawn.SetActive(false);
-        canvasInfo.DisplaySingleUnitInfo();
+        canvasInfo.DisplaySingleUnitInfo((string)_objects[0], (string)_objects[1]);
     }
 
     private CanvasUnitInfo canvasInfo = null;
-    //private CanvasSpawnUnitInfo canvasSpawn = null;
 }

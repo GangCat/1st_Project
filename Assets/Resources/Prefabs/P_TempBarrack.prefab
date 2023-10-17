@@ -101,9 +101,9 @@ MonoBehaviour:
   selectDisplayCircle: {fileID: 52691291055329485, guid: d02d8a447130d5d4bbc9d60ffde1d811,
     type: 3}
   objectDisplayName: "\uD329\uD1A0\uB9AC"
-  objectDescription: "\uB77C\uCCC7 \uBD07\uACFC \uB808\uC774 \uBD07\uC744 \uC0DD\uC0B0\uD560
-    \uC218 \uC788\uB294 \uAC74\uBB3C.\n\uC591\uCABD\uC73C\uB85C \uB2EC\uB9B0 \uD30C\uC774\uD504\uAC00
-    \uB208\uC5D0 \uB748\uB2E4.\n"
+  objectDisplayDescription: "\uB77C\uCCC7 \uBD07\uACFC \uB808\uC774 \uBD07\uC744
+    \uC0DD\uC0B0\uD560 \uC218 \uC788\uB294 \uAC74\uBB3C.\n\uC591\uCABD\uC5D0 \uB2EC\uB9B0
+    \uD30C\uC774\uD504\uAC00 \uB208\uC5D0 \uB748\uB2E4."
   chaseStartRange: 0
   chaseFinishRange: 0
   attackRange: 0

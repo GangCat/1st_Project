@@ -23,10 +23,10 @@ public class CanvasUnitInfo : MonoBehaviour
         singleInfo.InitContainer(_container);
     }
 
-    public void DisplaySingleUnitInfo()
+    public void DisplaySingleUnitInfo(string _objectName, string _objectDescription)
     {
         groupInfo.HideDisplay();
-        singleInfo.DisplaySingleInfo();
+        singleInfo.DisplaySingleInfo(_objectName, _objectDescription);
     }
 
     public void DisplayGroupUnitInfo(int _unitCnt)

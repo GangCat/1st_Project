@@ -5542,7 +5542,7 @@ GameObject:
   - component: {fileID: 405242194}
   - component: {fileID: 405242197}
   m_Layer: 0
-  m_Name: Canvas_Tolltip
+  m_Name: Canvas_Tooltip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7783,8 +7783,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -10579,8 +10579,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -11697,7 +11697,7 @@ GameObject:
   - component: {fileID: 846680178}
   - component: {fileID: 846680180}
   m_Layer: 0
-  m_Name: Text_UnitInfo
+  m_Name: Text_UnitDescription
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11833,7 +11833,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 846680176}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f2855d5c8963fcf4ca4d79e1efbe6656, type: 3}
+  m_Script: {fileID: 11500000, guid: c7951f17c958494499819677f0198888, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &851140288
@@ -13039,7 +13039,7 @@ GameObject:
   - component: {fileID: 925993528}
   - component: {fileID: 925993530}
   m_Layer: 0
-  m_Name: Image_Tolltip
+  m_Name: Image_Tooltip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13080,7 +13080,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.5281983, g: 0.7830189, b: 0.4986205, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 0

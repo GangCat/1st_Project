@@ -23,6 +23,8 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
 
     }
 
+    public string GetObjectName => objectDisplayName;
+    public string GetObjectDescription => objectDisplayDescription;
     public Vector3 GetPos => transform.position;
     public int MaxHp => statusHp.MaxHp;
     public float AttRange => attackRange;
@@ -602,7 +604,7 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
     protected string objectDisplayName = null;
     [TextArea]
     [SerializeField]
-    protected string objectDescription = null;
+    protected string objectDisplayDescription = null;
 
 
     [Header("-Unit Control Values")]

@@ -90,10 +90,10 @@ MonoBehaviour:
   objectType: 5
   selectDisplayCircle: {fileID: 52691291055329485, guid: d02d8a447130d5d4bbc9d60ffde1d811,
     type: 3}
-  objectDisplayName: 
-  objectDescription: "\uB808\uC774 \uBD07\uC774 \uC62C\uB77C\uAC08 \uC218 \uC788\uB294
-    \uC18C\uD615 \uBC99\uCEE4.\n\uB192\uC740 \uACE0\uB3C4\uB355\uC5D0 \uB808\uC774
-    \uBD07\uC758 \uC0AC\uAC70\uB9AC\uC640 \uACF5\uACA9\uB825\uC774 \uC0C1\uC2B9\uD55C\uB2E4."
+  objectDisplayName: "\uBC99\uCEE4"
+  objectDisplayDescription: "\uB808\uC774 \uBD07\uC774 \uC62C\uB77C\uAC08 \uC218
+    \uC788\uB294 \uC18C\uD615 \uBC99\uCEE4.\n\uB192\uC740 \uACE0\uB3C4\uB355\uC5D0
+    \uB808\uC774 \uBD07\uC758 \uC0AC\uAC70\uB9AC\uC640 \uACF5\uACA9\uB825\uC774 \uC0C1\uC2B9\uD55C\uB2E4."
   chaseStartRange: 0
   chaseFinishRange: 0
   attackRange: 0

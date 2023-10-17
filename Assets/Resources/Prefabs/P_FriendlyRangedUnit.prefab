@@ -115,7 +115,7 @@ MonoBehaviour:
   selectDisplayCircle: {fileID: 52691291055329485, guid: d02d8a447130d5d4bbc9d60ffde1d811,
     type: 3}
   objectDisplayName: "\uB808\uC774 \uBD07"
-  objectDescription: "\uC65C\uC18C\uD55C \uC678\uD615\uACFC \uB2EC\uB9AC \uAC15\uB825\uD55C
+  objectDisplayDescription: "\uC791\uC740 \uC678\uD615\uACFC \uB2EC\uB9AC \uAC15\uB825\uD55C
     \uB808\uC774\uC800\uB97C \uBC1C\uC0AC\uD558\uB294 \uC6D0\uAC70\uB9AC \uACF5\uACA9\uC6A9
     \uB85C\uBD07\uC774\uB2E4."
   chaseStartRange: 6

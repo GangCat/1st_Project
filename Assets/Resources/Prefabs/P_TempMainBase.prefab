@@ -246,10 +246,10 @@ MonoBehaviour:
   selectDisplayCircle: {fileID: 52691291055329485, guid: d02d8a447130d5d4bbc9d60ffde1d811,
     type: 3}
   objectDisplayName: "\uBA54\uC778 \uBCA0\uC774\uC2A4"
-  objectDescription: "\uD589\uC131\uC5D0 \uBD88\uC2DC\uCC29\uD560 \uB54C \uD0C0\uACE0
-    \uC628 \uC6B0\uC8FC\uC120\uC758 \uBCC0\uD615\uBC84\uC804\uC774\uB2E4.\n\uC774
+  objectDisplayDescription: "\uD589\uC131\uC5D0 \uBD88\uC2DC\uCC29\uD560 \uB54C \uD0C0\uACE0
+    \uC628 \uC6B0\uC8FC\uC120\uC744 \uAE30\uC9C0\uD615\uD0DC\uB85C \uBCC0\uD658\uD558\uC600\uB2E4.\n\uC774
     \uAC74\uBB3C\uC774 \uD30C\uAD34\uB41C\uB2E4\uBA74 \uC0DD\uC874 \uAC00\uB2A5\uC131\uC740
-    0\uC5D0 \uAC00\uAE4C\uC6B8 \uAC83\uC774\uB2E4."
+    0\uC5D0 \uAC00\uAE4C\uC6B8\uAC83\uC774\uB2E4."
   chaseStartRange: 0
   chaseFinishRange: 0
   attackRange: 0
