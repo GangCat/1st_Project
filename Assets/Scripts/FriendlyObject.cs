@@ -10,6 +10,8 @@ public class FriendlyObject : SelectableObject, ISubscriber
         SelectableObjectManager.InitNodeFriendly(transform.position, out nodeIdx);
         stateMachine = GetComponent<StateMachine>();
         statusHp = GetComponent<StatusHp>();
+        displayCircleObject = GetComponentInChildren<PickObjectDisplay>();
+        displayCircleObject.Init();
         statusHp.Init();
 
         if (stateMachine != null)
@@ -64,12 +66,14 @@ public class FriendlyObject : SelectableObject, ISubscriber
     {
         isSelect = true;
         listIdx = _listIdx;
+        ActivateCircle();
     }
 
     public void unSelect()
     {
         isSelect = false;
         listIdx = -1;
+        DeActivateCircle();
     }
 
     public void UpdatelistIdx(int _listidx)

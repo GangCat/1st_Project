@@ -224,5 +224,17 @@ public static class Functions
     {
         return _value < _maxValue ? _value : _maxValue;
     }
+
+    public static RaycastHit[] OthographCameraBoxcastScreen(LayerMask _layerMask, Camera _mainCam)
+    {
+        Vector3 worldCamPos = _mainCam.transform.position;
+        // 스크린의 중앙 좌표를 계산합니다.
+        //Vector3 centerOfScreen = new Vector3(Screen.width / 2f, Screen.height / 2f, 0f);
+        Vector3 minBoxPos = _mainCam.ScreenToWorldPoint(new Vector3(0f, 0f, _mainCam.nearClipPlane));
+        Vector3 maxBoxPos = _mainCam.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, _mainCam.nearClipPlane));
+        //Vector3 worldScreenCenterPos = _mainCam.ScreenToWorldPoint(new Vector3(centerOfScreen.x, centerOfScreen.y, _mainCam.nearClipPlane));
+        return Physics.BoxCastAll(worldCamPos, new Vector3(maxBoxPos.x - minBoxPos.x, maxBoxPos.y - minBoxPos.y, 0.1f), _mainCam.transform.forward, _mainCam.transform.rotation, 1000f, _layerMask);
+
+    }
 }
 

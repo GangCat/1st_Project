@@ -86,7 +86,6 @@ public class GameManager : MonoBehaviour, IPauseSubject
 
         if (isMainMenu)
         {
-
             inputMng.MainInit();
         }
 
@@ -160,6 +159,7 @@ public class GameManager : MonoBehaviour, IPauseSubject
         ArraySelectCommand.Add(ESelectCommand.REMOVE_FROM_LIST, new CommandRemoveFromList(selectMng));
         ArraySelectCommand.Add(ESelectCommand.SET_LIST_TO_CROWD, new CommandSetListToCrowd(selectMng));
         ArraySelectCommand.Add(ESelectCommand.LOAD_CROWD_WITH_IDX, new CommandLoadCrowdWithIdx(selectMng));
+        ArraySelectCommand.Add(ESelectCommand.ADD_TO_LIST, new CommandAddToList(selectMng));
 
         ArrayUnitActionCommand.Add(EUnitActionCommand.MOVE_WITH_POS, new CommandUnitMoveWithPos(selectMng));
         ArrayUnitActionCommand.Add(EUnitActionCommand.MOVE_ATTACK, new CommandUnitMoveAttack(selectMng));

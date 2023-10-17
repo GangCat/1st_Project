@@ -23773,7 +23773,8 @@ MonoBehaviour:
   arrCrowdFuncHotkey: 17010000310000003200000033000000340000003500000036000000370000003800000039000000
   arrOtherFuncHotkey: 60000000
   cancleKey: 27
-  debugModeKey: 293
+  UnitSelectComandKey: 304
+  arrDeveloperMenuHotkey: 1801000025010000240100002301000022010000
   isMainMenu: 0
   isDetectingChangeKey: 0
 --- !u!4 &1606740354
@@ -27568,10 +27569,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -6647300595234779752, guid: 49669c041f5244b47b1d42375a5d156a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -6647300595234779752, guid: 49669c041f5244b47b1d42375a5d156a,
+        type: 3}
+      propertyPath: m_TagString
+      value: StageFloor
+      objectReference: {fileID: 0}
+    - target: {fileID: -2815194613554758484, guid: 49669c041f5244b47b1d42375a5d156a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 49669c041f5244b47b1d42375a5d156a,
         type: 3}
       propertyPath: m_Name
       value: test 222
+      objectReference: {fileID: 0}
+    - target: {fileID: 6588434171230858588, guid: 49669c041f5244b47b1d42375a5d156a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
