@@ -10,6 +10,8 @@ public class FriendlyObject : SelectableObject, ISubscriber
         SelectableObjectManager.InitNodeFriendly(transform.position, out nodeIdx);
         stateMachine = GetComponent<StateMachine>();
         statusHp = GetComponent<StatusHp>();
+        displayCircleObject = GetComponentInChildren<PickObjectDisplay>();
+        displayCircleObject.Init();
         statusHp.Init();
 
         if (stateMachine != null)
@@ -49,17 +51,29 @@ public class FriendlyObject : SelectableObject, ISubscriber
     public EUnitType GetUnitType => unitType;
     public int NodeIdx => nodeIdx;
     public bool IsSelect => isSelect;
+    public int CrowdIdx
+    {
+        get => crowdIdx;
+        set => crowdIdx = value;
+    }
+
+    public void ResetCrowdIdx()
+    {
+        crowdIdx = -1;
+    }
 
     public void Select(int _listIdx = 0)
     {
         isSelect = true;
         listIdx = _listIdx;
+        ActivateCircle();
     }
 
     public void unSelect()
     {
         isSelect = false;
         listIdx = -1;
+        DeActivateCircle();
     }
 
     public void UpdatelistIdx(int _listidx)
@@ -82,6 +96,8 @@ public class FriendlyObject : SelectableObject, ISubscriber
 
             if (objectType.Equals(EObjectType.UNIT_01) || objectType.Equals(EObjectType.UNIT_02))
             {
+                if (crowdIdx != -1)
+                    ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.REMOVE_AT_CROWD, crowdIdx, this);
                 ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.DEAD, gameObject, unitType, this);
                 Broker.UnSubscribe(this, EPublisherType.SELECTABLE_MANAGER);
                 SelectableObjectManager.ResetFriendlyNodeWalkable(transform.position, nodeIdx);
@@ -710,6 +726,7 @@ public class FriendlyObject : SelectableObject, ISubscriber
     private Transform targetBunker = null;
 
     private int listIdx = -1;
+    private int crowdIdx = -1;
     private float oriAttRange = 0f;
     private bool isAttack = false;
     private bool isSelect = false;

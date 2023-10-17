@@ -11,6 +11,8 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
         SelectableObjectManager.InitNodeEnemy(transform.position, out nodeIdx);
         stateMachine = GetComponent<StateMachine>();
         statusHp = GetComponent<StatusHp>();
+        displayCircleObject = GetComponentInChildren<PickObjectDisplay>();
+        displayCircleObject.Init();
         statusHp.Init();
 
         if (stateMachine != null)
@@ -23,6 +25,8 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
 
     }
 
+    public string GetObjectName => objectDisplayName;
+    public string GetObjectDescription => objectDisplayDescription;
     public Vector3 GetPos => transform.position;
     public int MaxHp => statusHp.MaxHp;
     public float AttRange => attackRange;
@@ -49,14 +53,18 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
         }
     }
 
-    public void DisplayCircle()
+    public void ActivateCircle()
     {
-        displayCircleObject = Instantiate(selectDisplayCircle, transform.position, Quaternion.identity, transform);
+        displayCircleObject.SetActive(true);
+        //if(displayCircleObject == null)
+        //    displayCircleObject = Instantiate(selectDisplayCircle, transform.position, Quaternion.identity, transform);
     }
 
-    public void DestroyCircle()
+    public void DeActivateCircle()
     {
-        Destroy(displayCircleObject);
+        displayCircleObject.SetActive(false);
+        //if (displayCircleObject != null)
+        //    Destroy(displayCircleObject);
     }
 
     public EObjectType GetObjectType()
@@ -602,7 +610,7 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
     protected string objectDisplayName = null;
     [TextArea]
     [SerializeField]
-    protected string objectDescription = null;
+    protected string objectDisplayDescription = null;
 
 
     [Header("-Unit Control Values")]
@@ -635,5 +643,6 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
     protected StatusHp statusHp = null;
 
     protected int nodeIdx = 0;
-    protected GameObject displayCircleObject = null;
+    [SerializeField]
+    protected PickObjectDisplay displayCircleObject = null;
 }

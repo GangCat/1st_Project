@@ -22,7 +22,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
             arrMemoryPool[i] = new MemoryPool(arrUnitPrefab[i], 5, transform);
 
         arrCrowd = new List<FriendlyObject>[9];
-        for(int i = 0; i < arrCrowd.Length; ++i)
+        for (int i = 0; i < arrCrowd.Length; ++i)
             arrCrowd[i] = new List<FriendlyObject>();
 
 
@@ -118,8 +118,14 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
     public void SetListToCrowd(int _arrIdx)
     {
         if (isEnemyObjectInList || listSelectedFriendlyObject.Count < 1) return;
+
+        for (int i = 0; i < arrCrowd[_arrIdx].Count; ++i)
+            arrCrowd[_arrIdx][i].ResetCrowdIdx();
         arrCrowd[_arrIdx].Clear();
+
         arrCrowd[_arrIdx].AddRange(listSelectedFriendlyObject.ToArray());
+        for (int i = 0; i < arrCrowd[_arrIdx].Count; ++i)
+            arrCrowd[_arrIdx][i].CrowdIdx = _arrIdx;
     }
 
     public void LoadCrowdWithIdx(int _arrIdx)
@@ -134,10 +140,15 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
             SelectFinish();
     }
 
+    public void RemoveAtCrowd(int _arrIdx, FriendlyObject _removeObj)
+    {
+        arrCrowd[_arrIdx].Remove(_removeObj);
+    }
+
     public void SelectStart()
     {
         for (int i = 0; i < listSelectedFriendlyObject.Count; ++i)
-            listSelectedFriendlyObject[i].DestroyCircle();
+            listSelectedFriendlyObject[i].DeActivateCircle();
     }
 
     public void RemoveUnitAtList(FriendlyObject _removeObj)
@@ -163,6 +174,20 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
         UpdateInfo();
     }
 
+    public void AddToList(FriendlyObject _addObj)
+    {
+        if (_addObj == null) return;
+        if (_addObj.GetUnitType.Equals(EUnitType.NONE)) return;
+        if (isEnemyObjectInList || isFriendlyStructureInList) return;
+        if (listSelectedFriendlyObject.Count > 11) return;
+
+        _addObj.Select(listSelectedFriendlyObject.Count);
+        _addObj.ActivateCircle();
+        listSelectedFriendlyObject.Add(_addObj);
+
+        UpdateInfo();
+    }
+
     public void InUnit(FriendlyObject _friObj)
     {
         curBunker.InUnit(_friObj);
@@ -184,7 +209,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
     {
         if (listSelectedFriendlyObject[0].GetObjectType().Equals(EObjectType.BARRACK))
             return listSelectedFriendlyObject[0].GetComponent<StructureBarrack>().CanSpawnUnit();
-        else 
+        else
             return false;
     }
 
@@ -228,14 +253,14 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
 
         tempListSelectableObject.Add(_object);
         _object.IsTempSelect = true;
-        _object.DisplayCircle();
+        _object.ActivateCircle();
     }
 
     public void RemoveSelectedObject(SelectableObject _object)
     {
         tempListSelectableObject.Remove(_object);
         _object.IsTempSelect = false;
-        _object.DestroyCircle();
+        _object.DeActivateCircle();
     }
 
     public void SelectFinish()
@@ -245,7 +270,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
         if (tempListSelectableObject.Count < 1)
         {
             for (int i = 0; i < listSelectedFriendlyObject.Count; ++i)
-                listSelectedFriendlyObject[i].DisplayCircle();
+                listSelectedFriendlyObject[i].ActivateCircle();
             return;
         }
 
@@ -255,7 +280,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
         for (int i = 0; i < tempListSelectableObject.Count; ++i)
         {
             tempListSelectableObject[i].IsTempSelect = false;
-            tempListSelectableObject[i].DestroyCircle();
+            tempListSelectableObject[i].DeActivateCircle();
         }
 
         listSelectedFriendlyObject.Clear();
@@ -268,7 +293,6 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
         foreach (SelectableObject obj in tempListSelectableObject)
         {
             if (obj == null) continue;
-            obj.DestroyCircle();
 
             if (listSelectedFriendlyObject.Count > 11) break;
 
@@ -324,15 +348,16 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
         // 임시 리스트에 적 유닛만 있을 경우
         if (isEnemyObjectInList)
         {
-            tempObj.DisplayCircle();
+            //tempObj.ActivateCircle();
             selectObjectCallback?.Invoke(tempObj.GetObjectType());
             InputOtherUnitInfo(tempObj);
-            ArrayHUDCommand.Use(EHUDCommand.DISPLAY_SINGLE_INFO);
+            enemyCurSelected = tempObj;
+            DisplaySingleUnitInfo();
         }
         // 임시 리스트에 아군 건물만 있을 경우
         else if (isFriendlyStructureInList)
         {
-            tempObj.DisplayCircle();
+            //tempObj.ActivateCircle();
             InputOtherUnitInfo(tempObj);
             listSelectedFriendlyObject.Add(tempObj.GetComponent<FriendlyObject>());
             Structure structureInList = tempObj.GetComponent<Structure>();
@@ -375,11 +400,11 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
                 else
                 {
                     InputOtherUnitInfo(tempObj);
-                    ArrayHUDCommand.Use(EHUDCommand.DISPLAY_SINGLE_INFO);
+                    DisplaySingleUnitInfo(structureInList);
                 }
             }
             // 아군 건물이 핵 생산 건물일 경우
-            else if(tempObj.GetObjectType().Equals(EObjectType.NUCLEAR))
+            else if (tempObj.GetObjectType().Equals(EObjectType.NUCLEAR))
             {
                 StructureNuclear tempNuclear = listSelectedFriendlyObject[0].GetComponent<StructureNuclear>();
 
@@ -394,7 +419,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
                 {
                     selectObjectCallback?.Invoke(EObjectType.NUCLEAR);
                     InputOtherUnitInfo(tempObj);
-                    ArrayHUDCommand.Use(EHUDCommand.DISPLAY_SINGLE_INFO);
+                    DisplaySingleUnitInfo(structureInList);
                 }
             }
             // 아무것도 하지 않는 상태의 건물일 경우
@@ -402,20 +427,20 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
             {
                 selectObjectCallback?.Invoke(tempObj.GetObjectType());
                 InputOtherUnitInfo(tempObj);
-                ArrayHUDCommand.Use(EHUDCommand.DISPLAY_SINGLE_INFO);
+                DisplaySingleUnitInfo(structureInList);
             }
         }
         // 임시 리스트에 아군 유닛이 존재할 경우
         else if (isFriendlyUnitInList)
         {
             selectObjectCallback?.Invoke(listSelectedFriendlyObject[0].GetObjectType());
-            for (int i = 0; i < listSelectedFriendlyObject.Count; ++i)
-                listSelectedFriendlyObject[i].DisplayCircle();
+            //for (int i = 0; i < listSelectedFriendlyObject.Count; ++i)
+            //    listSelectedFriendlyObject[i].ActivateCircle();
             // 아군 유닛 1마리만 존재할 경우
             if (listSelectedFriendlyObject.Count < 2)
             {
                 InputOtherUnitInfo(listSelectedFriendlyObject[0]);
-                ArrayHUDCommand.Use(EHUDCommand.DISPLAY_SINGLE_INFO);
+                DisplaySingleUnitInfo();
             }
             else
             {
@@ -475,7 +500,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
                         ArrayStructureFuncButtonCommand.Use(EStructureButtonCommand.DISPLAY_CANCLE_BUTTON);
                     }
                     // 만일 건물이 핵 건물이고 핵 생산중이라면
-                    else if(tempNuclear != null && tempNuclear.IsProcessingSpawnNuclear)
+                    else if (tempNuclear != null && tempNuclear.IsProcessingSpawnNuclear)
                     {
                         selectObjectCallback?.Invoke(EObjectType.NUCLEAR);
                         tempNuclear.UpdateSpawnNuclearInfo();
@@ -486,7 +511,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
                     {
                         selectObjectCallback?.Invoke(listSelectedFriendlyObject[0].GetObjectType());
                         InputOtherUnitInfo(listSelectedFriendlyObject[0]);
-                        ArrayHUDCommand.Use(EHUDCommand.DISPLAY_SINGLE_INFO);
+                        DisplaySingleUnitInfo(curStructure);
                     }
                 }
             }
@@ -497,7 +522,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
                 if (listSelectedFriendlyObject.Count < 2)
                 {
                     InputOtherUnitInfo(listSelectedFriendlyObject[0]);
-                    ArrayHUDCommand.Use(EHUDCommand.DISPLAY_SINGLE_INFO);
+                    DisplaySingleUnitInfo();
                 }
                 // 리스트에 유닛이 다수 존재할 경우
                 else
@@ -513,9 +538,29 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
         // 리스트가 비어있거나 적 유닛만 존재할 경우
         else
         {
-            ArrayHUDCommand.Use(EHUDCommand.HIDE_UNIT_INFO);
+            if (enemyCurSelected != null)
+                DisplaySingleUnitInfo();
+            else
+                ArrayHUDCommand.Use(EHUDCommand.HIDE_UNIT_INFO);
+
             selectObjectCallback?.Invoke(EObjectType.NONE);
         }
+    }
+
+    private void DisplaySingleUnitInfo(Structure _structure = null)
+    {
+        if (listSelectedFriendlyObject.Count < 1)
+        {
+            ArrayHUDCommand.Use(EHUDCommand.DISPLAY_SINGLE_INFO, enemyCurSelected.GetObjectName, enemyCurSelected.GetObjectDescription);
+            return;
+        }
+
+        SelectableObject tempObj = listSelectedFriendlyObject[0];
+
+        if (_structure == null)
+            ArrayHUDCommand.Use(EHUDCommand.DISPLAY_SINGLE_INFO, tempObj.GetObjectName, tempObj.GetObjectDescription);
+        else
+            ArrayHUDCommand.Use(EHUDCommand.DISPLAY_SINGLE_STRUCTURE_INFO, tempObj.GetObjectName, tempObj.GetObjectDescription, _structure.UpgradeLevel);
     }
 
     public static void UpdateHp(int _listIdx = -2)
@@ -555,19 +600,24 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
     {
         unitInfoContainer.objectType = _obj.GetObjectType();
         unitInfoContainer.maxHp = _obj.MaxHp;
-        unitInfoContainer.curHpPercent= _obj.GetCurHpPercent;
+        unitInfoContainer.curHpPercent = _obj.GetCurHpPercent;
         unitInfoContainer.attDmg = _obj.AttDmg;
         unitInfoContainer.attRange = _obj.AttRange;
         unitInfoContainer.attRate = _obj.AttRate;
 
-        if (!_obj.GetObjectType().Equals(EObjectType.ENEMY_UNIT))
+        if (_obj.GetObjectType().Equals(EObjectType.ENEMY_UNIT))
+        {
+            _obj.ActivateCircle();
+        }
+        else
         {
             unitInfoContainer.unitType = _obj.GetComponent<FriendlyObject>().GetUnitType;
             _obj.GetComponent<FriendlyObject>().Select();
         }
+            
     }
 
- 
+
 
     public void ResetTargetBunker()
     {
@@ -636,7 +686,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
             posZ = i / col;
             destPos = _targetPos + new Vector3(posX, 0f, posZ);
 
-            if(_isPatrol)
+            if (_isPatrol)
                 listSelectedFriendlyObject[i].Patrol(destPos);
             else
                 listSelectedFriendlyObject[i].MoveByPos(destPos);
@@ -646,7 +696,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
     private Vector3 CalcFormationCenterPos(float _targetPosY)
     {
         Vector3 centerPos = Vector3.zero;
-        foreach(FriendlyObject obj in listSelectedFriendlyObject)
+        foreach (FriendlyObject obj in listSelectedFriendlyObject)
         {
             centerPos.x += obj.Position.x;
             centerPos.z += obj.Position.z;
@@ -773,5 +823,5 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
 
     private List<FriendlyObject>[] arrCrowd = null;
 
-    private EObjectType objectType;
+    private SelectableObject enemyCurSelected = null;
 }

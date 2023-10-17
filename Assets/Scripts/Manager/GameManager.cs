@@ -86,7 +86,6 @@ public class GameManager : MonoBehaviour, IPauseSubject
 
         if (isMainMenu)
         {
-
             inputMng.MainInit();
         }
 
@@ -131,6 +130,7 @@ public class GameManager : MonoBehaviour, IPauseSubject
         ArrayFriendlyObjectCommand.Add(EFriendlyObjectCommand.COMPLETE_UPGRADE_MELEE_UNIT_HP, new CommandCompleteUpgradeMeleeUnitHp(selectMng));
         ArrayFriendlyObjectCommand.Add(EFriendlyObjectCommand.DEAD_HERO, new CommandFriendlyDeadHero(heroMng, uiMng, selectMng));
         ArrayFriendlyObjectCommand.Add(EFriendlyObjectCommand.COMPLETE_SPAWN_UNIT, new CommandCompleteSpawnUnit(selectMng));
+        ArrayFriendlyObjectCommand.Add(EFriendlyObjectCommand.REMOVE_AT_CROWD, new CommandFriendlyRemoveAtCrowd(selectMng));
 
         ArrayNuclearCommand.Add(ENuclearCommand.SPAWN_NUCLEAR, new CommandSpawnNuclear(structureMng, currencyMng));
         ArrayNuclearCommand.Add(ENuclearCommand.LAUNCH_NUCLEAR, new CommandLaunchNuclear(structureMng));
@@ -159,6 +159,7 @@ public class GameManager : MonoBehaviour, IPauseSubject
         ArraySelectCommand.Add(ESelectCommand.REMOVE_FROM_LIST, new CommandRemoveFromList(selectMng));
         ArraySelectCommand.Add(ESelectCommand.SET_LIST_TO_CROWD, new CommandSetListToCrowd(selectMng));
         ArraySelectCommand.Add(ESelectCommand.LOAD_CROWD_WITH_IDX, new CommandLoadCrowdWithIdx(selectMng));
+        ArraySelectCommand.Add(ESelectCommand.ADD_TO_LIST, new CommandAddToList(selectMng));
 
         ArrayUnitActionCommand.Add(EUnitActionCommand.MOVE_WITH_POS, new CommandUnitMoveWithPos(selectMng));
         ArrayUnitActionCommand.Add(EUnitActionCommand.MOVE_ATTACK, new CommandUnitMoveAttack(selectMng));

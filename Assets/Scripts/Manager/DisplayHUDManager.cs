@@ -6,9 +6,6 @@ public class DisplayHUDManager : MonoBehaviour
 {
     public void Init()
     {
-        //canvasEnergy = GetComponentInChildren<CanvasDisplayEnergy>();
-        //canvasCore = GetComponentInChildren<CanvasDisplayCore>();
-        //canvasPopulation = GetComponentInChildren<CanvasDisplayPopulation>();
         canvasMinimap = GetComponentInChildren<CanvasMinimap>();
         canvasWaveInfo = GetComponentInChildren<CanvasWaveInfo>();
         canvasUnitInfo = GetComponentInChildren<CanvasUnitInfo>();
@@ -39,7 +36,8 @@ public class DisplayHUDManager : MonoBehaviour
         ArrayHUDCommand.Add(EHUDCommand.INIT_DISPLAY_GROUP_INFO, new CommandInitDisplayGroupUnitInfo(canvasUnitInfo));
         ArrayHUDCommand.Add(EHUDCommand.INIT_DISPLAY_SINGLE_INFO, new CommandInitDisplaySingleUnitInfo(canvasUnitInfo));
         ArrayHUDCommand.Add(EHUDCommand.DISPLAY_GROUP_INFO, new CommandDisplayGroupUnitInfo(canvasUnitInfo, canvasSpawnUnitInfo));
-        ArrayHUDCommand.Add(EHUDCommand.DISPLAY_SINGLE_INFO, new CommandDisplaySingleUnitInfo(canvasUnitInfo, canvasSpawnUnitInfo));
+        ArrayHUDCommand.Add(EHUDCommand.DISPLAY_SINGLE_INFO, new CommandDisplaySingleUnitInfo(canvasUnitInfo));
+        ArrayHUDCommand.Add(EHUDCommand.DISPLAY_SINGLE_STRUCTURE_INFO, new CommandDisplaySingleStructureInfo(canvasUnitInfo));
         ArrayHUDCommand.Add(EHUDCommand.HIDE_UNIT_INFO, new CommandHideUnitInfo(canvasUnitInfo));
         ArrayHUDCommand.Add(EHUDCommand.HERO_RESURRECTION_UPDATE, new CommandHeroRessurectionUpdate(canvaHeroRessurection));
         ArrayHUDCommand.Add(EHUDCommand.HERO_RESSURECTION_FINISH, new CommandHeroRessurectionFinish(canvaHeroRessurection));
@@ -73,6 +71,7 @@ public class DisplayHUDManager : MonoBehaviour
         canvasConstructInfo.HideDisplay();
         canvasDemolishInfo.HideDisplay();
         canvasNuclearInfo.HideDisplay();
+        canvasTooltip.HideTooltip();
     }
 
     public void HeroDead()
@@ -80,29 +79,6 @@ public class DisplayHUDManager : MonoBehaviour
         canvaHeroRessurection.SetActive(true);
     }
 
-    //public void UpdateEnergy(uint _curEnergy)
-    //{
-    //    canvasEnergy.UpdateEnergy(_curEnergy);
-    //}
-
-    //public void UpdateCore(uint _curCore)
-    //{
-    //    canvasCore.UpdateCore(_curCore);
-    //}
-
-    //public void UpdateCurPopulation(uint _curPopulation)
-    //{
-    //    canvasPopulation.UpdateCurPopulation(_curPopulation);
-    //}
-
-    //public void UpdateCurMaxPopulation(uint _curMaxPopulation)
-    //{
-    //    canvasPopulation.UpdateCurMaxPopulation(_curMaxPopulation);
-    //}
-
-    //private CanvasDisplayEnergy canvasEnergy = null;
-    //private CanvasDisplayCore canvasCore = null;
-    //private CanvasDisplayPopulation canvasPopulation = null;
     private CanvasMinimap canvasMinimap = null;
     private CanvasWaveInfo canvasWaveInfo = null;
     private CanvasUnitInfo canvasUnitInfo = null;

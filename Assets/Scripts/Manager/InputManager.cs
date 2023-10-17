@@ -248,7 +248,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
             return;
         }
 
-        if (Input.GetKeyDown(debugModeKey))
+        if (Input.GetKeyDown(arrDeveloperMenuHotkey[(int)EDeveloperMenuKey.DISPLAY_STATE_AND_FOG]))
             onDebugModeCallback?.Invoke();
 
 
@@ -324,6 +324,24 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
         }
 
 
+    }
+
+    private bool DeveloperMenuHotkeyActione()
+    {
+        if (Input.GetKeyDown(arrDeveloperMenuHotkey[(int)EDeveloperMenuKey.DISPLAY_STATE_AND_FOG]))
+        {
+            Debug.Log("1");
+        }
+            //Array 대충 아래같은 느낌으로 커맨드 만들기
+        else if (Input.GetKeyDown(arrStructureFuncHotkey[(int)EStructureFuncKey.DEMOLISH]))
+            ArrayStructureFuncButtonCommand.Use(EStructureButtonCommand.DEMOLISH);
+        else if (Input.GetKeyDown(arrStructureFuncHotkey[(int)EStructureFuncKey.UPGRADE]))
+            ArrayStructureFuncButtonCommand.Use(EStructureButtonCommand.UPGRADE);
+        else if (Input.GetKeyDown(cancleKey))
+            ArrayStructureFuncButtonCommand.Use(EStructureButtonCommand.CANCLE_CURRENT_FUNCTION);
+        else
+            return false;
+        return true;
     }
 
     private void CrowdHotkeyAction(bool _isCrowdCommandReady)
@@ -507,28 +525,43 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
 
     private void DragOperateWithMouseClick()
     {
+
+
         RaycastHit hit;
-        ArraySelectCommand.Use(ESelectCommand.SELECT_START);
+        
 
         if (Functions.Picking(selectableLayer, out hit))
         {
             SelectableObject sObj = hit.transform.GetComponent<SelectableObject>();
 
-            if (isCheckDoubleClick)
+            if (sObj != null)
             {
-                if (hit.transform.Equals(SelectableObjectManager.GetFirstSelectedObjectInList().transform))
+                if (Input.GetKey(UnitSelectComandKey))
                 {
-                    Debug.Log("double Click");
-                    // 여기서 카메라 커맨드로 박스캐스트나 오버랩 박스로 화면내의 selectable다 찾아내고
-                    // 그 배열 받아와서 그 배열에 있는 애들 중 hit랑 타입 같은 애들만 골라서 temp에 일일이 다 넣어주기
+                    FriendlyObject tempFObj = sObj.GetComponent<FriendlyObject>();
+                    if (tempFObj.IsSelect)
+                        ArraySelectCommand.Use(ESelectCommand.REMOVE_FROM_LIST, tempFObj);
+                    else
+                        ArraySelectCommand.Use(ESelectCommand.ADD_TO_LIST, sObj);
+
+                    return;
+                }
+                else if (isCheckDoubleClick)
+                {
+                    if (hit.transform.Equals(SelectableObjectManager.GetFirstSelectedObjectInList().transform))
+                    {
+                        Debug.Log("double Click");
+                        // 여기서 카메라 커맨드로 박스캐스트나 오버랩 박스로 화면내의 selectable다 찾아내고
+                        // 그 배열 받아와서 그 배열에 있는 애들 중 hit랑 타입 같은 애들만 골라서 temp에 일일이 다 넣어주기
+                    }
+
+                    isCheckDoubleClick = false;
+                    return;
                 }
 
-                isCheckDoubleClick = false;
-            }
-
-
-            if (sObj != null)
+                ArraySelectCommand.Use(ESelectCommand.SELECT_START);
                 ArraySelectCommand.Use(ESelectCommand.TEMP_SELECT, sObj);
+            }
         }
 
         Functions.Picking("StageFloor", floorLayer, ref dragStartPos);
@@ -708,10 +741,13 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
                 return false;
         }
 
-        if (_changeKey.Equals(cancleKey))
-            return false;
+        for(int i = 0; i < arrDeveloperMenuHotkey.Length; ++i)
+        {
+            if (_changeKey.Equals(arrDeveloperMenuHotkey[i]))
+                return false;
+        }
 
-        if (_changeKey.Equals(debugModeKey))
+        if (_changeKey.Equals(cancleKey))
             return false;
 
         return true;
@@ -742,7 +778,11 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
     [SerializeField]
     private KeyCode cancleKey = KeyCode.Escape;
     [SerializeField]
-    private KeyCode debugModeKey = KeyCode.F12;
+    private KeyCode UnitSelectComandKey = KeyCode.LeftShift;
+
+    [Header("-Debug Mode Hotkey")]
+    [SerializeField]
+    private KeyCode[] arrDeveloperMenuHotkey = null;
 
     private float elapsedTime = 0f;
     private float leftClickElapsedTime = 0f;
