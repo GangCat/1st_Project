@@ -66,7 +66,6 @@ public class Structure : MonoBehaviour, IPauseObserver
             isProcessingDemolish = false;
         }
 
-
         if (myObj.IsSelect)
         {
             UpdateInfo();
@@ -148,11 +147,9 @@ public class Structure : MonoBehaviour, IPauseObserver
     protected virtual void UpgradeComplete()
     {
         curUpgradeType = EUpgradeType.NONE;
-        if (myObj.IsSelect)
-        {
-            UpdateInfo();
-        }
         ++upgradeLevel;
+        if (myObj.IsSelect)
+            UpdateInfo();
     }
 
     public virtual void UpdateNodeWalkable(bool _walkable)

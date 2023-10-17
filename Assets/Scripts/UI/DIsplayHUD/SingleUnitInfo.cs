@@ -44,7 +44,10 @@ public class SingleUnitInfo : MonoBehaviour
         if (!_structureLevel.Equals(0))
         {
             textStructureLevel.SetActive(true);
-            textStructureLevel.UpdateText(_structureLevel.ToString());
+            if(_structureLevel.Equals(3))
+                textStructureLevel.UpdateText(string.Format("{0}\n(max)", _structureLevel.ToString()));
+            else
+                textStructureLevel.UpdateText(_structureLevel.ToString());
         }
         else
             textStructureLevel.SetActive(false);

@@ -131,6 +131,7 @@ public class GameManager : MonoBehaviour, IPauseSubject
         ArrayFriendlyObjectCommand.Add(EFriendlyObjectCommand.COMPLETE_UPGRADE_MELEE_UNIT_HP, new CommandCompleteUpgradeMeleeUnitHp(selectMng));
         ArrayFriendlyObjectCommand.Add(EFriendlyObjectCommand.DEAD_HERO, new CommandFriendlyDeadHero(heroMng, uiMng, selectMng));
         ArrayFriendlyObjectCommand.Add(EFriendlyObjectCommand.COMPLETE_SPAWN_UNIT, new CommandCompleteSpawnUnit(selectMng));
+        ArrayFriendlyObjectCommand.Add(EFriendlyObjectCommand.REMOVE_AT_CROWD, new CommandFriendlyRemoveAtCrowd(selectMng));
 
         ArrayNuclearCommand.Add(ENuclearCommand.SPAWN_NUCLEAR, new CommandSpawnNuclear(structureMng, currencyMng));
         ArrayNuclearCommand.Add(ENuclearCommand.LAUNCH_NUCLEAR, new CommandLaunchNuclear(structureMng));

@@ -118,8 +118,14 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
     public void SetListToCrowd(int _arrIdx)
     {
         if (isEnemyObjectInList || listSelectedFriendlyObject.Count < 1) return;
+
+        for (int i = 0; i < arrCrowd[_arrIdx].Count; ++i)
+            arrCrowd[_arrIdx][i].ResetCrowdIdx();
         arrCrowd[_arrIdx].Clear();
+
         arrCrowd[_arrIdx].AddRange(listSelectedFriendlyObject.ToArray());
+        for(int i = 0; i < arrCrowd[_arrIdx].Count; ++i)
+            arrCrowd[_arrIdx][i].CrowdIdx = _arrIdx;
     }
 
     public void LoadCrowdWithIdx(int _arrIdx)
@@ -132,6 +138,11 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
         }
         else
             SelectFinish();
+    }
+
+    public void RemoveAtCrowd(int _arrIdx, FriendlyObject _removeObj)
+    {
+        arrCrowd[_arrIdx].Remove(_removeObj);
     }
 
     public void SelectStart()

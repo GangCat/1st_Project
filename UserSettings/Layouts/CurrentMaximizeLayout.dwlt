@@ -26,7 +26,7 @@ MonoBehaviour:
   m_MinSize: {x: 400, y: 100}
   m_MaxSize: {x: 32384, y: 16192}
   vertical: 0
-  controlID: 9641
+  controlID: 19708
 --- !u!114 &2
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -152,7 +152,7 @@ MonoBehaviour:
   m_MinSize: {x: 100, y: 100}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
-  controlID: 9642
+  controlID: 19709
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -626,14 +626,14 @@ MonoBehaviour:
   m_OverrideSceneCullingMask: 6917529027641081856
   m_SceneIsLit: 1
   m_SceneLighting: 1
-  m_2DMode: 0
+  m_2DMode: 1
   m_isRotationLocked: 0
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -47.68359, y: 11.537486, z: -55.295143}
+    m_Target: {x: 721.77747, y: 168.97726, z: -0.75293565}
     speed: 2
-    m_Value: {x: -47.68359, y: 11.537486, z: -55.295143}
+    m_Value: {x: 721.77747, y: 168.97726, z: -0.75293565}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -679,17 +679,17 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: 0.36948675, y: 0.3874959, z: -0.17324293, w: 0.8267419}
+    m_Target: {x: 0, y: 0, z: 0, w: 1}
     speed: 2
-    m_Value: {x: 0.36945188, y: 0.38745934, z: -0.17322657, w: 0.82666385}
+    m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 10
+    m_Target: 230.02536
     speed: 2
-    m_Value: 10
+    m_Value: 230.02536
   m_Ortho:
-    m_Target: 0
+    m_Target: 1
     speed: 2
-    m_Value: 0
+    m_Value: 1
   m_CameraSettings:
     m_Speed: 1
     m_SpeedNormalized: 0.5
@@ -703,7 +703,7 @@ MonoBehaviour:
     m_FarClip: 10000
     m_DynamicClip: 1
     m_OcclusionCulling: 0
-  m_LastSceneViewRotation: {x: 0.2607706, y: 0.05963326, z: -0.016173588, w: 0.9635189}
+  m_LastSceneViewRotation: {x: -0.08717229, y: 0.89959055, z: -0.21045254, w: -0.3726226}
   m_LastSceneViewOrtho: 0
   m_ReplacementShader: {fileID: 0}
   m_ReplacementString: 
@@ -894,9 +894,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: e6f90000
-      m_LastClickedID: 63974
-      m_ExpandedIDs: 42f0feff52f2ffff68850000f4870000c08a0000d0f70000d8f7000030f80000e8f8000062fa0000bcfa00004afb00005cfb000086fb00004cfc00005cff000094ff0000
+      m_SelectedIDs: 
+      m_LastClickedID: 0
+      m_ExpandedIDs: 42f0feff52f2ffff68850000f4870000c08a000072f70000d0f7000030f80000e8f8000062fa0000bcfa00004afb00005cfb000086fb00004cfc00005cff0000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -912,7 +912,7 @@ MonoBehaviour:
         m_IsRenaming: 0
         m_OriginalEventType: 11
         m_IsRenamingFilename: 0
-        m_ClientGUIView: {fileID: 8}
+        m_ClientGUIView: {fileID: 4}
       m_SearchString: 
     m_ExpandedScenes: []
     m_CurrenRootInstanceID: 0
@@ -1070,7 +1070,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scripts/Manager
+    - Assets/Scripts/Command/CommandFriendlyObject
     m_Globs: []
     m_ProductIds: 
     m_AnyWithAssetOrigin: 0
@@ -1080,16 +1080,16 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/Scripts/Manager
+  - Assets/Scripts/Command/CommandFriendlyObject
   m_LastFoldersGridSize: 16
   m_LastProjectPath: C:\Users\SAMSUNG\Desktop\NewFolder\Unity\1st Project
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: c6b90000
-    m_LastClickedID: 47558
-    m_ExpandedIDs: 000000009e960000a0960000a2960000a4960000b2960000b6960000d2b90000
+    m_SelectedIDs: b82b0200
+    m_LastClickedID: 142264
+    m_ExpandedIDs: 000000009e960000a0960000a2960000a4960000b6960000c0b90000d2b90000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1117,7 +1117,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 000000009e960000a0960000a2960000a4960000
+    m_ExpandedIDs: 000000009e960000a0960000a2960000a4960000b6960000d2b90000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1142,24 +1142,24 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: e6f90000
-    m_LastClickedInstanceID: 63974
+    m_SelectedInstanceIDs: 
+    m_LastClickedInstanceID: 0
     m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c62300008aea0000887a00003036000050c60000f8a2000000000000ceb90100e84e0200f24e020004620200ce7302005a7d0200647d0200a2370100fe6d0100348e0000c2850000b67f0000d87e00001a800000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: P_TempBunker
-      m_OriginalName: P_TempBunker
+      m_Name: 
+      m_OriginalName: 
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 36318
+      m_UserData: 0
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 0
+      m_OriginalEventType: 11
       m_IsRenamingFilename: 1
       m_ClientGUIView: {fileID: 12}
     m_CreateAssetUtility:
