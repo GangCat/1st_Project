@@ -94,8 +94,8 @@ public class StructureNuclear : Structure
         _spwnCompleteCallback?.Invoke(this);
         
         // Nuclear Ready Audio
-        audioType = EAudioType_Adjutant.NUCLEAR_READY;
-        AudioManager.instance.PlayAudio_Adjutant(audioType);
+        audioType = EAudioType_Advisor.NUCLEAR_READY;
+        AudioManager.instance.PlayAudio_Advisor(audioType);
     }
 
     public void LaunchNuclear(Vector3 _destPos)
@@ -106,8 +106,8 @@ public class StructureNuclear : Structure
             ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
         
         // Nuclear Ready Audio
-        audioType = EAudioType_Adjutant.NUCLEAR_LAUNCH;
-        AudioManager.instance.PlayAudio_Adjutant(audioType);
+        audioType = EAudioType_Advisor.NUCLEAR_LAUNCH;
+        AudioManager.instance.PlayAudio_Advisor(audioType);
     }
 
 

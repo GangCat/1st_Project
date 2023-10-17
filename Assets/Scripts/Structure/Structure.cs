@@ -226,8 +226,8 @@ public class Structure : MonoBehaviour, IPauseObserver
             UpdateInfo();
         
         // Build Complete Audio Play
-        audioType = EAudioType_Adjutant.CONST_COMPLETE;
-        AudioManager.instance.PlayAudio_Adjutant(audioType);
+        audioType = EAudioType_Advisor.CONST_COMPLETE;
+        AudioManager.instance.PlayAudio_Advisor(audioType);
     }
 
     public virtual void Demolish()
@@ -272,8 +272,8 @@ public class Structure : MonoBehaviour, IPauseObserver
         Destroy(gameObject);
         
         // Build cancel Audio Play
-        audioType = EAudioType_Adjutant.CONST_CANCEL;
-        AudioManager.instance.PlayAudio_Adjutant(audioType);
+        // audioType = EAudioType_Adjutant.CONST_CANCEL;
+        AudioManager.instance.PlayAudio_Destroy(objectType);
     }
 
     protected virtual void UpdateInfo()
@@ -375,5 +375,6 @@ public class Structure : MonoBehaviour, IPauseObserver
 
     protected bool isPause = false;
     
-    protected EAudioType_Adjutant audioType;
+    protected EAudioType_Advisor audioType;
+    private EObjectType objectType;
 }

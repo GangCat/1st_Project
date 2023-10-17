@@ -240,6 +240,8 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
 
     public void SelectFinish()
     {
+        
+        
         if (tempListSelectableObject.Count < 1)
         {
             for (int i = 0; i < listSelectedFriendlyObject.Count; ++i)
@@ -281,6 +283,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
                         isFriendlyUnitInList = true;
                         isFriendlyStructureInList = false;
                         isEnemyObjectInList = false;
+                        tempObj = null;
                     }
                     else
                         listSelectedFriendlyObject.Add(obj.GetComponent<FriendlyObject>());
@@ -306,6 +309,16 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
                 default:
                     break;
             }
+        }
+
+        if( tempObj!= null)
+        {
+            // AudioManager.instance.PlayAudio_Select(/*tempObj.GetObjectType()*/EObjectType.UNIT_01);     // Select Audio(Unit)
+            AudioManager.instance.PlayAudio_Select(tempObj.GetObjectType());     // Select Audio(Unit)
+        }
+        else
+        {
+            AudioManager.instance.PlayAudio_Select(listSelectedFriendlyObject[0].GetObjectType());     // Select Audio(Struct)
         }
 
         // 임시 리스트에 적 유닛만 있을 경우
@@ -759,4 +772,6 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
     private MemoryPool[] arrMemoryPool = null;
 
     private List<FriendlyObject>[] arrCrowd = null;
+
+    private EObjectType objectType;
 }

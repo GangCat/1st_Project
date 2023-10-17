@@ -93,8 +93,8 @@ MonoBehaviour:
     targetPos: {x: 0, y: 0, z: 0}
     isWaitForNewPath: 0
     isPause: 0
-    moveSpeed: 5
-    attRate: 2
+    moveSpeed: 3
+    attRate: 1
     attDmg: 2
     objectType: 1
     TurretMissile: {fileID: 0}

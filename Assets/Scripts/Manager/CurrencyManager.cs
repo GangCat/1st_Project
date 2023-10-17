@@ -111,8 +111,8 @@ public class CurrencyManager : MonoBehaviour, IPublisher, IPauseObserver
         if (curCore < _decreaseCore)
         {
             // Not enough core Audio Play
-            audioType = EAudioType_Adjutant.CORE;
-            AudioManager.instance.PlayAudio_Adjutant(audioType);
+            audioType = EAudioType_Advisor.CORE;
+            AudioManager.instance.PlayAudio_Advisor(audioType);
             return false;
         }
         return true;
@@ -123,8 +123,8 @@ public class CurrencyManager : MonoBehaviour, IPublisher, IPauseObserver
         if (curEnergy < _decreaseEnergy)
         {
             // Not enough energy Audio Play
-            audioType = EAudioType_Adjutant.ENERGY;
-            AudioManager.instance.PlayAudio_Adjutant(audioType);
+            audioType = EAudioType_Advisor.ENERGY;
+            AudioManager.instance.PlayAudio_Advisor(audioType);
             
             return false;
         }
@@ -529,5 +529,5 @@ public class CurrencyManager : MonoBehaviour, IPublisher, IPauseObserver
 
     private bool isPause = false;
     
-    private EAudioType_Adjutant audioType;
+    private EAudioType_Advisor audioType;
 }

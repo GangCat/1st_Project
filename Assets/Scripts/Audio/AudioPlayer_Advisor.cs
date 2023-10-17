@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AudioPlayer_Struct : AudioPlayerBase
+public class AudioPlayer_Advisor : AudioPlayerBase
 {
     public override void Init()
     {
         instance = this;
+
         audioPlayers = new AudioSource[audioChannels];
         AudioManager.AudioVolumes volumes = AudioManager.instance.Volumes;
 
@@ -19,7 +20,7 @@ public class AudioPlayer_Struct : AudioPlayerBase
 
     }
 
-    public void PlayAudio(EAudioType_Struct _audioType)
+    public void PlayAudio(EAudioType_Advisor _audioType)
     {
         for (int i = 0; i < audioPlayers.Length; ++i)
         {
@@ -32,15 +33,16 @@ public class AudioPlayer_Struct : AudioPlayerBase
         }
     }
     
-    
-    [Header("#StructAudio")]
+    [Header("#AdvisorAudio")]
     [SerializeField] private AudioClip[] audioClips;
+    
+    
     // [SerializeField] private float audioVolume;
     [SerializeField] private int audioChannels; 
     private AudioSource[] audioPlayers;
 
     private int channelIndex;
     
-    public static AudioPlayer_Struct instance;
-    public enum EAudioType_Struct { NONE = -1, BUILD, DESTROY, MAIN_BASE, NUCLEAR, TURRET, BARRACK, BUNKER, WALL,  LENGTH } 
+    public static AudioPlayer_Advisor instance;
+    public enum EAudioType_Advisor { NONE = -1, ENERGY, CORE, RESEARCH, UPGRADE, CONST_COMPLETE,CONST_CANCEL, PAUSE, RESUME, NUCLEAR_READY, NUCLEAR_LAUNCH, UNDERATTACK_01, UNDERATTACK_02, UNDERATTACK_03, LENGTH } 
 }

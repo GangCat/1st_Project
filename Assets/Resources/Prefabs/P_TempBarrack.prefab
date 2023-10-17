@@ -77,7 +77,7 @@ MonoBehaviour:
   demolishDelay: 4
   modelGo: {fileID: 2733166738310973005}
   arrSpawnUnitDelay:
-  - 20
+  - 3
   - 3
   - 3
   arrUnitPrefab:

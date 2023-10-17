@@ -14,4 +14,5 @@ public class CommandSelectFinish : Command
     }
 
     private SelectableObjectManager selMng = null;
+
 }
